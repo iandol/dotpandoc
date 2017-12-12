@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+# If we have institute: metadata, convert it to an
+# "Affiliations" paragraph at the start of the document
+# THis is because Word template cannot handle this natively
+
+require 'paru/filter'
+
+Paru::Filter.run do
+  stop! unless metadata.key?('institute')
+  inst = metadata['institute']
+  text = '**Affiliations**: '
+  if inst.is_a?(String)
+    text += inst
+  elsif inst.is_a?(Array)
+    inst.each_index do |i|
+      text += inst[i].to_s + '  &  '
+    end
+    text = text[0..-6]
+  elsif inst[0].is_a?(Hash)
+    text = 'HASH TODO'
+  end
+  p = Paru::PandocFilter::Para.new([])
+  p.inner_markdown = text
+  document.prepend(p)
+  stop!
+end

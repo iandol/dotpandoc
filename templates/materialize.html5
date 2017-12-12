@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html$if(lang)$ lang="$lang$"$endif$$if(dir)$ dir="$dir$"$endif$>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+$for(author-meta)$
+  <meta name="author" content="$author-meta$">
+$endfor$
+$if(date-meta)$
+  <meta name="dcterms.date" content="$date-meta$">
+$endif$
+$if(keywords)$
+  <meta name="keywords" content="$for(keywords)$$keywords$$sep$, $endfor$">
+$endif$
+  <title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
+  <style type="text/css">code{white-space: pre;}</style>
+$if(quotes)$
+  <style type="text/css">q { quotes: "“" "”" "‘" "’"; }</style>
+$endif$
+$if(highlighting-css)$
+  <style type="text/css">
+$highlighting-css$
+  </style>
+$endif$
+$for(css)$
+  <link rel="stylesheet" href="$css$">
+$endfor$
+<style type="text/css">
+  .markdown-body { max-width: 960px; margin: 0 auto; padding: 32px; }
+</style>
+$if(math)$
+  $math$
+$endif$
+  <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+$for(header-includes)$
+  $header-includes$
+$endfor$
+<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+</head>
+<body>
+<div class="markdown-body">
+  $for(include-before)$
+  $include-before$
+  $endfor$
+  $if(title)$
+  <header>
+  <h1 class="title">$title$</h1>
+  $if(subtitle)$
+  <p class="subtitle">$subtitle$</p>
+  $endif$
+  $for(author)$
+  <p class="author">$author$</p>
+  $endfor$
+  $if(date)$
+  <p class="date">$date$</p>
+  $endif$
+  </header>
+  $endif$
+  $if(toc)$
+  <nav id="$idprefix$TOC">
+  $toc$
+  </nav>
+  $endif$
+  $body$
+  $for(include-after)$
+  $include-after$
+  $endfor$
+</div>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+</body>
+</html>

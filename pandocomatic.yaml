@@ -1,0 +1,327 @@
+settings:
+  recursive: true
+  follow-symlinks: false
+  skip: ['.*', 'pandocomatic.yaml']
+templates:
+##############################################################################-GENERAL
+##############################################################################
+  refs:
+    setup: []
+    preprocessors: []
+    pandoc:
+      standalone: true
+      filter: ['pandoc-citeproc'] #process citations
+      bibliography: Core.json #JSON is faster than BibTeX, symlinked to .pandoc
+      csl: csl/apa-ian.csl
+      #citation-abbreviations: cite-abbr.json
+    metadata:
+      notes-after-punctuation: false
+      link-citations: true 
+    postprocessors: []
+    cleanup: []
+##############################################################################—DOCX
+##############################################################################
+  docx:
+    pandoc:
+      from: markdown
+      to: docx
+      standalone: true
+      filter:
+        - 'filters/removeHR' #remove horizontal rules
+        - 'filters/authorSimplifyMetadata' #collapse down metadata "author: name: affiliation:" to author:
+        - 'filters/prependInstitute' #add affiliations if institute: metadata present
+      reference-doc: 'templates/custom.docx'
+      dpi: 300
+##############################################################################
+  docx-refs:
+    extends: ['docx','refs']
+##############################################################################
+  docx-refs-no-links:
+    extends: ['docx','refs']
+    metadata: 
+      link-citations: false
+##############################################################################
+  docx-endnote:
+    extends: ['docx','refs']
+    preprocessors: 
+      add: ['preprocessors/convertEndnoteRefs'] #turns endnote to pandoc citations
+##############################################################################
+  docx-changes:
+    extends: ['docx','refs']
+    preprocessors: ['preprocessors/criticmarkup'] #process criticmarkup
+##############################################################################
+  odt-refs:
+    extends: ['docx-refs']
+    pandoc:
+      to: odt
+      reference-doc: 'templates/custom.odt'
+##############################################################################—LATEX
+##############################################################################
+  latex:
+    #LaTeX generates this from metadata unlike Word
+    #preprocessors: ['preprocessors/removeAffiliations'] 
+    pandoc:
+      from: markdown
+      to: latex
+      standalone: true
+      filter: 
+        - filters/removeHR #remove horizontal rules
+        - filters/authorToName #convert author to author: name: affiliation:
+      template: templates/custom.latex
+      dpi: 300
+      base-header-level: 2
+    metadata:
+      classoption: twoside
+      mainfont: 'Greta Sans Std'
+      mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
+      sansfont: 'Gill Sans'
+      sansfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
+      monofont: 'Fira Code'
+      mathfont: 'Cambria Math'
+      mathfontoptions: 'math-style=ISO,bold-style=ISO'
+      CJKmainfont: 'PingFang SC'
+      CJKsansfont: 'Heiti SC'
+      linkcolor: Mahogany
+      citecolor: Sepia
+      urlcolor: BrickRed
+      lang: 'en-GB'
+      documentclass: 'article'
+      fontsize: '11pt'
+      linestretch: '1.5'
+      geometry: 'margin=2cm'
+      nonumberfigures: true
+      lof: false
+    postprocessors: ['postprocessors/fixLaTeX']
+##############################################################################
+  latex-with-refs:
+    extends: ['latex','refs']
+##############################################################################
+  latex-endnote:
+    extends: 'latex-with-refs'
+    preprocessors: ['preprocessors/convertEndnoteRefs']
+##############################################################################
+  latex-with-toc:
+    extends: 'latex-with-refs'
+    pandoc:
+      toc: true
+      toc-depth: 3
+##############################################################################
+  latex-letter:
+    pandoc:
+      from: markdown
+      to: latex
+      standalone: true
+      template: templates/letter.latex
+    metadata:
+      author: 
+        - Jonna Doe
+        - Institute of Cool
+      opening: To whom it may concern,
+      closing: Sincerely,
+      mainfont: 'Greta Sans Std'
+      mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
+      signature-before: -8ex
+      signature-after: 0ex
+      closing-indentation: 0pt
+      links-as-notes: true
+      linkcolor: Mahogany
+      citecolor: Sepia
+      urlcolor: BrickRed
+      lang: 'en-GB'
+      geometry: 'margin=2cm'
+##############################################################################
+  pdf-refs:
+    extends: 'latex-with-refs'
+    pandoc:
+      to: pdf
+      pdf-engine: 'xelatex'
+    cleanup: ['latexmk -c']
+##############################################################################
+  pdf-endnote:
+    extends: 'latex-endnote'
+    pandoc:
+      to: pdf
+      pdf-engine: 'xelatex'
+    cleanup: ['latexmk -c']
+##############################################################################
+# https://github.com/Wandmalfarbe/pandoc-latex-template
+  eisvogel:
+    extends: 'refs'
+    pandoc:
+      from: markdown
+      to: latex
+      standalone: true
+      filter: 
+        - filters/removeHR #remove horizontal rules
+      dpi: 300
+      template: templates/eisvogel.latex
+      toc: true
+      base-header-level: 2
+    metadata: 
+      titlepage: true
+      titlepage-color: BB5544
+      titlepage-text-color: FFFFFF
+      titlepage-rule-color: FFFFFF
+      titlepage-rule-height: 4
+      nonumberfigures: true
+      mainfont: 'Greta Sans Std'
+      mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
+      sansfont: 'Gill Sans'
+      sansfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
+      monofont: 'Fira Code'
+      mathfont: 'Cambria Math'
+      mathfontoptions: 'math-style=ISO,bold-style=ISO'
+      CJKmainfont: 'PingFang SC'
+      CJKsansfont: 'Heiti SC'
+##############################################################################
+# https://github.com/Wandmalfarbe/pandoc-latex-template
+  eisvogel-endnote:
+    extends: 'eisvogel'
+    preprocessors: ['preprocessors/convertEndnoteRefs']
+##############################################################################
+  latex-ieee:
+    extends: 'latex-with-refs'
+    pandoc:
+      template: templates/ieee.latex
+    metadata: 
+      fontsize: '10pt'
+##############################################################################
+# https://github.com/pandoc-scholar/pandoc-scholar
+  latex-scholar:
+    extends: 'latex-with-refs'
+    pandoc:
+      template: templates/pandoc-scholar.latex
+    metadata: 
+      fontsize: '10pt'
+##############################################################################
+  memoir-with-refs:
+    extends: 'latex-with-refs'
+    pandoc:
+      template: templates/custom-memoir.latex
+      toc: true
+      toc-depth: 3
+      base-header-level: 1
+    metadata:
+      documentclass: 'memoir'
+##############################################################################—HTML
+##############################################################################
+  html:
+    pandoc:
+      from: markdown
+      to: html5
+      standalone: true
+      number-sections: false
+      section-divs: true
+      mathjax: true
+      filter: 
+        - 'filters/removeHR' #remove horizontal rules
+      template: 'templates/custom.html'
+      css: ['templates/custom.css']
+      dpi: 300
+      toc: true
+      toc-depth: 3
+      base-header-level: 1
+    postprocessors: ['postprocessors/fixHTML']
+##############################################################################
+  html-changes:
+    extends: ['html']
+    preprocessors: ['preprocessors/criticmarkup']
+##############################################################################
+  html-refs:
+    extends: ['refs','html']
+##############################################################################
+  html-endnote:
+    extends: ['refs','html']
+    preprocessors: ['preprocessors/convertEndnoteRefs']
+##############################################################################
+  html-scholar:
+    extends: ['refs','html']
+    preprocessors: ['preprocessors/convertEndnoteRefs']
+    pandoc:
+      template: 'templates/pandoc-scholar.html'
+      css: 'templates/pandoc-scholar.css'
+##############################################################################
+  html-scholar-pdf:
+    extends: ['html-scholar']
+    pandoc:
+      to: pdf
+      pdf-engine: prince
+      pdf-engine-opt: ['--page-size=A4','--page-margin=10mm']
+##############################################################################
+  html-pdf:
+    extends: ['html']
+    pandoc:
+      to: pdf
+      pdf-engine: prince
+      pdf-engine-opt: ['--page-size=A4']
+      toc: true
+##############################################################################
+  html-refs-pdf:
+    extends: ['refs','html']
+    pandoc:
+      to: pdf
+      pdf-engine: prince
+      pdf-engine-opt: ['--page-size=A4']
+##############################################################################
+  html-endnote-pdf:
+    extends: ['html-refs-pdf']
+    preprocessors: ['preprocessors/convertEndnoteRefs']
+##############################################################################
+  html-selfcontained:
+    extends: 'html'
+    pandoc:
+      self-contained: true
+##############################################################################
+  tufte:
+    pandoc:
+      from: markdown
+      to: html5
+      section-divs: true
+      standalone: true
+      filter: [pandoc-sidenote]
+      template: 'templates/tufte.html5'
+      css: 
+        - 'templates/tufte.css'
+        - 'templates/tuftepandoc.css'
+      self-contained: true
+##############################################################################
+  tufte-refs:
+    extends: ['refs','tufte']
+##############################################################################
+  tufte-refs-pdf:
+    extends: ['refs','tufte']
+    pandoc:
+      to: pdf
+      pdf-engine: prince
+      pdf-engine-opt: ['--page-size=A4']
+##############################################################################—EPUB
+##############################################################################
+  epub:
+    pandoc:
+      from: markdown
+      to: epub
+      standalone: true
+      self-contained: true
+    metadata:
+      stylesheet: epub.css
+      cover-image: templates/VPMLogoBlack.png
+##############################################################################—TEST
+##############################################################################
+# VARIOUS TEST TEMPLATES
+  test:
+    pandoc:
+      from: markdown
+      to: html5
+      standalone: true
+      css: ['templates/custom.css']
+      self-contained: true
+      mathjax: true
+  test-markdown:
+    pandoc:
+      from: markdown
+      to: markdown
+      output: out.md
+      standalone: true
+      filter: ['filters/testFilter']
+    metadata:
+        author: Joanna Doe

@@ -1,0 +1,41 @@
+#!/usr/bin/env ruby
+require 'paru/filter'
+# this converts a simple author metadata field (author: Joanna Doe^1^) into seperate
+# name & affiliation metadata fields that are better parsed by most Pandoc templates.
+
+testKey = 'author'
+pKey = 'pandocomatic-fileinfo'
+insertKey = 'name'
+
+Paru::Filter.run do
+  if metadata.has_key?(testKey)
+    if metadata.key?(pKey) & (metadata[pKey]['to'].match(/docx/))
+      stop!
+    end
+    newAuthor = nil
+    au = metadata[testKey]
+    if au.is_a?(String) # just a name string, so we need to turn it to a hash
+      newAuthor = [ Hash[ insertKey => au ] ]
+    elsif au.is_a?(Array)
+      if au[0].is_a?(String) # just an array of strings, turn to array of hashes
+        newAuthor = Array.new(au.length) {Hash.new}
+        au.each_index do |i|
+          # we test if ^superscript^ content in the author, in which case it becomes the affiliation
+          cp = au[i].match(/\^[\w\d\s\,§†\*]+\^/)
+          if cp.nil?
+            newAuthor[i] = Hash[ insertKey => au[i] ] 
+          else
+            newAuthor[i] = Hash[ insertKey => cp.pre_match, 'affiliation' => cp.to_s ] 
+          end
+        end
+      end
+    end
+    if not newAuthor.nil?
+      metadata[testKey] = newAuthor
+    end
+    if metadata['keywords'] #just in case a template uses tags instead of keywords
+      metadata['tags'] = metadata['keywords']
+    end
+  end
+  stop!
+end

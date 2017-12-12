@@ -1,0 +1,2 @@
+# Pandoc{omatic} Configuration Files #
+These are the Pandoc data dir contents, that largely get called using [Pandocomatic](https://github.com/htdebeer/pandocomatic) from meta-data in the main document.

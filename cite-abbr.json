@@ -1,0 +1,22 @@
+{
+  "default": {
+    "container-title": {
+      "Annual Review of Neuroscience": "Annu. Rev. Neurosci.",
+      "Annual Review of Visual Science": "Annu. Rev. Vis. Sci.",
+      "Cerebral Cortex": "Cereb. Cortex",
+      "Current Biology": "Curr. Biol.",
+      "Current Opinion in Neurobiology": "Curr. Opin. Neurobiol.",
+      "Journal of Comparative Neurology": "J. Comp. Neurol.",
+      "Journal of Neuroscience": "J. Neurosci.",
+      "Journal of the Optical Society of America A": "J. Opt. Soc. Am. A",
+      "Journal of Vision": "J. Vis.",
+      "Nature Reviews Neuroscience": "Nat. Rev. Neurosci.",
+      "Nature Neuroscience": "Nat. Neurosci.",
+      "Philosophical Transactions of the Royal Society B": "Phil. Trans. R. Soc. B",
+      "Proceedings of the National Academy of Sciences USA": "Proc. Natl. Acad. Sci. USA",
+      "Scientific Reports": "Sci. Rep.",
+      "Trends in Cognitive Sciences": "Trends Cog. Sci.",
+      "Trends in Neuroscience": "Trends Neurosci."
+    }
+  }
+}

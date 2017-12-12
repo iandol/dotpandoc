@@ -1,0 +1,59 @@
+#!/usr/bin/env ruby
+# this converts an author metadata field
+# author:  [name: ..., affiliation:..., correspondence:...]) into a format 
+# author: Name^affiliation,correspondence^ that the Word templates can handle. 
+# This is because the Word templates do not have the flexibility 
+# the other formats do...
+require 'paru/filter'
+
+testKey = 'author'
+pKey = 'pandocomatic-fileinfo'
+nameKey = 'name'
+affKey = 'affiliation'
+corrKey = 'correspondence'
+
+Paru::Filter.run do
+  if metadata.key?(testKey) & metadata.key?(pKey) & metadata[pKey]['to'].match(/(docx)/)
+    newAuthor = nil
+    correspondence = nil
+    au = metadata[testKey]
+    if au.is_a?(Array) && au[0].is_a?(Hash) #just an array of strings, turn to array of hashes
+      newAuthor = Array.new(au.length)
+      au.each_index do |i| 
+        if au[i].key?(nameKey)
+          if au[i].key?(affKey)
+            newAuthor[i] = au[i][nameKey].to_s + '^' + au[i][affKey].to_s + '^'
+          else
+            newAuthor[i] = au[i][nameKey].to_s
+          end
+          if au[i].key?(corrKey)
+            if newAuthor[i] =~ /\^$/
+              newAuthor[i] = newAuthor[i][0..-2] + '§^'
+            else
+              newAuthor[i] += '^§^'
+            end
+            if correspondence.nil?
+              correspondence = au[i][corrKey]
+            else
+              correspondence += ' & ' + au[i][corrKey]
+            end
+          end
+        end
+      end
+    elsif au.is_a?(Hash) #single name: John Doe author
+      newAuthor = Array.new(au.length)
+      newAuthor[0] = au[nameKey]
+    end
+    
+    metadata[testKey] = newAuthor unless newAuthor.nil?
+
+    unless correspondence.nil?
+      correspondence = '§ **Correspondence**: ' + correspondence
+      p = Paru::PandocFilter::Para.new([])
+      p.inner_markdown = correspondence
+      document.prepend(p)
+    end
+
+  end
+  stop!
+end

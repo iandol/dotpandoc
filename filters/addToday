@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require 'paru/filter'
+require 'date'
+
+Paru::Filter.run do 
+  metadata["date"] = "#{Date.today.to_s}"
+  stop!
+end

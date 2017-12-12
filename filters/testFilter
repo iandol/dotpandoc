@@ -1,0 +1,47 @@
+#!/usr/bin/env ruby
+# testing filter, uses byebug to remote debug
+
+require 'byebug/core'
+require 'byebug'
+PORT = 8990
+warn "\n!!!DEBUG Server started: localhost:#{PORT} @ " + Time.now.to_s + "\n\n"
+Byebug.wait_connection = true
+Byebug.start_server('127.0.0.1', PORT)
+require 'paru/filter'
+
+testKey = 'author'
+pmaticKey = 'pandocomatic-fileinfo'
+insertKey = 'name'
+
+Paru::Filter.run do
+  byebug
+  if metadata.has_key?(testKey) 
+    if metadata.key?(pmaticKey) & (metadata[pmaticKey]['to'].match(/docx/))
+      stop!
+    end
+    nau = nil
+    au = metadata[testKey]
+    if au.is_a?(String)
+      nau = [ Hash[ insertKey => au ] ]
+    elsif au.is_a?(Array)
+      if au[0].is_a?(String)
+        nau = Array.new(au.length) {Hash.new}
+        au.each_index { |i| 
+          cp = au[i].match(/\^[\d\s\,§†\*]+\^/)
+          if cp.nil?
+            nau[i] = Hash[ insertKey => au[i] ] 
+          else
+            nau[i] = Hash[ insertKey => cp.pre_match, 'affiliation' => cp.to_s ] 
+          end
+        }
+      end
+    end
+    if not nau.nil?
+      metadata[testKey] = nau
+    end
+  end
+  if metadata['keywords']
+    metadata['tags'] = metadata['keywords']
+  end
+  stop!
+end
