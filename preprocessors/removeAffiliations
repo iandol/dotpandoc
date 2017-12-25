@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 #encoding: utf-8
-# This removes an affiliation paragraph, as LaTeX can generate this from the metadata,
-# Word cannot so do not run this for DOCX outputs
+# This removes an affiliation paragraph if present, 
+# as LaTeX will generate this from the metadata
 
 Encoding.default_external = Encoding::UTF_8
 Encoding.default_internal = Encoding::UTF_8

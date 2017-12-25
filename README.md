@@ -1,2 +1,2 @@
-# Pandoc{omatic} Configuration Files #
-These are the Pandoc data dir contents, that largely get called using [Pandocomatic](https://github.com/htdebeer/pandocomatic) from meta-data in the main document.
+# Pandoc\{omatic\} Configuration Files #
+These are my Pandoc data directory contents (default location: `$HOME/.pandoc/`), that largely get called using [`pandocomatic`](https://github.com/htdebeer/pandocomatic) via its `pandocomatic.yaml` configuration. I mostly run this triggered automatically by Scrivener's post-processing compile feature; see [Scrivomatic](https://github.com/iandol/scrivomatic) for more details of this workflow...

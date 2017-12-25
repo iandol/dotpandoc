@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 #encoding: utf-8
-# This fixes several problems with LaTeX output
+# This tweaks several parts of the LaTeX output
 
 Encoding.default_external = Encoding::UTF_8
 Encoding.default_internal = Encoding::UTF_8
@@ -11,7 +11,7 @@ output = input.gsub(/⬄/, '{\\fixfont⬄}')
 output.gsub!(/⇨/, '{\\fixfont⇨}')
 output.gsub!(/⇦/, '{\\fixfont⇦}')
 output.gsub!(/‐/, '-') # replace hyphen with hyphen-minus
-# ensure correct titlecase
+# ensure correct titlecase for Neuroscience terms
 output.gsub!(/\bmt\b/i, 'MT')
 output.gsub!(/\bteo\b/i, 'TEO')
 output.gsub!(/\btrn\b/i, 'TRN')

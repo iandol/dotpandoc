@@ -3,6 +3,7 @@ settings:
   follow-symlinks: false
   skip: ['.*', 'pandocomatic.yaml']
 templates:
+##############################################################################
 ##############################################################################-GENERAL
 ##############################################################################
   refs:
@@ -11,14 +12,16 @@ templates:
     pandoc:
       standalone: true
       filter: ['pandoc-citeproc'] #process citations
-      bibliography: Core.json #JSON is faster than BibTeX, symlinked to .pandoc
+      bibliography: Core.json #JSON is faster than BibTeX, symlinked to ~/.pandoc
       csl: csl/apa-ian.csl
       #citation-abbreviations: cite-abbr.json
     metadata:
+      reference-section-title: "References"
       notes-after-punctuation: false
       link-citations: true 
     postprocessors: []
     cleanup: []
+##############################################################################
 ##############################################################################—DOCX
 ##############################################################################
   docx:
@@ -28,15 +31,15 @@ templates:
       standalone: true
       filter:
         - 'filters/removeHR' #remove horizontal rules
-        - 'filters/authorSimplifyMetadata' #collapse down metadata "author: name: affiliation:" to author:
-        - 'filters/prependInstitute' #add affiliations if institute: metadata present
+        - 'filters/authorSimplifyMetadata' #collapse down metadata "author: [name: affiliation:]" to author:
+        - 'filters/prependInstitute' #add affiliations paragraph if institute: metadata present
       reference-doc: 'templates/custom.docx'
       dpi: 300
 ##############################################################################
   docx-refs:
     extends: ['docx','refs']
 ##############################################################################
-  docx-refs-no-links:
+  docx-refs-not-linked:
     extends: ['docx','refs']
     metadata: 
       link-citations: false
@@ -44,29 +47,28 @@ templates:
   docx-endnote:
     extends: ['docx','refs']
     preprocessors: 
-      add: ['preprocessors/convertEndnoteRefs'] #turns endnote to pandoc citations
+      add: ['preprocessors/convertEndnoteRefs'] #turns endnote citations to pandoc citations
 ##############################################################################
   docx-changes:
     extends: ['docx','refs']
-    preprocessors: ['preprocessors/criticmarkup'] #process criticmarkup
+    preprocessors: ['preprocessors/criticmarkup'] #process criticmarkup to HTML that pandoc can use
 ##############################################################################
   odt-refs:
     extends: ['docx-refs']
     pandoc:
       to: odt
       reference-doc: 'templates/custom.odt'
+##############################################################################
 ##############################################################################—LATEX
 ##############################################################################
   latex:
-    #LaTeX generates this from metadata unlike Word
-    #preprocessors: ['preprocessors/removeAffiliations'] 
     pandoc:
       from: markdown
       to: latex
       standalone: true
       filter: 
         - filters/removeHR #remove horizontal rules
-        - filters/authorToName #convert author to author: name: affiliation:
+        - filters/authorToName #convert author: to author: [name: affiliation:]
       template: templates/custom.latex
       dpi: 300
       base-header-level: 2
@@ -203,6 +205,7 @@ templates:
       base-header-level: 1
     metadata:
       documentclass: 'memoir'
+##############################################################################
 ##############################################################################—HTML
 ##############################################################################
   html:
@@ -294,9 +297,10 @@ templates:
       to: pdf
       pdf-engine: prince
       pdf-engine-opt: ['--page-size=A4']
+##############################################################################
 ##############################################################################—EPUB
 ##############################################################################
-  epub:
+  epub-test:
     pandoc:
       from: markdown
       to: epub
@@ -305,6 +309,7 @@ templates:
     metadata:
       stylesheet: epub.css
       cover-image: templates/VPMLogoBlack.png
+##############################################################################
 ##############################################################################—TEST
 ##############################################################################
 # VARIOUS TEST TEMPLATES

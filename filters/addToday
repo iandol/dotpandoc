@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# add today's date to metadata
 
 require 'paru/filter'
 require 'date'

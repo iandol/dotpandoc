@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Make sure References are single spaced
+
 require "paru/filter"
 
 END_CAPITAL = 10

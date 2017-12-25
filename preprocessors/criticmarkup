@@ -2,6 +2,7 @@
 #encoding: utf-8
 
 # the job of this preproceccer is to convert criticmarkup to HTML
+# which pandoc can parse to e.g. Word output
 input = $stdin.read
 output = input.gsub(/{~~/, '<del>')
 output.gsub!(/~~}/, '</ins>')

@@ -28,9 +28,9 @@ Paru::Filter.run do
           end
           if au[i].key?(corrKey)
             if newAuthor[i] =~ /\^$/
-              newAuthor[i] = newAuthor[i][0..-2] + '§^'
+              newAuthor[i] = newAuthor[i][0..-2] + '\*^'
             else
-              newAuthor[i] += '^§^'
+              newAuthor[i] += '^\*^'
             end
             if correspondence.nil?
               correspondence = au[i][corrKey]
@@ -48,7 +48,7 @@ Paru::Filter.run do
     metadata[testKey] = newAuthor unless newAuthor.nil?
 
     unless correspondence.nil?
-      correspondence = '§ **Correspondence**: ' + correspondence
+      correspondence = '\* **Correspondence**: ' + correspondence
       p = Paru::PandocFilter::Para.new([])
       p.inner_markdown = correspondence
       document.prepend(p)
