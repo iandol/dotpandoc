@@ -1,7 +1,9 @@
 #!/usr/bin/env ruby
 require 'paru/filter'
-# this converts a simple author metadata field (author: Joanna Doe^1^) into seperate
+# This converts a simple author metadata field (author: Joanna Doe^1^) into seperate
 # name & affiliation metadata fields that are better parsed by most Pandoc templates.
+# I prefer to do this the other way round, with richer metadata I then simplify
+# for Word/LibreOffice using authorSimplifyMetadata filter; authorToName is deprecated.
 
 testKey = 'author'
 pKey = 'pandocomatic-fileinfo'

@@ -11,6 +11,7 @@ pKey = 'pandocomatic-fileinfo'
 nameKey = 'name'
 affKey = 'affiliation'
 corrKey = 'correspondence'
+corrMarker = '\*' # which marker to use, if askterisk you must escape it.
 
 Paru::Filter.run do
   if metadata.key?(testKey) & metadata.key?(pKey) & metadata[pKey]['to'].match(/(docx)/)
@@ -28,7 +29,7 @@ Paru::Filter.run do
           end
           if au[i].key?(corrKey)
             if newAuthor[i] =~ /\^$/
-              newAuthor[i] = newAuthor[i][0..-2] + '\*^'
+              newAuthor[i] = newAuthor[i][0..-2] + corrMarker + '^'
             else
               newAuthor[i] += '^\*^'
             end
@@ -48,7 +49,7 @@ Paru::Filter.run do
     metadata[testKey] = newAuthor unless newAuthor.nil?
 
     unless correspondence.nil?
-      correspondence = '\* **Correspondence**: ' + correspondence
+      correspondence = corrMarker + ' **Correspondence**: ' + correspondence
       p = Paru::PandocFilter::Para.new([])
       p.inner_markdown = correspondence
       document.prepend(p)
