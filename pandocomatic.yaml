@@ -27,7 +27,7 @@ templates:
 ##############################################################################
   docx:
     pandoc:
-      from: markdown
+      from: markdown+compact_definition_lists
       to: docx
       standalone: true
       filter:
@@ -211,7 +211,7 @@ templates:
 ##############################################################################
   html:
     pandoc:
-      from: markdown
+      from: markdown+compact_definition_lists
       to: html5
       standalone: true
       number-sections: false
@@ -278,7 +278,7 @@ templates:
 ##############################################################################
   tufte:
     pandoc:
-      from: markdown
+      from: markdown+compact_definition_lists
       to: html5
       section-divs: true
       standalone: true
