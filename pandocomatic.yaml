@@ -27,12 +27,13 @@ templates:
 ##############################################################################
   docx:
     pandoc:
-      from: markdown+compact_definition_lists
+      from: markdown
       to: docx
       standalone: true
       filter:
         - 'filters/removeHR' #remove horizontal rules
         - 'filters/authorSimplifyMetadata' #collapse down metadata "author: [name: affiliation:]" to author:
+        - 'filters/prependKeywords' #add keywords paragraph if keywords: metadata present
         - 'filters/prependInstitute' #add affiliations paragraph if institute: metadata present
       reference-doc: 'templates/custom.docx'
 ##############################################################################
@@ -210,7 +211,7 @@ templates:
 ##############################################################################
   html:
     pandoc:
-      from: markdown+compact_definition_lists
+      from: markdown
       to: html5
       standalone: true
       number-sections: false
