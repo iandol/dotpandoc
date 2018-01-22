@@ -35,7 +35,6 @@ templates:
         - 'filters/authorSimplifyMetadata' #collapse down metadata "author: [name: affiliation:]" to author:
         - 'filters/prependInstitute' #add affiliations paragraph if institute: metadata present
       reference-doc: 'templates/custom.docx'
-      dpi: 300
 ##############################################################################
   docx-refs:
     extends: ['docx','refs']
