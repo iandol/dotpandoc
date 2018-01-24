@@ -34,6 +34,7 @@ templates:
         - 'filters/removeHR' #remove horizontal rules
         - 'filters/authorSimplifyMetadata' #collapse down metadata "author: [name: affiliation:]" to author:
         - 'filters/prependKeywords' #add keywords paragraph if keywords: metadata present
+        - 'filters/prependComments' #add comments paragraph if comments: metadata present
         - 'filters/prependInstitute' #add affiliations paragraph if institute: metadata present
       reference-doc: 'templates/custom.docx'
 ##############################################################################
@@ -75,9 +76,9 @@ templates:
       base-header-level: 2
     metadata:
       classoption: twoside
-      mainfont: 'Greta Sans Std'
+      mainfont: 'Greta Text Pro'
       mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
-      sansfont: 'Gill Sans'
+      sansfont: 'Greta Sans Pro'
       sansfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
       monofont: 'Fira Code'
       mathfont: 'Cambria Math'
@@ -121,7 +122,7 @@ templates:
         - Institute of Cool
       opening: To whom it may concern,
       closing: Sincerely,
-      mainfont: 'Greta Sans Std'
+      mainfont: 'Greta Sans Pro'
       mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
       signature-before: -8ex
       signature-after: 0ex
@@ -167,7 +168,7 @@ templates:
       titlepage-rule-color: FFFFFF
       titlepage-rule-height: 4
       nonumberfigures: true
-      mainfont: 'Greta Sans Std'
+      mainfont: 'Greta Sans Pro'
       mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
       sansfont: 'Gill Sans'
       sansfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
