@@ -39,11 +39,13 @@ author:
 ```
 
 
-Likewise, my [prependInstitute](https://github.com/iandol/dotpandoc/blob/master/filters/prependInstitute) filter takes the `institute` metadata and makes a paragraph in the document body:
+Likewise, my [prependInstitute](https://github.com/iandol/dotpandoc/blob/master/filters/prependInstitute) filter takes the `institute` metadata and prepends a paragraph into the document body:
 
 ```
 Affiliations: ^1^ University of X & ^2^ Institute of Y
 ```
+
+As I also prepend comments and keywords, I've created a filter that prepends a "list of metadata entries", which is a bit faster than running sperate prependXXX filters for each item to prepend: [prependAll](https://github.com/iandol/dotpandoc/blob/master/filters/prependAll).
 
 Other filters here are from other sources or for testing purposes. I do use addToday and removeHR regularly.
 

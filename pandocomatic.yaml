@@ -1,12 +1,12 @@
-# These are pandocomatic templates.
+# --------------------------- Pandocomatic templates -------------------------
 settings:
   recursive: true
   follow-symlinks: false
   skip: ['.*', 'pandocomatic.yaml']
 templates:
-##############################################################################
-##############################################################################-GENERAL
-##############################################################################
+#-----------------------------------------------------------------------------
+#:::::::::::::::::::::::::::::::::: GENERAL ::::::::::::::::::::::::::::::::::
+#-----------------------------------------------------------------------------
   refs:
     setup: []
     preprocessors: []
@@ -15,16 +15,16 @@ templates:
       filter: ['pandoc-citeproc'] #process citations
       bibliography: Core.json #JSON is faster than BibTeX, symlinked to ~/.pandoc
       csl: csl/apa-ian.csl
-      #citation-abbreviations: cite-abbr.json
+      #citation-abbreviations: cite-abbr.json # my journal abbreviations
     metadata:
       reference-section-title: "References"
       notes-after-punctuation: false
       link-citations: true 
     postprocessors: []
     cleanup: []
-##############################################################################
-##############################################################################—DOCX
-##############################################################################
+#-----------------------------------------------------------------------------
+#:::::::::::::::::::::::::::::::::: DOCX :::::::::::::::::::::::::::::::::::::
+#-----------------------------------------------------------------------------
   docx:
     pandoc:
       from: markdown
@@ -36,33 +36,34 @@ templates:
         - 'filters/prependKeywords' #add keywords paragraph if keywords: metadata present
         - 'filters/prependComments' #add comments paragraph if comments: metadata present
         - 'filters/prependInstitute' #add affiliations paragraph if institute: metadata present
+        #- 'filters/prependAll' # prepends institute:, comments: and keywords: metadata
       reference-doc: 'templates/custom.docx'
-##############################################################################
+#-----------------------------------------------------------------------------
   docx-refs:
     extends: ['docx','refs']
-##############################################################################
+#-----------------------------------------------------------------------------
   docx-refs-not-linked:
     extends: ['docx','refs']
     metadata: 
       link-citations: false
-##############################################################################
+#-----------------------------------------------------------------------------
   docx-endnote:
     extends: ['docx','refs']
     preprocessors: 
       add: ['preprocessors/convertEndnoteRefs'] #turns endnote citations to pandoc citations
-##############################################################################
+#-----------------------------------------------------------------------------
   docx-changes:
     extends: ['docx','refs']
     preprocessors: ['preprocessors/criticmarkup'] #process criticmarkup to HTML that pandoc can use
-##############################################################################
+#-----------------------------------------------------------------------------
   odt-refs:
     extends: ['docx-refs']
     pandoc:
       to: odt
       reference-doc: 'templates/custom.odt'
-##############################################################################
-##############################################################################—LATEX
-##############################################################################
+#-----------------------------------------------------------------------------
+#:::::::::::::::::::::::::::::::::: LATEX ::::::::::::::::::::::::::::::::::::
+#-----------------------------------------------------------------------------
   latex:
     pandoc:
       from: markdown
@@ -92,24 +93,33 @@ templates:
       documentclass: 'article'
       fontsize: '11pt'
       linestretch: '1.5'
-      geometry: 'margin=2cm'
+      geometry: 'margin=1.8cm'
       nonumberfigures: true
       lof: false
     postprocessors: ['postprocessors/fixLaTeX']
-##############################################################################
+#-----------------------------------------------------------------------------
   latex-with-refs:
     extends: ['latex','refs']
-##############################################################################
+#-----------------------------------------------------------------------------
   latex-endnote:
     extends: 'latex-with-refs'
     preprocessors: ['preprocessors/convertEndnoteRefs']
-##############################################################################
+#-----------------------------------------------------------------------------
+  latex-chemfig: # example of using header-includes with yaml block scalar data http://yaml-multiline.info/
+    extends: 'latex-with-refs'
+    metadata:
+      header-includes:
+        - |
+          ```{=latex}
+          \usepackage[]{chemfig}
+          ```
+#-----------------------------------------------------------------------------
   latex-with-toc:
     extends: 'latex-with-refs'
     pandoc:
       toc: true
       toc-depth: 3
-##############################################################################
+#-----------------------------------------------------------------------------
   latex-letter:
     pandoc:
       from: markdown
@@ -133,21 +143,21 @@ templates:
       urlcolor: BrickRed
       lang: 'en-GB'
       geometry: 'margin=2cm'
-##############################################################################
+#-----------------------------------------------------------------------------
   pdf-refs:
     extends: 'latex-with-refs'
     pandoc:
       to: pdf
       pdf-engine: 'xelatex'
     cleanup: ['latexmk -c']
-##############################################################################
+#-----------------------------------------------------------------------------
   pdf-endnote:
     extends: 'latex-endnote'
     pandoc:
       to: pdf
       pdf-engine: 'xelatex'
     cleanup: ['latexmk -c']
-##############################################################################
+#-----------------------------------------------------------------------------
 # https://github.com/Wandmalfarbe/pandoc-latex-template
   eisvogel:
     extends: 'refs'
@@ -177,19 +187,27 @@ templates:
       mathfontoptions: 'math-style=ISO,bold-style=ISO'
       CJKmainfont: 'PingFang SC'
       CJKsansfont: 'Heiti SC'
-##############################################################################
+#-----------------------------------------------------------------------------
+# https://github.com/Wandmalfarbe/pandoc-latex-template
+  eisvogel-pdf:
+    extends: 'eisvogel'
+    pandoc:
+      to: pdf
+      pdf-engine: 'xelatex'
+    cleanup: []
+#-----------------------------------------------------------------------------
 # https://github.com/Wandmalfarbe/pandoc-latex-template
   eisvogel-endnote:
     extends: 'eisvogel'
     preprocessors: ['preprocessors/convertEndnoteRefs']
-##############################################################################
+#-----------------------------------------------------------------------------
   latex-ieee:
     extends: 'latex-with-refs'
     pandoc:
       template: templates/ieee.latex
     metadata: 
       fontsize: '10pt'
-##############################################################################
+#-----------------------------------------------------------------------------
 # https://github.com/pandoc-scholar/pandoc-scholar
   latex-scholar:
     extends: 'latex-with-refs'
@@ -197,7 +215,7 @@ templates:
       template: templates/pandoc-scholar.latex
     metadata: 
       fontsize: '10pt'
-##############################################################################
+#-----------------------------------------------------------------------------
   memoir-with-refs:
     extends: 'latex-with-refs'
     pandoc:
@@ -207,9 +225,9 @@ templates:
       base-header-level: 1
     metadata:
       documentclass: 'memoir'
-##############################################################################
-##############################################################################—HTML
-##############################################################################
+#-----------------------------------------------------------------------------
+#:::::::::::::::::::::::::::::::::: HTML :::::::::::::::::::::::::::::::::::::
+#-----------------------------------------------------------------------------
   html:
     pandoc:
       from: markdown
@@ -227,32 +245,32 @@ templates:
       toc-depth: 3
       base-header-level: 1
     postprocessors: ['postprocessors/fixHTML']
-##############################################################################
+#-----------------------------------------------------------------------------
   html-changes:
     extends: ['html']
     preprocessors: ['preprocessors/criticmarkup']
-##############################################################################
+#-----------------------------------------------------------------------------
   html-refs:
     extends: ['refs','html']
-##############################################################################
+#-----------------------------------------------------------------------------
   html-endnote:
     extends: ['refs','html']
     preprocessors: ['preprocessors/convertEndnoteRefs']
-##############################################################################
+#-----------------------------------------------------------------------------
   html-scholar:
     extends: ['refs','html']
     preprocessors: ['preprocessors/convertEndnoteRefs']
     pandoc:
       template: 'templates/pandoc-scholar.html'
       css: 'templates/pandoc-scholar.css'
-##############################################################################
+#-----------------------------------------------------------------------------
   html-scholar-pdf:
     extends: ['html-scholar']
     pandoc:
       to: pdf
       pdf-engine: prince
       pdf-engine-opt: ['--page-size=A4','--page-margin=10mm']
-##############################################################################
+#-----------------------------------------------------------------------------
   html-pdf:
     extends: ['html']
     pandoc:
@@ -260,23 +278,23 @@ templates:
       pdf-engine: prince
       pdf-engine-opt: ['--page-size=A4']
       toc: true
-##############################################################################
+#-----------------------------------------------------------------------------
   html-refs-pdf:
     extends: ['refs','html']
     pandoc:
       to: pdf
       pdf-engine: prince
       pdf-engine-opt: ['--page-size=A4']
-##############################################################################
+#-----------------------------------------------------------------------------
   html-endnote-pdf:
     extends: ['html-refs-pdf']
     preprocessors: ['preprocessors/convertEndnoteRefs']
-##############################################################################
+#-----------------------------------------------------------------------------
   html-selfcontained:
     extends: 'html'
     pandoc:
       self-contained: true
-##############################################################################
+#-----------------------------------------------------------------------------
   tufte:
     pandoc:
       from: markdown+compact_definition_lists
@@ -289,19 +307,19 @@ templates:
         - 'templates/tufte.css'
         - 'templates/tuftepandoc.css'
       self-contained: true
-##############################################################################
+#-----------------------------------------------------------------------------
   tufte-refs:
     extends: ['refs','tufte']
-##############################################################################
+#-----------------------------------------------------------------------------
   tufte-refs-pdf:
     extends: ['refs','tufte']
     pandoc:
       to: pdf
       pdf-engine: prince
       pdf-engine-opt: ['--page-size=A4']
-##############################################################################
-##############################################################################—EPUB
-##############################################################################
+#-----------------------------------------------------------------------------
+#:::::::::::::::::::::::::::::::::: EPUB :::::::::::::::::::::::::::::::::::::
+#-----------------------------------------------------------------------------
   epub-test:
     pandoc:
       from: markdown
@@ -311,9 +329,9 @@ templates:
     metadata:
       stylesheet: epub.css
       cover-image: templates/VPMLogoBlack.png
-##############################################################################
-##############################################################################—TEST
-##############################################################################
+#-----------------------------------------------------------------------------
+#:::::::::::::::::::::::::::::::::: TEST :::::::::::::::::::::::::::::::::::::
+#-----------------------------------------------------------------------------
 # VARIOUS TEST TEMPLATES
   test:
     pandoc:
