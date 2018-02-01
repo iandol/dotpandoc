@@ -16,7 +16,7 @@ insertKey = 'name'
 Paru::Filter.run do
   byebug
   if metadata.has_key?(testKey) 
-    if metadata.key?(pmaticKey) & (metadata[pmaticKey]['to'].match(/docx/))
+    if metadata.key?(pmaticKey) & (metadata[pmaticKey]['to'].match(/docx|odt/))
       stop!
     end
     nau = nil
