@@ -65,6 +65,7 @@ templates:
 #:::::::::::::::::::::::::::::::::: LATEX ::::::::::::::::::::::::::::::::::::
 #-----------------------------------------------------------------------------
   latex:
+    preprocessors: ['preprocessors/removeImageDimensions'] #remove image dimensions
     pandoc:
       from: markdown
       to: latex
@@ -161,13 +162,14 @@ templates:
 # https://github.com/Wandmalfarbe/pandoc-latex-template
   eisvogel:
     extends: 'refs'
+    preprocessors: ['preprocessors/removeImageDimensions'] #remove image dimensions
     pandoc:
       from: markdown
       to: latex
       standalone: true
       filter: 
         - filters/removeHR #remove horizontal rules
-      dpi: 300
+      dpi: 72
       template: templates/eisvogel.latex
       toc: true
       base-header-level: 2
