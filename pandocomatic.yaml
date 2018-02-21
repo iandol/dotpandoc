@@ -182,13 +182,15 @@ templates:
       nonumberfigures: true
       mainfont: 'Greta Sans Pro'
       mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
-      sansfont: 'Gill Sans'
+      sansfont: 'Graublau Slab'
       sansfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
       monofont: 'Fira Code'
       mathfont: 'Cambria Math'
       mathfontoptions: 'math-style=ISO,bold-style=ISO'
       CJKmainfont: 'PingFang SC'
       CJKsansfont: 'Heiti SC'
+      nonumberfigures: true  
+    postprocessors: ['postprocessors/fixLaTeX']
 #-----------------------------------------------------------------------------
 # https://github.com/Wandmalfarbe/pandoc-latex-template
   eisvogel-pdf:

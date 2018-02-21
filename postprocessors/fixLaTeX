@@ -10,6 +10,9 @@ input = $stdin.read
 output = input.gsub(/⬄/, '{\\fixfont⬄}')
 output.gsub!(/⇨/, '{\\fixfont⇨}')
 output.gsub!(/⇦/, '{\\fixfont⇦}')
+output.gsub!(/→/, '{\\fixfont→}')
+output.gsub!(/Δ/, '{\\fixfontΔ}')
+#output.gsub!(/µ/, '{\\fixfont\\mu}')
 output.gsub!(/⟳/, '{\\fixfont⟳}')
 # replace hyphen with hyphen-minus
 output.gsub!(/‐/, '-')
