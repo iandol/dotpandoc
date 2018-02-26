@@ -23,6 +23,17 @@ templates:
     postprocessors: []
     cleanup: []
 #-----------------------------------------------------------------------------
+  plain-refs:
+    extends: ['refs']
+    pandoc:
+      from: markdown
+      to: plain
+      standalone: true
+      columns: 80
+      filter:
+        - 'filters/authorSimplifyMetadata' #collapse down metadata "author: [name: affiliation:]" to author:
+        - 'filters/prependAll' # prepends institute:, comments: and keywords: metadata
+#-----------------------------------------------------------------------------
 #:::::::::::::::::::::::::::::::::: DOCX :::::::::::::::::::::::::::::::::::::
 #-----------------------------------------------------------------------------
   docx:
@@ -99,15 +110,15 @@ templates:
       lof: false
     postprocessors: ['postprocessors/fixLaTeX']
 #-----------------------------------------------------------------------------
-  latex-with-refs:
+  latex-refs:
     extends: ['latex','refs']
 #-----------------------------------------------------------------------------
   latex-endnote:
-    extends: 'latex-with-refs'
+    extends: 'latex-refs'
     preprocessors: ['preprocessors/convertEndnoteRefs']
 #-----------------------------------------------------------------------------
   latex-chemfig: # example of using header-includes with yaml block scalar data http://yaml-multiline.info/
-    extends: 'latex-with-refs'
+    extends: 'latex-refs'
     metadata:
       header-includes:
         - |
@@ -116,7 +127,7 @@ templates:
           ```
 #-----------------------------------------------------------------------------
   latex-with-toc:
-    extends: 'latex-with-refs'
+    extends: 'latex-refs'
     pandoc:
       toc: true
       toc-depth: 3
@@ -146,7 +157,7 @@ templates:
       geometry: 'margin=2cm'
 #-----------------------------------------------------------------------------
   pdf-refs:
-    extends: 'latex-with-refs'
+    extends: 'latex-refs'
     pandoc:
       to: pdf
       pdf-engine: 'xelatex'
@@ -206,7 +217,7 @@ templates:
     preprocessors: ['preprocessors/convertEndnoteRefs']
 #-----------------------------------------------------------------------------
   latex-ieee:
-    extends: 'latex-with-refs'
+    extends: 'latex-refs'
     pandoc:
       template: templates/ieee.latex
     metadata: 
@@ -214,14 +225,14 @@ templates:
 #-----------------------------------------------------------------------------
 # https://github.com/pandoc-scholar/pandoc-scholar
   latex-scholar:
-    extends: 'latex-with-refs'
+    extends: 'latex-refs'
     pandoc:
       template: templates/pandoc-scholar.latex
     metadata: 
       fontsize: '10pt'
 #-----------------------------------------------------------------------------
   memoir-with-refs:
-    extends: 'latex-with-refs'
+    extends: 'latex-refs'
     pandoc:
       template: templates/custom-memoir.latex
       toc: true
