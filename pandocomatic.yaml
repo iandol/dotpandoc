@@ -31,6 +31,7 @@ templates:
       standalone: true
       columns: 80
       filter:
+        #- 'filters/prependAuthor' # prepends authors as this doesn't work for plain output
         - 'filters/authorSimplifyMetadata' #collapse down metadata "author: [name: affiliation:]" to author:
         - 'filters/prependAll' # prepends institute:, comments: and keywords: metadata
 #-----------------------------------------------------------------------------
@@ -44,10 +45,7 @@ templates:
       filter:
         - 'filters/removeHR' #remove horizontal rules
         - 'filters/authorSimplifyMetadata' #collapse down metadata "author: [name: affiliation:]" to author:
-        - 'filters/prependKeywords' #add keywords paragraph if keywords: metadata present
-        - 'filters/prependComments' #add comments paragraph if comments: metadata present
-        - 'filters/prependInstitute' #add affiliations paragraph if institute: metadata present
-        #- 'filters/prependAll' # prepends institute:, comments: and keywords: metadata
+        - 'filters/prependAll' # prepends institute:, comments: and keywords: metadata
       reference-doc: 'templates/custom.docx'
 #-----------------------------------------------------------------------------
   docx-refs:

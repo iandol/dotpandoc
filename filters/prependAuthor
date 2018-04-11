@@ -1,0 +1,38 @@
+#!/usr/bin/env ruby
+# If we have institute: metadata, convert it to an
+# "Affiliations" paragraph at the start of the document
+# THis is because Word template cannot handle this natively
+
+require 'paru/filter'
+  require 'byebug/core'
+  require 'byebug'
+  PORT = 8989
+  STDOUT.puts "\n!!!---BYEBUG on localhost:#{PORT} @ " + Time.now.to_s + "\n\n"
+  Byebug.wait_connection = true
+  Byebug.start_server('127.0.0.1', PORT)
+
+Paru::Filter.run do
+  stop! unless metadata.key?('author')
+  auth = metadata['author']
+  text = '**Authors**: '
+  if auth.is_a?(String)
+    text += auth
+  elsif auth.is_a?(Array)
+    if auth[0].is_a?(Hash)
+      auth = auth[0]
+      text += auth['name'] 
+    else
+      auth.each_index do |i|
+        text += auth[i].to_s + '  &  '
+      end
+      text = text[0..-6]
+    end
+  elsif auth[0].is_a?(Hash)
+    text = 'HASH TODO'
+  end
+  stop! if text.length == 0
+  p = Paru::PandocFilter::Para.new([])
+  p.inner_markdown = text
+  document.prepend(p)
+  stop!
+end

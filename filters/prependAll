@@ -11,7 +11,7 @@ prepend_list = {:comments => "Comments", :keywords => "Keywords", :institute => 
 Paru::Filter.run do
   prepend_list.each do |key,val|
     next unless metadata.key?(key.to_s)
-    kw = metadata[key]
+    kw = metadata[key.to_s]
     text = '**' + val + '**: '
     if kw.is_a?(String)
       text += kw
@@ -20,9 +20,10 @@ Paru::Filter.run do
         text += kw[i].to_s + ', '
       end
       text = text[0..-3]
-    elsif kw[0].is_a?(Hash)
-      text = 'HASH TODO'
+    else
+      text = ''
     end
+    next if text.length == 0
     p = Paru::PandocFilter::Para.new([])
     p.inner_markdown = text
     document.prepend(p)
