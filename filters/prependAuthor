@@ -4,12 +4,6 @@
 # THis is because Word template cannot handle this natively
 
 require 'paru/filter'
-  require 'byebug/core'
-  require 'byebug'
-  PORT = 8989
-  STDOUT.puts "\n!!!---BYEBUG on localhost:#{PORT} @ " + Time.now.to_s + "\n\n"
-  Byebug.wait_connection = true
-  Byebug.start_server('127.0.0.1', PORT)
 
 Paru::Filter.run do
   stop! unless metadata.key?('author')

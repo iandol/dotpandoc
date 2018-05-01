@@ -23,17 +23,19 @@ templates:
     postprocessors: []
     cleanup: []
 #-----------------------------------------------------------------------------
-  plain-refs:
-    extends: ['refs']
+  plain:
     pandoc:
       from: markdown
       to: plain
       standalone: true
       columns: 80
       filter:
-        #- 'filters/prependAuthor' # prepends authors as this doesn't work for plain output
+        #- 'filters/prependAuthor' # prepends authors as this is needed for plain output
         - 'filters/authorSimplifyMetadata' #collapse down metadata "author: [name: affiliation:]" to author:
-        - 'filters/prependAll' # prepends institute:, comments: and keywords: metadata
+        - 'filters/prependAll' # prepends institute:, comments: and keywords: metadata into the text
+#-----------------------------------------------------------------------------
+  plain-refs:
+    extends: ['refs','plain']
 #-----------------------------------------------------------------------------
 #:::::::::::::::::::::::::::::::::: DOCX :::::::::::::::::::::::::::::::::::::
 #-----------------------------------------------------------------------------
@@ -45,7 +47,7 @@ templates:
       filter:
         - 'filters/removeHR' #remove horizontal rules
         - 'filters/authorSimplifyMetadata' #collapse down metadata "author: [name: affiliation:]" to author:
-        - 'filters/prependAll' # prepends institute:, comments: and keywords: metadata
+        - 'filters/prependAll' # prepends institute:, comments: and keywords: metadata into the text
       reference-doc: 'templates/custom.docx'
 #-----------------------------------------------------------------------------
   docx-refs:
@@ -140,6 +142,12 @@ templates:
       author: 
         - Jonna Doe
         - Institute of Cool
+      address:
+        - Room 201, Systems Building
+        - Institute of Neuroscience
+        - 320 Yueyang rd
+        - Shanghai 200031
+        - CHINA
       opening: To whom it may concern,
       closing: Sincerely,
       mainfont: 'Greta Sans Pro'
