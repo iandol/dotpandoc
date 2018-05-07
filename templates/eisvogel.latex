@@ -1,7 +1,6 @@
-% !TEX TS-program = xelatex
-% !TEX encoding = UTF-8 Unicode
-% Copyright (c) 2017, Pascal Wagler;  
-% Copyright (c) 2014--2017, John MacFarlane
+%%
+% Copyright (c) 2018, Pascal Wagler;  
+% Copyright (c) 2014--2018, John MacFarlane
 % 
 % All rights reserved.
 % 
@@ -207,16 +206,6 @@ $endif$
 $if(beamer)$
 \newif\ifbibliography
 $endif$
-$if(natbib)$
-\usepackage[$natbiboptions$]{natbib}
-\bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
-$endif$
-$if(biblatex)$
-\usepackage[$if(biblio-style)$style=$biblio-style$,$endif$$for(biblatexoptions)$$biblatexoptions$$sep$,$endfor$]{biblatex}
-$for(bibliography)$
-\addbibresource{$bibliography$}
-$endfor$
-$endif$
 $if(listings)$
 \usepackage{listings}
 \newcommand{\passthrough}[1]{#1}
@@ -256,22 +245,34 @@ $if(beamer)$
 \widowpenalties 1 10000
 \raggedbottom
 $if(section-titles)$
+\setbeamertemplate{part page}{
+\centering
+\begin{beamercolorbox}[sep=16pt,center]{part title}
+  \usebeamerfont{part title}\insertpart\par
+\end{beamercolorbox}
+}
+\setbeamertemplate{section page}{
+\centering
+\begin{beamercolorbox}[sep=12pt,center]{part title}
+  \usebeamerfont{section title}\insertsection\par
+\end{beamercolorbox}
+}
+\setbeamertemplate{subsection page}{
+\centering
+\begin{beamercolorbox}[sep=8pt,center]{part title}
+  \usebeamerfont{subsection title}\insertsubsection\par
+\end{beamercolorbox}
+}
 \AtBeginPart{
-  \let\insertpartnumber\relax
-  \let\partname\relax
   \frame{\partpage}
 }
 \AtBeginSection{
   \ifbibliography
   \else
-    \let\insertsectionnumber\relax
-    \let\sectionname\relax
     \frame{\sectionpage}
   \fi
 }
 \AtBeginSubsection{
-  \let\insertsubsectionnumber\relax
-  \let\subsectionname\relax
   \frame{\subsectionpage}
 }
 $endif$
@@ -307,6 +308,9 @@ $else$
 \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
 \fi
 $endif$
+$endif$
+$if(pagestyle)$
+\pagestyle{$pagestyle$}
 $endif$
 
 % Make use of float-package and set default placement for figures to H
@@ -352,6 +356,16 @@ $if(dir)$
   \newenvironment{RTL}{\beginR}{\endR}
   \newenvironment{LTR}{\beginL}{\endL}
 \fi
+$endif$
+$if(natbib)$
+\usepackage[$natbiboptions$]{natbib}
+\bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
+$endif$
+$if(biblatex)$
+\usepackage[$if(biblio-style)$style=$biblio-style$,$endif$$for(biblatexoptions)$$biblatexoptions$$sep$,$endfor$]{biblatex}
+$for(bibliography)$
+\addbibresource{$bibliography$}
+$endfor$
 $endif$
 
 $if(title)$
@@ -481,11 +495,24 @@ $endif$
 %
 % captions
 %
-\usepackage[format=hang,labelfont=bf,labelsep=endash,font={sf,small}]{caption}
+\definecolor{caption-color}{HTML}{777777}
+\usepackage[textfont={color=caption-color}, skip=4mm, format=hang, singlelinecheck=false, labelfont=bf, labelsep=endash, font={sf,small}]{caption}
+\setcapindent{0em}
+\captionsetup[longtable]{position=above}
 $if(nonumberfigures)$
 \captionsetup[figure]{labelformat=empty}% redefines the caption setup of the figures environment
 $endif$
 \newcommand{\imglabel}[1]{\textbf{\textit{(#1)}}}
+
+%
+% blockquote
+%
+\definecolor{blockquote-border}{RGB}{221,221,221}
+\definecolor{blockquote-text}{RGB}{119,119,119}
+\usepackage{mdframed}
+\newmdenv[rightline=false,bottomline=false,topline=false,linewidth=3pt,linecolor=blockquote-border,skipabove=\parskip]{customblockquote}
+\renewenvironment{quote}{\begin{customblockquote}\list{}{\rightmargin=0em\leftmargin=0em}%
+\item\relax\color{blockquote-text}\ignorespaces}{\unskip\unskip\endlist\end{customblockquote}}
 
 %
 % Source Sans Pro as the de­fault font fam­ily
@@ -519,12 +546,7 @@ $endif$
 %
 \usepackage{titling}
 \title{$title$}
-\author{$for(author)$$author.name$$sep$, $endfor$}
-
-%
-% environment for boxes
-%
-%\usepackage{framed}
+\author{$for(author)$$author$$sep$, $endfor$}
 
 %
 % tables
@@ -587,6 +609,7 @@ $if(listings)$
   tabsize          = 4,
   numberstyle      = \color{listing-numbers},
   aboveskip        = 1.0em,
+  belowcaptionskip = 1.0em,
   keywordstyle     = \color{listing-keyword}\bfseries,
   classoffset      = 0,
   sensitive        = true,
@@ -721,6 +744,9 @@ $if(beamer)$
 \begin{frame}
 \tableofcontents[hideallsubsections]
 \end{frame}
+$if(toc-own-page)$
+\newpage
+$endif$
 $else$
 {
 $if(colorlinks)$
@@ -728,6 +754,9 @@ $if(colorlinks)$
 $endif$
 \setcounter{tocdepth}{$toc-depth$}
 \tableofcontents
+$if(toc-own-page)$
+\newpage
+$endif$
 }
 $endif$
 $endif$

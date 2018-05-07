@@ -19,6 +19,7 @@ Paru::Filter.run do
   elsif inst[0].is_a?(Hash)
     text = 'HASH TODO'
   end
+  stop! if text.length < 19
   p = Paru::PandocFilter::Para.new([])
   p.inner_markdown = text
   document.prepend(p)

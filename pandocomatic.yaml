@@ -3,11 +3,13 @@ settings:
   recursive: true
   follow-symlinks: false
   skip: ['.*', 'pandocomatic.yaml']
+  match-files: 'first'
 templates:
 #-----------------------------------------------------------------------------
 #:::::::::::::::::::::::::::::::::: GENERAL ::::::::::::::::::::::::::::::::::
 #-----------------------------------------------------------------------------
   refs:
+    extends: []
     setup: []
     preprocessors: []
     pandoc:
@@ -30,9 +32,9 @@ templates:
       standalone: true
       columns: 80
       filter:
-        #- 'filters/prependAuthor' # prepends authors as this is needed for plain output
-        - 'filters/authorSimplifyMetadata' #collapse down metadata "author: [name: affiliation:]" to author:
-        - 'filters/prependAll' # prepends institute:, comments: and keywords: metadata into the text
+        - 'filters/prependAbstract' #prepends abstract: metadata into the text
+        - 'filters/prependAll' #prepends institute:, comments: and keywords: metadata into the text
+        - 'filters/prependAuthor' #prepends authors
 #-----------------------------------------------------------------------------
   plain-refs:
     extends: ['refs','plain']
@@ -139,9 +141,6 @@ templates:
       standalone: true
       template: templates/letter.latex
     metadata:
-      author: 
-        - Jonna Doe
-        - Institute of Cool
       address:
         - Room 201, Systems Building
         - Institute of Neuroscience
@@ -160,7 +159,7 @@ templates:
       citecolor: Sepia
       urlcolor: BrickRed
       lang: 'en-GB'
-      geometry: 'margin=2cm'
+      geometry: 'margin=1.5cm'
 #-----------------------------------------------------------------------------
   pdf-refs:
     extends: 'latex-refs'

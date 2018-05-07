@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# If we have institute: metadata, convert it to an
+# If we have author: metadata, convert it to an
 # "Affiliations" paragraph at the start of the document
 # THis is because Word template cannot handle this natively
 
@@ -13,8 +13,17 @@ Paru::Filter.run do
     text += auth
   elsif auth.is_a?(Array)
     if auth[0].is_a?(Hash)
-      auth = auth[0]
-      text += auth['name'] 
+      auth.each_index do |i|
+        text += auth[i]['name'].to_s
+        unless auth[i]['affiliation'].nil?
+          text += auth[i]['affiliation'].to_s
+        end
+        unless auth[i]['correspondence'].nil?
+          text += ' <' + auth[i]['correspondence'].to_s + '>'
+        end
+        text += '  &  '
+      end
+      text = text[0..-6]
     else
       auth.each_index do |i|
         text += auth[i].to_s + '  &  '
@@ -24,7 +33,7 @@ Paru::Filter.run do
   elsif auth[0].is_a?(Hash)
     text = 'HASH TODO'
   end
-  stop! if text.length == 0
+  stop! if text.length < 14
   p = Paru::PandocFilter::Para.new([])
   p.inner_markdown = text
   document.prepend(p)
