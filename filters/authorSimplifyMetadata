@@ -5,6 +5,11 @@
 # This is because the Word/ODT templates do not have the flexibility 
 # the other formats do...
 require 'paru/filter'
+  require 'byebug/core'
+  require 'byebug'
+  PORT = 8989
+  Byebug.wait_connection = true
+  Byebug.start_server('127.0.0.1', PORT)
 
 testKey = 'author'
 pKey = 'pandocomatic-fileinfo'
@@ -21,6 +26,7 @@ Paru::Filter.run do
 	newAuthor = nil
 	correspondence = nil
 	contribution = nil
+	text = ''
 	au = metadata[testKey]
 	if au.is_a?(Array) && au[0].is_a?(Hash) #just an array of hashes
 		newAuthor = Array.new(au.length)
@@ -33,8 +39,19 @@ Paru::Filter.run do
 			if aut.key?(nameKey)
 				newAuthor[i] = aut[nameKey].to_s
 				if aut.key?(affKey)
-          if aut[affKey].is_a?(String)
-            newAuthor[i] += '^' + aut[affKey].to_s + '^'
+					byebug
+          if aut[affKey].is_a?(String) || aut[affKey].is_a?(Fixnum)
+          	aff = aut[affKey].to_s
+            frag = ''
+            a = aff.split(',') #comma seperated values
+            a.each do |af|
+              if af.match(/^\d+$/)
+                frag += '^' + af + '^ '
+              else
+                frag += af + ''
+              end
+              text += frag + ' '
+            end
           elsif aut['affiliation'].is_a?(Array)
             newAuthor[i] += '^'
             aut[affKey].each { |aff| newAuthor[i] += aff.to_s + ',' }
