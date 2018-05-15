@@ -1,25 +1,22 @@
 #!/usr/bin/env ruby
 # If we have abstract: metadata, convert it to an
 # "Abstract: " paragraph at the start of the document
-# This is because some templates cannot handle this natively
+# This is because some templates / plain text cannot handle this natively
 
 require 'paru/filter'
 
 Paru::Filter.run do
   stop! unless metadata.key?('abstract')
+  text = ''
   ab = metadata['abstract']
-  text = '**Abstract**: '
   if ab.is_a?(String)
     text += ab
   elsif ab.is_a?(Array)
-    ab.each_index do |i|
-      text += ab[i].to_s + ', '
-    end
+    ab.each_index { |i| text += ab[i].to_s + '. ' }
     text = text[0..-3]
-  elsif ab[0].is_a?(Hash)
-    text = 'HASH TODO'
   end
-  stop! if text.length < 15
+  stop! if text.length == 0
+  text = '**Abstract**: ' + text
   p = Paru::PandocFilter::Para.new([])
   p.inner_markdown = text
   document.prepend(p)

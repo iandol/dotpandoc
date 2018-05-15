@@ -1,39 +1,84 @@
 #!/usr/bin/env ruby
 # If we have author: metadata, convert it to an
-# "Affiliations" paragraph at the start of the document
-# THis is because Word template cannot handle this natively
+# "Authors" and Affiliations" paragraph at the start of the document
+# This is because Word template cannot handle this natively
 
 require 'paru/filter'
+  require 'byebug/core'
+  require 'byebug'
+  PORT = 8989
+  Byebug.wait_connection = true
+  Byebug.start_server('127.0.0.1', PORT)
 
 Paru::Filter.run do
   stop! unless metadata.key?('author')
   auth = metadata['author']
   text = '**Authors**: '
+  addContribution = false
   if auth.is_a?(String)
     text += auth
   elsif auth.is_a?(Array)
     if auth[0].is_a?(Hash)
       auth.each_index do |i|
-        text += auth[i]['name'].to_s
-        unless auth[i]['affiliation'].nil?
-          text += auth[i]['affiliation'].to_s
+        unless auth[i].keys.include?('name') #convert first key to name: key
+          values = auth[i].values[0]
+          values['name'] = auth[i].keys[0]
+          auth[i]=values
         end
-        unless auth[i]['correspondence'].nil?
-          text += ' <' + auth[i]['correspondence'].to_s + '>'
+        text += auth[i]['name'].to_s
+        if auth[i].key?('affiliation')
+          byebug
+          if auth[i]['affiliation'].is_a?(String)
+            text += '['
+            a = auth[i]['affiliation'].split(',') #comma seperated values
+            a.each do |af|
+              if af.match(/^\d+$/)
+                frag += '^' + af + '^ '
+              else
+                frag += af + ' '
+              end
+              text += frag + ']'
+            end
+          elsif auth[i]['affiliation'].is_a?(Array)
+            text += '['
+            frag = ''
+            auth[i]['affiliation'].each do |af| 
+              if af.to_s.match(/^\d+$/)
+                frag += '^' + af.to_s + '^ '
+              else
+                frag += af.to_s + ' '
+              end
+            end
+            text += frag[0..-2] + ']'
+          end
+        end
+        if auth[i].key?('correspondence')
+          if auth[i]['email'].nil?
+            text += ' <' + auth[i]['correspondence'].to_s + '>'
+          else
+            text += ' <' + auth[i]['email'].to_s + '>'
+          end
+        end
+        if auth[i].key?('equal_contributor')
+          text += '†' 
+          addContribution = true;
         end
         text += '  &  '
       end
       text = text[0..-6]
     else
-      auth.each_index do |i|
-        text += auth[i].to_s + '  &  '
-      end
+      auth.each_index { |i| text += auth[i].to_s + '  &  ' }
       text = text[0..-6]
     end
   elsif auth[0].is_a?(Hash)
     text = 'HASH TODO'
   end
   stop! if text.length < 14
+  if addContribution
+    p = Paru::PandocFilter::Para.new([])
+    p.inner_markdown = "† equal contribution"
+    document.prepend(p)
+  end
   p = Paru::PandocFilter::Para.new([])
   p.inner_markdown = text
   document.prepend(p)

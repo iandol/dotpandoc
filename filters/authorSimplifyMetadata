@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 # this converts an author metadata field
 # author:  [name: ..., affiliation:..., correspondence:...]) into a format 
-# author: Name^affiliation,correspondence^ that the Word templates can handle. 
-# This is because the Word templates do not have the flexibility 
+# author: Name^affiliation,correspondence^ that the Word/ODT templates can handle. 
+# This is because the Word/ODT templates do not have the flexibility 
 # the other formats do...
 require 'paru/filter'
 
@@ -12,49 +12,80 @@ nameKey = 'name'
 affKey = 'affiliation'
 corrKey = 'correspondence'
 corrMarker = '\*' # which marker to use, if asterisk you must escape it.
+contributionKey = 'equal_contributor'
+conMarker = '†'
 
 Paru::Filter.run do
-  if metadata.key?(testKey) & metadata.key?(pKey) & metadata[pKey]['to'].match(/(docx|odt)/)
-    newAuthor = nil
-    correspondence = nil
-    au = metadata[testKey]
-    if au.is_a?(Array) && au[0].is_a?(Hash) #just an array of strings, turn to array of hashes
-      newAuthor = Array.new(au.length)
-      au.each_index do |i| 
-        if au[i].key?(nameKey)
-          if au[i].key?(affKey)
-            newAuthor[i] = au[i][nameKey].to_s + '^' + au[i][affKey].to_s + '^'
-          else
-            newAuthor[i] = au[i][nameKey].to_s
-          end
-          if au[i].key?(corrKey)
-            if newAuthor[i] =~ /\^$/
-              newAuthor[i] = newAuthor[i][0..-2] + corrMarker + '^'
-            else
-              newAuthor[i] += '^' + corrMarker + '^'
-            end
-            if correspondence.nil?
-              correspondence = au[i][corrKey]
-            else
-              correspondence += ' & ' + au[i][corrKey]
-            end
+	stop! unless metadata.key?(testKey)
+	stop! if metadata.key?(pKey) & !metadata[pKey]['to'].match(/docx|odt/)
+	newAuthor = nil
+	correspondence = nil
+	contribution = nil
+	au = metadata[testKey]
+	if au.is_a?(Array) && au[0].is_a?(Hash) #just an array of hashes
+		newAuthor = Array.new(au.length)
+		au.each_with_index do |aut,i|
+			unless aut.key?(nameKey) #convert first key to name: key
+				values = aut.values[0]
+				values['name'] = aut.keys[0]
+				aut=values
+			end
+			if aut.key?(nameKey)
+				newAuthor[i] = aut[nameKey].to_s
+				if aut.key?(affKey)
+          if aut[affKey].is_a?(String)
+            newAuthor[i] += '^' + aut[affKey].to_s + '^'
+          elsif aut['affiliation'].is_a?(Array)
+            newAuthor[i] += '^'
+            aut[affKey].each { |aff| newAuthor[i] += aff.to_s + ',' }
+            newAuthor[i] = newAuthor[i][0..-2] + '^'
           end
         end
-      end
-    elsif au.is_a?(Hash) #single name: John Doe author
-      newAuthor = Array.new(au.length)
-      newAuthor[0] = au[nameKey]
-    end
-    
-    metadata[testKey] = newAuthor unless newAuthor.nil?
+				if aut.key?(corrKey)
+					if newAuthor[i] =~ /\^$/
+						newAuthor[i] = newAuthor[i][0..-2] + corrMarker + '^'
+					else
+						newAuthor[i] += '^' + corrMarker + '^'
+					end
+					if aut.key?('email')
+						email = aut['email']
+					else
+						email = aut[corrKey]
+					end
+					if correspondence.nil?
+						correspondence = "[#{email}](#{email})"
+					else
+						correspondence += ' & ' + "[#{email}](#{email})"
+					end
+				end
+				if aut.key?(contributionKey)
+					if newAuthor[i] =~ /\^$/
+						newAuthor[i] = newAuthor[i][0..-2] + conMarker + '^'
+					else
+						newAuthor[i] += '^' + conMarker + '^'
+					end
+					contribution = '† equal contribution'
+				end
+			end
+		end
+	elsif au.is_a?(Hash) #single name: John Doe author
+		newAuthor = Array.new(au.length)
+		newAuthor[0] = au[nameKey]
+	end
+	
+	metadata[testKey] = newAuthor unless newAuthor.nil?
 
-    unless correspondence.nil?
-      correspondence = '**' + corrMarker + ' Correspondence**: ' + correspondence
-      p = Paru::PandocFilter::Para.new([])
-      p.inner_markdown = correspondence
-      document.prepend(p)
-    end
+	unless contribution.nil?
+		p = Paru::PandocFilter::Para.new([])
+		p.inner_markdown = contribution
+		document.prepend(p)
+	end
+	unless correspondence.nil?
+		correspondence = '**' + corrMarker + ' Correspondence**: ' + correspondence
+		p = Paru::PandocFilter::Para.new([])
+		p.inner_markdown = correspondence
+		document.prepend(p)
+	end
 
-  end
-  stop!
+	stop!
 end

@@ -258,9 +258,9 @@ templates:
       mathjax: true
       filter: 
         - 'filters/removeHR' #remove horizontal rules
+        - 'filters/prependAuthor' #remove horizontal rules
       template: 'templates/custom.html'
       css: ['templates/custom.css']
-      dpi: 300
       toc: true
       toc-depth: 3
       base-header-level: 1
