@@ -18,7 +18,8 @@ Paru::Filter.run do
         unless au.keys.include?('name') #convert first key to name: key
           values = au.values[0]
           values['name'] = au.keys[0]
-          auth[i]=values
+          au = values
+          auth[i]=au
         end
         text += au['name'].to_s
         if au.key?('affiliation')
