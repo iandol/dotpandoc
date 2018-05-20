@@ -375,13 +375,16 @@ $if(subtitle)$
 \providecommand{\subtitle}[1]{}
 \subtitle{$subtitle$}
 $endif$
+
 $if(author)$
-\author{$for(author)$$author.name$$sep$ \and $endfor$}
+\author{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.correspondence)$*$endif$$if(author.equal_contributor)$†$endif$}$sep$ \and $endfor$}
 $endif$
+
 $if(institute)$
 \providecommand{\institute}[1]{}
-\institute{$for(institute)$$institute$$sep$ \and $endfor$}
+\institute{$for(institute)$\textsuperscript{$institute.index$}\quad$institute.name$$sep$ \and $endfor$}
 $endif$
+
 \date{$date$}
 $if(beamer)$
 $if(titlegraphic)$
@@ -546,7 +549,7 @@ $endif$
 %
 \usepackage{titling}
 \title{$title$}
-\author{$for(author)$$author$$sep$, $endfor$}
+\author{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.correspondence)$*$endif$$if(author.equal_contributor)$†$endif$}$sep$ \and $endfor$}
 
 %
 % tables
@@ -703,14 +706,11 @@ $if(subtitle)$
 $endif$
 \vskip 2em
 \noindent
-{\Large{\textsf{\textbf{\uppercase{$for(author)$$author.name$$for(author.affiliation)$\textsuperscript{$author.affiliation$$if(author.correspondence)$§$endif$}$sep$,$endfor$$sep$, $endfor$}}}}}
-$if(institute)$
+{\Large{\textsf{\textbf{\uppercase{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.correspondence)$*$endif$$if(author.equal_contributor)$†$endif$}$sep$ \and $endfor$}}}}}
 \vskip 2em
 \setstretch{1}
-\textsf{\emph{$for(institute)$$institute$$sep$  \\  $endfor$}}
-$if(author)$
-\vskip 2em\textsf{\emph{$for(author)$$if(author.correspondence)$$author.correspondence$ $endif$$endfor$}}
-$endif$
+$if(institute)$
+\textsf{\emph{$for(institute)$\textsuperscript{$institute.index$}\quad$institute.name$$sep$  \\  $endfor$}}
 $endif$
 }
 

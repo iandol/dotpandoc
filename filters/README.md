@@ -29,7 +29,9 @@ pandocomatic_:
     csl: csl/cell.csl
 ```
 
-My [authorSimplifyMetadata](https://github.com/iandol/dotpandoc/blob/master/filters/authorSimplifyMetadata) filter takes the author fields and modifies them to work with Word/LibreOffice, collapsing `affiliation`, `correspondence` and `equal_contributor` to superscripts after the name, and adding the `correspondence` information as a paragraph directly into the document body:
+The [assimilateMetadata](https://github.com/iandol/dotpandoc/blob/master/filters/assimilateMetadata) filter is the main filter that makes sure the author and institute fields are converted into the correct formats, adding a new field `correspondence_list` and `equal_contributions` for Pandoc templates to use.
+
+The [simplifyMetadata](https://github.com/iandol/dotpandoc/blob/master/filters/authorSimplifyMetadata) filter takes the author fields and modifies them to work with Word/LibreOffice, collapsing `affiliation`, `correspondence` and `equal_contributor` to superscripts after the name, and adding the `correspondence` information as a paragraph directly into the document body:
 
 ```
 ---
@@ -48,7 +50,7 @@ Likewise, my [prependInstitute](https://github.com/iandol/dotpandoc/blob/master/
 Affiliations: ^1^ — University of X & ^2^ — Institute of Y
 ```
 
-As I also prepend comments and keywords, I've created a filter that prepends a "list of metadata entries", which is a bit faster than running sperate prependXXX filters for each item to prepend: [prependAll](https://github.com/iandol/dotpandoc/blob/master/filters/prependAll).
+As I also prepend comments and keywords, I've created a filter that prepends a "list of metadata entries", which is a bit faster than running sperate prependXXX filters for each item to prepend: [prependAll](https://github.com/iandol/dotpandoc/blob/master/filters/prependAll). [prependAuthor](https://github.com/iandol/dotpandoc/blob/master/filters/prependAuthor) is used to get author information into plain-text like outputs.
 
 Other filters here are from other sources or for testing purposes. I do use addToday and removeHR regularly.
 

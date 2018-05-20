@@ -48,7 +48,8 @@ templates:
       standalone: true
       filter:
         - 'filters/removeHR' #remove horizontal rules
-        - 'filters/authorSimplifyMetadata' #collapse down metadata "author: [name: affiliation:]" to author:
+        - 'filters/simplifyMetadata' #collapse down metadata "author: [name: affiliation:]" to author:
+        - 'filters/prependAbstract' #prepends abstract: metadata into the text
         - 'filters/prependAll' # prepends institute:, comments: and keywords: metadata into the text
       reference-doc: 'templates/custom.docx'
 #-----------------------------------------------------------------------------
@@ -85,7 +86,7 @@ templates:
       standalone: true
       filter: 
         - filters/removeHR #remove horizontal rules
-        - filters/authorToName #convert author: to author: [name: affiliation:]
+        - filters/assimilateMetadata #convert author: to author: [name: affiliation:]
       template: templates/custom.latex
       dpi: 300
       base-header-level: 2
@@ -185,6 +186,7 @@ templates:
       standalone: true
       filter: 
         - filters/removeHR #remove horizontal rules
+        - filters/assimilateMetadata #convert author: to author: [name: affiliation:]
       dpi: 72
       template: templates/eisvogel.latex
       toc: true
@@ -257,8 +259,8 @@ templates:
       section-divs: true
       mathjax: true
       filter: 
-        - 'filters/removeHR' #remove horizontal rules
-        - 'filters/prependAuthor' #remove horizontal rules
+        - filters/removeHR #remove horizontal rules
+        - filters/assimilateMetadata #regularise metadata
       template: 'templates/custom.html'
       css: ['templates/custom.css']
       toc: true

@@ -51,22 +51,34 @@ $if(subtitle)$
 <p class="subtitle">$subtitle$</p>
 $endif$
 
+$if(author)$
 <p class="author-list">
 $for(author)$
   $if(author.last)$and $endif$<span property="author" typeof="Person">
-    $author.name$</span><sup>$if(author.affiliation)$$author.affiliation$$endif$$if(author.correspondence)$§$if(author.email)$<a href="mailto:$author.email$">✉</a> $endif$$endif$$for(author.institute_indices)$$author.institute_indices$$sep$,$endfor$$if(author.equal_contributor)$,$if(equal_contributor_symbol)$$equal_contributor_symbol$$else$*$endif$$endif$</sup>$sep$,
-$endfor$
+    $author.name$</span><sup>$for(author.affiliation)$$author.affiliation$$sep$,$endfor$
+    $if(author.correspondence)$<a href="mailto:$author.correspondence$">✉</a>$endif$
+    $if(author.equal_contributor)$†$endif$</sup>$sep$,$endfor$
 </p>
+$endif$
+$if(equal_contributors)$
+<p><sup>†</sup> These authors contributed equally to this work.</p>
+$endif$
+
 $if(institute)$
 <div class="author_affiliations">
 $for(institute)$
-  <span class="affiliation">$institute$</span>
+  <div class="affiliation"><sup>$institute.index$</sup> $institute.name$$if(institute.address)$, $institute.address$$endif$</div>    
 $endfor$
 </div>
 $endif$
+
+$if(correspondence_list)$
 <div class="correspondence">
-$for(author)$$if(author.correspondence)$<span class="correspondence-item">$author.correspondence$</span> $endif$ $endfor$
+  $for(correspondence_list)$<span class="correspondence-item">$correspondence_list$</span>$sep$    $endfor$
 </div>
+$endif$
+$if(doi)$<p><a href="https://doi.org/$doi$">doi: $doi$</a></p>$endif$
+
 $if(date)$
 <p class="date">$date$</p>
 $endif$
@@ -77,7 +89,9 @@ $if(toc)$
 $table-of-contents$
 </nav>
 $endif$
+<div id="content">
 $body$
+</div>
 $for(include-after)$
 $include-after$
 $endfor$

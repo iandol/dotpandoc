@@ -347,17 +347,21 @@ $if(title)$
 \postdate{\par\end{center}}
 \title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
 $endif$
+
 $if(subtitle)$
 \providecommand{\subtitle}[1]{}
 \subtitle{$subtitle$}
 $endif$
+
 $if(author)$
-\author{$for(author)$$author.name$\textsuperscript{$author.affiliation$$if(author.correspondence)$§$endif$}$sep$ \and $endfor$}
+\author{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.correspondence)$*$endif$$if(author.equal_contributor)$†$endif$}$sep$ \and $endfor$}
 $endif$
+
 $if(institute)$
 \providecommand{\institute}[1]{}
-\institute{$for(institute)$$institute$$sep$ \and $endfor$}
+\institute{$for(institute)$\textsuperscript{$institute.index$}\quad$institute.name$$sep$ \and $endfor$}
 $endif$
+
 \date{$date$}
 $if(beamer)$
 $if(titlegraphic)$
@@ -375,12 +379,19 @@ $if(beamer)$
 $else$
 \maketitle
 $endif$
+
+$if(equal_contributors)$
+\textsf{\textsuperscript{†} These authors contributed equally to this work.}
+$endif$
+
+$if(correspondence_list)$
+\textsf{\textsuperscript{*} Correspondence:\quad$for(correspondence_list)$\emph{$correspondence_list$}$sep$\quad\&\quad$endfor$}
+$endif$
+
 $if(institute)$
-\vspace{-2em}\textsf{\emph{$for(institute)$$institute$$sep$\quad\&\quad$endfor$}}\vspace{1em}
+\vspace{-2em}\textsf{$for(institute)$\textsuperscript{$institute.index$}$institute.name$$sep$\quad\&\quad$endfor$}
 $endif$
-$if(author)$
-\vspace{-2em}\textsf{\emph{$for(author)$$if(author.correspondence)$\quad\textsuperscript{§}$author.correspondence$$endif$$sep$ $endfor$}}
-$endif$
+
 $if(abstract)$
 \begin{abstract}
 \vspace{-2em}\singlespacing\noindent\textsf{$abstract$}

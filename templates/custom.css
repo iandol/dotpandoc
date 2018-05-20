@@ -113,7 +113,7 @@ ins {
 }
 
 .correspondence::before {
-	content: "§ Correspondence: ";
+	content: "* Correspondence: ";
 	font-weight: bold;
 	color: grey;
 }
