@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 # this converts an author metadata field
 # author:  [name: ..., affiliation:..., correspondence:...]) into a format
-# author: Name^affiliation,correspondence^ that the Word/ODT templates can handle.
+# author: Name^affiliation,correspondence,contribution^ that the Word/ODT templates can handle.
 # This is because the Word/ODT templates do not have the flexibility
-# the other formats do...
+# the other pandoc output formats do...
 require 'paru/filter'
 
 def fixName(author)

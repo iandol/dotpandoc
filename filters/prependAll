@@ -16,11 +16,11 @@ Paru::Filter.run do
     if kw.is_a?(String)
       text += kw
     elsif kw.is_a?(Array)
-      kw.each_with_index do |x,i| 
+      kw.each do |x|
         if x.is_a?(Hash)
-          text += '^' + x.keys[0].to_s + '^ ' + x.values[0].to_s + '; ' 
+          text += '^' + x.keys[0].to_s + '^ ' + x.values[0].to_s + '; '
         else
-          text += x.to_s + '; ' 
+          text += x.to_s + '; '
         end
       end
       text = text[0..-3]
