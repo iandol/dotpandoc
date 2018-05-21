@@ -359,7 +359,7 @@ $endif$
 
 $if(institute)$
 \providecommand{\institute}[1]{}
-\institute{$for(institute)$\textsuperscript{$institute.index$}\quad$institute.name$$sep$ \and $endfor$}
+\institute{$for(institute)$\textsuperscript{$institute.index$} $institute.name$$sep$ \and $endfor$}
 $endif$
 
 \date{$date$}

@@ -40,11 +40,9 @@
 
 \PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
 \PassOptionsToPackage{hyphens}{url}
-$if(colorlinks)$
-\PassOptionsToPackage{dvipsnames,svgnames*,x11names*,table}{xcolor}
-$endif$
+\PassOptionsToPackage{svgnames*,table}{xcolor}
 %
-\documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$paper,$else$a4paper,$endif$$if(beamer)$ignorenonframetext,$if(handout)$handout,$endif$$if(aspectratio)$aspectratio=$aspectratio$,$endif$$endif$$for(classoption)$$classoption$$sep$,$endfor$]{scrartcl}
+\documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$paper,$else$a4paper,$endif$$if(beamer)$ignorenonframetext,$if(handout)$handout,$endif$$if(aspectratio)$aspectratio=$aspectratio$,$endif$$endif$$for(classoption)$$classoption$$sep$,$endfor$,tablecaptionabove]{scrartcl}
 $if(beamer)$
 \setbeamertemplate{caption}[numbered]
 \setbeamertemplate{caption label separator}{: }
@@ -375,16 +373,13 @@ $if(subtitle)$
 \providecommand{\subtitle}[1]{}
 \subtitle{$subtitle$}
 $endif$
-
 $if(author)$
-\author{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.correspondence)$*$endif$$if(author.equal_contributor)$†$endif$}$sep$ \and $endfor$}
+\author{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.correspondence)$*$endif$$if(author.equal_contributor)$†$endif$}$sep$ \& $endfor$}
 $endif$
-
 $if(institute)$
 \providecommand{\institute}[1]{}
-\institute{$for(institute)$\textsuperscript{$institute.index$}\quad$institute.name$$sep$ \and $endfor$}
+\institute{$for(institute)$\textsuperscript{$institute.index$}\enskip $institute.name$$sep$ \& $endfor$}
 $endif$
-
 \date{$date$}
 $if(beamer)$
 $if(titlegraphic)$
@@ -430,10 +425,7 @@ $endif$
 %
 % colors
 %
-$if(colorlinks)$
-$else$
-\usepackage[dvipsnames,svgnames*,x11names*,table]{xcolor}
-$endif$
+\usepackage[]{xcolor}
 
 %
 % listing colors
@@ -526,8 +518,8 @@ $endif$
 %
 $if(mainfont)$
 $else$
-%\usepackage[default]{sourcesanspro}
-%\usepackage{sourcecodepro}
+\usepackage[default]{sourcesanspro}
+\usepackage{sourcecodepro}
 $endif$
 
 %
@@ -689,7 +681,6 @@ $if(titlepage-color)$
 \newpagecolor{titlepage-color}\afterpage{\restorepagecolor}
 $endif$
 \newcommand{\colorRule}[3][black]{\textcolor[HTML]{#1}{\rule{#2}{#3}}}
-\begin{flushleft}
 \noindent
 \\[-1em]
 \color[HTML]{$if(titlepage-text-color)$$titlepage-text-color$$else$5F5F5F$endif$}
@@ -697,24 +688,37 @@ $endif$
 \par
 \noindent
 
-{\setstretch{1.4}
+{ \setstretch{1.5}
 \vfill
-\noindent {\huge{\textsf{\textbf{\emph{$title$}}}}}
+\noindent {\huge \textbf{\textsf{$title$}}}
+
 $if(subtitle)$
 \vskip 1em
 {\Large \textsf{$subtitle$}}
 $endif$
+
+\begin{flushleft}
 \vskip 2em
 \noindent
-{\Large{\textsf{\textbf{\uppercase{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.correspondence)$*$endif$$if(author.equal_contributor)$†$endif$}$sep$ \and $endfor$}}}}}
+{\Large{\textsf{\textbf{\uppercase{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.correspondence)$*$endif$$if(author.equal_contributor)$†$endif$}$sep$,\quad $endfor$}}}}}
+
+\setstretch{1}
+$if(equal_contributors)$
+\textsf{\textsuperscript{†} These authors contributed equally to this work.}
+$endif$
+
+$if(correspondence_list)$
+\textsf{\textbf{\textsuperscript{*} Correspondence:} $for(correspondence_list)$\emph{$correspondence_list$}$sep$\quad\&\quad$endfor$}
+$endif$
+
 \vskip 2em
 \setstretch{1}
 $if(institute)$
-\textsf{\emph{$for(institute)$\textsuperscript{$institute.index$}\quad$institute.name$$sep$  \\  $endfor$}}
+\textsf{\textbf{$for(institute)$\textsuperscript{$institute.index$} $institute.name$$sep$ \\ $endfor$}}
 $endif$
 }
 
-\textsf{$date$}
+\textsf{$date$}}
 \end{flushleft}
 \end{titlepage}
 \restoregeometry
