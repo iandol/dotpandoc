@@ -139,10 +139,11 @@ templates:
     pandoc:
       from: markdown
       to: latex
+      pdf-engine: xelatex
       standalone: true
       template: templates/letter.latex
     metadata:
-      address:
+      return-address:
         - Room 201, Systems Building
         - Institute of Neuroscience
         - 320 Yueyang rd
@@ -150,17 +151,22 @@ templates:
         - CHINA
       opening: To whom it may concern,
       closing: Sincerely,
-      mainfont: 'Greta Sans Pro'
+      mainfont: 'Dolly Pro'
       mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
-      signature-before: -8ex
-      signature-after: 0ex
+      fontsize: '11pt'
+      linestretch: '1.2'
+      letterhead: /Users/ian/Dropbox/Work/ION-Letterhead.pdf
+      signature: /Users/ian/Dropbox/Work/Ian-Signature.png
+      signature-width: 50mm
+      signature-before: -11ex
+      signature-after: -1ex
       closing-indentation: 0pt
       links-as-notes: true
       linkcolor: Mahogany
       citecolor: Sepia
       urlcolor: BrickRed
       lang: 'en-GB'
-      geometry: 'margin=1.5cm'
+      geometry: ['margin=2cm','top=2.3cm']
 #-----------------------------------------------------------------------------
   pdf-refs:
     extends: 'latex-refs'

@@ -153,7 +153,7 @@ $if(listings)$
 \newcommand{\passthrough}[1]{#1}
 $endif$
 $if(lhs)$
-\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
+\lstnewenvironment{code}{\lstset{language=Ruby,basicstyle=\small\ttfamily}}{}
 $endif$
 $if(highlighting-macros)$
 $highlighting-macros$
@@ -211,7 +211,7 @@ $endif$
 
 $if(signature)$
 \usepackage{graphicx,grffile}
-\signature{$if(signature-before)$\vspace*{$signature-before$}$endif$\includegraphics{$signature$}$if(author)$\\$if(signature-after)$\vspace*{$signature-after$}$endif$$for(author)$$author$$sep$\\$endfor$$endif$}
+\signature{$if(signature-before)$\vspace*{$signature-before$}$endif$\includegraphics$if(signature-width)$[width=$signature-width$]$endif${$signature$}$if(author)$\\$if(signature-after)$\vspace*{$signature-after$}$endif$$for(author)$$author$$sep$\\$endfor$$endif$}
 $else$
 $if(author)$
 \signature{$for(author)$$author$$sep$\\$endfor$}
@@ -275,10 +275,9 @@ $if(letterhead)$
 $endif$
 
 \begin{document}
-
+\setstretch{1}
 $for(include-before)$
 $include-before$
-
 $endfor$
 $if(toc)$
 {
@@ -289,13 +288,13 @@ $endif$
 \tableofcontents
 }
 $endif$
-
-
 \begin{letter}{$for(address)$$address$$sep$\\$endfor$}
 \opening{$opening$}
-
+$if(linestretch)$
+\setstretch{$linestretch$}
+$endif$
 $body$
-
+\setstretch{1}
 $if(closing)$
 $if(closing-indentation)$
 \longindentation=$closing-indentation$

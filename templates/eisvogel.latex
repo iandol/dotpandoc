@@ -682,13 +682,12 @@ $if(titlepage-color)$
 $endif$
 \newcommand{\colorRule}[3][black]{\textcolor[HTML]{#1}{\rule{#2}{#3}}}
 \noindent
-\\[-1em]
 \color[HTML]{$if(titlepage-text-color)$$titlepage-text-color$$else$5F5F5F$endif$}
 \makebox[0pt][l]{\colorRule[$if(titlepage-rule-color)$$titlepage-rule-color$$else$435488$endif$]{1.3\textwidth}{$if(titlepage-rule-height)$$titlepage-rule-height$$else$4$endif$pt}}
 \par
 \noindent
 
-{ \setstretch{1.5}
+\setstretch{1.5}
 \vfill
 \noindent {\huge \textbf{\textsf{$title$}}}
 
@@ -716,9 +715,8 @@ $endif$
 $if(institute)$
 \textsf{\textbf{$for(institute)$\textsuperscript{$institute.index$} $institute.name$$sep$ \\ $endfor$}}
 $endif$
-}
 
-\textsf{$date$}}
+\textsf{$date$}
 \end{flushleft}
 \end{titlepage}
 \restoregeometry
