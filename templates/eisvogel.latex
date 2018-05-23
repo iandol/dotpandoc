@@ -161,8 +161,11 @@ $if(verbatim-in-note)$
 $endif$
 $if(colorlinks)$
 \usepackage{xcolor}
-\definecolor{default-citecolor}{HTML}{4077C0}
-\definecolor{default-urlcolor}{HTML}{4077C0}
+\definecolor{Sepia}{rgb}{.4,.1,.1}
+\definecolor{Mahogany}{rgb}{.6,.2,.2}
+\definecolor{BrickRed}{rgb}{.7,.3,.3}
+\definecolor{default-citecolor}{HTML}{C07740}
+\definecolor{default-urlcolor}{HTML}{C07740}
 $endif$
 \usepackage{hyperref}
 \hypersetup{
@@ -177,9 +180,6 @@ $if(subject)$
 $endif$
 $if(keywords)$
             pdfkeywords={$for(keywords)$$keywords$$sep$, $endfor$},
-$endif$
-$if(tags)$
-            pdfkeywords={$for(tags)$$tags$$sep$, $endfor$},
 $endif$
 $if(colorlinks)$
             colorlinks=true,

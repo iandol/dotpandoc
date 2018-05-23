@@ -88,7 +88,6 @@ templates:
         - filters/removeHR #remove horizontal rules
         - filters/assimilateMetadata #convert author: to author: [name: affiliation:]
       template: templates/custom.latex
-      dpi: 300
       base-header-level: 2
     metadata:
       classoption: twoside
@@ -101,6 +100,7 @@ templates:
       mathfontoptions: 'math-style=ISO,bold-style=ISO'
       CJKmainfont: 'PingFang SC'
       CJKsansfont: 'Heiti SC'
+      colorlinks: true
       linkcolor: Mahogany
       citecolor: Sepia
       urlcolor: BrickRed
@@ -162,6 +162,7 @@ templates:
       signature-after: -1ex
       closing-indentation: 0pt
       links-as-notes: true
+      colorlinks: true
       linkcolor: Mahogany
       citecolor: Sepia
       urlcolor: BrickRed
@@ -193,7 +194,6 @@ templates:
       filter: 
         - filters/removeHR #remove horizontal rules
         - filters/assimilateMetadata #convert author: to author: [name: affiliation:]
-      dpi: 72
       template: templates/eisvogel.latex
       toc: true
       base-header-level: 2
@@ -203,6 +203,10 @@ templates:
       titlepage-text-color: FFFFFF
       titlepage-rule-color: FFFFFF
       titlepage-rule-height: 4
+      colorlinks: true
+      linkcolor: Mahogany
+      citecolor: Sepia
+      urlcolor: BrickRed
       nonumberfigures: true
       mainfont: 'Greta Sans Pro'
       mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
