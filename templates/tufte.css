@@ -62,11 +62,15 @@ section { padding-top: 1rem;
 
 p, ol, ul { font-size: 1.4rem; }
 
-p { line-height: 2rem;
+p { text-align: justify; 
+		line-height: 2rem;
 		margin-top: 1.4rem;
 		margin-bottom: 1.4rem;
 		padding-right: 0;
 		vertical-align: baseline; }
+
+#refs p { font-size: 0.95rem;
+		line-height: 1em; }
 
 /* Chapter Epigraphs */
 div.epigraph { margin: 5em 0; }
@@ -95,6 +99,18 @@ section>ol, section>ul { width: 45%;
 												 -webkit-padding-end: 5%; }
 
 li { padding: 0.5rem 0; }
+nav#TOC li { padding: 0; }
+
+nav#TOC {	float: right;
+					clear: right;
+					margin-right: 0;
+					width: 40%;
+					margin-top: 4em;
+					margin-bottom: 0;
+					font-size: 1rem;
+					line-height: 1.2;
+					vertical-align: baseline;
+					position: relative; }
 
 figure { padding: 0;
 				 border: 0;
@@ -106,7 +122,7 @@ figure { padding: 0;
 				 -webkit-margin-end: 0;
 				 margin: 0 0 3em 0; }
 
-figcaption { font-family: "Gill Sans", "Gill Sans MT", sans-serif;
+figcaption { font-family: "Greta Sans Pro", "Graublau Sans", Calibri, sans-serif;
 						 float: right;
 						 clear: right;
 						 margin-top: 0;
@@ -119,6 +135,88 @@ figcaption { font-family: "Gill Sans", "Gill Sans MT", sans-serif;
 						 margin-right: -60%; }
 
 figure.fullwidth figcaption { margin-right: 24%; }
+
+del {
+  background: #fae6e6;
+}
+
+ins {
+  background: #ecfce6
+}
+
+.annotation {
+	background: #FFB;
+	color: #333;
+}
+
+.author_affiliations {padding-left: 0em; margin-top:0.5em;}
+.author_affiliations::before {
+	content: "Affiliations: ";
+	font-weight: bold;
+	color: grey;
+}
+.affiliation-item {
+	display: inline-block;
+	margin-right: 20px;
+}
+
+.correspondence {display: none; padding-left: 0em; margin-top:0.5em;}
+.correspondence::before {
+	content: "Correspondence: ";
+	font-weight: bold;
+	color: grey;
+}
+.correspondence-item {
+	display: inline-block;
+	margin-right: 20px;
+}
+
+.date {font-size: 1rem; padding-left: 0em; margin-top:0.5em;}
+.date::before {
+	content: "Date: ";
+	font-weight: bold;
+	color: grey;
+}
+
+aside::before, .comment::before {
+	content: "[";
+	font-weight: bold;
+	color: #222;
+}
+
+aside::after, .comment::after {
+	content: "]";
+	font-weight: bold;
+	color: #222;
+}
+
+aside, .comment {
+	background: #FFB;
+	color: #222;
+	opacity: 0.5;
+	z-index: -1;
+}
+
+aside:hover, .comment:hover {  }
+
+div.info, div.todo, div.warning {
+	font-size: 0.7em;
+	line-height: 1em;
+	float: right;
+	width: 20%;
+	margin: 5px;
+	padding: 0;
+	background: #EEE;
+	border-radius: 5px;
+	border: 1px solid #DDD;
+	box-shadow: 1px 1px 5px 0px #888;
+}
+div.info::before { content: "INFO: "; font-weight: bold; }
+div.todo::before { content: "TODO: "; font-weight: bold; }
+div.warning::before { content: "WARNING: "; font-weight: bold; }
+div.warning {background: #CCF;}
+div.warning {background: #FCC;}
+div.info p, div.todo p, div.warning p { padding: 0.25em; }
 
 /* Links: replicate underline that clears descenders */
 a:link, a:visited { color: inherit; }
@@ -179,9 +277,9 @@ p, footer, table { width: 55%; }
 div.fullwidth, table.fullwidth { width: 100%; }
 
 div.table-wrapper { overflow-x: auto;
-										font-family: "Gill Sans", "Gill Sans MT", sans-serif; }
+										font-family: "Greta Sans Pro", "Graublau Sans", Calibri, sans-serif; }
 
-.sans { font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+.sans { font-family: "Greta Sans Pro", "Graublau Sans", Calibri, sans-serif;
 				letter-spacing: .03em; }
 
 code { font-family: "Fira Code", Consolas, "Liberation Mono", Menlo, Courier, monospace;

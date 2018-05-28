@@ -4,9 +4,19 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-$for(author-meta)$
-  <meta name="author" content="$author-meta$">
+$if(title)$
+  <meta name="title" content="$title$" />
+  <meta name="citation_title" content="$title$" /> 
+$endif$
+$if(author)$
+$for(author)$
+  <meta name="author" content="$author.name$" />
+  <meta name="citation_author" content="$author.name$" />
 $endfor$
+$endif$
+$if(date)$
+  <meta name="citation_date" content="$date$" />
+$endif$
 $if(date-meta)$
   <meta name="dcterms.date" content="$date-meta$">
 $endif$
@@ -47,18 +57,41 @@ $if(title)$
 $if(subtitle)$
 <p class="subtitle">$subtitle$</p>
 $endif$
-$if(date)$
-<p class="byline">$date$$if(author)$ &ndash; $author$$endif$</p>
-$else$
 $if(author)$
-<p class="byline">$author$</p>
+<p class="author-list">
+$for(author)$
+  $if(author.last)$and $endif$<span property="author" typeof="Person">
+    $author.name$</span><sup>$for(author.affiliation)$$author.affiliation$$sep$,$endfor$
+    $if(author.correspondence)$<a href="mailto:$author.correspondence$">✉</a>$endif$
+    $if(author.equal_contributor)$†$endif$</sup>$sep$,$endfor$
+</p>
 $endif$
+$if(equal_contributors)$
+<p><sup>†</sup> These authors contributed equally to this work.</p>
+$endif$
+
+$if(institute)$
+<div class="author_affiliations">
+$for(institute)$
+  <span class="affiliation"><sup>$institute.index$</sup> $institute.name$$if(institute.address)$, $institute.address$$endif$</span>    
+$endfor$
+</div>
+$endif$
+
+$if(correspondence_list)$
+<div class="correspondence">
+  $for(correspondence_list)$<span class="correspondence-item">$correspondence_list$</span>$sep$    $endfor$
+</div>
+$endif$
+$if(doi)$<p><a href="https://doi.org/$doi$">doi: $doi$</a></p>$endif$
+$if(date)$
+<p class="date">$date$</p>
 $endif$
 </header>
 $endif$
 $if(toc)$
 <nav id="$idprefix$TOC">
-$toc$
+$table-of-contents$
 </nav>
 $endif$
 $body$

@@ -93,6 +93,34 @@ blockquote {
 	font-style: italic;
 }
 
+.author_affiliations {padding-left: 1em; margin-top:1em;}
+.author_affiliations::before {
+	content: "Affiliations: ";
+	font-weight: bold;
+	color: grey;
+}
+.affiliation-item {
+	display: inline-block;
+	margin-right: 20px;
+}
+
+.correspondence {display: none; padding-left: 1em; margin-top:1em;}
+.correspondence::before {
+	content: "Correspondence: ";
+	font-weight: bold;
+	color: grey;
+}
+.correspondence-item {
+	display: inline-block;
+	margin-right: 20px;
+}
+
+.date::before {
+	content: "Date: ";
+	font-weight: bold;
+	color: grey;
+}
+
 del {
   background: #fae6e6;
 }
@@ -104,23 +132,6 @@ ins {
 .annotation {
 	background: #FFB;
 	color: #333;
-}
-
-.author_affiliations::before {
-	content: "# Affiliations: ";
-	font-weight: bold;
-	color: grey;
-}
-
-.correspondence::before {
-	content: "* Correspondence: ";
-	font-weight: bold;
-	color: grey;
-}
-
-.correspondence-item {
-	display: inline-block;
-	margin-right: 10px;
 }
 
 aside::before, .comment::before {

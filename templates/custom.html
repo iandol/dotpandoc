@@ -9,10 +9,10 @@ $if(title)$
   <meta name="citation_title" content="$title$" /> 
 $endif$
 $if(author)$
-  $for(author)$
+$for(author)$
   <meta name="author" content="$author.name$" />
   <meta name="citation_author" content="$author.name$" />
-  $endfor$
+$endfor$
 $endif$
 $if(date)$
   <meta name="citation_date" content="$date$" />
@@ -77,7 +77,7 @@ $endif$
 $if(institute)$
 <div class="author_affiliations">
 $for(institute)$
-  <div class="affiliation"><sup>$institute.index$</sup> $institute.name$$if(institute.address)$, $institute.address$$endif$</div>    
+  <div class="affiliation-item"><sup>$institute.index$</sup> $institute.name$$if(institute.address)$, $institute.address$$endif$</div>    
 $endfor$
 </div>
 $endif$

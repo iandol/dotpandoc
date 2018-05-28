@@ -274,7 +274,6 @@ templates:
       section-divs: true
       mathjax: true
       filter: 
-        - filters/removeHR #remove horizontal rules
         - filters/assimilateMetadata #regularise metadata
       template: 'templates/custom.html'
       css: ['templates/custom.css']
@@ -332,18 +331,21 @@ templates:
     pandoc:
       self-contained: true
 #-----------------------------------------------------------------------------
+# https://github.com/jez/tufte-pandoc-css
   tufte:
     pandoc:
       from: markdown+compact_definition_lists
       to: html5
       section-divs: true
       standalone: true
-      filter: [pandoc-sidenote]
+      mathjax: true
+      filter: 
+        - filters/assimilateMetadata # regularise metadata
+        - pandoc-sidenote # brew install jez/formulae/pandoc-sidenote
       template: 'templates/tufte.html5'
       css: 
         - 'templates/tufte.css'
         - 'templates/tuftepandoc.css'
-      self-contained: true
 #-----------------------------------------------------------------------------
   tufte-refs:
     extends: ['refs','tufte']
