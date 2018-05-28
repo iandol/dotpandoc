@@ -5,32 +5,25 @@
 Encoding.default_external = Encoding::UTF_8
 Encoding.default_internal = Encoding::UTF_8
 
-input = $stdin.read
-# fix some unicode character issues (fixfont macro forces Cambria maths to be used)
-output = input.gsub(/⬄/, '{\\fixfont⬄}')
-output.gsub!(/⇨/, '{\\fixfont⇨}')
-output.gsub!(/⇦/, '{\\fixfont⇦}')
-output.gsub!(/→/, '{\\fixfont→}')
-output.gsub!(/Δ/, '{\\fixfontΔ}')
-#output.gsub!(/µ/, '{\\fixfont\\mu}')
-output.gsub!(/⟳/, '{\\fixfont⟳}')
-# replace hyphen with hyphen-minus
-output.gsub!(/‐/, '-')
+output = $stdin.read
+
+# make sure we perform font substitutions for characters that may not have a font entry
+# fixfont uses Cambria Math with a huge glyph range
+list = %w[⬄ ↔ ⇔ ⇄ ⇨ ⇦ → ← ⇳ Δ ⟳ ⟲ ‐]
+list.each do |ch|
+  output.gsub!(/#{ch}/, "\{\\fixfont#{ch}\}")
+end
+
 # ensure correct titlecase for Neuroscience terms
-output.gsub!(/\bmt\b/i, 'MT')
-output.gsub!(/\bteo\b/i, 'TEO')
-output.gsub!(/\btrn\b/i, 'TRN')
-output.gsub!(/\bmst\b/i, 'MST')
-output.gsub!(/\bgaba\b/i, 'GABA')
-output.gsub!(/\bgabaergic\b/i, 'GABAergic')
-output.gsub!(/\blgn\b/i, 'LGN')
-output.gsub!(/\bv1\b/i, 'V1')
-output.gsub!(/\bv2\b/i, 'V2')
-output.gsub!(/\bv3\b/i, 'V3')
-output.gsub!(/\bv4\b/i, 'V4')
+list = %w[MT MST TEO TRN GABA GABAergic LGN dLGN V1 V2 V3 V4 V5 fMRI EEG MEG]
+list.each do |phrase|
+  output.gsub!(/\b#{phrase}\b/i, phrase)
+end
+
 # make quotes italicised
 output.gsub!(/\\begin\{quote\}/, '\begin{quote}\emph{')
 output.gsub!(/\\end\{quote\}/, '}\end{quote}')
+
 # make sure references are small and sans-font
 output.gsub!(/\\label{references}/, '\label{references}\setstretch{0.75}\sffamily\small')
 

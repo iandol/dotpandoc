@@ -172,8 +172,8 @@ $endif$
 $if(title-meta)$
             pdftitle={$title-meta$},
 $endif$
-$if(author-meta)$
-            pdfauthor={$author-meta$},
+$if(author)$
+            pdfauthor={$for(author)$$author.name$$sep$, $endfor$},
 $endif$
 $if(subject)$
             pdfsubject={$subject$},
@@ -195,7 +195,7 @@ $if(verbatim-in-note)$
 \VerbatimFootnotes % allows verbatim text in footnotes
 $endif$
 % use cambria to fix some font substitution problems for e.g. ⬄
-\newfontfamily\fixfont[Numbers=OldStyle,Numbers=Proportional]{Cambria}
+\newfontfamily\fixfont[]{Cambria}
 $if(geometry)$
 \usepackage[margin=2.5cm,includehead=true,includefoot=true,centering,$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
 $else$

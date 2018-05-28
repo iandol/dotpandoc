@@ -90,7 +90,11 @@ templates:
       template: templates/custom.latex
       base-header-level: 2
     metadata:
+      documentclass: 'article'
       classoption: twoside
+      fontsize: '11pt'
+      linestretch: '1.5'
+      geometry: 'margin=1.8cm'
       mainfont: 'Greta Text Pro'
       mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
       sansfont: 'Greta Sans Pro'
@@ -98,17 +102,13 @@ templates:
       monofont: 'Fira Code'
       mathfont: 'Cambria Math'
       mathfontoptions: 'math-style=ISO,bold-style=ISO'
-      CJKmainfont: 'PingFang SC'
-      CJKsansfont: 'Heiti SC'
+      CJKmainfont:
+      CJKsansfont:
       colorlinks: true
       linkcolor: Mahogany
       citecolor: Sepia
       urlcolor: BrickRed
       lang: 'en-GB'
-      documentclass: 'article'
-      fontsize: '11pt'
-      linestretch: '1.5'
-      geometry: 'margin=1.8cm'
       nonumberfigures: true
       lof: false
     postprocessors: ['postprocessors/fixLaTeX']
@@ -192,7 +192,6 @@ templates:
       to: latex
       standalone: true
       filter: 
-        - filters/removeHR #remove horizontal rules
         - filters/assimilateMetadata #convert author: to author: [name: affiliation:]
       template: templates/eisvogel.latex
       toc: true
@@ -215,8 +214,8 @@ templates:
       monofont: 'Fira Code'
       mathfont: 'Cambria Math'
       mathfontoptions: 'math-style=ISO,bold-style=ISO'
-      CJKmainfont: 'PingFang SC'
-      CJKsansfont: 'Heiti SC'
+      CJKmainfont:
+      CJKsansfont:
       nonumberfigures: true  
     postprocessors: ['postprocessors/fixLaTeX']
 #-----------------------------------------------------------------------------

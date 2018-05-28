@@ -95,7 +95,7 @@ $if(CJKmainfont)$
 $endif$
 \fi
 % use cambria to fix some font substitution problems for e.g. ⬄
-\newfontfamily\fixfont[Numbers=Proportional]{Cambria}
+\newfontfamily\fixfont[]{Cambria}
 % customise titles
 \usepackage{xcolor}
 \usepackage{titlesec}
@@ -157,8 +157,8 @@ $endif$
 $if(title-meta)$
             pdftitle={$title-meta$},
 $endif$
-$if(author-meta)$
-            pdfauthor={$author-meta$},
+$if(author)$
+            pdfauthor={$for(author)$$author.name$$sep$, $endfor$},
 $endif$
 $if(subject)$
             pdfsubject={$subject$},
@@ -190,7 +190,7 @@ $if(listings)$
 \newcommand{\passthrough}[1]{#1}
 $endif$
 $if(lhs)$
-\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
+\lstnewenvironment{code}{\lstset{language=Ruby,basicstyle=\small\ttfamily}}{}
 $endif$
 $if(highlighting-macros)$
 $highlighting-macros$
