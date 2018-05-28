@@ -389,7 +389,7 @@ $if(correspondence_list)$
 $endif$
 
 $if(institute)$
-\vspace{-2em}\textsf{$for(institute)$\textsuperscript{$institute.index$}$institute.name$$sep$\quad\&\quad$endfor$}
+\vspace{-1em}\textsf{$for(institute)$\textsuperscript{$institute.index$}$institute.name$$sep$\quad\&\quad$endfor$}
 $endif$
 
 $if(abstract)$

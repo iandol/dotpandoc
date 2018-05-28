@@ -85,14 +85,13 @@ templates:
       to: latex
       standalone: true
       filter: 
-        - filters/removeHR #remove horizontal rules
         - filters/assimilateMetadata #convert author: to author: [name: affiliation:]
       template: templates/custom.latex
       base-header-level: 2
     metadata:
       documentclass: 'article'
       classoption: twoside
-      fontsize: '11pt'
+      fontsize: '12pt'
       linestretch: '1.5'
       geometry: 'margin=1.8cm'
       mainfont: 'Greta Text Pro'
@@ -110,7 +109,6 @@ templates:
       urlcolor: BrickRed
       lang: 'en-GB'
       nonumberfigures: true
-      lof: false
     postprocessors: ['postprocessors/fixLaTeX']
 #-----------------------------------------------------------------------------
   latex-refs:
@@ -134,6 +132,13 @@ templates:
     pandoc:
       toc: true
       toc-depth: 3
+#-----------------------------------------------------------------------------
+  latex-with-lof:
+    extends: 'latex-refs'
+    pandoc:
+      toc: true
+      toc-depth: 3
+      lof: true
 #-----------------------------------------------------------------------------
   latex-letter:
     pandoc:
@@ -198,15 +203,10 @@ templates:
       base-header-level: 2
     metadata: 
       titlepage: true
-      titlepage-color: BB5544
+      titlepage-color: BB4433
       titlepage-text-color: FFFFFF
       titlepage-rule-color: FFFFFF
-      titlepage-rule-height: 4
-      colorlinks: true
-      linkcolor: Mahogany
-      citecolor: Sepia
-      urlcolor: BrickRed
-      nonumberfigures: true
+      titlepage-rule-height: 10
       mainfont: 'Greta Sans Pro'
       mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
       sansfont: 'Graublau Slab'
@@ -216,6 +216,12 @@ templates:
       mathfontoptions: 'math-style=ISO,bold-style=ISO'
       CJKmainfont:
       CJKsansfont:
+      fontsize: '12pt'
+      linestretch: '1.7'
+      colorlinks: true
+      linkcolor: Mahogany
+      citecolor: Sepia
+      urlcolor: BrickRed
       nonumberfigures: true  
     postprocessors: ['postprocessors/fixLaTeX']
 #-----------------------------------------------------------------------------

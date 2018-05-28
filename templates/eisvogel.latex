@@ -490,7 +490,7 @@ $endif$
 %
 % captions
 %
-\definecolor{caption-color}{HTML}{777777}
+\definecolor{caption-color}{HTML}{444444}
 \usepackage[textfont={color=caption-color}, skip=4mm, format=hang, singlelinecheck=false, labelfont=bf, labelsep=endash, font={sf,small}]{caption}
 \setcapindent{0em}
 \captionsetup[longtable]{position=above}
@@ -649,7 +649,7 @@ $endif$
 %
 % header and footer
 %
-\definecolor{DarkGray}{rgb}{.4,.4,.4}
+\definecolor{DarkGray}{rgb}{.5,.5,.5}
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhead{}
@@ -657,9 +657,9 @@ $endif$
 \lhead{\footnotesize{}\color{DarkGray}$title$}
 \chead{}
 \rhead{\footnotesize{}\color{DarkGray}$date$}
-\lfoot{\footnotesize{}\color{DarkGray}$for(author)$$author.name$$sep$, $endfor$}
+\lfoot{\footnotesize{}\color{DarkGray}$for(author)$$author.name$$sep$,$endfor$}
 \cfoot{}
-\rfoot{\thepage}
+\rfoot{\footnotesize{}\color{DarkGray}\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0.4pt}
 
@@ -675,7 +675,7 @@ $endif$
 
 $if(titlepage)$
 \begin{titlepage}
-\newgeometry{left=6cm}
+\newgeometry{left=5.5cm,right=1.5cm}
 $if(titlepage-color)$
 \definecolor{titlepage-color}{HTML}{$titlepage-color$}
 \newpagecolor{titlepage-color}\afterpage{\restorepagecolor}
@@ -687,9 +687,8 @@ $endif$
 \par
 \noindent
 
-\setstretch{1.5}
 \vfill
-\noindent {\huge \textbf{\textsf{$title$}}}
+\noindent {\setstretch{2}\huge\textbf{\textsf{$title$}}}
 
 $if(subtitle)$
 \vskip 1em
@@ -707,16 +706,18 @@ $if(equal_contributors)$
 $endif$
 
 $if(correspondence_list)$
-\textsf{\textbf{\textsuperscript{*} Correspondence:} $for(correspondence_list)$\emph{$correspondence_list$}$sep$\quad\&\quad$endfor$}
+\textsf{\textbf{\textsuperscript{*}} Correspondence: $for(correspondence_list)$\emph{$correspondence_list$}$sep$\quad\&\quad$endfor$}
 $endif$
 
 \vskip 2em
-\setstretch{1}
 $if(institute)$
-\textsf{\textbf{$for(institute)$\textsuperscript{$institute.index$} $institute.name$$sep$ \\ $endfor$}}
+\textsf{\Large\emph{$for(institute)$\textsuperscript{$institute.index$} $institute.name$$sep$ \\ $endfor$}}
 $endif$
 
-\textsf{$date$}
+$if(date)$
+\vskip 2em
+\textsf{\emph{$date$}}
+$endif$
 \end{flushleft}
 \end{titlepage}
 \restoregeometry
@@ -751,6 +752,7 @@ $if(toc-own-page)$
 $endif$
 $else$
 {
+\setstretch{1.2}
 $if(colorlinks)$
 \hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$$endif$}
 $endif$

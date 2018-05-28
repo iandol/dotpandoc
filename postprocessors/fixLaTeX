@@ -25,6 +25,6 @@ output.gsub!(/\\begin\{quote\}/, '\begin{quote}\emph{')
 output.gsub!(/\\end\{quote\}/, '}\end{quote}')
 
 # make sure references are small and sans-font
-output.gsub!(/\\label{references}/, '\label{references}\setstretch{0.75}\sffamily\small')
+output.gsub!(/\\label{(references|bibliography)}/, '\\label{\1}\\setstretch{0.75}\\sffamily\\small')
 
 puts output
