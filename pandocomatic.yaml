@@ -14,12 +14,13 @@ templates:
     preprocessors: []
     pandoc:
       standalone: true
-      filter: ['pandoc-citeproc'] #process citations
+      filter: 
+        - pandoc-citeproc #process citations
       bibliography: Core.json #JSON is faster than BibTeX, symlinked to ~/.pandoc
       csl: csl/apa-ian.csl
       #citation-abbreviations: cite-abbr.json # my journal abbreviations
     metadata:
-      reference-section-title: "References"
+      reference-section-title: References
       notes-after-punctuation: false
       link-citations: true 
     postprocessors: []
@@ -32,9 +33,9 @@ templates:
       standalone: true
       columns: 80
       filter:
-        - 'filters/prependAbstract' #prepends abstract: metadata into the text
-        - 'filters/prependAll' #prepends institute:, comments: and keywords: metadata into the text
-        - 'filters/prependAuthor' #prepends authors
+        - filters/prependAbstract #prepends abstract: metadata into the text
+        - filters/prependAll #prepends institute:, comments: and keywords: metadata into the text
+        - filters/prependAuthor #prepends authors
 #-----------------------------------------------------------------------------
   plain-refs:
     extends: ['refs','plain']
@@ -47,31 +48,31 @@ templates:
       to: docx
       standalone: true
       filter:
-        - 'filters/removeHR' #remove horizontal rules
-        - 'filters/simplifyMetadata' #collapse down metadata "author: [name: affiliation:]" to author:
+        - filters/removeHR #remove horizontal rules
+        - filters/simplifyMetadata #collapse down metadata "author: [name: affiliation:]" to author:
         - 'filters/prependAbstract' #prepends abstract: metadata into the text
         - 'filters/prependAll' # prepends institute:, comments: and keywords: metadata into the text
       reference-doc: 'templates/custom.docx'
 #-----------------------------------------------------------------------------
   docx-refs:
-    extends: ['docx','refs']
+    extends: [docx,refs]
 #-----------------------------------------------------------------------------
   docx-refs-not-linked:
-    extends: ['docx','refs']
+    extends: [docx,refs]
     metadata: 
       link-citations: false
 #-----------------------------------------------------------------------------
   docx-endnote:
-    extends: ['docx','refs']
+    extends: [docx,refs]
     preprocessors: 
       add: ['preprocessors/convertEndnoteRefs'] #turns endnote citations to pandoc citations
 #-----------------------------------------------------------------------------
   docx-changes:
-    extends: ['docx','refs']
+    extends: [docx,refs]
     preprocessors: ['preprocessors/criticmarkup'] #process criticmarkup to HTML that pandoc can use
 #-----------------------------------------------------------------------------
   odt-refs:
-    extends: ['docx-refs']
+    extends: [docx-refs]
     pandoc:
       to: odt
       reference-doc: 'templates/custom.odt'
@@ -79,7 +80,8 @@ templates:
 #:::::::::::::::::::::::::::::::::: LATEX ::::::::::::::::::::::::::::::::::::
 #-----------------------------------------------------------------------------
   latex:
-    preprocessors: ['preprocessors/removeImageDimensions'] #remove image dimensions
+    preprocessors: 
+      - preprocessors/removeImageDimensions #remove image dimensions
     pandoc:
       from: markdown
       to: latex
@@ -109,17 +111,19 @@ templates:
       urlcolor: BrickRed
       lang: 'en-GB'
       nonumberfigures: true
-    postprocessors: ['postprocessors/fixLaTeX']
+    postprocessors: 
+      - postprocessors/fixLaTeX
 #-----------------------------------------------------------------------------
   latex-refs:
-    extends: ['latex','refs']
+    extends: [latex,refs]
 #-----------------------------------------------------------------------------
   latex-endnote:
-    extends: 'latex-refs'
-    preprocessors: ['preprocessors/convertEndnoteRefs']
+    extends: [latex-refs]
+    preprocessors: 
+      - preprocessors/convertEndnoteRefs
 #-----------------------------------------------------------------------------
   latex-chemfig: # example of using header-includes with yaml block scalar data http://yaml-multiline.info/
-    extends: 'latex-refs'
+    extends: [latex-refs]
     metadata:
       header-includes:
         - |
@@ -128,13 +132,13 @@ templates:
           ```
 #-----------------------------------------------------------------------------
   latex-with-toc:
-    extends: 'latex-refs'
+    extends: [latex-refs]
     pandoc:
       toc: true
       toc-depth: 3
 #-----------------------------------------------------------------------------
   latex-with-lof:
-    extends: 'latex-refs'
+    extends: [latex-refs]
     pandoc:
       toc: true
       toc-depth: 3
@@ -175,7 +179,7 @@ templates:
       geometry: ['margin=2cm','top=2.3cm']
 #-----------------------------------------------------------------------------
   pdf-refs:
-    extends: 'latex-refs'
+    extends: [latex-refs]
     pandoc:
       to: pdf
       pdf-engine: 'xelatex'
@@ -191,7 +195,8 @@ templates:
 # https://github.com/Wandmalfarbe/pandoc-latex-template
   eisvogel:
     extends: 'refs'
-    preprocessors: ['preprocessors/removeImageDimensions'] #remove image dimensions
+    preprocessors: 
+      - preprocessors/removeImageDimensions #remove image dimensions
     pandoc:
       from: markdown
       to: latex
@@ -223,11 +228,12 @@ templates:
       citecolor: Sepia
       urlcolor: BrickRed
       nonumberfigures: true  
-    postprocessors: ['postprocessors/fixLaTeX']
+    postprocessors: 
+      - postprocessors/fixLaTeX
 #-----------------------------------------------------------------------------
 # https://github.com/Wandmalfarbe/pandoc-latex-template
   eisvogel-pdf:
-    extends: 'eisvogel'
+    extends: [eisvogel]
     pandoc:
       to: pdf
       pdf-engine: 'xelatex'
@@ -235,11 +241,12 @@ templates:
 #-----------------------------------------------------------------------------
 # https://github.com/Wandmalfarbe/pandoc-latex-template
   eisvogel-endnote:
-    extends: 'eisvogel'
-    preprocessors: ['preprocessors/convertEndnoteRefs']
+    extends: [eisvogel]
+    preprocessors: 
+      - preprocessors/convertEndnoteRefs
 #-----------------------------------------------------------------------------
   latex-ieee:
-    extends: 'latex-refs'
+    extends: [latex-refs]
     pandoc:
       template: templates/ieee.latex
     metadata: 
@@ -247,14 +254,14 @@ templates:
 #-----------------------------------------------------------------------------
 # https://github.com/pandoc-scholar/pandoc-scholar
   latex-scholar:
-    extends: 'latex-refs'
+    extends: [latex-refs]
     pandoc:
       template: templates/pandoc-scholar.latex
     metadata: 
       fontsize: '10pt'
 #-----------------------------------------------------------------------------
   memoir-with-refs:
-    extends: 'latex-refs'
+    extends: [latex-refs]
     pandoc:
       template: templates/custom-memoir.latex
       toc: true
@@ -280,35 +287,39 @@ templates:
       toc: true
       toc-depth: 3
       base-header-level: 1
-    postprocessors: ['postprocessors/fixHTML']
+    postprocessors: 
+      - postprocessors/fixHTML
 #-----------------------------------------------------------------------------
   html-changes:
     extends: ['html']
-    preprocessors: ['preprocessors/criticmarkup']
+    preprocessors: 
+      - preprocessors/criticmarkup
 #-----------------------------------------------------------------------------
   html-refs:
-    extends: ['refs','html']
+    extends: [refs, html]
 #-----------------------------------------------------------------------------
   html-endnote:
-    extends: ['refs','html']
-    preprocessors: ['preprocessors/convertEndnoteRefs']
+    extends: [refs, html]
+    preprocessors: 
+      - preprocessors/convertEndnoteRefs
 #-----------------------------------------------------------------------------
   html-scholar:
-    extends: ['refs','html']
-    preprocessors: ['preprocessors/convertEndnoteRefs']
+    extends: [refs, html]
+    preprocessors: 
+      - preprocessors/convertEndnoteRefs
     pandoc:
       template: 'templates/pandoc-scholar.html'
       css: 'templates/pandoc-scholar.css'
 #-----------------------------------------------------------------------------
   html-scholar-pdf:
-    extends: ['html-scholar']
+    extends: [html-scholar]
     pandoc:
       to: pdf
       pdf-engine: prince
       pdf-engine-opt: ['--page-size=A4','--page-margin=10mm']
 #-----------------------------------------------------------------------------
   html-pdf:
-    extends: ['html']
+    extends: [html]
     pandoc:
       to: pdf
       pdf-engine: prince
@@ -316,18 +327,19 @@ templates:
       toc: true
 #-----------------------------------------------------------------------------
   html-refs-pdf:
-    extends: ['refs','html']
+    extends: [refs, html]
     pandoc:
       to: pdf
       pdf-engine: prince
       pdf-engine-opt: ['--page-size=A4']
 #-----------------------------------------------------------------------------
   html-endnote-pdf:
-    extends: ['html-refs-pdf']
-    preprocessors: ['preprocessors/convertEndnoteRefs']
+    extends: [html-refs-pdf]
+    preprocessors: 
+      - preprocessors/convertEndnoteRefs
 #-----------------------------------------------------------------------------
   html-selfcontained:
-    extends: 'html'
+    extends: [html]
     pandoc:
       self-contained: true
 #-----------------------------------------------------------------------------
@@ -348,10 +360,10 @@ templates:
         - 'templates/tuftepandoc.css'
 #-----------------------------------------------------------------------------
   tufte-refs:
-    extends: ['refs','tufte']
+    extends: [refs,tufte]
 #-----------------------------------------------------------------------------
   tufte-refs-pdf:
-    extends: ['refs','tufte']
+    extends: [refs,tufte]
     pandoc:
       to: pdf
       pdf-engine: prince
@@ -386,6 +398,7 @@ templates:
       to: markdown
       output: out.md
       standalone: true
-      filter: ['filters/testFilter']
+      filter: 
+        - filters/testFilter
     metadata:
-        author: Joanna Doe
+      author: Joanna Doe
