@@ -711,7 +711,7 @@ $endif$
 
 \vskip 2em
 $if(institute)$
-\textsf{\Large\emph{$for(institute)$\textsuperscript{$institute.index$} $institute.name$$sep$ \\ $endfor$}}
+\textsf{\emph{$for(institute)$\textsuperscript{$institute.index$} $institute.name$$sep$ \\ $endfor$}}
 $endif$
 
 $if(date)$
