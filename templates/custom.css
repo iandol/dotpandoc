@@ -155,7 +155,7 @@ aside, .comment {
 
 aside:hover, .comment:hover {  }
 
-div.info, div.todo, div.warning {
+div.infobox, div.info, div.todo, div.warning {
 	font-size: 0.7em;
 	line-height: 1em;
 	float: right;
