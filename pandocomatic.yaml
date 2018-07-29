@@ -1,4 +1,5 @@
 # --------------------------- Pandocomatic templates -------------------------
+# REMEMBER that YAML requires spaces not tabs, and indentation is important!
 settings:
   recursive: true
   follow-symlinks: false
@@ -76,6 +77,38 @@ templates:
     pandoc:
       to: odt
       reference-doc: 'templates/custom.odt'
+#-----------------------------------------------------------------------------
+#:::::::::::::::::::::::::::::: PRESENTATIONS ::::::::::::::::::::::::::::::::
+#-----------------------------------------------------------------------------
+# Note for reveal.js standalone download the files  and put them 
+# in a reveal.js/ folder relative to the markdown file.
+#   wget https://github.com/hakimel/reveal.js/archive/master.tar.gz
+#   tar -xzvf master.tar.gz
+#   mv reveal.js-master reveal.js
+  revealjs:
+    extends: [refs]
+    pandoc:
+      from: markdown
+      to: revealjs
+      toc: true
+    metadata:
+      revealjs-url: http://lab.hakim.se/reveal-js
+      slideNumber: true
+      transition: fade # none/fade/slide/convex/concave/zoom
+      transitionSpeed: default # default/fast/slow
+  revealjs-local:
+    extends: [revealjs]
+    metadata:
+      revealjs-url: ./reveal.js
+  revealjs-selfcontained:
+    extends: [revealjs-local]
+    pandoc:
+      self-contained: true
+  powerpoint:
+    extends: [refs]
+    pandoc:
+      from: markdown
+      to: pptx
 #-----------------------------------------------------------------------------
 #:::::::::::::::::::::::::::::::::: LATEX ::::::::::::::::::::::::::::::::::::
 #-----------------------------------------------------------------------------
