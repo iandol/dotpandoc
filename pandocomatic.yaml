@@ -51,9 +51,9 @@ templates:
       filter:
         - filters/removeHR #remove horizontal rules
         - filters/simplifyMetadata #collapse down metadata "author: [name: affiliation:]" to author:
-        - 'filters/prependAbstract' #prepends abstract: metadata into the text
-        - 'filters/prependAll' # prepends institute:, comments: and keywords: metadata into the text
-      reference-doc: 'templates/custom.docx'
+        - filters/prependAbstract #prepends abstract: metadata into the text
+        - filters/prependAll # prepends institute:, comments: and keywords: metadata into the text
+      reference-doc: templates/custom.docx
 #-----------------------------------------------------------------------------
   docx-refs:
     extends: [docx,refs]
@@ -66,17 +66,17 @@ templates:
   docx-endnote:
     extends: [docx,refs]
     preprocessors: 
-      add: ['preprocessors/convertEndnoteRefs'] #turns endnote citations to pandoc citations
+      add: [preprocessors/convertEndnoteRefs] #turns endnote citations to pandoc citations
 #-----------------------------------------------------------------------------
   docx-changes:
     extends: [docx,refs]
-    preprocessors: ['preprocessors/criticmarkup'] #process criticmarkup to HTML that pandoc can use
+    preprocessors: [preprocessors/criticmarkup] #process criticmarkup to HTML that pandoc can use
 #-----------------------------------------------------------------------------
   odt-refs:
     extends: [docx-refs]
     pandoc:
       to: odt
-      reference-doc: 'templates/custom.odt'
+      reference-doc: templates/custom.odt
 #-----------------------------------------------------------------------------
 #:::::::::::::::::::::::::::::: PRESENTATIONS ::::::::::::::::::::::::::::::::
 #-----------------------------------------------------------------------------
@@ -186,7 +186,7 @@ templates:
       template: templates/letter.latex
     metadata:
       return-address:
-        - Room 201, Systems Building
+        - Room 307, Systems Building
         - Institute of Neuroscience
         - 320 Yueyang rd
         - Shanghai 200031
@@ -197,8 +197,8 @@ templates:
       mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
       fontsize: '11pt'
       linestretch: '1.2'
-      letterhead: /Users/ian/Dropbox/Work/ION-Letterhead.pdf
-      signature: /Users/ian/Dropbox/Work/Ian-Signature.png
+      letterhead: "/Users/ian/Dropbox/Work/ION-Letterhead.pdf"
+      signature: "/Users/ian/Dropbox/Work/Ian-Signature.png"
       signature-width: 50mm
       signature-before: -11ex
       signature-after: -1ex
@@ -209,7 +209,7 @@ templates:
       citecolor: Sepia
       urlcolor: BrickRed
       lang: 'en-GB'
-      geometry: ['margin=2cm','top=2.3cm']
+      geometry: ['margin=1.5cm','top=2.3cm']
 #-----------------------------------------------------------------------------
   pdf-refs:
     extends: [latex-refs]

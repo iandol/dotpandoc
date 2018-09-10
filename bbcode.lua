@@ -145,8 +145,9 @@ end
 
 -- CHANGES BY @tajmone: Inline Code
 --   *  Convert to bold and red.
+-- [background=#EEE][font=menlo,consolas,monospace] but many forums don't support it :-(
 function Code(s, attr)
-  return "[b][color=#BF2700]" .. s .. "[/color][/b]"
+  return "[color=#BF2700][b]" .. s .. "[/b][/color]"
 end
 
 function InlineMath(s)
@@ -190,15 +191,15 @@ function Header(lev, s, attr)
   if lev == 1 then
     return "[size=200][color=#BF2700][b]" .. s .. "[/b][/color][/size]"
   elseif lev == 2 then
-    return "[size=180][color=#002D97][b]" .. s .. "[/b][/color][/size]"
+    return "[size=175][color=#AF1700][b]" .. s .. "[/b][/color][/size]"
   elseif lev == 3 then
-    return "[size=160][color=#006600][b]" .. s .. "[/b][/color][/size]"
+    return "[size=150][color=#9F1700][b]" .. s .. "[/b][/color][/size]"
   elseif lev == 4 then
-    return "[size=150][color=#0C71A3][b]" .. s .. "[/b][/color][/size]"
+    return "[size=125][color=#8F0700][b]" .. s .. "[/b][/color][/size]"
   elseif lev == 5 then
-    return "[size=140][color=#A9B8C2][b]" .. s .. "[/b][/color][/size]"
+    return "[size=110][color=#7F0000][b]" .. s .. "[/b][/color][/size]"
   else
-    return "[size=130][b]" .. s .. "[/b][/size]"
+    return "[size=100][b]" .. s .. "[/b][/size]"
   end
 end
 
