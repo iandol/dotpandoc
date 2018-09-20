@@ -2,6 +2,8 @@
 # If we have abstract: metadata, convert it to an
 # "Abstract: " paragraph at the start of the document
 # This is because some templates / plain text cannot handle this natively
+#
+# VERSION: 1.0.0
 
 require 'paru/filter'
 

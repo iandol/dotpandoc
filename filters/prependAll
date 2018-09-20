@@ -2,6 +2,8 @@
 # If we have particular metadata, prepend it to a
 # paragraph at the start of the document;
 # as Word/ODT templates cannot handle this natively
+#
+# VERSION: 1.0.0
 
 require 'paru/filter'
 
@@ -9,29 +11,29 @@ require 'paru/filter'
 prepend_list = {:comments => "Comments", :keywords => "Keywords", :institute => "Affiliations"}
 
 Paru::Filter.run do
-  prepend_list.each do |key,val|
-    next unless metadata.key?(key.to_s)
-    text = ''
-    kw = metadata[key.to_s]
-    if kw.is_a?(String)
-      text += kw
-    elsif kw.is_a?(Array)
-      kw.each do |x|
-        if x.is_a?(Hash)
-          text += '^' + x.keys[0].to_s + '^ ' + x.values[0].to_s + '; '
-        else
-          text += x.to_s + '; '
-        end
-      end
-      text = text[0..-3]
-    else
-      text = ''
-    end
-    next if text.length == 0
-    text = '**' + val + '**: ' + text
-    p = Paru::PandocFilter::Para.new([])
-    p.inner_markdown = text
-    document.prepend(p)
-  end
-  stop!
+	prepend_list.each do |key,val|
+		next unless metadata.key?(key.to_s)
+		text = ''
+		kw = metadata[key.to_s]
+		if kw.is_a?(String)
+			text += kw
+		elsif kw.is_a?(Array)
+			kw.each do |x|
+				if x.is_a?(Hash)
+					text += '^' + x.keys[0].to_s + '^ ' + x.values[0].to_s + '; '
+				else
+					text += x.to_s + '; '
+				end
+			end
+			text = text[0..-3]
+		else
+			text = ''
+		end
+		next if text.length == 0
+		text = '**' + val + '**: ' + text
+		p = Paru::PandocFilter::Para.new([])
+		p.inner_markdown = text
+		document.prepend(p)
+	end
+	stop!
 end
