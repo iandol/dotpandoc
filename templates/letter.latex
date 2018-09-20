@@ -1,3 +1,6 @@
+% !TEX TS-program = xelatex
+% !TEX encoding = UTF-8 Unicode
+
 % see https://github.com/aaronwolen/pandoc-letter
 %   address : Name and address of the recipient; takes a list for a multi-line address.
 %   author : Writer of the letter; can take a list for a multi-line signature.

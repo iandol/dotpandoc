@@ -188,12 +188,12 @@ templates:
       return-address:
         - Room 307, Systems Building
         - Institute of Neuroscience
-        - 320 Yueyang rd
+        - 320 Yueyang Rd
         - Shanghai 200031
         - CHINA
       opening: To whom it may concern,
       closing: Sincerely,
-      mainfont: 'Dolly Pro'
+      mainfont: 'Graublau Sans'
       mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
       fontsize: '11pt'
       linestretch: '1.2'
