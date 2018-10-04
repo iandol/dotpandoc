@@ -238,13 +238,15 @@ templates:
         - filters/assimilateMetadata #convert author: to author: [name: affiliation:]
       template: templates/eisvogel.latex
       toc: true
-      base-header-level: 2
+      base-header-level: 1
     metadata: 
       titlepage: true
       titlepage-color: BB4433
       titlepage-text-color: FFFFFF
-      titlepage-rule-color: FFFFFF
+      titlepage-rule-color: EEEEEE
       titlepage-rule-height: 10
+      logo: "/Users/ian/Dropbox/Work/Ian-Signature.png"
+      logo-width: 125
       mainfont: 'Greta Sans Pro'
       mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
       sansfont: 'Graublau Slab'
@@ -255,7 +257,7 @@ templates:
       CJKmainfont:
       CJKsansfont:
       fontsize: '12pt'
-      linestretch: '1.7'
+      linestretch: '1.5'
       colorlinks: true
       linkcolor: Mahogany
       citecolor: Sepia
@@ -271,6 +273,12 @@ templates:
       to: pdf
       pdf-engine: 'xelatex'
     cleanup: []
+#-----------------------------------------------------------------------------
+# https://github.com/Wandmalfarbe/pandoc-latex-template
+  eisvogel-original:
+    extends: [eisvogel]
+    pandoc:
+      template: templates/eisvogel.latex
 #-----------------------------------------------------------------------------
 # https://github.com/Wandmalfarbe/pandoc-latex-template
   eisvogel-endnote:

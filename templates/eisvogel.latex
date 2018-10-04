@@ -1,3 +1,5 @@
+% !TEX TS-program = xelatex
+% !TEX encoding = UTF-8 Unicode
 %%
 % Copyright (c) 2018, Pascal Wagler;  
 % Copyright (c) 2014--2018, John MacFarlane
@@ -41,13 +43,59 @@
 \PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
 \PassOptionsToPackage{hyphens}{url}
 \PassOptionsToPackage{dvipsnames,svgnames*,table}{xcolor}
-%
-\documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$paper,$else$a4paper,$endif$$if(beamer)$ignorenonframetext,$if(handout)$handout,$endif$$if(aspectratio)$aspectratio=$aspectratio$,$endif$$endif$$for(classoption)$$classoption$$sep$,$endfor$,tablecaptionabove]{scrartcl}
+$if(dir)$$if(latex-dir-rtl)$
+\PassOptionsToPackage{RTLdocument}{bidi}
+$endif$$endif$%
+\documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$paper,$else$a4paper,$endif$$if(beamer)$ignorenonframetext,$if(handout)$handout,$endif$$if(aspectratio)$aspectratio=$aspectratio$,$endif$$endif$$for(classoption)$$classoption$$sep$,$endfor$,tablecaptionabove]{$if(book)$scrbook$else$scrartcl$endif$}
 $if(beamer)$
+$if(background-image)$
+\usebackgroundtemplate{%
+\includegraphics[width=\paperwidth]{$background-image$}%
+}
+$endif$
+\usepackage{pgfpages}
 \setbeamertemplate{caption}[numbered]
 \setbeamertemplate{caption label separator}{: }
 \setbeamercolor{caption name}{fg=normal text.fg}
 \beamertemplatenavigationsymbols$if(navigation)$$navigation$$else$empty$endif$
+$for(beameroption)$
+\setbeameroption{$beameroption$}
+$endfor$
+% Prevent slide breaks in the middle of a paragraph:
+\widowpenalties 1 10000
+\raggedbottom
+$if(section-titles)$
+\setbeamertemplate{part page}{
+\centering
+\begin{beamercolorbox}[sep=16pt,center]{part title}
+  \usebeamerfont{part title}\insertpart\par
+\end{beamercolorbox}
+}
+\setbeamertemplate{section page}{
+\centering
+\begin{beamercolorbox}[sep=12pt,center]{part title}
+  \usebeamerfont{section title}\insertsection\par
+\end{beamercolorbox}
+}
+\setbeamertemplate{subsection page}{
+\centering
+\begin{beamercolorbox}[sep=8pt,center]{part title}
+  \usebeamerfont{subsection title}\insertsubsection\par
+\end{beamercolorbox}
+}
+\AtBeginPart{
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \frame{\sectionpage}
+  \fi
+}
+\AtBeginSubsection{
+  \frame{\subsectionpage}
+}
+$endif$
 $endif$
 $if(beamerarticle)$
 \usepackage{beamerarticle} % needs to be loaded first
@@ -164,8 +212,10 @@ $if(colorlinks)$
 \definecolor{Sepia}{rgb}{.4,.1,.1}
 \definecolor{Mahogany}{rgb}{.6,.2,.2}
 \definecolor{BrickRed}{rgb}{.7,.3,.3}
-\definecolor{default-citecolor}{HTML}{C07740}
-\definecolor{default-urlcolor}{HTML}{C07740}
+\definecolor{default-linkcolor}{rgb}{.6,.2,.2}
+\definecolor{default-filecolor}{rgb}{.6,.2,0}
+\definecolor{default-citecolor}{rgb}{.4,.1,.1}
+\definecolor{default-urlcolor}{rgb}{.7,.3,.3}
 $endif$
 \usepackage{hyperref}
 \hypersetup{
@@ -184,6 +234,7 @@ $endif$
 $if(colorlinks)$
             colorlinks=true,
             linkcolor=$if(linkcolor)$$linkcolor$$else$Mahogany$endif$,
+            filecolor=$if(filecolor)$$filecolor$$else$default-filecolor$endif$,
             citecolor=$if(citecolor)$$citecolor$$else$Sepia$endif$,
             urlcolor=$if(urlcolor)$$urlcolor$$else$BrickRed$endif$,
 $else$
@@ -200,6 +251,10 @@ $if(geometry)$
 \usepackage[margin=2.5cm,includehead=true,includefoot=true,centering,$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
 $else$
 \usepackage[margin=2.5cm,includehead=true,includefoot=true,centering]{geometry}
+$endif$
+$if(logo)$
+\usepackage[export]{adjustbox}
+\usepackage{graphicx}
 $endif$
 $if(beamer)$
 \newif\ifbibliography
@@ -237,43 +292,6 @@ $if(graphics)$
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-$endif$
-$if(beamer)$
-% Prevent slide breaks in the middle of a paragraph:
-\widowpenalties 1 10000
-\raggedbottom
-$if(section-titles)$
-\setbeamertemplate{part page}{
-\centering
-\begin{beamercolorbox}[sep=16pt,center]{part title}
-  \usebeamerfont{part title}\insertpart\par
-\end{beamercolorbox}
-}
-\setbeamertemplate{section page}{
-\centering
-\begin{beamercolorbox}[sep=12pt,center]{part title}
-  \usebeamerfont{section title}\insertsection\par
-\end{beamercolorbox}
-}
-\setbeamertemplate{subsection page}{
-\centering
-\begin{beamercolorbox}[sep=8pt,center]{part title}
-  \usebeamerfont{subsection title}\insertsubsection\par
-\end{beamercolorbox}
-}
-\AtBeginPart{
-  \frame{\partpage}
-}
-\AtBeginSection{
-  \ifbibliography
-  \else
-    \frame{\sectionpage}
-  \fi
-}
-\AtBeginSubsection{
-  \frame{\subsectionpage}
-}
-$endif$
 $endif$
 $if(links-as-notes)$
 % Make links footnotes instead of hotlinks:
@@ -341,11 +359,7 @@ $endif$
 $if(dir)$
 \ifxetex
   % load bidi as late as possible as it modifies e.g. graphicx
-  $if(latex-dir-rtl)$
-  \usepackage[RTLdocument]{bidi}
-  $else$
   \usepackage{bidi}
-  $endif$
 \fi
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \TeXXeTstate=1
@@ -491,7 +505,7 @@ $endif$
 % captions
 %
 \definecolor{caption-color}{HTML}{444444}
-\usepackage[textfont={color=caption-color}, skip=4mm, format=hang, singlelinecheck=false, labelfont=bf, labelsep=endash, font={sf,small}]{caption}
+\usepackage[font={stretch=1.0,sf,small}, textfont={color=caption-color}, position=bottom, skip=4mm, labelfont=bf, singlelinecheck=false, format=hang, labelsep=endash]{caption}
 \setcapindent{0em}
 \captionsetup[longtable]{position=above}
 
@@ -651,6 +665,8 @@ $endif$
 %
 % header and footer
 %
+$if(disable-header-and-footer)$
+$else$
 \definecolor{DarkGray}{rgb}{.5,.5,.5}
 \usepackage{fancyhdr}
 \pagestyle{fancy}
@@ -664,6 +680,7 @@ $endif$
 \rfoot{\footnotesize{}\color{DarkGray}\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0.4pt}
+$endif$
 
 %%
 %% end added
@@ -677,32 +694,34 @@ $endif$
 
 $if(titlepage)$
 \begin{titlepage}
-\newgeometry{left=5.5cm,right=1.5cm}
+\newgeometry{left=6cm}
 $if(titlepage-color)$
 \definecolor{titlepage-color}{HTML}{$titlepage-color$}
 \newpagecolor{titlepage-color}\afterpage{\restorepagecolor}
 $endif$
 \newcommand{\colorRule}[3][black]{\textcolor[HTML]{#1}{\rule{#2}{#3}}}
+\begin{flushleft}
 \noindent
+\\[-1em]
 \color[HTML]{$if(titlepage-text-color)$$titlepage-text-color$$else$5F5F5F$endif$}
 \makebox[0pt][l]{\colorRule[$if(titlepage-rule-color)$$titlepage-rule-color$$else$435488$endif$]{1.3\textwidth}{$if(titlepage-rule-height)$$titlepage-rule-height$$else$4$endif$pt}}
 \par
 \noindent
 
+{ \setstretch{1.4}
 \vfill
-\noindent {\setstretch{2}\huge\textbf{\textsf{$title$}}}
-
+\noindent {\huge \textbf{\textsf{$title$}}}
 $if(subtitle)$
 \vskip 1em
 {\Large \textsf{$subtitle$}}
 $endif$
-
-\begin{flushleft}
 \vskip 2em
 \noindent
 {\Large{\textsf{\textbf{\uppercase{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.correspondence)$*$endif$$if(author.equal_contributor)$†$endif$}$sep$,\quad $endfor$}}}}}
+\vfill
+}
 
-\setstretch{1}
+{ \setstretch{1}
 $if(equal_contributors)$
 \textsf{\textsuperscript{†} These authors contributed equally to this work.}
 $endif$
@@ -714,6 +733,12 @@ $endif$
 \vskip 2em
 $if(institute)$
 \textsf{\emph{$for(institute)$\textsuperscript{$institute.index$} $institute.name$$sep$ \\ $endfor$}}
+$endif$
+}
+
+$if(logo)$
+\noindent
+\includegraphics[width=$if(logo-width)$$logo-width$$else$100$endif$pt, left]{$logo$}
 $endif$
 
 $if(date)$
@@ -735,7 +760,7 @@ $if(beamer)$
 $endif$
 $if(abstract)$
 \begin{abstract}
-\noindent\textbf{Abstract: }$abstract$
+\noindent\textbf{Abstract — }$abstract$
 \end{abstract}
 $endif$
 $endif$
@@ -745,8 +770,14 @@ $include-before$
 
 $endfor$
 $if(toc)$
+$if(toc-title)$
+\renewcommand*\contentsname{$toc-title$}
+$endif$
 $if(beamer)$
 \begin{frame}
+$if(toc-title)$
+\frametitle{$toc-title$}
+$endif$
 \tableofcontents[hideallsubsections]
 \end{frame}
 $if(toc-own-page)$
@@ -754,7 +785,6 @@ $if(toc-own-page)$
 $endif$
 $else$
 {
-\setstretch{1.2}
 $if(colorlinks)$
 \hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$$endif$}
 $endif$
