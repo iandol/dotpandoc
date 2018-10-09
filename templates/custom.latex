@@ -1,6 +1,6 @@
 % !TEX TS-program = xelatex
 % !TEX encoding = UTF-8 Unicode
-\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{unicode=true$for(hyperrefoptions)$,$hyperrefoptions$$endfor$}{hyperref} % options for packages loaded elsewhere
 \PassOptionsToPackage{hyphens}{url}
 $if(colorlinks)$
 \PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
@@ -204,6 +204,7 @@ $endif$
 $if(colorlinks)$
             colorlinks=true,
             linkcolor=$if(linkcolor)$$linkcolor$$else$Mahogany$endif$,
+            filecolor=$if(filecolor)$$filecolor$$else$Mahogany$endif$,
             citecolor=$if(citecolor)$$citecolor$$else$Sepia$endif$,
             urlcolor=$if(urlcolor)$$urlcolor$$else$BrickRed$endif$,
 $else$
@@ -345,21 +346,17 @@ $if(title)$
 \postdate{\par\end{center}}
 \title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
 $endif$
-
 $if(subtitle)$
 \providecommand{\subtitle}[1]{}
 \subtitle{$subtitle$}
 $endif$
-
 $if(author)$
 \author{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.correspondence)$*$endif$$if(author.equal_contributor)$†$endif$}$sep$ \and $endfor$}
 $endif$
-
 $if(institute)$
 \providecommand{\institute}[1]{}
 \institute{$for(institute)$\textsuperscript{$institute.index$} $institute.name$$sep$ \and $endfor$}
 $endif$
-
 \date{$date$}
 $if(beamer)$
 $if(titlegraphic)$
@@ -402,8 +399,14 @@ $include-before$
 
 $endfor$
 $if(toc)$
+$if(toc-title)$
+\renewcommand*\contentsname{$toc-title$}
+$endif$
 $if(beamer)$
 \begin{frame}
+$if(toc-title)$
+\frametitle{$toc-title$}
+$endif$
 \tableofcontents[hideallsubsections]
 \end{frame}
 $else$

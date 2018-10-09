@@ -40,7 +40,7 @@
 % https://github.com/Wandmalfarbe/pandoc-latex-template
 %%
 
-\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{unicode=true$for(hyperrefoptions)$,$hyperrefoptions$$endfor$}{hyperref} % options for packages loaded elsewhere
 \PassOptionsToPackage{hyphens}{url}
 \PassOptionsToPackage{dvipsnames,svgnames*,table}{xcolor}
 $if(dir)$$if(latex-dir-rtl)$
