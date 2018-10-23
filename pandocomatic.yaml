@@ -245,8 +245,8 @@ templates:
       titlepage-text-color: FFFFFF
       titlepage-rule-color: EEEEEE
       titlepage-rule-height: 10
-      logo: "/Users/ian/Dropbox/Work/Ian-Signature.png"
-      logo-width: 125
+      #logo: "/Users/ian/Dropbox/Images/Logos/ION_Logo.png"
+      #logo-width: 100
       mainfont: 'Greta Sans Pro'
       mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
       sansfont: 'Graublau Slab'
@@ -262,7 +262,8 @@ templates:
       linkcolor: Mahogany
       citecolor: Sepia
       urlcolor: BrickRed
-      nonumberfigures: true  
+      nonumberfigures: true
+      lang: 'en-GB'
     postprocessors: 
       - postprocessors/fixLaTeX
 #-----------------------------------------------------------------------------
