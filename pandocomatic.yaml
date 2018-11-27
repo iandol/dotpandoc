@@ -191,6 +191,7 @@ templates:
         - 320 Yueyang Rd
         - Shanghai 200031
         - CHINA
+        - ✉ i.andolina@ion.ac.cn
       opening: To whom it may concern,
       closing: Sincerely,
       mainfont: 'Graublau Sans'
@@ -199,7 +200,7 @@ templates:
       linestretch: '1.2'
       letterhead: "/Users/ian/Dropbox/Work/ION-Letterhead.pdf"
       signature: "/Users/ian/Dropbox/Work/Ian-Signature.png"
-      signature-width: 50mm
+      signature-width: 52mm
       signature-before: -11ex
       signature-after: -1ex
       closing-indentation: 0pt
@@ -210,6 +211,8 @@ templates:
       urlcolor: BrickRed
       lang: 'en-GB'
       geometry: ['margin=1.5cm','top=2.3cm']
+    postprocessors: 
+      - postprocessors/fixLaTeX
 #-----------------------------------------------------------------------------
   pdf-refs:
     extends: [latex-refs]

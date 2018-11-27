@@ -72,7 +72,6 @@ $if(linestretch)$
 $endif$
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[$if(fontenc)$$fontenc$$else$T1$endif$]{fontenc}
   \usepackage[utf8]{inputenc}
@@ -93,6 +92,9 @@ $for(fontfamilies)$
 $endfor$
 $if(mainfont)$
     \setmainfont[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$]{$mainfont$}
+$endif$
+$if(romanfont)$
+	\setromanfont[$for(romanfontoptions)$$romanfontoptions$$sep$,$endfor$]{$romanfont$}
 $endif$
 $if(sansfont)$
     \setsansfont[$for(sansfontoptions)$$sansfontoptions$$sep$,$endfor$]{$sansfont$}
@@ -129,8 +131,9 @@ $if(CJKmainfont)$
   \fi
 $endif$
 \fi
-% use cambria to fix some font substitution problems for e.g. ⬄
+% use cambria/Arial to fix some font substitution problems for e.g. ⬄
 \newfontfamily\fixfont[]{Cambria}
+\newfontfamily\fixfontB[]{Arial Unicode MS}
 % customise titles
 \usepackage{xcolor}
 \usepackage{titlesec}

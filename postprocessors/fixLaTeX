@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 #encoding: utf-8
+
 # This tweaks several parts of the Pandoc LaTeX output
+# VERSION: 1.0.1
 
 Encoding.default_external = Encoding::UTF_8
 Encoding.default_internal = Encoding::UTF_8
@@ -14,8 +16,15 @@ list.each do |ch|
   output.gsub!(/#{ch}/, "\{\\fixfont#{ch}\}")
 end
 
+# make sure we perform font substitutions for characters that may not have a font entry
+# fixfontB uses Arial Unicode MS with a huge glyph range
+list = %w[✉]
+list.each do |ch|
+  output.gsub!(/#{ch}/, "\{\\fixfontB#{ch}\}")
+end
+
 # ensure correct titlecase for Neuroscience terms
-list = %w[MT MST TEO TRN GABA GABAergic LGN dLGN V1 V2 V3 V4 V5 fMRI EEG MEG]
+list = %w[MT MST TEO TRN GABA GABAergic LGN dLGN V1 V2 V3 V4 V5 fMRI EEG MEG tDCS]
 list.each do |phrase|
   output.gsub!(/\b#{phrase}\b/i, phrase)
 end
