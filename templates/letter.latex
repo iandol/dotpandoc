@@ -23,7 +23,7 @@ $if(colorlinks)$
 \PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
 $endif$
 %
-\documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$paper,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{letter}
+\documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$paper,$else$a4paper,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{letter}
 $if(fontfamily)$
 \usepackage[$for(fontfamilyoptions)$$fontfamilyoptions$$sep$,$endfor$]{$fontfamily$}
 $else$
@@ -94,7 +94,7 @@ $if(CJKmainfont)$
   \fi
 $endif$
 \fi
-% use cambria/Arial to fix some font substitution problems for e.g. ⬄
+% use Cambria/Arial to fix some font substitution problems for e.g. ⬄
 \newfontfamily\fixfont[]{Cambria}
 \newfontfamily\fixfontB[]{Arial Unicode MS}
 % use upquote if available, for straight quotes in verbatim environments

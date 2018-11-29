@@ -185,13 +185,16 @@ templates:
       standalone: true
       template: templates/letter.latex
     metadata:
+      papersize: a4
       return-address:
+        - Cognition & Behaviour Research Platform
         - Room 307, Systems Building
-        - Institute of Neuroscience
+        - Institute of Neuroscience, CAS
         - 320 Yueyang Rd
         - Shanghai 200031
         - CHINA
-        - ✉ i.andolina@ion.ac.cn
+        - ✉ <i.andolina@ion.ac.cn>
+        - ✆ +86 021 54921747
       opening: To whom it may concern,
       closing: Sincerely,
       mainfont: 'Graublau Sans'
@@ -203,14 +206,14 @@ templates:
       signature-width: 52mm
       signature-before: -11ex
       signature-after: -1ex
-      closing-indentation: 0pt
-      links-as-notes: true
+      closing-indentation: 10pt
+      links-as-notes: false
       colorlinks: true
       linkcolor: Mahogany
       citecolor: Sepia
       urlcolor: BrickRed
       lang: 'en-GB'
-      geometry: ['margin=1.5cm','top=2.3cm']
+      geometry: ['margin=1.5cm','top=2.5cm']
     postprocessors: 
       - postprocessors/fixLaTeX
 #-----------------------------------------------------------------------------

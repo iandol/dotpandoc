@@ -251,8 +251,9 @@ $endif$
 $if(verbatim-in-note)$
 \VerbatimFootnotes % allows verbatim text in footnotes
 $endif$
-% use cambria to fix some font substitution problems for e.g. ⬄
+% use Cambria/Arial to fix some font substitution problems for e.g. ⬄
 \newfontfamily\fixfont[]{Cambria}
+\newfontfamily\fixfontB[]{Arial Unicode MS}
 $if(geometry)$
 \usepackage[margin=2.5cm,includehead=true,includefoot=true,centering,$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
 $else$
