@@ -19,7 +19,7 @@ templates:
         - pandoc-citeproc #process citations
       bibliography: Core.json #JSON is faster than BibTeX, symlinked to ~/.pandoc
       csl: csl/apa-ian.csl
-      #citation-abbreviations: cite-abbr.json # my journal abbreviations
+      citation-abbreviations: cite-abbr.json # my journal abbreviations
     metadata:
       reference-section-title: References
       notes-after-punctuation: false
