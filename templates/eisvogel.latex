@@ -734,16 +734,15 @@ $if(institute)$
 $endif$
 }
 
-$if(logo)$
-\noindent
-\includegraphics[width=$if(logo-width)$$logo-width$$else$100$endif$pt, left]{$logo$}
-$endif$
-
 $if(date)$
 \vskip 2em
 \textsf{\emph{$date$}}
 $endif$
 \end{flushleft}
+$if(logo)$
+\noindent
+\includegraphics[width=$if(logo-width)$$logo-width$$else$100$endif$pt, center]{$logo$}
+$endif$
 \end{titlepage}
 \restoregeometry
 $endif$
