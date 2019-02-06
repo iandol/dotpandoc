@@ -20,7 +20,6 @@ Paru::Filter.run do
         else
           text += x.to_s + ' & ' 
         end
-      end
       text = text[0..-4]
     end
   elsif inst[0].is_a?(Hash)
