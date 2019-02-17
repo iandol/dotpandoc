@@ -506,7 +506,9 @@ $endif$
 \usepackage[font={stretch=1.0,sf,small}, textfont={color=caption-color}, position=bottom, skip=4mm, labelfont=bf, singlelinecheck=false, format=hang, labelsep=endash]{caption}
 \setcapindent{0em}
 \captionsetup[longtable]{position=above}
-
+$if(nonumberfigures)$
+\captionsetup[figure]{labelformat=empty}% redefines the caption setup of the figures environment
+$endif$
 %
 % blockquote
 %
