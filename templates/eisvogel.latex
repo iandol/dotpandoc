@@ -742,6 +742,7 @@ $if(date)$
 $endif$
 \end{flushleft}
 $if(logo)$
+\vskip 2em
 \noindent
 \includegraphics[width=$if(logo-width)$$logo-width$$else$100$endif$pt, center]{$logo$}
 $endif$

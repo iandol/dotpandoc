@@ -114,7 +114,7 @@ templates:
 #-----------------------------------------------------------------------------
   latex:
     preprocessors: 
-      - preprocessors/removeImageDimensions #remove image dimensions
+      #- preprocessors/removeImageDimensions #remove image dimensions
     pandoc:
       from: markdown
       to: latex
@@ -243,7 +243,7 @@ templates:
   eisvogel:
     extends: 'refs'
     preprocessors: 
-      - preprocessors/removeImageDimensions #remove image dimensions
+      #- preprocessors/removeImageDimensions #remove image dimensions
     pandoc:
       from: markdown
       to: latex
@@ -259,8 +259,8 @@ templates:
       titlepage-text-color: FFFFFF
       titlepage-rule-color: EEEEEE
       titlepage-rule-height: 10
-      #logo: "/Users/ian/Dropbox/Images/Logos/ION_Logo.png"
-      #logo-width: 100
+      #logo: "/Users/ian/Dropbox/Images/Logos/Platform-banner-ION.png"
+      #logo-width: 350
       mainfont: 'Greta Sans Pro'
       mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
       sansfont: 'Graublau Slab'
