@@ -1,8 +1,8 @@
 % !TEX TS-program = xelatex
 % !TEX encoding = UTF-8 Unicode
 %%
-% Copyright (c) 2018, Pascal Wagler;  
-% Copyright (c) 2014--2018, John MacFarlane
+% Copyright (c) 2017 - 2019, Pascal Wagler;  
+% Copyright (c) 2014 - 2019, John MacFarlane
 % 
 % All rights reserved.
 % 
@@ -42,11 +42,39 @@
 
 \PassOptionsToPackage{unicode=true$for(hyperrefoptions)$,$hyperrefoptions$$endfor$}{hyperref} % options for packages loaded elsewhere
 \PassOptionsToPackage{hyphens}{url}
-\PassOptionsToPackage{dvipsnames,svgnames*,table}{xcolor}
-$if(dir)$$if(latex-dir-rtl)$
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*,table}{xcolor}
+$if(dir)$
+$if(latex-dir-rtl)$
 \PassOptionsToPackage{RTLdocument}{bidi}
-$endif$$endif$%
-\documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$paper,$else$a4paper,$endif$$if(beamer)$ignorenonframetext,$if(handout)$handout,$endif$$if(aspectratio)$aspectratio=$aspectratio$,$endif$$endif$$for(classoption)$$classoption$$sep$,$endfor$,tablecaptionabove]{$if(book)$scrbook$else$scrartcl$endif$}
+$endif$
+$endif$
+%
+\documentclass[
+$if(fontsize)$
+  $fontsize$,
+$endif$
+$if(lang)$
+  $babel-lang$,
+$endif$
+$if(papersize)$
+  $papersize$paper,
+$else$
+  a4paper,
+$endif$
+$if(beamer)$
+  ignorenonframetext,
+$if(handout)$
+  handout,
+$endif$
+$if(aspectratio)$
+  aspectratio=$aspectratio$,
+$endif$
+$endif$
+$for(classoption)$
+  $classoption$$sep$,
+$endfor$
+,tablecaptionabove
+]{$if(book)$scrbook$else$scrartcl$endif$}
 $if(beamer)$
 $if(background-image)$
 \usebackgroundtemplate{%
@@ -114,7 +142,6 @@ $else$
 $endif$
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[$if(fontenc)$$fontenc$$else$T1$endif$]{fontenc}
   \usepackage[utf8]{inputenc}
@@ -129,10 +156,8 @@ $if(mathspec)$
 $else$
   \usepackage{unicode-math}
 $endif$
-  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
-$for(fontfamilies)$
-  \newfontfamily{$fontfamilies.name$}[$fontfamilies.options$]{$fontfamilies.font$}
-$endfor$
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 $if(mainfont)$
     \setmainfont[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$]{$mainfont$}
 $endif$
@@ -143,8 +168,11 @@ $if(sansfont)$
     \setsansfont[$for(sansfontoptions)$$sansfontoptions$$sep$,$endfor$]{$sansfont$}
 $endif$
 $if(monofont)$
-    \setmonofont[Mapping=tex-ansi$if(monofontoptions)$,$for(monofontoptions)$$monofontoptions$$sep$,$endfor$$endif$]{$monofont$}
+  \setmonofont[$for(monofontoptions)$$monofontoptions$$sep$,$endfor$]{$monofont$}
 $endif$
+$for(fontfamilies)$
+  \newfontfamily{$fontfamilies.name$}[$for(fontfamilies.options)$$fontfamilies.options$$sep$,$endfor$]{$fontfamilies.font$}
+$endfor$
 $if(mathfont)$
 $if(mathspec)$
   \ifxetex
@@ -196,19 +224,22 @@ $endif$
 $endif$
 % use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-% use microtype if available
-\IfFileExists{microtype.sty}{%
+\IfFileExists{microtype.sty}{% use microtype if available
 \usepackage[$for(microtypeoptions)$$microtypeoptions$$sep$,$endfor$]{microtype}
 \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
 $if(indent)$
 $else$
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
 \IfFileExists{parskip.sty}{%
 \usepackage{parskip}
 }{% else
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{6pt plus 2pt minus 1pt}
-}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
 $endif$
 $if(verbatim-in-note)$
 \usepackage{fancyvrb}
@@ -269,6 +300,13 @@ $endif$
 $if(listings)$
 \usepackage{listings}
 \newcommand{\passthrough}[1]{#1}
+\lstset{defaultdialect=[5.3]Lua}
+\lstset{defaultdialect=[x86masm]Assembler}
+$endif$
+$if(listings-no-page-break)$
+\usepackage{etoolbox}
+\BeforeBeginEnvironment{lstlisting}{\par\noindent\begin{minipage}{\linewidth}}
+\AfterEndEnvironment{lstlisting}{\end{minipage}\par\addvspace{\topskip}}
 $endif$
 $if(lhs)$
 \lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
@@ -285,8 +323,9 @@ $if(beamer)$
 \def\fnum@table{\tablename~\thetable}
 \makeatother
 $else$
-% Fix footnotes in tables (requires footnote package)
-\IfFileExists{footnote.sty}{\usepackage{footnote}\makesavenoteenv{longtable}}{}
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
 $endif$
 $endif$
 $if(graphics)$
@@ -315,7 +354,7 @@ $endif$
 $if(numbersections)$
 \setcounter{secnumdepth}{$if(secnumdepth)$$secnumdepth$$else$5$endif$}
 $else$
-\setcounter{secnumdepth}{0}
+\setcounter{secnumdepth}{-2}
 $endif$
 $if(beamer)$
 $else$
@@ -344,12 +383,12 @@ $for(header-includes)$
 $header-includes$
 $endfor$
 $if(lang)$
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\ifnum 0\ifxetex 1\fi=0 % if pdftex or luatex
   \usepackage[shorthands=off,$for(babel-otherlangs)$$babel-otherlangs$,$endfor$main=$babel-lang$]{babel}
 $if(babel-newcommands)$
   $babel-newcommands$
 $endif$
-\else
+\else % if xetex
   $if(mainfont)$
   $else$
   % See issue https://github.com/reutenauer/polyglossia/issues/127
@@ -391,18 +430,25 @@ $if(title)$
 \title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
 $endif$
 $if(subtitle)$
-\providecommand{\subtitle}[1]{}
+$if(beamer)$
+$else$
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+$endif$
 \subtitle{$subtitle$}
 $endif$
 $if(author)$
 \author{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.correspondence)$*$endif$$if(author.equal_contributor)$†$endif$}$sep$ \& $endfor$}
 $endif$
-$if(institute)$
-\providecommand{\institute}[1]{}
-\institute{$for(institute)$\textsuperscript{$institute.index$}\enskip $institute.name$$sep$ \& $endfor$}
-$endif$
 \date{$date$}
 $if(beamer)$
+$if(institute)$
+\institute{$for(institute)$\textsuperscript{$institute.index$}\enskip $institute.name$$sep$ \& $endfor$}
+$endif$
 $if(titlegraphic)$
 \titlegraphic{\includegraphics{$titlegraphic$}}
 $endif$
@@ -669,17 +715,20 @@ $if(disable-header-and-footer)$
 $else$
 \definecolor{DarkGray}{rgb}{.5,.5,.5}
 \usepackage{fancyhdr}
-\pagestyle{fancy}
+
+\fancypagestyle{eisvogel-header-footer}{
 \fancyhead{}
 \fancyfoot{}
-\lhead{\footnotesize{}\color{DarkGray}$title$}
-\chead{}
-\rhead{\footnotesize{}\color{DarkGray}$date$}
-\lfoot{\footnotesize{}\color{DarkGray}$for(author)$$author.name$$sep$,$endfor$}
-\cfoot{}
-\rfoot{\footnotesize{}\color{DarkGray}\thepage}
+  \lhead[$if(header-right)$$header-right$$else$$date$$endif$]{\footnotesize{}\color{DarkGray}$if(header-left)$$header-left$$else$$title$$endif$}
+  \chead[$if(header-center)$$header-center$$else$$endif$]{\footnotesize{}\color{DarkGray}$if(header-center)$$header-center$$else$$endif$}
+  \rhead[$if(header-left)$$header-left$$else$$title$$endif$]{\footnotesize{}\color{DarkGray}$if(header-right)$$header-right$$else$$date$$endif$}
+  \lfoot[$if(footer-right)$$footer-right$$else$\thepage$endif$]{\footnotesize{}\color{DarkGray}$if(footer-left)$$footer-left$$else$$for(author)$$author.name$$sep$, $endfor$$endif$}
+  \cfoot[$if(footer-center)$$footer-center$$else$$endif$]{\footnotesize{}\color{DarkGray}$if(footer-center)$$footer-center$$else$$endif$}
+  \rfoot[$if(footer-left)$$footer-left$$else$$for(author)$$author.name$$sep$, $endfor$$endif$]{\footnotesize{}\color{DarkGray}$if(footer-right)$$footer-right$$else$\thepage$endif$}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0.4pt}
+}
+\pagestyle{eisvogel-header-footer}
 $endif$
 
 %%
@@ -763,6 +812,11 @@ $if(abstract)$
 \noindent\textbf{Abstract — }$abstract$
 \end{abstract}
 $endif$
+$endif$
+
+$if(first-chapter)$
+\setcounter{chapter}{$first-chapter$}
+\addtocounter{chapter}{-1}
 $endif$
 
 $for(include-before)$
