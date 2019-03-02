@@ -51,7 +51,6 @@ templates:
       filter:
         - filters/removeHR #remove horizontal rules
         - filters/simplifyMetadata #collapse down metadata "author: [name: affiliation:]" to author:
-        - filters/prependAbstract #prepends abstract: metadata into the text
         - filters/prependAll # prepends institute:, comments: and keywords: metadata into the text
       reference-doc: templates/custom.docx
 #-----------------------------------------------------------------------------
