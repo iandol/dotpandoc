@@ -267,8 +267,8 @@ templates:
       monofont: 'Fira Code'
       mathfont: 'Cambria Math'
       mathfontoptions: 'math-style=ISO,bold-style=ISO'
-      CJKmainfont:
-      CJKsansfont:
+      CJKmainfont: 'PingFang SC'
+      CJKsansfont: 'PingFang SC'
       fontsize: '12pt'
       linestretch: '1.5'
       colorlinks: true
