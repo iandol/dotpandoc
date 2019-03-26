@@ -17,6 +17,8 @@ templates:
       standalone: true
       filter: 
         - pandoc-citeproc #process citations
+      lua-filter:
+        - filters/pagebreak.lua
       bibliography: Core.json #JSON is faster than BibTeX, symlinked to ~/.pandoc
       csl: csl/apa-ian.csl
       citation-abbreviations: cite-abbr.json # my journal abbreviations
