@@ -1,5 +1,7 @@
 # --------------------------- Pandocomatic templates -------------------------
-# REMEMBER that YAML requires spaces not tabs, and indentation is important!
+# Remember that YAML requires SPACES NOT TABS, and indentation is important!
+# Path values are relative to the Pandoc data dir, you can use ./ to
+# make the relative to the working directory.
 settings:
   recursive: true
   follow-symlinks: false

@@ -1,7 +1,7 @@
 # My Filters #
 Most of the filters here are really aimed to handle academic paper workflows. For scientific papers we normally have multiple authors, each with an affiliation to an Istitution and optionally an address for correspondence. Pandoc offers templates that allow us to convert metadata into this structured content, and for HTML and LaTeX I use this mechanism. Word and LibreOffice do not allow such flexibility, and so we must use filters to transform the metadata to add the correct information to the document body itself.
 
-My YAML metadata normally looks like this (<$…> are Scrivener placeholders):
+My YAML metadata normally looks something like this (<$…> are Scrivener placeholders):
 
 ```yaml
 title: "<$projecttitle>"
@@ -50,7 +50,10 @@ Likewise, my [prependInstitute](https://github.com/iandol/dotpandoc/blob/master/
 Affiliations: ^1^ — University of X & ^2^ — Institute of Y
 ```
 
-As I also prepend comments and keywords, I've created a filter that prepends a "list of metadata entries", which is a bit faster than running sperate prependXXX filters for each item to prepend: [prependAll](https://github.com/iandol/dotpandoc/blob/master/filters/prependAll). [prependAuthor](https://github.com/iandol/dotpandoc/blob/master/filters/prependAuthor) is used to get author information into plain-text like outputs.
+As I also prepend comments and keywords, I've created a filter that prepends a "list of metadata entries", which is a bit faster than running sperate prependXXX filters for each item to prepend: [prependAll](https://github.com/iandol/dotpandoc/blob/master/filters/prependAll). [prependAuthor](https://github.com/iandol/dotpandoc/blob/master/filters/prependAuthor) is used to get author information into plain-text outputs.
 
 Other filters here are from other sources or for testing purposes. I do use addToday and removeHR regularly.
+
+As an alternative to my metadata filter, you could also use Pandoc-Scholar's Lua filter: https://github.com/pandoc-scholar/pandoc-scholar/tree/master/lua-filters/scholarly-metadata  
+
 
