@@ -17,11 +17,12 @@ templates:
     preprocessors: []
     pandoc:
       standalone: true
+      verbose: true # verbose by default
       filter: 
-        - pandoc-citeproc #process citations
+        - pandoc-citeproc # process citations
       lua-filter:
-        - filters/pagebreak.lua
-      bibliography: Core.json #JSON is faster than BibTeX, symlinked to ~/.pandoc
+        - filters/pagebreak.lua # use \newpage{} also for HTML and docx
+      bibliography: Core.json #JSON faster than BIB, symlinked to Pandoc data dir
       csl: csl/apa-ian.csl
       citation-abbreviations: cite-abbr.json # my journal abbreviations
     metadata:
@@ -36,6 +37,7 @@ templates:
       from: markdown
       to: plain
       standalone: true
+      verbose: true
       columns: 80
       filter:
         - filters/prependAbstract #prepends abstract: metadata into the text
@@ -117,13 +119,13 @@ templates:
 #-----------------------------------------------------------------------------
   latex:
     preprocessors: 
-      #- preprocessors/removeImageDimensions #remove image dimensions
+      #- preprocessors/removeImageDimensions # remove image dimensions
     pandoc:
       from: markdown
       to: latex
       standalone: true
       filter: 
-        - filters/assimilateMetadata #convert author: to author: [name: affiliation:]
+        - filters/assimilateMetadata # handle academic metadata
       template: templates/custom.latex
       base-header-level: 2
     metadata:
@@ -146,7 +148,7 @@ templates:
       citecolor: Sepia
       urlcolor: BrickRed
       lang: 'en-GB'
-      nonumberfigures: true
+      nonumberfigures: true # I use Scrivener autonumbering, so disable for LaTeX
     postprocessors: 
       - postprocessors/fixLaTeX
 #-----------------------------------------------------------------------------
@@ -243,13 +245,13 @@ templates:
   eisvogel:
     extends: 'refs'
     preprocessors: 
-      #- preprocessors/removeImageDimensions #remove image dimensions
+      #- preprocessors/removeImageDimensions # remove image dimensions
     pandoc:
       from: markdown
       to: latex
       standalone: true
       filter: 
-        - filters/assimilateMetadata #convert author: to author: [name: affiliation:]
+        - filters/assimilateMetadata # handle academic matadata
       template: templates/eisvogel.latex
       toc: true
       base-header-level: 1
@@ -339,7 +341,7 @@ templates:
       filter: 
         - filters/assimilateMetadata #regularise metadata
       template: 'templates/custom.html'
-      css: ['templates/custom.css']
+      css: 'templates/custom.css'
       toc: true
       toc-depth: 3
       base-header-level: 1
