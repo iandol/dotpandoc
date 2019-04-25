@@ -266,7 +266,7 @@ $if(dir)$
 \fi
 $endif$
 
-\address{$for(return-address)$$return-address$$sep$\\$endfor$}
+\address{$for(return-address)$\footnotesize{$return-address$}$sep$\\$endfor$}
 
 $if(blockquote)$
 \usepackage{mdframed} % color is loaded by mdframed
