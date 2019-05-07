@@ -1,4 +1,4 @@
-% !TEX TS-program = xelatex
+% !TEX program = xelatex
 % !TEX encoding = UTF-8 Unicode
 % Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode$for(hyperrefoptions)$,$hyperrefoptions$$endfor$}{hyperref}
@@ -158,6 +158,10 @@ $endif$
 % use cambria/Arial to fix some font substitution problems for e.g. ⬄
 \newfontfamily\fixfont[]{Cambria}
 \newfontfamily\fixfontB[]{Arial Unicode MS}
+$if(logo)$
+\usepackage[export]{adjustbox}
+\usepackage{graphicx}
+$endif$
 % customise titles
 \usepackage{xcolor}
 \usepackage{titlesec}
@@ -237,9 +241,9 @@ $if(colorlinks)$
             citecolor=$if(citecolor)$$citecolor$$else$Sepia$endif$,
             urlcolor=$if(urlcolor)$$urlcolor$$else$BrickRed$endif$,
 $else$
-  hidelinks,
+            hidelinks,
 $endif$
-  pdfcreator={LaTeX via pandoc}}
+            pdfcreator={Scrivomatic, Pandoc and LaTeX}}
 \urlstyle{same} % disable monospaced font for URLs
 $if(verbatim-in-note)$
 \VerbatimFootnotes % allow verbatim text in footnotes
@@ -393,7 +397,7 @@ $endif$
 \subtitle{$subtitle$}
 $endif$
 $if(author)$
-\author{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.correspondence)$*$endif$$if(author.equal_contributor)$†$endif$}$sep$ \and $endfor$}
+\author{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.correspondence)$✉︎$endif$$if(author.equal_contributor)$†$endif$}$sep$ \and $endfor$}
 $endif$
 \date{$date$}
 $if(beamer)$
@@ -419,17 +423,24 @@ $else$
 \maketitle
 $endif$
 
-$if(equal_contributors)$
-\textsf{\textsuperscript{†} These authors contributed equally to this work.}
-$endif$
-
-$if(correspondence_list)$
-\textsf{\textsuperscript{*} Correspondence:\quad$for(correspondence_list)$\emph{$correspondence_list$}$sep$\quad\&\quad$endfor$}
+\begin{center}
+$if(logo)$
+\vspace{-1em}\includegraphics[width=$if(logo-width)$$logo-width$$else$100$endif$pt, center]{$logo$}\vspace{-0.8em}
 $endif$
 
 $if(institute)$
-\vspace{-1em}\textsf{$for(institute)$\textsuperscript{$institute.index$}$institute.name$$sep$\quad\&\quad$endfor$}
+\textsf{$for(institute)$\textsuperscript{$institute.index$} $institute.name$$sep$\quad\&\quad$endfor$}
 $endif$
+
+$if(correspondence_list)$
+\textsf{\textsuperscript{✉︎} $for(correspondence_list)$\emph{$correspondence_list$}$sep$\quad\&\quad$endfor$}
+$endif$
+
+$if(equal_contributors)$
+\textsf{\textsuperscript{†} \small\emph{These authors contributed equally to this work.}}
+$endif$
+\end{center}
+
 
 $if(abstract)$
 \begin{abstract}

@@ -131,9 +131,10 @@ templates:
     metadata:
       documentclass: 'article'
       classoption: twoside
+      pagestyle: plain # control \pagestyle{}: the default article class supports plain (default), empty (no running heads or page numbers), and headings (section titles in running heads)
       fontsize: '12pt'
       linestretch: '1.5'
-      geometry: 'margin=1.8cm'
+      geometry: ['margin=2cm','twoside']
       mainfont: 'Greta Text Pro'
       mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
       sansfont: 'Greta Sans Pro'
@@ -141,8 +142,7 @@ templates:
       monofont: 'Fira Code'
       mathfont: 'Cambria Math'
       mathfontoptions: 'math-style=ISO,bold-style=ISO'
-      CJKmainfont: 'Libian SC'
-      CJKsansfont: 'PingFang SC'
+      CJKmainfont: 'Heiti SC'
       colorlinks: true
       linkcolor: Mahogany
       citecolor: Sepia
