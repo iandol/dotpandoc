@@ -155,7 +155,7 @@ $if(CJKmainfont)$
   \fi
 $endif$
 \fi
-% use cambria/Arial to fix some font substitution problems for e.g. ⬄
+% use Cambria/Arial Unicode to fix some font substitution problems for e.g. ⬄
 \newfontfamily\fixfont[]{Cambria}
 \newfontfamily\fixfontB[]{Arial Unicode MS}
 $if(logo)$
@@ -397,7 +397,11 @@ $endif$
 \subtitle{$subtitle$}
 $endif$
 $if(author)$
-\author{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.correspondence)$✉︎$endif$$if(author.equal_contributor)$†$endif$}$sep$ \and $endfor$}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \author{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.correspondence)$*$endif$$if(author.equal_contributor)$†$endif$}$sep$ \and $endfor$}
+\else
+  \author{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.correspondence)$\fixfontB{✉︎}$endif$$if(author.equal_contributor)$†$endif$}$sep$ \and $endfor$}
+\fi
 $endif$
 \date{$date$}
 $if(beamer)$
@@ -433,11 +437,15 @@ $if(institute)$
 $endif$
 
 $if(correspondence_list)$
-\textsf{\textsuperscript{✉︎} $for(correspondence_list)$\emph{$correspondence_list$}$sep$\quad\&\quad$endfor$}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\textsf{* $for(correspondence_list)$\emph{$correspondence_list$}$sep$\quad\&\quad$endfor$}
+\else
+\textsf{\fixfontB{✉︎} $for(correspondence_list)$\emph{$correspondence_list$}$sep$\quad\&\quad$endfor$}
+\fi
 $endif$
 
 $if(equal_contributors)$
-\textsf{\textsuperscript{†} \small\emph{These authors contributed equally to this work.}}
+\textsf{\textsuperscript{†} \small{\emph{These authors contributed equally to this work.}}}
 $endif$
 \end{center}
 
