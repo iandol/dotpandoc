@@ -36,6 +36,7 @@ templates:
     pandoc:
       from: markdown
       to: plain
+      template: templates/custom.plain
       standalone: true
       verbose: true
       columns: 80
