@@ -1,7 +1,9 @@
 #!/usr/bin/env ruby
 # If we have author: metadata, convert it to an
 # "Authors" and Affiliations" paragraph at the start of the document
-# This is because Word template cannot handle this natively
+# This is because plain text template etc. cannot handle this natively
+#
+# VERSION: 1.0.0
 
 require 'paru/filter'
 

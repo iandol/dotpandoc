@@ -280,6 +280,8 @@ templates:
       urlcolor: BrickRed
       nonumberfigures: true
       lang: 'en-GB'
+      header-left:
+      footer-left:
     postprocessors: 
       - postprocessors/fixLaTeX
 #-----------------------------------------------------------------------------
