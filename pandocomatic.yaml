@@ -1,17 +1,21 @@
 # --------------------------- Pandocomatic templates -------------------------
 # Remember that YAML requires SPACES NOT TABS, and indentation is important!
-# Path values are relative to the Pandoc data dir, you can use ./ to
-# make the relative to the working directory.
+# Paths are relative to the Pandoc data dir, you can also use ./ to make
+# them relative to the working directory.
 settings:
   recursive: true
   follow-symlinks: false
   skip: ['.*', 'pandocomatic.yaml']
   match-files: 'first'
+#-----------------------------------------------------------------------------
 templates:
 #-----------------------------------------------------------------------------
 #:::::::::::::::::::::::::::::::::: GENERAL ::::::::::::::::::::::::::::::::::
 #-----------------------------------------------------------------------------
   crossref:
+    setup: []
+    preprocessors: 
+      - preprocessors/fixCrossref #allows to put crossref labels in styled captions
     pandoc:
       standalone: true
       verbose: true # verbose by default
@@ -19,11 +23,10 @@ templates:
         - pandoc-crossref # process crossrefs
     metadata:
       linkReferences: true
+    postprocessors: []
+    cleanup: []
 #-----------------------------------------------------------------------------
   refs:
-    extends: []
-    setup: []
-    preprocessors: []
     pandoc:
       standalone: true
       verbose: true # verbose by default
@@ -38,8 +41,6 @@ templates:
       reference-section-title: References
       notes-after-punctuation: false
       link-citations: true 
-    postprocessors: []
-    cleanup: []
 #-----------------------------------------------------------------------------
   plain:
     pandoc:
@@ -55,10 +56,10 @@ templates:
         - filters/prependAuthor #prepends authors
 #-----------------------------------------------------------------------------
   plain-refs:
-    extends: [refs,plain]
+    extends: [plain,refs]
 #-----------------------------------------------------------------------------
   plain-refs-crossref:
-    extends: [refs,plain,crossref]
+    extends: [plain,refs,crossref]
 #-----------------------------------------------------------------------------
 #:::::::::::::::::::::::::::::::::: DOCX :::::::::::::::::::::::::::::::::::::
 #-----------------------------------------------------------------------------
@@ -68,16 +69,16 @@ templates:
       to: docx
       standalone: true
       filter:
-        - filters/removeHR #remove horizontal rules
-        - filters/simplifyMetadata #collapse down metadata "author: [name: affiliation:]" to author:
+        #- filters/removeHR #remove horizontal rules
         - filters/prependAll # prepends institute:, comments: and keywords: metadata into the text
+        - filters/simplifyMetadata #collapse down metadata "author: [name: affiliation:]" to author:
       reference-doc: templates/custom.docx
 #-----------------------------------------------------------------------------
   docx-refs:
     extends: [docx,refs]
 #-----------------------------------------------------------------------------
   docx-refs-crossref:
-    extends: [refs,docx,crossref]
+    extends: [docx,refs,crossref]
 #-----------------------------------------------------------------------------
   docx-refs-not-linked:
     extends: [docx,refs]
@@ -150,7 +151,7 @@ templates:
       pagestyle: plain # control \pagestyle{}: the default article class supports plain (default), empty (no running heads or page numbers), and headings (section titles in running heads)
       fontsize: '12pt'
       linestretch: '1.5'
-      geometry: ['margin=2cm','twoside']
+      geometry: ['inner=2.2cm','outer=1.8cm','bottom=2.5cm','twoside']
       mainfont: 'Greta Text Pro'
       mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
       sansfont: 'Greta Sans Pro'
@@ -170,6 +171,16 @@ templates:
 #-----------------------------------------------------------------------------
   latex-refs:
     extends: [latex,refs]
+#-----------------------------------------------------------------------------
+  latex-refs-crossref:
+    extends: [latex,refs,crossref]
+    pandoc:
+      include-in-header: blank.txt
+    metadata:
+      nonumberfigures: false
+      titleDelim: '&nbsp;—&nbsp;'
+      figPrefix: ['Fig.','Figs.']
+
 #-----------------------------------------------------------------------------
   latex-endnote:
     extends: [latex-refs]
@@ -196,6 +207,7 @@ templates:
     pandoc:
       toc: true
       toc-depth: 3
+    metadata:
       lof: true
 #-----------------------------------------------------------------------------
   latex-letter:
@@ -244,6 +256,13 @@ templates:
 #-----------------------------------------------------------------------------
   pdf-refs:
     extends: [latex-refs]
+    pandoc:
+      to: pdf
+      pdf-engine: 'xelatex'
+    cleanup: ['latexmk -c']
+#-----------------------------------------------------------------------------
+  pdf-refs-crossref:
+    extends: [latex-refs-crossref]
     pandoc:
       to: pdf
       pdf-engine: 'xelatex'

@@ -6,15 +6,19 @@
 		{
 			"label": "Scrivomatic",
 			"type": "shell",
+			"options": {
+				"cwd": "${fileDirname}"
+			},
 			"command": "scrivomatic",
 			"args": [
 				"-v",
 				"-l",
 				"${file}"
-		  ]
-			"group": {
-				"kind": "build",
-				"isDefault": true
+			],
+			"group": "build",
+			"presentation": {
+				"reveal": "always",
+				"panel": "new"
 			}
 		}
 	]

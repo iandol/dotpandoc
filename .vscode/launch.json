@@ -1,0 +1,30 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Debug Ruby File",
+			"type": "Ruby",
+			"request": "launch",
+			"program": "${file}"
+		},
+		{
+			"name": "Debug < MD",
+			"type": "Ruby",
+			"request": "launch",
+			"program": "${file}",
+			"args": [" < ${workspaceROOT}/test.md"]
+		},
+		{ //see https://github.com/rubyide/vscode-ruby/wiki/3.-Attaching-to-a-debugger -  rdebug-ide -- file.rb
+			"name": "Debug Attach",
+			"type": "Ruby",
+			"request": "attach",
+			"cwd": "${workspaceRoot}",
+			"remoteWorkspaceRoot": "${workspaceRoot}",
+			"remoteHost": "127.0.0.1",
+			"remotePort": "1234"
+		}
+	]
+}
