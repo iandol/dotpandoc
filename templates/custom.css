@@ -93,18 +93,21 @@ blockquote {
 	font-style: italic;
 }
 
+.author_contributions {font-size: 0.9em;}
+
 .author_affiliations {padding-left: 1em; margin-top:1em;}
 .author_affiliations::before {
+	display: block;
 	content: "Affiliations: ";
 	font-weight: bold;
 	color: grey;
 }
 .affiliation-item {
-	display: inline-block;
-	margin-right: 20px;
+	display: block;
+	margin-left: 20px;
 }
 
-.correspondence {display: none; padding-left: 1em; margin-top:1em;}
+.correspondence {padding-left: 1em; margin-top:1em;}
 .correspondence::before {
 	content: "Correspondence: ";
 	font-weight: bold;
@@ -112,7 +115,8 @@ blockquote {
 }
 .correspondence-item {
 	display: inline-block;
-	margin-right: 20px;
+	margin-right: 25px;
+	margin-left: 5px;
 }
 
 .date::before {
@@ -153,7 +157,7 @@ aside, .comment {
 	z-index: -1;
 }
 
-aside:hover, .comment:hover {  }
+aside:hover, .comment:hover { opacity: 1; }
 
 div.infobox, div.info, div.todo, div.warning {
 	font-size: 0.7em;
@@ -270,8 +274,6 @@ figure.fullwidth table {
 div.sourceCode,
 pre:not(.sourceCode) {
 	padding: 1.4rem;
-	margin: -0.7rem -1.4rem;
-	width: 55%;
 	font-size: 0.9rem;
 	overflow-x: auto;
 }

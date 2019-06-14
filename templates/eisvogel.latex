@@ -525,9 +525,8 @@ $endif$
 % captions
 %
 \definecolor{caption-color}{HTML}{444444}
-\usepackage[font={stretch=1.0,sf,small}, textfont={color=caption-color}, position=bottom, skip=4mm, labelfont=bf, singlelinecheck=false, format=hang, labelsep=endash]{caption}
+\usepackage[font={stretch=1.0,sf,small}, textfont={color=caption-color}, position=bottom, skip=4mm, labelfont=bf, singlelinecheck=false, justification=$if(caption-justification)$$caption-justification$$else$raggedright$endif$, format=hang, labelsep=endash]{caption}
 \setcapindent{0em}
-\captionsetup[longtable]{position=above}
 $if(nonumberfigures)$
 \captionsetup[figure]{labelformat=empty}% redefines the caption setup of the figures environment
 $endif$
@@ -655,10 +654,10 @@ $endif$
   frameround       = ffff,
   tabsize          = 4,
   numberstyle      = \color{listing-numbers},
-  aboveskip        = -0.7em,
+  aboveskip        = 1.0em,
   belowskip        = 0.1em,
   abovecaptionskip = 0em,
-  belowcaptionskip = 1em,
+  belowcaptionskip = 1.0em,
   keywordstyle     = \color{listing-keyword}\bfseries,
   classoffset      = 0,
   sensitive        = true,
@@ -705,7 +704,7 @@ $endif$
 %
 $if(disable-header-and-footer)$
 $else$
-\definecolor{DarkGray}{rgb}{.5,.5,.5}
+\definecolor{DarkGray}{rgb}{.6,.6,.6}
 \usepackage{fancyhdr}
 
 \fancypagestyle{eisvogel-header-footer}{

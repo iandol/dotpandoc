@@ -149,18 +149,21 @@ ins {
 	color: #333;
 }
 
+.author_contributions {font-size: 0.9em;}
+
 .author_affiliations {padding-left: 0em; margin-top:0.5em;}
 .author_affiliations::before {
+	display: block;
 	content: "Affiliations: ";
 	font-weight: bold;
 	color: grey;
 }
 .affiliation-item {
-	display: inline-block;
-	margin-right: 20px;
+	display: block;
+	margin-left: 20px;
 }
 
-.correspondence {display: none; padding-left: 0em; margin-top:0.5em;}
+.correspondence {padding-left: 0em; margin-top:0.5em;}
 .correspondence::before {
 	content: "Correspondence: ";
 	font-weight: bold;
@@ -168,7 +171,8 @@ ins {
 }
 .correspondence-item {
 	display: inline-block;
-	margin-right: 20px;
+	margin-right: 25px;
+	margin-left: 5px;
 }
 
 .date {font-size: 1rem; padding-left: 0em; margin-top:0.5em;}

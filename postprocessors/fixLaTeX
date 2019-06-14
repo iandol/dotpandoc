@@ -35,7 +35,7 @@ output.gsub!(/\\end\{quote\}/, '}\end{quote}')
 
 # make isolated figures centered
 output.gsub!(/^\\includegraphics{/, '\\includegraphics[center]{')
-output.gsub!(/^\\includegraphics\[([^\]]*)\]/, '\\includegraphics[\1,center]')
+#output.gsub!(/^\\includegraphics\[([^\]]*)\]/, '\\includegraphics[\1,center]')
 
 # make sure reference typography is small and sans-font
 output.gsub!(/\\label{(.*(references|bibliography))}/, '\\label{\1}\\setstretch{0.75}\\sffamily\\small')

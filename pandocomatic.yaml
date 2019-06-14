@@ -180,7 +180,6 @@ templates:
       nonumberfigures: false
       titleDelim: '&nbsp;—&nbsp;'
       figPrefix: ['Fig.','Figs.']
-
 #-----------------------------------------------------------------------------
   latex-endnote:
     extends: [latex-refs]
@@ -314,10 +313,25 @@ templates:
       urlcolor: BrickRed
       nonumberfigures: true
       lang: 'en-GB'
+      disable-header-and-footer:
+      header-right:
       header-left:
-      footer-left:
+      header-center:
+      footer-right:
+      footer-left: 
+      footer-center:
     postprocessors: 
       - postprocessors/fixLaTeX
+#-----------------------------------------------------------------------------
+# https://github.com/Wandmalfarbe/pandoc-latex-template
+  eisvogel-crossref:
+    extends: [eisvogel,crossref]
+    pandoc:
+      include-in-header: blank.txt
+    metadata:
+      nonumberfigures: false
+      titleDelim: '&nbsp;—&nbsp;'
+      figPrefix: ['Fig.','Figs.']
 #-----------------------------------------------------------------------------
 # https://github.com/Wandmalfarbe/pandoc-latex-template
   eisvogel-pdf:
@@ -381,8 +395,15 @@ templates:
       toc: true
       toc-depth: 3
       base-header-level: 1
+    metadata:
+      lang: 'en-GB'
     postprocessors: 
       - postprocessors/fixHTML
+#-----------------------------------------------------------------------------
+  html-selfcontained:
+    extends: [html]
+    pandoc:
+      self-contained: true
 #-----------------------------------------------------------------------------
   html-changes:
     extends: ['html']
@@ -392,16 +413,17 @@ templates:
   html-refs:
     extends: [refs, html]
 #-----------------------------------------------------------------------------
+  html-refs-crossref:
+    extends: [refs, html, crossref]
+#-----------------------------------------------------------------------------
   html-endnote:
     extends: [refs, html]
     preprocessors: 
       - preprocessors/convertEndnoteRefs
 #-----------------------------------------------------------------------------
   html-scholar:
-    extends: [refs, html]
-    preprocessors: 
-      - preprocessors/convertEndnoteRefs
-    pandoc:
+    extends: [refs, crossref, html]
+    pandoc: 
       template: 'templates/pandoc-scholar.html'
       css: 'templates/pandoc-scholar.css'
 #-----------------------------------------------------------------------------
@@ -421,21 +443,12 @@ templates:
       toc: true
 #-----------------------------------------------------------------------------
   html-refs-pdf:
-    extends: [refs, html]
-    pandoc:
-      to: pdf
-      pdf-engine: prince
-      pdf-engine-opt: ['--page-size=A4']
+    extends: [refs, crossref, html-pdf]
 #-----------------------------------------------------------------------------
   html-endnote-pdf:
     extends: [html-refs-pdf]
     preprocessors: 
       - preprocessors/convertEndnoteRefs
-#-----------------------------------------------------------------------------
-  html-selfcontained:
-    extends: [html]
-    pandoc:
-      self-contained: true
 #-----------------------------------------------------------------------------
 # https://github.com/jez/tufte-pandoc-css
   tufte:
@@ -452,12 +465,14 @@ templates:
       css: 
         - 'templates/tufte.css'
         - 'templates/tuftepandoc.css'
+    metadata:
+      lang: 'en-GB'
 #-----------------------------------------------------------------------------
   tufte-refs:
-    extends: [refs,tufte]
+    extends: [refs,tufte,crossref]
 #-----------------------------------------------------------------------------
   tufte-refs-pdf:
-    extends: [refs,tufte]
+    extends: [tufte-refs]
     pandoc:
       to: pdf
       pdf-engine: prince
@@ -495,4 +510,4 @@ templates:
       filter: 
         - filters/testFilter
     metadata:
-      author: Joanna Doe
+      #author: Joanna Doe

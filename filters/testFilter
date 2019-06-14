@@ -3,7 +3,7 @@
 
 require 'byebug/core'
 require 'byebug'
-PORT = 8990
+PORT = 1234
 warn "\n!!!DEBUG Server started: localhost:#{PORT} @ " + Time.now.to_s + "\n\n"
 Byebug.wait_connection = true
 Byebug.start_server('127.0.0.1', PORT)
