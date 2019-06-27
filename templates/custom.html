@@ -67,7 +67,8 @@ $for(author)$
   $if(author.last)$and $endif$<span property="author" typeof="Person">
     $author.name$</span><sup>$for(author.affiliation)$$author.affiliation$$sep$,$endfor$
     $if(author.correspondence)$<a href="mailto:$author.correspondence$">✉</a>$endif$
-    $if(author.equal_contributor)$†$endif$</sup>$sep$,$endfor$
+    $if(author.equal_contributor)$†$endif$</sup>$sep$,
+$endfor$
 </p>
 $endif$
 $if(equal_contributors)$
@@ -87,6 +88,7 @@ $if(correspondence_list)$
   $for(correspondence_list)$<span class="correspondence-item">$correspondence_list$</span>$sep$    $endfor$
 </div>
 $endif$
+$if(abstract)$<p class="abstract" property="description">$abstract$</p>$endif$
 $if(doi)$<p><a href="https://doi.org/$doi$">doi: $doi$</a></p>$endif$
 
 $if(date)$

@@ -54,6 +54,8 @@ templates:
         - filters/prependAbstract #prepends abstract: metadata into the text
         - filters/prependAll #prepends institute:, comments: and keywords: metadata into the text
         - filters/prependAuthor #prepends authors
+      lua-filter:
+        - filters/removeEmphasis.lua # remove emphasis for plain and turn strong to UPPER
 #-----------------------------------------------------------------------------
   plain-refs:
     extends: [plain,refs]
