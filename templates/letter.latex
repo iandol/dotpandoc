@@ -29,8 +29,8 @@ $if(fontfamily)$
 $else$
 \usepackage{lmodern}
 $endif$
-\usepackage{setspace}
 $if(linestretch)$
+\usepackage{setspace}
 \setstretch{$linestretch$}
 $endif$
 \usepackage{amssymb,amsmath}
@@ -55,9 +55,6 @@ $for(fontfamilies)$
 $endfor$
 $if(mainfont)$
     \setmainfont[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$]{$mainfont$}
-$endif$
-$if(romanfont)$
-	\setromanfont[$for(romanfontoptions)$$romanfontoptions$$sep$,$endfor$]{$romanfont$}
 $endif$
 $if(sansfont)$
     \setsansfont[$for(sansfontoptions)$$sansfontoptions$$sep$,$endfor$]{$sansfont$}
@@ -296,7 +293,9 @@ $endif$
 \tableofcontents
 }
 $endif$
-\begin{letter}{$for(address)$$address$$sep$\\$endfor$}
+
+
+\begin{letter}{$for(address)$$address$$sep$\\$endfor$$if(subject)$\\ ~ \\$subject$$endif$}
 \opening{$opening$}
 $if(linestretch)$
 \setstretch{$linestretch$}
