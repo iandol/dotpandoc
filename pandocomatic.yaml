@@ -294,9 +294,13 @@ templates:
       titlepage: true
       titlepage-color: BB4433
       titlepage-text-color: FFFFFF
-      titlepage-rule-color: EEEEEE
+      titlepage-rule-color: FFFFFF
       titlepage-rule-height: 10
-      #logo: "/Users/ian/Dropbox/Images/Logos/Platform-banner-ION.png"
+      caption-justification: justified
+      toc-own-page: true
+      listings-disable-line-numbers: false
+      float-placement-figure: H
+      #logo: "/Users/ian/Dropbox/Images/Logos/Platform-ION-Banner-White.png"
       #logo-width: 350
       mainfont: 'Greta Sans Pro'
       mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
@@ -315,15 +319,25 @@ templates:
       urlcolor: BrickRed
       nonumberfigures: true
       lang: 'en-GB'
-      disable-header-and-footer:
+      disable-header-and-footer: false
       header-right:
       header-left:
       header-center:
       footer-right:
       footer-left: 
       footer-center:
+      footnotes_pretty: true
+      footnotes-disable-backlinks: false
     postprocessors: 
       - postprocessors/fixLaTeX
+#-----------------------------------------------------------------------------
+# https://github.com/Wandmalfarbe/pandoc-latex-template
+  eisvogel-logo:
+    extends: [eisvogel]
+    metadata:
+      titlepage-background: /Users/ian/Dropbox/Images/Logos/backgroundlogo.pdf
+      titlepage-text-color: 555555
+      titlepage-rule-color: 555555
 #-----------------------------------------------------------------------------
 # https://github.com/Wandmalfarbe/pandoc-latex-template
   eisvogel-crossref:

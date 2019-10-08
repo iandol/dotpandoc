@@ -1,37 +1,37 @@
 % !TEX program = xelatex
 % !TEX encoding = UTF-8 Unicode
 %%
-% Copyright (c) 2017 - 2019, Pascal Wagler;  
+% Copyright (c) 2017 - 2019, Pascal Wagler;
 % Copyright (c) 2014 - 2019, John MacFarlane
-% 
+%
 % All rights reserved.
-% 
-% Redistribution and use in source and binary forms, with or without 
-% modification, are permitted provided that the following conditions 
+%
+% Redistribution and use in source and binary forms, with or without
+% modification, are permitted provided that the following conditions
 % are met:
-% 
-% - Redistributions of source code must retain the above copyright 
+%
+% - Redistributions of source code must retain the above copyright
 % notice, this list of conditions and the following disclaimer.
-% 
-% - Redistributions in binary form must reproduce the above copyright 
-% notice, this list of conditions and the following disclaimer in the 
+%
+% - Redistributions in binary form must reproduce the above copyright
+% notice, this list of conditions and the following disclaimer in the
 % documentation and/or other materials provided with the distribution.
-% 
-% - Neither the name of John MacFarlane nor the names of other 
-% contributors may be used to endorse or promote products derived 
+%
+% - Neither the name of John MacFarlane nor the names of other
+% contributors may be used to endorse or promote products derived
 % from this software without specific prior written permission.
-% 
-% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
-% "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
-% LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS 
-% FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
-% COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, 
+%
+% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+% "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+% LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+% FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+% COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
 % INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-% BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
-% LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
-% CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
-% LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN 
-% ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+% BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+% LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+% CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+% LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+% ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 % POSSIBILITY OF SUCH DAMAGE.
 %%
 
@@ -76,12 +76,12 @@ $endif$
 $for(classoption)$
   $classoption$$sep$,
 $endfor$
-,tablecaptionabove
-]{$if(book)$scrbook$else$scrartcl$endif$}
+]{$if(beamer)$$documentclass$$else$$if(book)$scrbook$else$scrartcl$endif$$endif$}
+
 $if(beamer)$
 $if(background-image)$
 \usebackgroundtemplate{%
-\includegraphics[width=\paperwidth]{$background-image$}%
+  \includegraphics[width=\paperwidth]{$background-image$}%
 }
 $endif$
 \usepackage{pgfpages}
@@ -97,22 +97,22 @@ $endfor$
 \raggedbottom
 $if(section-titles)$
 \setbeamertemplate{part page}{
-\centering
-\begin{beamercolorbox}[sep=16pt,center]{part title}
-  \usebeamerfont{part title}\insertpart\par
-\end{beamercolorbox}
+  \centering
+  \begin{beamercolorbox}[sep=16pt,center]{part title}
+    \usebeamerfont{part title}\insertpart\par
+  \end{beamercolorbox}
 }
 \setbeamertemplate{section page}{
-\centering
-\begin{beamercolorbox}[sep=12pt,center]{part title}
-  \usebeamerfont{section title}\insertsection\par
-\end{beamercolorbox}
+  \centering
+  \begin{beamercolorbox}[sep=12pt,center]{part title}
+    \usebeamerfont{section title}\insertsection\par
+  \end{beamercolorbox}
 }
 \setbeamertemplate{subsection page}{
-\centering
-\begin{beamercolorbox}[sep=8pt,center]{part title}
-  \usebeamerfont{subsection title}\insertsubsection\par
-\end{beamercolorbox}
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center]{part title}
+    \usebeamerfont{subsection title}\insertsubsection\par
+  \end{beamercolorbox}
 }
 \AtBeginPart{
   \frame{\partpage}
@@ -128,9 +128,11 @@ $if(section-titles)$
 }
 $endif$
 $endif$
+
 $if(beamerarticle)$
 \usepackage{beamerarticle} % needs to be loaded first
 $endif$
+
 $if(fontfamily)$
 \usepackage[$for(fontfamilyoptions)$$fontfamilyoptions$$sep$,$endfor$]{$fontfamily$}
 $else$
@@ -162,10 +164,10 @@ $endif$
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 $if(mainfont)$
-    \setmainfont[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$]{$mainfont$}
+  \setmainfont[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$]{$mainfont$}
 $endif$
 $if(sansfont)$
-    \setsansfont[$for(sansfontoptions)$$sansfontoptions$$sep$,$endfor$]{$sansfont$}
+  \setsansfont[$for(sansfontoptions)$$sansfontoptions$$sep$,$endfor$]{$sansfont$}
 $endif$
 $if(monofont)$
   \setmonofont[$for(monofontoptions)$$monofontoptions$$sep$,$endfor$]{$monofont$}
@@ -222,20 +224,21 @@ $if(outertheme)$
 \useoutertheme{$outertheme$}
 $endif$
 $endif$
+
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \IfFileExists{microtype.sty}{% use microtype if available
-\usepackage[$for(microtypeoptions)$$microtypeoptions$$sep$,$endfor$]{microtype}
-\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+  \usepackage[$for(microtypeoptions)$$microtypeoptions$$sep$,$endfor$]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
 $if(indent)$
 $else$
 \makeatletter
 \@ifundefined{KOMAClassName}{% if non-KOMA class
-\IfFileExists{parskip.sty}{%
-\usepackage{parskip}
-}{% else
-\setlength{\parindent}{0pt}
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
     \setlength{\parskip}{6pt plus 2pt minus 1pt}}
 }{% if KOMA class
   \KOMAoptions{parskip=half}}
@@ -253,29 +256,38 @@ $endif$
 \definecolor{default-citecolor}{rgb}{.4,.1,.1}
 \definecolor{default-urlcolor}{rgb}{.7,.3,.3}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+
+$if(footnotes-pretty)$
+% load footmisc in order to customize footnotes (footmisc has to be loaded before hyperref, cf. https://tex.stackexchange.com/a/169124/144087)
+\usepackage[hang,flushmargin,bottom,multiple]{footmisc}
+\setlength{\footnotemargin}{0.8em} % set space between footnote nr and text
+\setlength{\footnotesep}{\baselineskip} % set space between multiple footnotes
+\setlength{\skip\footins}{0.3cm} % set space between page content and footnote
+\setlength{\footskip}{0.9cm} % set space between footnote and page bottom
+$endif$
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
 $if(title-meta)$
-            pdftitle={$title-meta$},
+  pdftitle={$title-meta$},
 $endif$
 $if(author)$
-            pdfauthor={$for(author)$$author.name$$sep$, $endfor$},
+  pdfauthor={$for(author)$$author.name$$sep$, $endfor$},
 $endif$
 $if(lang)$
   pdflang={$lang$},
 $endif$
 $if(subject)$
-            pdfsubject={$subject$},
+  pdfsubject={$subject$},
 $endif$
 $if(keywords)$
-            pdfkeywords={$for(keywords)$$keywords$$sep$, $endfor$},
+  pdfkeywords={$for(keywords)$$keywords$$sep$, $endfor$},
 $endif$
 $if(colorlinks)$
-            colorlinks=true,
-            linkcolor=$if(linkcolor)$$linkcolor$$else$Mahogany$endif$,
-            filecolor=$if(filecolor)$$filecolor$$else$default-filecolor$endif$,
-            citecolor=$if(citecolor)$$citecolor$$else$Sepia$endif$,
-            urlcolor=$if(urlcolor)$$urlcolor$$else$BrickRed$endif$,
+  colorlinks=true,
+  linkcolor=$if(linkcolor)$$linkcolor$$else$Mahogany$endif$,
+  filecolor=$if(filecolor)$$filecolor$$else$default-filecolor$endif$,
+  citecolor=$if(citecolor)$$citecolor$$else$Sepia$endif$,
+  urlcolor=$if(urlcolor)$$urlcolor$$else$BrickRed$endif$,
 $else$
   hidelinks,
 $endif$
@@ -289,17 +301,22 @@ $endif$
 \newfontfamily\fixfont[]{Cambria}
 \newfontfamily\fixfontB[]{Arial Unicode MS}
 $if(geometry)$
-\usepackage[margin=2.5cm,includehead=true,includefoot=true,centering,$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
+$if(beamer)$
+\geometry{margin=2cm,includehead=true,includefoot=true,centering,$for(geometry)$$geometry$$sep$,$endfor$}
 $else$
-\usepackage[margin=2.5cm,includehead=true,includefoot=true,centering]{geometry}
+\usepackage[margin=2cm,includehead=true,includefoot=true,centering,$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
 $endif$
+$endif$
+
 $if(logo)$
 \usepackage[export]{adjustbox}
 \usepackage{graphicx}
 $endif$
+
 $if(beamer)$
 \newif\ifbibliography
 $endif$
+
 $if(listings)$
 \usepackage{listings}
 \newcommand{\passthrough}[1]{#1}
@@ -316,7 +333,18 @@ $if(lhs)$
 $endif$
 $if(highlighting-macros)$
 $highlighting-macros$
+
+% Workaround/bugfix from jannick0.
+% See https://github.com/jgm/pandoc/issues/4302#issuecomment-360669013)
+% or https://github.com/Wandmalfarbe/pandoc-latex-template/issues/2
+%
+% Redefine the verbatim environment 'Highlighting' to break long lines (with
+% the help of fvextra). Redefinition is necessary because it is unlikely that
+% pandoc includes fvextra in the default template.
+\usepackage{fvextra}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,fontsize=$if(code-block-font-size)$$code-block-font-size$$else$\small$endif$,commandchars=\\\{\}}
 $endif$
+
 $if(tables)$
 \usepackage{longtable,booktabs}
 $if(beamer)$
@@ -336,6 +364,13 @@ $else$
 \makesavenoteenv{longtable}
 $endif$
 $endif$
+
+% add backlinks to footnote references, cf. https://tex.stackexchange.com/questions/302266/make-footnote-clickable-both-ways
+$if(footnotes-disable-backlinks)$
+$else$
+\usepackage{footnotebackref}
+$endif$
+
 $if(graphics)$
 \usepackage{graphicx,grffile}
 \makeatletter
@@ -347,15 +382,18 @@ $if(graphics)$
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 $endif$
+
 $if(links-as-notes)$
 % Make links footnotes instead of hotlinks:
 \DeclareRobustCommand{\href}[2]{#2\footnote{\url{#1}}}
 $endif$
+
 $if(strikeout)$
 \usepackage[normalem]{ulem}
 % Avoid problems with \sout in headers with hyperref
 \pdfstringdefDisableCommands{\renewcommand{\sout}{}}
 $endif$
+
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
@@ -364,20 +402,22 @@ $if(numbersections)$
 $else$
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 $endif$
+
 $if(beamer)$
 $else$
 $if(block-headings)$
 % Make \paragraph and \subparagraph free-standing
 \ifx\paragraph\undefined\else
-\let\oldparagraph\paragraph
-\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
 \fi
 \ifx\subparagraph\undefined\else
-\let\oldsubparagraph\subparagraph
-\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
 \fi
 $endif$
 $endif$
+
 $if(pagestyle)$
 \pagestyle{$pagestyle$}
 $endif$
@@ -390,6 +430,7 @@ $endif$
 $for(header-includes)$
 $header-includes$
 $endfor$
+
 $if(lang)$
 \ifxetex
   $if(mainfont)$
@@ -410,6 +451,7 @@ $if(babel-newcommands)$
 $endif$
 \fi
 $endif$
+
 $if(dir)$
 \ifxetex
   % Load bidi as late as possible as it modifies e.g. graphicx
@@ -423,20 +465,31 @@ $if(dir)$
   \newenvironment{LTR}{\beginL}{\endL}
 \fi
 $endif$
+
 $if(natbib)$
 \usepackage[$natbiboptions$]{natbib}
 \bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
 $endif$
+
 $if(biblatex)$
 \usepackage[$if(biblio-style)$style=$biblio-style$,$endif$$for(biblatexoptions)$$biblatexoptions$$sep$,$endfor$]{biblatex}
 $for(bibliography)$
 \addbibresource{$bibliography$}
 $endfor$
 $endif$
+$if(csl-refs)$
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newenvironment{cslreferences}%
+  {$if(csl-hanging-indent)$\setlength{\parindent}{0pt}%
+  \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces$endif$}%
+  {\par}
+$endif$
 
 $if(title)$
 \title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
 $endif$
+
 $if(subtitle)$
 $if(beamer)$
 $else$
@@ -449,10 +502,13 @@ $else$
 $endif$
 \subtitle{$subtitle$}
 $endif$
+
 $if(author)$
 \author{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.correspondence)$*$endif$$if(author.equal_contributor)$†$endif$}$sep$ \& $endfor$}
 $endif$
+
 \date{$date$}
+
 $if(beamer)$
 $if(institute)$
 \institute{$for(institute)$\textsuperscript{$institute.index$}\enskip $institute.name$$sep$ \& $endfor$}
@@ -464,10 +520,6 @@ $if(logo)$
 \logo{\includegraphics{$logo$}}
 $endif$
 $endif$
-
-
-
-
 
 %%
 %% added
@@ -508,6 +560,13 @@ $endif$
 $if(titlepage)$
 \usepackage{pagecolor}
 \usepackage{afterpage}
+$if(titlepage-background)$
+\usepackage{tikz}
+$endif$
+$if(geometry)$
+$else$
+\usepackage[margin=2cm,includehead=true,includefoot=true,centering]{geometry}
+$endif$
 $endif$
 
 %
@@ -516,7 +575,7 @@ $endif$
 \PassOptionsToPackage{hyphens}{url}
 
 %
-% When using babel or polyglossia with biblatex, loading csquotes is recommended 
+% When using babel or polyglossia with biblatex, loading csquotes is recommended
 % to ensure that quoted texts are typeset according to the rules of your main language.
 %
 \usepackage{csquotes}
@@ -524,11 +583,14 @@ $endif$
 %
 % captions
 %
-\definecolor{caption-color}{HTML}{444444}
+\definecolor{caption-color}{rgb}{.4,.4,.4}
+$if(beamer)$
+$else$
 \usepackage[font={stretch=1.0,sf,small}, textfont={color=caption-color}, position=bottom, skip=4mm, labelfont=bf, singlelinecheck=false, justification=$if(caption-justification)$$caption-justification$$else$raggedright$endif$, format=hang, labelsep=endash]{caption}
 \setcapindent{0em}
 $if(nonumberfigures)$
-\captionsetup[figure]{labelformat=empty}% redefines the caption setup of the figures environment
+  \captionsetup[figure]{labelformat=empty}% redefines the caption setup of the figures environment
+$endif$
 $endif$
 %
 % blockquote
@@ -544,41 +606,71 @@ $endif$
 % Source Sans Pro as the de­fault font fam­ily
 % Source Code Pro for monospace text
 %
-% 'default' option sets the default 
+% 'default' option sets the default
 % font family to Source Sans Pro, not \sfdefault.
 %
-$if(mainfont)$
-$else$
-\usepackage[default]{sourcesanspro}
-\usepackage{sourcecodepro}
-$endif$
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  $if(fontfamily)$
+  $else$
+  \usepackage[default]{sourcesanspro}
+  \usepackage{sourcecodepro}
+  $endif$
+\else % if not pdftex
+  $if(mainfont)$
+  $else$
+  \usepackage[default]{sourcesanspro}
+  \usepackage{sourcecodepro}
 
-%
-% heading font
-%
+  % XeLaTeX specific adjustments for straight quotes: https://tex.stackexchange.com/a/354887
+  % This issue is already fixed (see https://github.com/silkeh/latex-sourcecodepro/pull/5) but the
+  % fix is still unreleased.
+  % TODO: Remove this workaround when the new version of sourcecodepro is released on CTAN.
+  \ifxetex
+    \makeatletter
+    \defaultfontfeatures[\ttfamily]
+      { Numbers   = \sourcecodepro@figurestyle,
+        Scale     = \SourceCodePro@scale,
+        Extension = .otf }
+    \setmonofont
+      [ UprightFont    = *-\sourcecodepro@regstyle,
+        ItalicFont     = *-\sourcecodepro@regstyle It,
+        BoldFont       = *-\sourcecodepro@boldstyle,
+        BoldItalicFont = *-\sourcecodepro@boldstyle It ]
+      {SourceCodePro}
+    \makeatother
+  \fi
+  $endif$
+\fi
+
+%% HEADING STYLE
 \newcommand*{\heading}{\fontfamily{\sfdefault}\selectfont}
 
 %
 % heading color
 %
-\definecolor{heading-color}{RGB}{40,40,40}
+\definecolor{heading-color}{RGB}{.4,.4,.4}
+$if(beamer)$
+$else$
 \addtokomafont{section}{\color{heading-color}}
-% When using the classes report, scrreprt, book, 
+$endif$
+% When using the classes report, scrreprt, book,
 % scrbook or memoir, uncomment the following line.
 %\addtokomafont{chapter}{\color{heading-color}}
 
 %
 % variables for title and author
 %
+$if(beamer)$
+$else$
 \usepackage{titling}
 \title{$title$}
 \author{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.correspondence)$*$endif$$if(author.equal_contributor)$†$endif$}$sep$ \and $endfor$}
+$endif$
 
 %
 % tables
 %
 $if(tables)$
-
 \definecolor{table-row-color}{HTML}{F5F5F5}
 \definecolor{table-rule-color}{HTML}{999999}
 
@@ -587,9 +679,19 @@ $if(tables)$
 \setlength\heavyrulewidth{0.3ex}      % thickness of \toprule, \bottomrule
 \renewcommand{\arraystretch}{1.3}     % spacing (padding)
 
+$if(table-use-row-colors)$
+% TODO: This doesn't work anymore. I don't know why.
 % Reset rownum counter so that each table
 % starts with the same row colors.
 % https://tex.stackexchange.com/questions/170637/restarting-rowcolors
+%
+% Unfortunately the colored cells extend beyond the edge of the
+% table because pandoc uses @-expressions (@{}) like so:
+%
+% \begin{longtable}[]{@{}ll@{}}
+% \end{longtable}
+%
+% https://en.wikibooks.org/wiki/LaTeX/Tables#.40-expressions
 \let\oldlongtable\longtable
 \let\endoldlongtable\endlongtable
 \renewenvironment{longtable}{
@@ -597,14 +699,7 @@ $if(tables)$
 \oldlongtable} {
 \endoldlongtable
 \global\rownum=0\relax}
-
-% Unfortunately the colored cells extend beyond the edge of the 
-% table because pandoc uses @-expressions (@{}) like so: 
-%
-% \begin{longtable}[]{@{}ll@{}}
-% \end{longtable}
-%
-% https://en.wikibooks.org/wiki/LaTeX/Tables#.40-expressions
+$endif$
 $endif$
 
 %
@@ -619,21 +714,20 @@ $endif$
 % Listings
 %
 %
-
 $if(listings)$
-
 %
-% listing colors
+% general listing colors
 %
 \definecolor{listing-background}{HTML}{F7F7F7}
 \definecolor{listing-rule}{HTML}{B3B2B3}
 \definecolor{listing-numbers}{HTML}{B3B2B3}
 \definecolor{listing-text-color}{HTML}{000000}
 \definecolor{listing-keyword}{HTML}{435489}
+\definecolor{listing-keyword-2}{HTML}{1284CA} % additional keywords
+\definecolor{listing-keyword-3}{HTML}{9137CB} % additional keywords
 \definecolor{listing-identifier}{HTML}{435489}
 \definecolor{listing-string}{HTML}{00999A}
 \definecolor{listing-comment}{HTML}{8E8E8E}
-\definecolor{listing-javadoc-comment}{HTML}{006CA9}
 
 \lstdefinestyle{eisvogel_listing_style}{
   language         = java,
@@ -646,7 +740,7 @@ $else$
   framexleftmargin = 2.5em,
 $endif$
   backgroundcolor  = \color{listing-background},
-  basicstyle       = \color{listing-text-color}\small\ttfamily{}\linespread{1.15}, % print whole listing small
+  basicstyle       = \color{listing-text-color}\linespread{1.0}$if(code-block-font-size)$$code-block-font-size$$else$\small$endif$\ttfamily{},
   breaklines       = true,
   frame            = single,
   framesep         = 0.19em,
@@ -658,12 +752,12 @@ $endif$
   belowskip        = 0.1em,
   abovecaptionskip = 0em,
   belowcaptionskip = 1.0em,
-  keywordstyle     = \color{listing-keyword}\bfseries,
-  classoffset      = 0,
+  keywordstyle     = {\color{listing-keyword}\bfseries},
+  keywordstyle     = {[2]\color{listing-keyword-2}\bfseries},
+  keywordstyle     = {[3]\color{listing-keyword-3}\bfseries\itshape},
   sensitive        = true,
   identifierstyle  = \color{listing-identifier},
   commentstyle     = \color{listing-comment},
-  morecomment      = [s][\color{listing-javadoc-comment}]{/**}{*/},
   stringstyle      = \color{listing-string},
   showstringspaces = false,
   escapeinside     = {/*@}{@*/}, % Allow LaTeX inside these special comments
@@ -685,6 +779,44 @@ $endif$
 }
 \lstset{style=eisvogel_listing_style}
 
+%
+% Java (Java SE 12, 2019-06-22)
+%
+\lstdefinelanguage{Java}{
+  morekeywords={
+    % normal keywords (without data types)
+    abstract,assert,break,case,catch,class,continue,default,
+    do,else,enum,exports,extends,final,finally,for,if,implements,
+    import,instanceof,interface,module,native,new,package,private,
+    protected,public,requires,return,static,strictfp,super,switch,
+    synchronized,this,throw,throws,transient,try,volatile,while,
+    % var is an identifier
+    var
+  },
+  morekeywords={[2] % data types
+    % primitive data types
+    boolean,byte,char,double,float,int,long,short,
+    % String
+    String,
+    % primitive wrapper types
+    Boolean,Byte,Character,Double,Float,Integer,Long,Short
+    % number types
+    Number,AtomicInteger,AtomicLong,BigDecimal,BigInteger,DoubleAccumulator,DoubleAdder,LongAccumulator,LongAdder,Short,
+    % other
+    Object,Void,void
+  },
+  morekeywords={[3] % literals
+    % reserved words for literal values
+    null,true,false,
+  },
+  sensitive,
+  morecomment  = [l]//,
+  morecomment  = [s]{/*}{*/},
+  morecomment  = [s]{/**}{*/},
+  morestring   = [b]",
+  morestring   = [b]',
+}
+
 \lstdefinelanguage{XML}{
   morestring      = [b]",
   moredelim       = [s][\bfseries\color{listing-keyword}]{<}{\ },
@@ -702,26 +834,28 @@ $endif$
 %
 % header and footer
 %
+$if(beamer)$
+$else$
 $if(disable-header-and-footer)$
 $else$
 \definecolor{DarkGray}{rgb}{.6,.6,.6}
 \usepackage{fancyhdr}
 
 \fancypagestyle{eisvogel-header-footer}{
-\fancyhead{}
-\fancyfoot{}
+  \fancyhead{}
+  \fancyfoot{}
   \lhead[$if(header-right)$$header-right$$else$$date$$endif$]{\footnotesize{}\color{DarkGray}$if(header-left)$$header-left$$else$$title$$endif$}
   \chead[$if(header-center)$$header-center$$else$$endif$]{\footnotesize{}\color{DarkGray}$if(header-center)$$header-center$$else$$endif$}
   \rhead[$if(header-left)$$header-left$$else$$title$$endif$]{\footnotesize{}\color{DarkGray}$if(header-right)$$header-right$$else$$date$$endif$}
   \lfoot[$if(footer-right)$$footer-right$$else$\thepage$endif$]{\footnotesize{}\color{DarkGray}$if(footer-left)$$footer-left$$else$$for(author)$$author.name$$sep$, $endfor$$endif$}
   \cfoot[$if(footer-center)$$footer-center$$else$$endif$]{\footnotesize{}\color{DarkGray}$if(footer-center)$$footer-center$$else$$endif$}
   \rfoot[$if(footer-left)$$footer-left$$else$$for(author)$$author.name$$sep$, $endfor$$endif$]{\footnotesize{}\color{DarkGray}$if(footer-right)$$footer-right$$else$\thepage$endif$}
-\renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\footrulewidth}{0.4pt}
+  \renewcommand{\headrulewidth}{0.4pt}
+  \renewcommand{\footrulewidth}{0.4pt}
 }
 \pagestyle{eisvogel-header-footer}
 $endif$
-
+$endif$
 %%
 %% end added
 %%
@@ -731,14 +865,25 @@ $endif$
 %%
 %% begin titlepage
 %%
-
+$if(beamer)$
+$else$
 $if(titlepage)$
 \begin{titlepage}
-\newgeometry{left=6cm}
+$if(titlepage-background)$
+  \newgeometry{top=2cm, right=4cm, bottom=3.25cm, left=4cm}
+$else$
+  \newgeometry{left=6cm}
+$endif$
+
 $if(titlepage-color)$
 \definecolor{titlepage-color}{HTML}{$titlepage-color$}
 \newpagecolor{titlepage-color}\afterpage{\restorepagecolor}
 $endif$
+
+$if(titlepage-background)$
+\tikz[remember picture,overlay] \node[inner sep=0pt] at (current page.center){\includegraphics[width=\paperwidth,height=\paperheight]{$titlepage-background$}};
+$endif$
+
 \newcommand{\colorRule}[3][black]{\textcolor[HTML]{#1}{\rule{#2}{#3}}}
 \begin{flushleft}
 \noindent
@@ -748,18 +893,37 @@ $endif$
 \par
 \noindent
 
-{ \setstretch{1.4}
-\vfill
-\noindent {\huge \textbf{\textsf{$title$}}}
-$if(subtitle)$
-\vskip 1em
-{\Large \textsf{$subtitle$}}
-$endif$
-\vskip 2em
-\noindent
-{\Large{\textsf{\textbf{\uppercase{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.equal_contributor)$†$endif$$if(author.correspondence)$✉︎$endif$}$sep$,\quad $endfor$}}}}}
-\vfill
+$if(titlepage-background)$
+% The titlepage with a background image has other text spacing and text size
+{
+  \setstretch{1.4}
+  \vfill
+  \vskip -8em
+  \noindent {\huge \textbf{\textsf{$title$}}}
+  $if(subtitle)$
+  \vskip 1em
+  {\Large \textsf{$subtitle$}}
+  $endif$
+  \vskip 1em
+  \noindent {\Large{\textsf{\textbf{\uppercase{
+    $for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.equal_contributor)$†$endif$$if(author.correspondence)$✉︎$endif$}$sep$,\quad $endfor$}}}}
+  }
+  \vskip 6em
 }
+$else$
+{
+  \setstretch{1.4}
+  \vfill
+  \noindent {\huge \textbf{\textsf{$title$}}}
+  $if(subtitle)$
+  \vskip 1em
+  {\Large \textsf{$subtitle$}}
+  $endif$
+  \vskip 1em
+  \noindent {\Large{\textsf{\textbf{\uppercase{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.equal_contributor)$†$endif$$if(author.correspondence)$✉︎$endif$}$sep$,\quad $endfor$}}}}}
+  \vskip 6em
+}
+$endif$
 
 { \setstretch{1}
 $if(institute)$
@@ -773,20 +937,24 @@ $endif$
 $if(equal_contributors)$
 \textsf{\textsuperscript{†} \emph{\small{These authors contributed equally to this work.}}}
 $endif$
-}
 
 $if(date)$
 \vskip 2em
 \textsf{\emph{$date$}}
 $endif$
-\end{flushleft}
+}
+
+\vfill
+
 $if(logo)$
-\vskip 2em
 \noindent
 \includegraphics[width=$if(logo-width)$$logo-width$$else$100$endif$pt, center]{$logo$}
 $endif$
+
+\end{flushleft}
 \end{titlepage}
 \restoregeometry
+$endif$
 $endif$
 
 %%
@@ -796,6 +964,7 @@ $endif$
 $if(has-frontmatter)$
 \frontmatter
 $endif$
+
 $if(title)$
 $if(beamer)$
 \frame{\titlepage}
@@ -816,6 +985,7 @@ $for(include-before)$
 $include-before$
 
 $endfor$
+
 $if(toc)$
 $if(toc-title)$
 \renewcommand*\contentsname{$toc-title$}
@@ -823,9 +993,9 @@ $endif$
 $if(beamer)$
 \begin{frame}
 $if(toc-title)$
-\frametitle{$toc-title$}
+  \frametitle{$toc-title$}
 $endif$
-\tableofcontents[hideallsubsections]
+  \tableofcontents[hideallsubsections]
 \end{frame}
 $if(toc-own-page)$
 \newpage
@@ -843,23 +1013,29 @@ $endif$
 }
 $endif$
 $endif$
+
 $if(lot)$
 \listoftables
 $endif$
+
 $if(lof)$
 \listoffigures
 $endif$
+
 $if(linestretch)$
 \setstretch{$linestretch$}
 $endif$
+
 $if(has-frontmatter)$
 \mainmatter
 $endif$
+
 $body$
 
 $if(has-frontmatter)$
 \backmatter
 $endif$
+
 $if(natbib)$
 $if(bibliography)$
 $if(biblio-title)$
@@ -871,26 +1047,26 @@ $endif$
 $endif$
 $if(beamer)$
 \begin{frame}[allowframebreaks]{$biblio-title$}
-\bibliographytrue
+  \bibliographytrue
 $endif$
-\bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
+  \bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
 $if(beamer)$
 \end{frame}
 $endif$
+$endif$
+$endif$
 
-$endif$
-$endif$
 $if(biblatex)$
 $if(beamer)$
 \begin{frame}[allowframebreaks]{$biblio-title$}
-\bibliographytrue
-\printbibliography[heading=none]
+  \bibliographytrue
+  \printbibliography[heading=none]
 \end{frame}
 $else$
 \printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
 $endif$
-
 $endif$
+
 $for(include-after)$
 $include-after$
 

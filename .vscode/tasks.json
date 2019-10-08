@@ -12,10 +12,31 @@
 			"command": "scrivomatic",
 			"args": [
 				"-v",
-				"-l",
 				"${file}"
 			],
 			"group": "build",
+			"presentation": {
+				"reveal": "always",
+				"panel": "new"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Scrivomatic+Build",
+			"type": "shell",
+			"options": {
+				"cwd": "${fileDirname}"
+			},
+			"command": "scrivomatic",
+			"args": [
+				"-v",
+				"-b",
+				"${file}"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
 			"presentation": {
 				"reveal": "always",
 				"panel": "new"
