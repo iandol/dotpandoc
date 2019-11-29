@@ -30,7 +30,6 @@ templates:
     pandoc:
       standalone: true
       verbose: true # verbose by default
-      cite-method: citeproc
       filter: 
         - pandoc-citeproc # process citations
       lua-filter:
@@ -40,6 +39,7 @@ templates:
       citation-abbreviations: cite-abbr.json # my journal abbreviations
       reference-links: true
     metadata:
+      cite-method: citeproc
       reference-section-title: References
       notes-after-punctuation: false
       link-citations: true 
@@ -61,7 +61,7 @@ templates:
         - filters/prependAll #prepends institute:, comments: and keywords: metadata into the text
         - filters/prependAuthor #prepends authors
       lua-filter:
-        - filters/removeEmphasis.lua # remove emphasis for plain and turn strong to UPPER
+        #- filters/removeEmphasis.lua # remove emphasis for plain and turn strong to UPPER
 #-----------------------------------------------------------------------------
   plain-refs:
     extends: [plain,refs]
@@ -143,7 +143,7 @@ templates:
 #:::::::::::::::::::::::::::::::::: LATEX ::::::::::::::::::::::::::::::::::::
 #-----------------------------------------------------------------------------
   latex:
-    preprocessors: 
+    preprocessors:
       #- preprocessors/removeImageDimensions # remove image dimensions
     pandoc:
       from: markdown
@@ -152,7 +152,7 @@ templates:
       filter: 
         - filters/assimilateMetadata # handle academic metadata
       template: templates/custom.latex
-      base-header-level: 2
+      shift-heading-level-by: 0
     metadata:
       documentclass: 'article'
       classoption: twoside
@@ -309,7 +309,7 @@ templates:
         - filters/assimilateMetadata # handle academic matadata
       template: templates/eisvogel.latex
       toc: true
-      base-header-level: 1
+      shift-heading-level-by: 1
     metadata: 
       titlepage: true
       titlepage-color: BB4433

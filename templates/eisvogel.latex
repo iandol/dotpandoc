@@ -147,13 +147,13 @@ $else$
 $endif$
 \usepackage{amssymb,amsmath}
 \usepackage{iftex}
-\ifpdflatex
+\ifPDFTeX % if pdftex
   \usepackage[$if(fontenc)$$fontenc$$else$T1$endif$]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
 $if(mathspec)$
-  \ifxetex
+  \ifXeTeX
     \usepackage{mathspec}
   \else
     \usepackage{unicode-math}
@@ -177,7 +177,7 @@ $for(fontfamilies)$
 $endfor$
 $if(mathfont)$
 $if(mathspec)$
-  \ifxetex
+  \ifXeTeX
     \setmathfont(Digits,Latin,Greek)[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$mathfont$}
   \else
     \setmathfont[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$mathfont$}
@@ -187,18 +187,18 @@ $else$
 $endif$
 $endif$
 $if(CJKmainfont)$
-  \ifxetex
+  \ifXeTeX
     \usepackage{xeCJK}
     \setCJKmainfont[$for(CJKoptions)$$CJKoptions$$sep$,$endfor$]{$CJKmainfont$}
   \fi
 $endif$
 $if(luatexjapresetoptions)$
-  \ifluatex
+  \ifLuaTeX
     \usepackage[$for(luatexjapresetoptions)$$luatexjapresetoptions$$sep$,$endfor$]{luatexja-preset}
   \fi
 $endif$
 $if(CJKmainfont)$
-  \ifluatex
+  \ifLuaTeX
     \usepackage[$for(luatexjafontspecoptions)$$luatexjafontspecoptions$$sep$,$endfor$]{luatexja-fontspec}
     \setmainjfont[$for(CJKoptions)$$CJKoptions$$sep$,$endfor$]{$CJKmainfont$}
   \fi
@@ -432,7 +432,7 @@ $header-includes$
 $endfor$
 
 $if(lang)$
-\ifxetex
+\ifXeTeX
   $if(mainfont)$
   $else$
   % See issue https://github.com/reutenauer/polyglossia/issues/127
@@ -453,11 +453,11 @@ $endif$
 $endif$
 
 $if(dir)$
-\ifxetex
+\ifXeTeX
   % Load bidi as late as possible as it modifies e.g. graphicx
   \usepackage{bidi}
 \fi
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\ifPDFTeX % if pdftex
   \TeXXeTstate=1
   \newcommand{\RL}[1]{\beginR #1\endR}
   \newcommand{\LR}[1]{\beginL #1\endL}
@@ -531,7 +531,7 @@ $endif$
 % If no language is specified, use English as the default main document language.
 %
 $if(lang)$$else$
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\ifPDFTeX % if pdftex
   \usepackage[shorthands=off,$for(babel-otherlangs)$$babel-otherlangs$,$endfor$main=english]{babel}
 $if(babel-newcommands)$
   $babel-newcommands$
@@ -609,7 +609,7 @@ $endif$
 % 'default' option sets the default
 % font family to Source Sans Pro, not \sfdefault.
 %
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\ifPDFTeX % if pdftex
   $if(fontfamily)$
   $else$
   \usepackage[default]{sourcesanspro}
@@ -625,7 +625,7 @@ $endif$
   % This issue is already fixed (see https://github.com/silkeh/latex-sourcecodepro/pull/5) but the
   % fix is still unreleased.
   % TODO: Remove this workaround when the new version of sourcecodepro is released on CTAN.
-  \ifxetex
+  \ifXeTeX
     \makeatletter
     \defaultfontfeatures[\ttfamily]
       { Numbers   = \sourcecodepro@figurestyle,

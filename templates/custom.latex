@@ -1,5 +1,3 @@
-% !TEX program = xelatex
-% !TEX encoding = UTF-8 Unicode
 % Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode$for(hyperrefoptions)$,$hyperrefoptions$$endfor$}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
@@ -98,13 +96,13 @@ $if(linestretch)$
 $endif$
 \usepackage{amssymb,amsmath}
 \usepackage{iftex}
-\ifpdflatex
+\ifPDFTeX % if pdftex
   \usepackage[$if(fontenc)$$fontenc$$else$T1$endif$]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
 $if(mathspec)$
-  \ifxetex
+  \ifXeTeX
     \usepackage{mathspec}
   \else
     \usepackage{unicode-math}
@@ -128,7 +126,7 @@ $for(fontfamilies)$
 $endfor$
 $if(mathfont)$
 $if(mathspec)$
-  \ifxetex
+  \ifXeTeX
     \setmathfont(Digits,Latin,Greek)[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$mathfont$}
   \else
     \setmathfont[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$mathfont$}
@@ -138,18 +136,18 @@ $else$
 $endif$
 $endif$
 $if(CJKmainfont)$
-  \ifxetex
-    \usepackage{xeCJK}
+  \ifXeTeX
+    \usepackage[space]{xeCJK}
     \setCJKmainfont[$for(CJKoptions)$$CJKoptions$$sep$,$endfor$]{$CJKmainfont$}
   \fi
 $endif$
 $if(luatexjapresetoptions)$
-  \ifluatex
+  \ifLuaTeX
     \usepackage[$for(luatexjapresetoptions)$$luatexjapresetoptions$$sep$,$endfor$]{luatexja-preset}
   \fi
 $endif$
 $if(CJKmainfont)$
-  \ifluatex
+  \ifLuaTeX
     \usepackage[$for(luatexjafontspecoptions)$$luatexjafontspecoptions$$sep$,$endfor$]{luatexja-fontspec}
     \setmainjfont[$for(CJKoptions)$$CJKoptions$$sep$,$endfor$]{$CJKmainfont$}
   \fi
@@ -223,27 +221,27 @@ $endif$
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
 $if(title-meta)$
-            pdftitle={$title-meta$},
+  pdftitle={$title-meta$},
 $endif$
 $if(author)$
-            pdfauthor={$for(author)$$author.name$$sep$, $endfor$},
+  pdfauthor={${for(author)}${author.name}${sep}, ${endfor}},
 $endif$
 $if(subject)$
-            pdfsubject={$subject$},
+  pdfsubject={$subject$},
 $endif$
 $if(keywords)$
-            pdfkeywords={$for(keywords)$$keywords$$sep$, $endfor$},
+  pdfkeywords={$for(keywords)$$keywords$$sep$, $endfor$},
 $endif$
 $if(colorlinks)$
-            colorlinks=true,
-            linkcolor=$if(linkcolor)$$linkcolor$$else$Mahogany$endif$,
-            filecolor=$if(filecolor)$$filecolor$$else$Mahogany$endif$,
-            citecolor=$if(citecolor)$$citecolor$$else$Sepia$endif$,
-            urlcolor=$if(urlcolor)$$urlcolor$$else$BrickRed$endif$,
+  colorlinks=true,
+  linkcolor=$if(linkcolor)$$linkcolor$$else$Mahogany$endif$,
+  filecolor=$if(filecolor)$$filecolor$$else$Mahogany$endif$,
+  citecolor=$if(citecolor)$$citecolor$$else$Sepia$endif$,
+  urlcolor=$if(urlcolor)$$urlcolor$$else$BrickRed$endif$,
 $else$
-            hidelinks,
+  hidelinks,
 $endif$
-            pdfcreator={Scrivomatic, Pandoc and LaTeX}}
+  pdfcreator={Scrivomatic, Pandoc and LaTeX}}
 \urlstyle{same} % disable monospaced font for URLs
 $if(verbatim-in-note)$
 \VerbatimFootnotes % allow verbatim text in footnotes
@@ -338,7 +336,7 @@ $for(header-includes)$
 $header-includes$
 $endfor$
 $if(lang)$
-\ifxetex
+\ifXeTeX
   % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
   \usepackage{polyglossia}
   \setmainlanguage[$polyglossia-lang.options$]{$polyglossia-lang.name$}
@@ -353,11 +351,11 @@ $endif$
 \fi
 $endif$
 $if(dir)$
-\ifxetex
+\ifXeTeX
   % Load bidi as late as possible as it modifies e.g. graphicx
   \usepackage{bidi}
 \fi
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\ifPDFTeX % if pdftex
   \TeXXeTstate=1
   \newcommand{\RL}[1]{\beginR #1\endR}
   \newcommand{\LR}[1]{\beginL #1\endL}
@@ -374,6 +372,14 @@ $if(biblatex)$
 $for(bibliography)$
 \addbibresource{$bibliography$}
 $endfor$
+$endif$
+$if(csl-refs)$
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newenvironment{cslreferences}%
+  {$if(csl-hanging-indent)$\setlength{\parindent}{0pt}%
+  \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces$endif$}%
+  {\par}
 $endif$
 
 $if(title)$
@@ -397,7 +403,7 @@ $endif$
 \subtitle{$subtitle$}
 $endif$
 $if(author)$
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\ifPDFTeX % if pdftex
   \author{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.correspondence)$*$endif$$if(author.equal_contributor)$†$endif$}$sep$ \and $endfor$}
 \else
   \author{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.correspondence)$\fixfontB{✉︎}$endif$$if(author.equal_contributor)$†$endif$}$sep$ \and $endfor$}
@@ -437,7 +443,7 @@ $if(institute)$
 $endif$
 
 $if(correspondence_list)$
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\ifPDFTeX % if pdftex
 \textsf{* $for(correspondence_list)$\emph{$correspondence_list$}$sep$\quad\&\quad$endfor$}
 \else
 \textsf{\fixfontB{✉︎} $for(correspondence_list)$\emph{$correspondence_list$}$sep$\quad\&\quad$endfor$}
