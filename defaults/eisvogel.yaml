@@ -1,0 +1,46 @@
+from: markdown
+to: latex
+standalone: true
+filters: 
+  - assimilateMetadata # handle academic matadata
+template: eisvogel.latex
+toc: true
+shift-heading-level-by: 0
+metadata: 
+  titlepage: true
+  titlepage-color: BB4433
+  titlepage-text-color: FFFFFF
+  titlepage-rule-color: FFFFFF
+  titlepage-rule-height: 10
+  caption-justification: justified
+  toc-own-page: true
+  listings-disable-line-numbers: false
+  float-placement-figure: H
+  #logo: "/Users/ian/Dropbox/Images/Logos/Platform-ION-Banner-White.png"
+  #logo-width: 350
+  mainfont: 'Greta Sans Pro'
+  mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
+  sansfont: 'Graublau Slab'
+  sansfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
+  monofont: 'Fira Code'
+  mathfont: 'Cambria Math'
+  mathfontoptions: 'math-style=ISO,bold-style=ISO'
+  CJKmainfont: 'PingFang SC'
+  CJKsansfont: 'PingFang SC'
+  fontsize: '12pt'
+  linestretch: '1.5'
+  colorlinks: true
+  linkcolor: Mahogany
+  citecolor: Sepia
+  urlcolor: BrickRed
+  nonumberfigures: true
+  lang: 'en-GB'
+  disable-header-and-footer: false
+  header-right:
+  header-left:
+  header-center:
+  footer-right:
+  footer-left: 
+  footer-center:
+  footnotes_pretty: true
+  footnotes-disable-backlinks: false

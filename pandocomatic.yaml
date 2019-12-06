@@ -152,7 +152,6 @@ templates:
       filter: 
         - filters/assimilateMetadata # handle academic metadata
       template: templates/custom.latex
-      shift-heading-level-by: 0
     metadata:
       documentclass: 'article'
       classoption: twoside
@@ -430,7 +429,7 @@ templates:
       css: 'templates/custom.css'
       toc: true
       toc-depth: 3
-      base-header-level: 1
+      shift-heading-level-by: 1
     metadata:
       lang: 'en-GB'
     postprocessors: 

@@ -15,11 +15,11 @@ insertKey = 'name'
 
 Paru::Filter.run do
   byebug
-  if metadata.has_key?(testKey) 
-    if metadata.key?(pmaticKey) & (metadata[pmaticKey]['to'].match(/docx|odt/))
+  if metadata.key?(testKey) 
+    if metadata.key?(pmaticKey) && (metadata[pmaticKey]['to'].match(/docx|odt/))
       stop!
     end
-    nau = nil
+    nau = nil[]
     au = metadata[testKey]
     if au.is_a?(String)
       nau = [ Hash[ insertKey => au ] ]
@@ -34,6 +34,8 @@ Paru::Filter.run do
             nau[i] = Hash[ insertKey => cp.pre_match, 'affiliation' => cp.to_s ] 
           end
         }
+      elsif au[0].is_a?(Hash)
+        nau = [ Hash[ insertKey => au[0]['name'] ] ]
       end
     end
     if not nau.nil?

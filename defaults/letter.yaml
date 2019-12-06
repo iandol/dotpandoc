@@ -1,0 +1,38 @@
+from: markdown
+to: latex
+pdf-engine: xelatex
+standalone: true
+template: letter.latex
+metadata:
+  papersize: a4
+  return-address: 
+    - Cognition \& Behaviour Platform
+    - Institute of Neuroscience, CAS
+    - Room 307, Systems Building
+    - 320 Yueyang Rd, Shanghai 200031, CHINA
+    - ✉ <i.andolina@ion.ac.cn>
+    - ✆ +86 021 54921747
+  author: 'Ian Max Andolina Ph.D.\newline Director, Cognition \& Behaviour Platform'
+  opening: To whom it may concern,
+  closing: Sincerely yours,
+  mainfont: 'Graublau Sans'
+  mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
+  monofont: 'Fira Code'
+  mathfont: 'Cambria Math'
+  mathfontoptions: 'math-style=ISO,bold-style=ISO'
+  CJKmainfont: 'PingFang SC'
+  fontsize: '11pt'
+  linestretch: '1.2'
+  letterhead: "/Users/ian/Dropbox/Work/ION-Letterhead.pdf"
+  signature: "/Users/ian/Dropbox/Work/Ian-Signature.png"
+  signature-width: 45mm
+  signature-before: -11ex
+  signature-after: -1.5ex
+  closing-indentation: 12pt
+  links-as-notes: false
+  colorlinks: true
+  linkcolor: Mahogany
+  citecolor: Sepia
+  urlcolor: BrickRed
+  lang: 'en-GB'
+  geometry: ['margin=1.5cm','top=2.1cm']

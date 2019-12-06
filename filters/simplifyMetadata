@@ -5,7 +5,7 @@
 # This is because the Word/ODT templates do not have the flexibility
 # the other pandoc output formats do...
 #
-# VERSION: 1.0.0
+# VERSION: 1.0.1
 
 require 'paru/filter'
 def fixName(author)
@@ -34,7 +34,7 @@ conMarker = '†'
 
 Paru::Filter.run do
 	stop! unless metadata.key?(testKey)
-	stop! if metadata.key?(pKey) & !metadata[pKey]['to'].match(/docx|odt/)
+	stop! if metadata.key?(pKey) && !metadata[pKey]['to'].match(/docx|odt/)
 	newAuthor = nil
 	correspondence = nil
 	contribution = nil

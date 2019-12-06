@@ -17,8 +17,15 @@
 			"program": "${file}",
 			"args": [" < ${workspaceROOT}/test.md"]
 		},
+		{
+			"name": "Debug < JSON",
+			"type": "Ruby",
+			"request": "launch",
+			"program": "${file}",
+			"args": [" < ${workspaceROOT}/test.json"]
+		},
 		{ //see https://github.com/rubyide/vscode-ruby/wiki/3.-Attaching-to-a-debugger -  rdebug-ide -- file.rb
-			"name": "Debug Attach",
+			"name": "RDebug-ide Attach",
 			"type": "Ruby",
 			"request": "attach",
 			"cwd": "${workspaceRoot}",

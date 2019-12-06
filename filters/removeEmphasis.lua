@@ -11,6 +11,6 @@ function Emph(elem)
 	return elem.content
 end
 
- function Strong(elem)
+function Strong(elem)
 	return pandoc.SmallCaps(elem.content)
 end
