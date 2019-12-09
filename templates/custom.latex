@@ -87,7 +87,7 @@ $if(beamerarticle)$
 \usepackage{beamerarticle} % needs to be loaded first
 $endif$
 $if(fontfamily)$
-\usepackage[$for(fontfamilyoptions)$$fontfamilyoptions$$sep$,$endfor$]{$fontfamily$}
+\usepackage[${ for(fontfamilyoptions) }${ it }${ sep },${ endfor }]{$fontfamily$}
 $else$
 \usepackage{lmodern}
 $endif$
@@ -143,12 +143,12 @@ $if(CJKmainfont)$
 $endif$
 $if(luatexjapresetoptions)$
   \ifLuaTeX
-    \usepackage[$for(luatexjapresetoptions)$$luatexjapresetoptions$$sep$,$endfor$]{luatexja-preset}
+    \usepackage[$for(luatexjapresetoptions)$$it$$sep$,$endfor$]{luatexja-preset}
   \fi
 $endif$
 $if(CJKmainfont)$
   \ifLuaTeX
-    \usepackage[$for(luatexjafontspecoptions)$$luatexjafontspecoptions$$sep$,$endfor$]{luatexja-fontspec}
+    \usepackage[$for(luatexjafontspecoptions)$$it$$sep$,$endfor$]{luatexja-fontspec}
     \setmainjfont[$for(CJKoptions)$$CJKoptions$$sep$,$endfor$]{$CJKmainfont$}
   \fi
 $endif$
@@ -193,7 +193,7 @@ $endif$
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \IfFileExists{microtype.sty}{% use microtype if available
-  \usepackage[$for(microtypeoptions)$$microtypeoptions$$sep$,$endfor$]{microtype}
+  \usepackage[$for(microtypeoptions)$$it$$sep$,$endfor$]{microtype}
   \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
 \usepackage[format=hang,labelfont=bf,labelsep=endash,font={sf,small}]{caption}
@@ -224,7 +224,10 @@ $if(title-meta)$
   pdftitle={$title-meta$},
 $endif$
 $if(author)$
-  pdfauthor={${for(author)}${author.name}${sep}, ${endfor}},
+  pdfauthor={${ for(author) }${ it.name }${ sep }, ${ endfor }},
+$endif$
+$if(lang)$
+  pdflang={$lang$},
 $endif$
 $if(subject)$
   pdfsubject={$subject$},
@@ -247,7 +250,11 @@ $if(verbatim-in-note)$
 \VerbatimFootnotes % allow verbatim text in footnotes
 $endif$
 $if(geometry)$
-\usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
+$if(beamer)$
+\geometry{$for(geometry)$$geometry$$sep$,$endfor$}
+$else$
+\usepackage[$for(geometry)$$it$$sep$,$endfor$]{geometry}
+$endif$
 $endif$
 $if(beamer)$
 \newif\ifbibliography
@@ -368,7 +375,7 @@ $if(natbib)$
 \bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
 $endif$
 $if(biblatex)$
-\usepackage[$if(biblio-style)$style=$biblio-style$,$endif$$for(biblatexoptions)$$biblatexoptions$$sep$,$endfor$]{biblatex}
+\usepackage[$if(biblio-style)$style=$it$,$endif$$for(biblatexoptions)$$it$$sep$,$endfor$]{biblatex}
 $for(bibliography)$
 \addbibresource{$bibliography$}
 $endfor$
@@ -404,15 +411,15 @@ $endif$
 $endif$
 $if(author)$
 \ifPDFTeX % if pdftex
-  \author{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.correspondence)$*$endif$$if(author.equal_contributor)$†$endif$}$sep$ \and $endfor$}
+  \author{$for(author)$$it.name$\textsuperscript{$for(author.affiliation)$$it.affiliation$$sep$,$endfor$$if(author.correspondence)$*$endif$$if(author.equal_contributor)$†$endif$}$sep$ \and $endfor$}
 \else
-  \author{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.correspondence)$\fixfontB{✉︎}$endif$$if(author.equal_contributor)$†$endif$}$sep$ \and $endfor$}
+  \author{$for(author)$$it.name$\textsuperscript{$for(author.affiliation)$$it.affiliation$$sep$,$endfor$$if(author.correspondence)$\fixfontB{✉︎}$endif$$if(author.equal_contributor)$†$endif$}$sep$ \and $endfor$}
 \fi
 $endif$
 \date{$date$}
 $if(beamer)$
 $if(institute)$
-\institute{$for(institute)$\textsuperscript{$institute.index$} $institute.name$$sep$ \and $endfor$}
+\institute{$for(institute)$\textsuperscript{$it.index$} $it.name$$sep$ \and $endfor$}
 $endif$
 $if(titlegraphic)$
 \titlegraphic{\includegraphics{$titlegraphic$}}
@@ -439,14 +446,14 @@ $if(logo)$
 $endif$
 
 $if(institute)$
-\textsf{$for(institute)$\textsuperscript{$institute.index$} $institute.name$$sep$\quad\&\quad$endfor$}
+\textsf{$for(institute)$\textsuperscript{$it.index$} $it.name$$sep$\quad\&\quad$endfor$}
 $endif$
 
 $if(correspondence_list)$
 \ifPDFTeX % if pdftex
-\textsf{* $for(correspondence_list)$\emph{$correspondence_list$}$sep$\quad\&\quad$endfor$}
+\textsf{* $for(correspondence_list)$\emph{$it$}$sep$\quad\&\quad$endfor$}
 \else
-\textsf{\fixfontB{✉︎} $for(correspondence_list)$\emph{$correspondence_list$}$sep$\quad\&\quad$endfor$}
+\textsf{\fixfontB{✉︎} $for(correspondence_list)$\emph{$it$}$sep$\quad\&\quad$endfor$}
 \fi
 $endif$
 
@@ -454,7 +461,6 @@ $if(equal_contributors)$
 \textsf{\textsuperscript{†} \small{\emph{These authors contributed equally to this work.}}}
 $endif$
 \end{center}
-
 
 $if(abstract)$
 \begin{abstract}
@@ -465,8 +471,8 @@ $endif$
 
 $for(include-before)$
 $include-before$
-
 $endfor$
+
 $if(toc)$
 $if(toc-title)$
 \renewcommand*\contentsname{$toc-title$}
@@ -500,6 +506,7 @@ $endif$
 $if(has-frontmatter)$
 \mainmatter
 $endif$
+
 $body$
 
 $if(has-frontmatter)$
@@ -525,6 +532,7 @@ $endif$
 
 $endif$
 $endif$
+
 $if(biblatex)$
 $if(beamer)$
 \begin{frame}[allowframebreaks]{$biblio-title$}
@@ -534,10 +542,10 @@ $if(beamer)$
 $else$
 \printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
 $endif$
-
 $endif$
+
 $for(include-after)$
 $include-after$
-
 $endfor$
+
 \end{document}

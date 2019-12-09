@@ -9,7 +9,7 @@ keywords: pandoc, pandocomatic
 date: 1^st^ January 2025
 toc: true
 pandocomatic_:
-  use-template: [plain-refs, html-refs]
+  use-template: [plain-refs, html-refs, latex-refs]
 ---
 
 # 1. Intro #
