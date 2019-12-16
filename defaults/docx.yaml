@@ -5,4 +5,4 @@ filters:
   #- removeHR #remove horizontal rules
   - prependAll # prepends institute:, comments: and keywords: metadata into the text
   - simplifyMetadata #collapse down metadata "author: [name: affiliation:]" to author:
-reference-doc: templates/custom.docx
+reference-doc: /Users/ian/.local/share/pandoc/templates/custom.docx

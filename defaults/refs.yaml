@@ -5,10 +5,10 @@ filters:
   - pagebreak.lua # use \newpage{} also for HTML and docx
 reference-links: true
 metadata:
-  bibliography: Core.json #JSON faster than BIB, symlinked to Pandoc data dir
-  csl: csl/apa-ian.csl
-  citation-abbreviations: cite-abbr.json # my journal abbreviations
+  bibliography: /Users/ian/.local/share/pandoc/Core.json #JSON faster than BIB, symlinked to Pandoc data dir
+  csl: /Users/ian/.local/share/pandoc/csl/apa-ian.csl
+  citation-abbreviations: /Users/ian/.local/share/pandoc/cite-abbr.json # my journal abbreviations
   cite-method: citeproc
   reference-section-title: References
   notes-after-punctuation: false
-  link-citations: true 
+  link-citations: true
