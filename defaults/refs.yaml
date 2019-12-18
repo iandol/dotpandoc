@@ -1,5 +1,6 @@
 standalone: true
 verbosity: INFO # verbose by default
+cite-method: citeproc
 filters: 
   - pandoc-citeproc # process citations
   - pagebreak.lua # use \newpage{} also for HTML and docx
@@ -8,7 +9,6 @@ metadata:
   bibliography: /Users/ian/.local/share/pandoc/Core.json #JSON faster than BIB, symlinked to Pandoc data dir
   csl: /Users/ian/.local/share/pandoc/csl/apa-ian.csl
   citation-abbreviations: /Users/ian/.local/share/pandoc/cite-abbr.json # my journal abbreviations
-  cite-method: citeproc
   reference-section-title: References
   notes-after-punctuation: false
   link-citations: true

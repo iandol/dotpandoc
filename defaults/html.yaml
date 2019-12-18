@@ -4,12 +4,14 @@ fail-if-warnings: false
 standalone: true
 number-sections: false
 section-divs: true
+eol: lf
 html-math-method:
   method: mathjax
+  url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
 filters: 
   - assimilateMetadata #regularise metadata
 template: custom.html
-css: templates/custom.css
+css: /Users/ian/.local/share/pandoc/templates/custom.css
 toc: true
 toc-depth: 3
 shift-heading-level-by: 1
