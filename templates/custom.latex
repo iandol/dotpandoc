@@ -54,19 +54,19 @@ $if(section-titles)$
 \setbeamertemplate{part page}{
   \centering
   \begin{beamercolorbox}[sep=16pt,center]{part title}
-  \usebeamerfont{part title}\insertpart\par
+    \usebeamerfont{part title}\insertpart\par
   \end{beamercolorbox}
 }
 \setbeamertemplate{section page}{
   \centering
   \begin{beamercolorbox}[sep=12pt,center]{part title}
-  \usebeamerfont{section title}\insertsection\par
+    \usebeamerfont{section title}\insertsection\par
   \end{beamercolorbox}
 }
 \setbeamertemplate{subsection page}{
   \centering
   \begin{beamercolorbox}[sep=8pt,center]{part title}
-  \usebeamerfont{subsection title}\insertsubsection\par
+    \usebeamerfont{subsection title}\insertsubsection\par
   \end{beamercolorbox}
 }
 \AtBeginPart{
@@ -113,10 +113,10 @@ $endif$
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 $if(mainfont)$
-    \setmainfont[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$]{$mainfont$}
+  \setmainfont[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$]{$mainfont$}
 $endif$
 $if(sansfont)$
-    \setsansfont[$for(sansfontoptions)$$sansfontoptions$$sep$,$endfor$]{$sansfont$}
+  \setsansfont[$for(sansfontoptions)$$sansfontoptions$$sep$,$endfor$]{$sansfont$}
 $endif$
 $if(monofont)$
   \setmonofont[$for(monofontoptions)$$monofontoptions$$sep$,$endfor$]{$monofont$}
@@ -314,7 +314,7 @@ $if(strikeout)$
 % Avoid problems with \sout in headers with hyperref
 \pdfstringdefDisableCommands{\renewcommand{\sout}{}}
 $endif$
-\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\setlength{\emergencystretch}{3em} % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 $if(numbersections)$
@@ -391,7 +391,11 @@ $endif$
 
 $if(title)$
 \usepackage{titling}
-\pretitle{\begin{center}\setstretch{1}\LARGE\sffamily\bfseries\itshape} 
+$if(linestretch)$
+\pretitle{\begin{center}\setstretch{1}\LARGE\sffamily\bfseries\itshape}
+$else$
+\pretitle{\begin{center}\LARGE\sffamily\bfseries\itshape}
+$endif$
 \posttitle{\par\end{center}} 
 \predate{\begin{center}\sffamily} 
 \postdate{\par\end{center}}
@@ -478,7 +482,7 @@ $if(toc-title)$
 \renewcommand*\contentsname{$toc-title$}
 $endif$
 $if(beamer)$
-\begin{frame}
+\begin{frame}[allowframebreaks]
 $if(toc-title)$
   \frametitle{$toc-title$}
 $endif$
