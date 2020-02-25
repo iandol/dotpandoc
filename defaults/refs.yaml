@@ -1,13 +1,13 @@
 standalone: true
 verbosity: INFO # verbose by default
 cite-method: citeproc
+bibliography: /Users/ian/.local/share/pandoc/Core.json #JSON faster than BIB, symlinked into Pandoc data dir
+csl: /Users/ian/.local/share/pandoc/csl/apa-ian.csl
 filters: 
   - pandoc-citeproc # process citations
   - pagebreak.lua # use \newpage{} also for HTML and docx
 reference-links: true
 metadata:
-  bibliography: /Users/ian/.local/share/pandoc/Core.json #JSON faster than BIB, symlinked to Pandoc data dir
-  csl: /Users/ian/.local/share/pandoc/csl/apa-ian.csl
   citation-abbreviations: /Users/ian/.local/share/pandoc/cite-abbr.json # my journal abbreviations
   reference-section-title: References
   notes-after-punctuation: false

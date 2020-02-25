@@ -61,6 +61,7 @@ templates:
         - filters/prependAll #prepends institute:, comments: and keywords: metadata into the text
         - filters/prependAuthor #prepends authors
       lua-filter:
+        - modifyHeadings.lua #makes headings stand out a bit more
         #- filters/removeEmphasis.lua # remove emphasis for plain and turn strong to UPPER
 #-----------------------------------------------------------------------------
   plain-refs:
