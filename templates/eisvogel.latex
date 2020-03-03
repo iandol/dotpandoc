@@ -1,6 +1,6 @@
 %%
-% Copyright (c) 2017 - 2019, Pascal Wagler;
-% Copyright (c) 2014 - 2019, John MacFarlane
+% Copyright (c) 2017 - 2020, Pascal Wagler;
+% Copyright (c) 2014 - 2020, John MacFarlane
 %
 % All rights reserved.
 %
@@ -559,6 +559,10 @@ $endfor$
 \fi
 $endif$
 
+$if(page-background)$
+\usepackage[pages=all]{background}
+$endif$
+
 %
 % for the background color of the title page
 %
@@ -858,6 +862,17 @@ $else$
   \renewcommand{\footrulewidth}{0.4pt}
 }
 \pagestyle{eisvogel-header-footer}
+$if(page-background)$
+\backgroundsetup{
+scale=1,
+color=black,
+opacity=$if(page-background-opacity)$$page-background-opacity$$else$0.2$endif$,
+angle=0,
+contents={%
+  \includegraphics[width=\paperwidth,height=\paperheight]{$page-background$}
+  }%
+}
+$endif$
 $endif$
 $endif$
 %%
