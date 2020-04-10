@@ -21,7 +21,7 @@ _ _ _ _ _ _
 
 You make different Compile formats for different sets of `defaults` options. 
 
-### Why I still prefer pandocomatic?
+## Why I still prefer pandocomatic?
 
 I don't actually use these default.yaml files myself. Mostly, this is because of pandocomatic's ability to call pre/post processing scripts in a single recipe. For example, by default pandoc-crossref cannot recognise crossrefs in styled caption, so I made a [small script to fix this in the source markdown file](https://github.com/iandol/dotpandoc/blob/master/pandocomatic.yaml#L18). Pandocomatic enables me to easily call this before pandoc is run, without any other fiddling or manual intervention. This is not possible with pandoc directly, you would need to write a wrapper script to call your modifier processors first then run pandoc, and, well, I already have pandocomatic to do that elegantly for me!
 
