@@ -305,21 +305,21 @@ templates:
     pandoc:
       to: pdf
       pdf-engine: 'xelatex'
-    cleanup: ['latexmk -c']
+    cleanup: []
 #-----------------------------------------------------------------------------
   pdf-refs-crossref:
     extends: [latex-refs-crossref]
     pandoc:
       to: pdf
       pdf-engine: 'xelatex'
-    cleanup: ['latexmk -c']
+    cleanup: []
 #-----------------------------------------------------------------------------
   pdf-endnote:
     extends: 'latex-endnote'
     pandoc:
       to: pdf
       pdf-engine: 'xelatex'
-    cleanup: ['latexmk -c']
+    cleanup: []
 #-----------------------------------------------------------------------------
 # https://github.com/Wandmalfarbe/pandoc-latex-template
   eisvogel:
