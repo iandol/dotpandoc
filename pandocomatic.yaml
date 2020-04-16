@@ -86,6 +86,11 @@ templates:
   docx-refs:
     extends: [docx,refs]
 #-----------------------------------------------------------------------------
+  docx-refs-nsfc:
+    extends: [docx,refs]
+    pandoc:
+      reference-doc: templates/custom.docx
+#-----------------------------------------------------------------------------
   docx-refs-crossref:
     extends: [docx,refs,crossref]
 #-----------------------------------------------------------------------------
