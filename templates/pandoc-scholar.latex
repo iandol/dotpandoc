@@ -1,5 +1,3 @@
-% !TEX TS-program = xelatex
-% !TEX encoding = UTF-8 Unicode
 \documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$paper,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
 $if(beamerarticle)$
 \usepackage{beamerarticle} % needs to be loaded first
@@ -78,9 +76,9 @@ $if(keywords)$
 $endif$
 $if(colorlinks)$
             colorlinks=true,
-            linkcolor=$if(linkcolor)$$linkcolor$$else$Mahogany$endif$,
-            citecolor=$if(citecolor)$$citecolor$$else$Sepia$endif$,
-            urlcolor=$if(urlcolor)$$urlcolor$$else$BrickRed$endif$,
+            linkcolor=$if(linkcolor)$$linkcolor$$else$Maroon$endif$,
+            citecolor=$if(citecolor)$$citecolor$$else$Blue$endif$,
+            urlcolor=$if(urlcolor)$$urlcolor$$else$Blue$endif$,
 $else$
             pdfborder={0 0 0},
 $endif$
@@ -101,7 +99,7 @@ $endfor$
 \fi
 $endif$
 $if(natbib)$
-\usepackage{natbib}
+\usepackage[$natbiboptions$]{natbib}
 \bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
 $endif$
 $if(biblatex)$
@@ -109,6 +107,14 @@ $if(biblatex)$
 $for(bibliography)$
 \addbibresource{$bibliography$}
 $endfor$
+$endif$
+$if(csl-refs)$
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newenvironment{cslreferences}%
+  {$if(csl-hanging-indent)$\setlength{\parindent}{0pt}%
+  \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces$endif$}%
+  {\par}
 $endif$
 $if(listings)$
 \usepackage{listings}
@@ -200,7 +206,12 @@ $if(title)$
 \title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
 $endif$
 $if(subtitle)$
-\providecommand{\subtitle}[1]{}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1}}{}{}
+}
+\makeatother
 \subtitle{$subtitle$}
 $endif$
 \usepackage{authblk}
@@ -210,10 +221,10 @@ $for(author)$
   $sep$,$endfor$]{%
   $author.name$%
   $if(author.correspondence)$$if(author.email)$%
-  \textsuperscript{@\,}%
-  $endif$$endif$%
+  \textsuperscript{*\,}%
+  %$endif$$endif$%
   $if(author.equal_contributor)$
-  \textsuperscript{$if(equal_contributor_symbol)$$equal_contributor_symbol$$else$*$endif$\,}%
+  \textsuperscript{$if(equal_contributor_symbol)$$equal_contributor_symbol$$else$\textdagger$endif$\,}%
   $endif$%
 }
 $endfor$
@@ -234,11 +245,11 @@ $endfor$
                     \@author
                   \end {tabular}\par}%
                 $if(has_equal_contributors)$
-                \vskip 0.5em{\textsuperscript{$if(equal_contributor_symbol)$$equal_contributor_symbol$$else$*$endif$}\,%
+                \vskip 0.5em{\textsuperscript{$if(equal_contributor_symbol)$$equal_contributor_symbol$$else$\textdagger$endif$}\,%
                   These authors contributed equally to this work.}
                 $endif$
                 $if(has_correspondence)$
-                \vskip 0.2em{\textsuperscript{@}\,Correspondence:
+                \vskip 0.2em{\textsuperscript{*}\,Correspondence:
                   $for(author)$$if(author.correspondence)$$if(author.email)$
                   $author.name$ <$author.email$>\\
                   $endif$$endif$$endfor$}%
@@ -285,20 +296,34 @@ $body$
 $if(natbib)$
 $if(bibliography)$
 $if(biblio-title)$
-$if(book-class)$
+$if(has-chapters)$
 \renewcommand\bibname{$biblio-title$}
 $else$
 \renewcommand\refname{$biblio-title$}
 $endif$
 $endif$
-\bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
+$if(beamer)$
+\begin{frame}[allowframebreaks]{$biblio-title$}
+  \bibliographytrue
+$endif$
+  \bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
+$if(beamer)$
+\end{frame}
+$endif$
 
 $endif$
 $endif$
 $if(biblatex)$
+$if(beamer)$
+\begin{frame}[allowframebreaks]{$biblio-title$}
+  \bibliographytrue
+  \printbibliography[heading=none]
+\end{frame}
+$else$
 \printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
-
 $endif$
+$endif$
+
 $for(include-after)$
 $include-after$
 
