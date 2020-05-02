@@ -43,6 +43,7 @@ templates:
       reference-section-title: References
       notes-after-punctuation: false
       link-citations: true 
+      csl-hanging-indent: true
 #-----------------------------------------------------------------------------
   plain:
     pandoc:
@@ -61,7 +62,7 @@ templates:
         - filters/prependAll #prepends institute:, comments: and keywords: metadata into the text
         - filters/prependAuthor #prepends authors
       lua-filter:
-        - modifyHeadings.lua #makes headings stand out a bit more
+        - filters/modifyHeadings.lua #makes headings stand out a bit more
         #- filters/removeEmphasis.lua # remove emphasis for plain and turn strong to UPPER
 #-----------------------------------------------------------------------------
   plain-refs:
