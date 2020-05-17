@@ -14,7 +14,7 @@ Documentation is here: https://pandoc.org/MANUAL.html#default-files
 
 ## Defaults and Scrivener
 
-While I still prefer to use pandocomatic, these defaults files do simplify the setup for people who may prefer a single install requirement (only Pandoc is needed, not Ruby). Currently you cannot call pandoc defaults from metadata (though see https://github.com/jgm/pandoc/issues/5870), what this means is that you can't use the metadata edited in Scrivener to customise your compile. BUT you can create *different Compile formats* in Scriveners Compile manager, each with a different set of pandoc defaults options, i.e. to output citeproc references to docx:
+While I still prefer to use pandocomatic, these defaults files do simplify the setup for people who may prefer a single install requirement (only Pandoc is needed, not Ruby). Currently you cannot call pandoc defaults from metadata (though see [issue #5870](https://github.com/jgm/pandoc/issues/5870)), what this means is that you can't use the metadata edited in Scrivener to customise your compile. BUT you can create *different Compile formats* in Scriveners Compile manager, each with a different set of pandoc defaults options, i.e. to output citeproc references to docx:
 
 ![](https://raw.githubusercontent.com/iandol/scrivomatic/master/images/defaults.png)
 _ _ _ _ _ _
