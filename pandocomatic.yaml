@@ -58,9 +58,9 @@ templates:
       eol: lf
       preserve-tabs: true
       filter:
-        - filters/prependAbstract #prepends abstract: metadata into the text
-        - filters/prependAll #prepends institute:, comments: and keywords: metadata into the text
-        - filters/prependAuthor #prepends authors
+        - filters/prependAbstract.rb #prepends abstract: metadata into the text
+        - filters/prependAll.rb #prepends institute:, comments: and keywords: metadata into the text
+        - filters/prependAuthor.rb #prepends authors
       lua-filter:
         - filters/modifyHeadings.lua #makes headings stand out a bit more
         #- filters/removeEmphasis.lua # remove emphasis for plain and turn strong to UPPER
@@ -80,8 +80,8 @@ templates:
       standalone: true
       filter:
         #- filters/removeHR #remove horizontal rules
-        - filters/prependAll # prepends institute:, comments: and keywords: metadata into the text
-        - filters/simplifyMetadata #collapse down metadata "author: [name: affiliation:]" to author:
+        - filters/prependAll.rb # prepends institute:, comments: and keywords: metadata into the text
+        - filters/simplifyMetadata.rb #collapse down metadata "author: [name: affiliation:]" to author:
       reference-doc: templates/custom.docx
 #-----------------------------------------------------------------------------
   docx-refs:
@@ -157,7 +157,7 @@ templates:
       to: latex
       standalone: true
       filter: 
-        - filters/assimilateMetadata # handle academic metadata
+        - filters/assimilateMetadata.rb # handle academic metadata
       template: templates/custom.latex
     metadata:
       documentclass: 'article'
