@@ -1,0 +1,26 @@
+.gitattributes text eol=lf
+.gitignore text eol=lf
+.doxyfile text eol=lf
+*.build text eol=lf
+*.c text eol=lf
+*.cmake text eol=lf
+*.cpp text eol=lf
+*.csv text eol=lf
+*.h text eol=lf
+*.m text eol=lf
+*.md text eol=lf
+*.lua text eol=lf
+*.py text eol=lf
+*.rb text eol=lf
+*.rst text eol=lf
+*.sh text eol=lf
+*.txt text eol=lf
+*.yml text eol=lf
+*.frag text eol=lf
+*.vert text eol=lf
+*.ino text eol=lf
+*.mat binary
+*.mexa64 binary
+*.mexmaci64 binary
+*.mexw64 binary
+*.zip binary
