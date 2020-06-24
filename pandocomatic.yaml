@@ -103,11 +103,11 @@ templates:
   docx-endnote:
     extends: [docx,refs]
     preprocessors: 
-      add: [preprocessors/convertEndnoteRefs] #turns endnote citations to pandoc citations
+      add: preprocessors/convertEndnoteRefs.rb  #turns endnote citations to pandoc citations
 #-----------------------------------------------------------------------------
   docx-changes:
     extends: [docx,refs]
-    preprocessors: [preprocessors/criticmarkup] #process criticmarkup to HTML that pandoc can use
+    preprocessors: preprocessors/criticmarkup.rb #process criticmarkup to HTML that pandoc can use
 #-----------------------------------------------------------------------------
   odt-refs:
     extends: [docx-refs]
@@ -181,7 +181,7 @@ templates:
       lang: 'en-GB'
       nonumberfigures: true # I use Scrivener autonumbering, so disable for LaTeX
     postprocessors: 
-      - postprocessors/fixLaTeX
+      - postprocessors/fixLaTeX.rb
 #-----------------------------------------------------------------------------
   latex-refs:
     extends: [latex,refs]
@@ -198,7 +198,7 @@ templates:
   latex-endnote:
     extends: [latex-refs]
     preprocessors: 
-      - preprocessors/convertEndnoteRefs
+      - preprocessors/convertEndnoteRefs.rb
 #-----------------------------------------------------------------------------
   latex-chemfig: # example of using header-includes with yaml block scalar data http://yaml-multiline.info/
     extends: [latex-refs]
@@ -299,7 +299,7 @@ templates:
       lang: 'en-GB'
       geometry: ['margin=1.5cm','top=2.1cm']
     postprocessors: 
-      - postprocessors/fixLaTeX
+      - postprocessors/fixLaTeX.rb
 #-----------------------------------------------------------------------------
   pdf-refs:
     extends: [latex-refs]
@@ -332,7 +332,7 @@ templates:
       to: latex
       standalone: true
       filter: 
-        - filters/assimilateMetadata # handle academic matadata
+        - filters/assimilateMetadata.rb # handle academic matadata
       template: templates/eisvogel.latex
       toc: true
       shift-heading-level-by: 1
@@ -375,7 +375,7 @@ templates:
       footnotes_pretty: true
       footnotes-disable-backlinks: false
     postprocessors: 
-      - postprocessors/fixLaTeX
+      - postprocessors/fixLaTeX.rb
 #-----------------------------------------------------------------------------
 # https://github.com/Wandmalfarbe/pandoc-latex-template
   eisvogel-logo:
@@ -413,7 +413,7 @@ templates:
   eisvogel-endnote:
     extends: [eisvogel]
     preprocessors: 
-      - preprocessors/convertEndnoteRefs
+      - preprocessors/convertEndnoteRefs.rb
 #-----------------------------------------------------------------------------
   latex-ieee:
     extends: [latex-refs]
@@ -451,7 +451,7 @@ templates:
       section-divs: true
       mathjax: true
       filter: 
-        - filters/assimilateMetadata #regularise metadata
+        - filters/assimilateMetadata.rb #regularise metadata
       template: 'templates/custom.html'
       css: 'templates/custom.css'
       toc: true
@@ -460,7 +460,7 @@ templates:
     metadata:
       lang: 'en-GB'
     postprocessors: 
-      - postprocessors/fixHTML
+      - postprocessors/fixHTML.rb
 #-----------------------------------------------------------------------------
   html-selfcontained:
     extends: [html]
@@ -470,7 +470,7 @@ templates:
   html-changes:
     extends: ['html']
     preprocessors: 
-      - preprocessors/criticmarkup
+      - preprocessors/criticmarkup.rb
 #-----------------------------------------------------------------------------
   html-refs:
     extends: [refs, html]
@@ -481,7 +481,7 @@ templates:
   html-endnote:
     extends: [refs, html]
     preprocessors: 
-      - preprocessors/convertEndnoteRefs
+      - preprocessors/convertEndnoteRefs.rb
 #-----------------------------------------------------------------------------
   html-scholar:
     extends: [refs, crossref, html]
@@ -510,7 +510,7 @@ templates:
   html-endnote-pdf:
     extends: [html-refs-pdf]
     preprocessors: 
-      - preprocessors/convertEndnoteRefs
+      - preprocessors/convertEndnoteRefs.rb
 #-----------------------------------------------------------------------------
 # https://github.com/jez/tufte-pandoc-css
   tufte:
@@ -521,7 +521,7 @@ templates:
       standalone: true
       mathjax: true
       filter: 
-        - filters/assimilateMetadata # regularise metadata
+        - filters/assimilateMetadata.rb # regularise metadata
         - pandoc-sidenote # brew install jez/formulae/pandoc-sidenote
       template: 'templates/tufte.html5'
       css: 
@@ -563,6 +563,21 @@ templates:
       css: ['templates/custom.css']
       self-contained: true
       mathjax: true
+      filter:
+        - filters/noop.rb
+    metadata:
+      lang: 'EN-GB'
+  test2:
+    pandoc:
+      from: markdown
+      to: html5
+      standalone: true
+      self-contained: true
+      mathjax: true
+      filter:
+        - filters/noop.rb
+    metadata:
+      lang: 'EN-GB'
   test-markdown:
     pandoc:
       from: markdown
@@ -570,6 +585,6 @@ templates:
       output: out.md
       standalone: true
       filter: 
-        - filters/testFilter
+        - filters/testFilter.rb
     metadata:
       #author: Joanna Doe
