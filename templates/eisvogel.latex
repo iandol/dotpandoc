@@ -60,7 +60,7 @@ $endif$
 $if(papersize)$
   $papersize$paper,
 $else$
-  a4paper,
+  paper=a4,
 $endif$
 $if(beamer)$
   ignorenonframetext,
