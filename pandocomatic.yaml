@@ -15,7 +15,7 @@ templates:
   crossref: # note crossref should come before citeproc!
     setup: []
     preprocessors: 
-      - preprocessors/fixCrossref #allows to put crossref labels in styled captions
+      - preprocessors/fixCrossref.rb #allows to put crossref labels in styled captions
     pandoc:
       standalone: true
       verbose: true # verbose by default
@@ -560,18 +560,7 @@ templates:
       from: markdown
       to: html5
       standalone: true
-      css: ['templates/custom.css']
-      self-contained: true
-      mathjax: true
-      filter:
-        - filters/noop.rb
-    metadata:
-      lang: 'EN-GB'
-  test2:
-    pandoc:
-      from: markdown
-      to: html5
-      standalone: true
+      css: templates/custom.css
       self-contained: true
       mathjax: true
       filter:
