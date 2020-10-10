@@ -1,11 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<style class="in-text" version="1.0" demote-non-dropping-particle="never" xmlns="http://purl.org/net/xbiblio/csl">
-  <!-- This style was edited with the Visual CSL Editor (http://editor.citationstyles.org/visualEditor/) -->
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="never">
   <info>
-    <title>American Psychological Association 6th edition IAN</title>
-    <title-short>APA IAN</title-short>
-    <id>http://www.zotero.org/styles/american-psychological-association-6th-edition-ian</id>
-    <link href="http://www.zotero.org/styles/american-psychological-association-6th-edition-ian" rel="self"/>
+    <title>American Psychological Association 6th edition</title>
+    <title-short>APA</title-short>
+    <id>http://www.zotero.org/styles/apa</id>
+    <link href="http://www.zotero.org/styles/apa" rel="self"/>
     <link href="http://owl.english.purdue.edu/owl/resource/560/01/" rel="documentation"/>
     <author>
       <name>Simon Kornblith</name>
@@ -32,7 +31,7 @@
     <category citation-format="author-date"/>
     <category field="psychology"/>
     <category field="generic-base"/>
-    <updated>2017-05-19T04:40:19+00:00</updated>
+    <updated>2017-05-04T21:20:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -81,7 +80,7 @@
   </macro>
   <macro name="author">
     <names variable="author">
-      <name and="symbol" delimiter-precedes-last="always" initialize-with="" name-as-sort-order="all" sort-separator=" "/>
+      <name name-as-sort-order="all" and="symbol" sort-separator=", " initialize-with="" delimiter=", " delimiter-precedes-last="always"/>
       <et-al font-style="italic"/>
       <label form="short" prefix=" (" suffix=")" text-case="capitalize-first"/>
       <substitute>
@@ -101,7 +100,7 @@
   </macro>
   <macro name="author-short">
     <names variable="author">
-      <name form="short" text-decoration="none" and="symbol" initialize-with=""/>
+      <name form="short" and="symbol" delimiter=", " initialize-with=""/>
       <et-al font-style="italic"/>
       <substitute>
         <names variable="editor"/>
@@ -445,7 +444,7 @@
       <if type="article-journal article-magazine" match="any">
         <group prefix=", " delimiter=", ">
           <group>
-            <text variable="volume" font-style="bold"/>
+            <text variable="volume" font-style="italic"/>
             <text variable="issue" prefix="(" suffix=")"/>
           </group>
           <text variable="page"/>
@@ -550,7 +549,7 @@
   <macro name="container-title">
     <choose>
       <if type="article article-journal article-magazine article-newspaper" match="any">
-        <text form="short" variable="container-title" font-style="italic" text-case="title"/>
+        <text variable="container-title" font-style="italic" text-case="title"/>
       </if>
       <else-if type="bill legal_case legislation" match="none">
         <text variable="container-title" font-style="italic"/>
@@ -622,18 +621,18 @@
   </macro>
   <citation et-al-min="3" et-al-use-first="1" et-al-subsequent-min="3" et-al-subsequent-use-first="1" disambiguate-add-year-suffix="true" disambiguate-add-names="true" disambiguate-add-givenname="true" collapse="year" givenname-disambiguation-rule="primary-name">
     <sort>
-      <key macro="issued-sort"/>
       <key macro="author"/>
-      </sort>
+      <key macro="issued-sort"/>
+    </sort>
     <layout prefix="(" suffix=")" delimiter="; ">
-      <group delimiter=" ">
-        <text macro="author-short" font-style="italic"/>
+      <group delimiter=", ">
+        <text macro="author-short"/>
         <text macro="issued-year"/>
         <text macro="citation-locator"/>
       </group>
     </layout>
   </citation>
-  <bibliography hanging-indent="true" et-al-min="8" et-al-use-first="6" et-al-use-last="true" entry-spacing="0" line-spacing="1">
+  <bibliography hanging-indent="true" et-al-min="8" et-al-use-first="6" et-al-use-last="true" entry-spacing="0" line-spacing="2">
     <sort>
       <key macro="author"/>
       <key macro="issued-sort" sort="ascending"/>
@@ -643,9 +642,9 @@
       <group suffix=".">
         <group delimiter=". ">
           <text macro="author"/>
-          <text macro="issued" quotes="false" font-style="normal" font-weight="normal" text-decoration="none"/>
+          <text macro="issued"/>
           <text macro="title-plus-extra"/>
-          <text macro="container" font-weight="normal"/>
+          <text macro="container"/>
         </group>
         <text macro="legal-cites"/>
         <text macro="locators"/>
