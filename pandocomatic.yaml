@@ -150,7 +150,7 @@ templates:
 #-----------------------------------------------------------------------------
   latex:
     preprocessors:
-      #- preprocessors/removeImageDimensions # remove image dimensions
+      - preprocessors/removeImageDimensions.rb # remove image dimensions
     pandoc:
       from: markdown
       to: latex
@@ -336,6 +336,7 @@ templates:
       toc: true
       shift-heading-level-by: 1
     metadata: 
+      book: false 
       titlepage: true
       titlepage-color: BB4433
       titlepage-text-color: FFFFFF
@@ -381,6 +382,8 @@ templates:
     extends: [eisvogel]
     metadata:
       titlepage-background: /Users/ian/Dropbox/Images/Logos/backgroundlogo.pdf
+      page-background:
+      page-background-opacity:
       titlepage-text-color: 555555
       titlepage-rule-color: 555555
 #-----------------------------------------------------------------------------

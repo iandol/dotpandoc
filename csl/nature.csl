@@ -37,10 +37,9 @@
   </macro>
   <macro name="access">
     <choose>
-      <if variable="volume"/>
-      <else-if variable="DOI">
+      <if variable="DOI">
         <text variable="DOI" prefix="doi:"/>
-      </else-if>
+      </if>
       <else-if type="webpage" variable="URL" match="all">
         <text term="available at" text-case="capitalize-first" suffix=": "/>
         <text variable="URL" suffix=". "/>
