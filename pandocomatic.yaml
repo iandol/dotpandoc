@@ -34,7 +34,7 @@ templates:
       lua-filter:
         - filters/pagebreak.lua # use \newpage{} also for HTML and docx
       bibliography: Core.json #JSON faster than BIB, symlinked to Pandoc data dir
-      csl: csl/apa.csl
+      csl: csl/cell-doi.csl
       citation-abbreviations: cite-abbr.json # my journal abbreviations
       reference-links: true
     metadata:
