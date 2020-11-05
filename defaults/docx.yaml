@@ -3,6 +3,6 @@ to: docx
 standalone: true
 filters:
   #- removeHR #remove horizontal rules
-  - prependAll # prepends institute:, comments: and keywords: metadata into the text
-  - simplifyMetadata #collapse down metadata "author: [name: affiliation:]" to author:
+  - prependAll.rb # prepends institute:, comments: and keywords: metadata into the text
+  - simplifyMetadata.rb #collapse down metadata "author: [name: affiliation:]" to author:
 reference-doc: /Users/ian/.local/share/pandoc/templates/custom.docx
