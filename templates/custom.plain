@@ -1,23 +1,22 @@
 $if(titleblock)$
 $titleblock$
-$endif$
 
+$endif$
 $for(header-includes)$
 $header-includes$
-$endfor$
 
+$endfor$
 $for(include-before)$
 $include-before$
-$endfor$
 
+$endfor$
 $if(toc)$
 Contents
 ========
 $table-of-contents$
 $endif$
-
 $body$
-
 $for(include-after)$
+
 $include-after$
 $endfor$

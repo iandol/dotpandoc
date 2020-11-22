@@ -17,7 +17,6 @@ templates:
     preprocessors: 
       - preprocessors/fixCrossref.rb #allows to put crossref labels in styled captions
     pandoc:
-      standalone: true
       verbose: true # verbose by default
       filter: 
         - pandoc-crossref # process crossrefs
@@ -28,11 +27,8 @@ templates:
 #-----------------------------------------------------------------------------
   refs:
     pandoc:
-      standalone: true
       verbose: true # verbose by default
       citeproc: true
-      lua-filter:
-        - filters/pagebreak.lua # use \newpage{} also for HTML and docx
       bibliography: Core.json #JSON faster than BIB, symlinked to Pandoc data dir
       csl: csl/cell-doi.csl
       citation-abbreviations: cite-abbr.json # my journal abbreviations
@@ -77,6 +73,8 @@ templates:
       from: markdown
       to: docx
       standalone: true
+      lua-filter:
+        - filters/pagebreak.lua # use \newpage{} also for HTML and docx
       filter:
         #- filters/removeHR #remove horizontal rules
         - filters/prependAll.rb # prepends institute:, comments: and keywords: metadata into the text
@@ -109,7 +107,7 @@ templates:
     preprocessors: preprocessors/criticmarkup.rb #process criticmarkup to HTML that pandoc can use
 #-----------------------------------------------------------------------------
   odt-refs:
-    extends: [docx-refs]
+    extends: [docx,refs]
     pandoc:
       to: odt
       reference-doc: templates/custom.odt
@@ -452,6 +450,8 @@ templates:
       number-sections: false
       section-divs: true
       mathjax: true
+      lua-filter:
+        - filters/pagebreak.lua # use \newpage{} also for HTML and docx
       filter: 
         - filters/assimilateMetadata.rb #regularise metadata
       template: 'templates/custom.html'
@@ -522,6 +522,8 @@ templates:
       section-divs: true
       standalone: true
       mathjax: true
+      lua-filter:
+        - filters/pagebreak.lua # use \newpage{} also for HTML and docx
       filter: 
         - filters/assimilateMetadata.rb # regularise metadata
         - pandoc-sidenote # brew install jez/formulae/pandoc-sidenote

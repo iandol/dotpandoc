@@ -1,7 +1,7 @@
+standalone: true
 from: markdown
 to: html5
 fail-if-warnings: false
-standalone: true
 number-sections: false
 section-divs: true
 eol: lf
