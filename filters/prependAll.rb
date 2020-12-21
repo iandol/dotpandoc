@@ -8,8 +8,16 @@
 require 'paru/filter'
 
 # here is our list of metadata to convert
-prepend_list = {:wordcount => "Wordcount", :comments => "Comments", 
-	:keywords => "Keywords", :abstract => "Abstract", :institute => "Affiliations"}
+	prepend_list = {
+		:comments => "Comments", 
+		:wordcount => "Wordcount", 
+		:conflicts => "Conflict of interests statement", 
+		:acknowledgements => "Acknowledgements", 
+		:contributions => "Author contributions",
+		:institute => "Affiliations",
+		:keywords => "Keywords", 
+		:abstract => "Abstract"
+	}
 
 Paru::Filter.run do
 	prepend_list.each do |key,val|
