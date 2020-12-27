@@ -29,13 +29,12 @@ templates:
     pandoc:
       verbose: true # verbose by default
       citeproc: true
-      bibliography: Core.json #JSON faster than BIB, symlinked to Pandoc data dir
+      bibliography: Core.json #JSON faster than BIB, symlinked within Pandoc data dir
       csl: csl/cell-doi.csl
       citation-abbreviations: cite-abbr.json # my journal abbreviations
       reference-links: true
     metadata:
-      cite-method: citeproc
-      reference-section-title: References
+      reference-section-title: Bibliography
       notes-after-punctuation: false
       link-citations: true 
       csl-hanging-indent: true
