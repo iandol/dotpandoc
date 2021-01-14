@@ -3,7 +3,7 @@
 # paragraph at the start of the document;
 # as Word/ODT templates cannot handle this natively
 #
-# VERSION: 1.0.1
+# VERSION: 1.0.2
 
 require 'paru/filter'
 
@@ -11,18 +11,16 @@ require 'paru/filter'
 	prepend_list = {
 		:comments => "Comments", 
 		:wordcount => "Wordcount", 
-		:conflicts => "Conflict of interests statement", 
+		:conflicts => "Conflict of interest statement", 
 		:acknowledgements => "Acknowledgements", 
 		:contributions => "Author contributions",
 		:institute => "Affiliations",
-		:keywords => "Keywords", 
-		:abstract => "Abstract"
+		:keywords => "Keywords"
 	}
 
 Paru::Filter.run do
 	prepend_list.each do |key,val|
 		next unless metadata.key?(key.to_s)
-
 		text = ''
 		kw = metadata[key.to_s]
 		if kw.is_a?(String)

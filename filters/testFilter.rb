@@ -1,12 +1,15 @@
 #!/usr/bin/env ruby
 # testing filter, uses byebug to remote debug
 
+# DEBUG BLOCK START
 require 'byebug/core'
 require 'byebug'
 PORT = 1234
 warn "\n!!!DEBUG Server started: localhost:#{PORT} @ " + Time.now.to_s + "\n\n"
 Byebug.wait_connection = true
 Byebug.start_server('127.0.0.1', PORT)
+# DEBUG BLOCK END
+
 require 'paru/filter'
 
 testKey = 'author'

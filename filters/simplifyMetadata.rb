@@ -5,20 +5,21 @@
 # This is because the Word/ODT templates do not have the flexibility
 # the other pandoc output formats do...
 #
-# VERSION: 1.0.1
+# VERSION: 1.0.2
+
 
 require 'paru/filter'
 def fixName(author)
-  author = Hash['name' => author] if author.is_a?(String)
-  unless author.key?('name') # convert first key id to name: key
-	 if author.values[0].is_a?(Hash)
+	author = Hash['name' => author] if author.is_a?(String)
+	unless author.key?('name') # convert first key id to name: key
+	if author.values[0].is_a?(Hash)
 		values = author.values[0]
 		values['id'] = author.keys[0]
 		values['name'] = values['id']
 		author = values
-	 else
+	else
 		author['name'] = 'Unknown'
-	 end
+	end
   end
   author
 end
@@ -33,6 +34,7 @@ contributionKey = 'equal_contributor'
 conMarker = '†'
 
 Paru::Filter.run do
+	
 	stop! unless metadata.key?(testKey)
 	stop! if metadata.key?(pKey) && !metadata[pKey]['to'].match(/docx|odt/)
 	newAuthor = nil
