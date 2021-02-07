@@ -166,7 +166,7 @@
             <text macro="editor"/>
           </group>
           <group prefix=" ">
-            <text variable="container-title" font-style="normal" form="short" strip-periods="true"/>
+            <text variable="container-title" font-style="normal" strip-periods="true"/>
             <text variable="volume" prefix=" "/>
             <group prefix=":">
               <text variable="page"/>
