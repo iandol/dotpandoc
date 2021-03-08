@@ -83,7 +83,7 @@ templates:
       to: docx
       standalone: true
       lua-filter:
-        - filters/pagebreak.lua # use \newpage{} also for HTML and docx
+        - filters/pagebreak.lua # use \newpage{} also for HTML, DOCX, ODT & EPUB
       filter:
         #- filters/removeHR #remove horizontal rules
         - filters/prependAll.rb # prepends institute:, comments: and keywords: metadata into the text
