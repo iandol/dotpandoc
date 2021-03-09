@@ -1,3 +1,2 @@
-defaults: [refs, latex]
 to: pdf
 pdf-engine: xelatex
