@@ -6,9 +6,9 @@ Since V2.8, Pandoc allows one to pass in sets of default.yaml settings, using th
 pandoc -d refs -d latex test.md -o test.tex
 ```
 
-Notice how you can combine sets together, so for example `-drefs -dhtml -dpdf-prince` will make a PDF using princeXML from HTML outputs with full CSL academic references. Since Pandoc V2.11 you can call combine default files, for example see [latex-refs.yaml](https://github.com/iandol/dotpandoc/blob/master/defaults/latex-refs.yaml) for an example, so now the combination is specified by the defaults file and you only need to call `-d latext-refs`.
+Notice how you can combine sets together, so for example `-drefs -dhtml -dpdf-prince` will make a PDF using [princeXML](https://www.princexml.com) from HTML outputs with full CSL academic references. Since Pandoc V2.11 default files can call other default files, for example see [latex-refs.yaml](https://github.com/iandol/dotpandoc/blob/master/defaults/latex-refs.yaml), so now the combination is specified by the defaults file and you only need to call `-d latex-refs`.
 
-Since Pandoc V2.12 you can now use relative paths, using `${VARIABLE}`, for example to refer to the home directory use `${HOME}`. There are two magic variables:
+Since Pandoc V2.12 you can now use relative or other paths, using `${VARIABLE}`; for example to refer to the home directory use `${HOME}`. There are two magic env variables:
 
 * `${USERDATA}` — points to the Pandoc data directory (default is `~/.local/share/pandoc/`).
 * `${.}` — points to the same folder the defaults file is found, allowing to package up resources in a portable folder.

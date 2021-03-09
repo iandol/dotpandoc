@@ -1,4 +1,5 @@
 defaults: html
+css: ${USERDATA}/templates/print.css
 from: markdown
 to: pdf
 output-file: Out.pdf

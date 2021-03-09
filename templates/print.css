@@ -1,0 +1,7 @@
+@page { 
+	size: A4;
+	margin: 18mm;
+	counter-increment: page;
+	prince-bleed: 5mm;
+	marks: crop cross;
+}

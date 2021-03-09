@@ -4,6 +4,8 @@
   fail-if-warnings: false
   number-sections: false
   section-divs: true
+  template: custom.html
+  css: ${USERDATA}/templates/custom.css
   eol: lf
   html-math-method:
     method: mathjax
@@ -11,8 +13,6 @@
   filters: 
     - pagebreak.lua
     - assimilateMetadata.rb #regularise metadata
-  template: custom.html
-  css: ${USERDATA}/templates/custom.css
   table-of-contents: true
   toc-depth: 3
   shift-heading-level-by: 0
