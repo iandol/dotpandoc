@@ -2,7 +2,7 @@ from: markdown
 to: latex
 standalone: true
 filters: 
-  - assimilateMetadata # handle academic matadata
+  - assimilateMetadata.rb # handle academic matadata
 template: eisvogel.latex
 toc: true
 shift-heading-level-by: 0

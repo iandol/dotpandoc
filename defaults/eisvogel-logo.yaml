@@ -2,11 +2,11 @@ from: markdown
 to: latex
 standalone: true
 filters: 
-  - assimilateMetadata # handle academic matadata
+  - assimilateMetadata.rb # handle academic matadata
 template: eisvogel.latex
 toc: true
 metadata:
-  titlepage-background: /Users/ian/Dropbox/Images/Logos/backgroundlogo.pdf
+  titlepage-background: ${HOME}/Dropbox/Images/Logos/backgroundlogo.pdf
   titlepage-text-color: 555555
   titlepage-rule-color: 555555
   titlepage: true

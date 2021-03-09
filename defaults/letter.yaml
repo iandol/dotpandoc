@@ -23,8 +23,8 @@ metadata:
   CJKmainfont: 'PingFang SC'
   fontsize: '11pt'
   linestretch: '1.2'
-  letterhead: "/Users/ian/Dropbox/Work/ION-Letterhead.pdf"
-  signature: "/Users/ian/Dropbox/Work/Ian-Signature.png"
+  letterhead: "${HOME}/Dropbox/Work/ION-Letterhead.pdf"
+  signature: "${HOME}/Dropbox/Work/Ian-Signature.png"
   signature-width: 45mm
   signature-before: -11ex
   signature-after: -1.5ex

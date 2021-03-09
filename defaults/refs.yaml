@@ -1,9 +1,9 @@
 verbosity: INFO # verbose by default
 citeproc: true
 cite-method: citeproc
-bibliography: /Users/ian/.local/share/pandoc/Core.json #JSON faster than BIB, symlinked into Pandoc data dir
-citation-abbreviations: /Users/ian/.local/share/pandoc/cite-abbr.json # my journal abbreviations
-csl: /Users/ian/.local/share/pandoc/csl/cell-doi.csl
+bibliography: ${USERDATA}/Core.json #JSON faster than BIB, symlinked into Pandoc data dir
+citation-abbreviations: ${USERDATA}/cite-abbr.json # my journal abbreviations
+csl: ${USERDATA}/csl/cell-doi.csl
 reference-links: true
 metadata:
   reference-section-title: Bibliography

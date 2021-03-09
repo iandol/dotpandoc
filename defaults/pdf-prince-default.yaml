@@ -1,6 +1,4 @@
-defaults: html
-from: markdown
-to: pdf
 output-file: Out.pdf
+to: pdf
 pdf-engine: prince
 pdf-engine-opt: ['--page-size=A4']

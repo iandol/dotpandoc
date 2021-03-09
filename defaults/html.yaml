@@ -1,19 +1,21 @@
-standalone: true
-from: markdown
-to: html5
-fail-if-warnings: false
-number-sections: false
-section-divs: true
-eol: lf
-html-math-method:
-  method: mathjax
-  url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
-filters: 
-  - assimilateMetadata #regularise metadata
-template: custom.html
-css: /Users/ian/.local/share/pandoc/templates/custom.css
-toc: true
-toc-depth: 3
-shift-heading-level-by: 1
-metadata:
-  lang: 'en-GB'
+  standalone: true
+  from: markdown
+  to: html5
+  fail-if-warnings: false
+  number-sections: false
+  section-divs: true
+  eol: lf
+  html-math-method:
+    method: mathjax
+    #url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+  filters: 
+    - pagebreak.lua
+    - assimilateMetadata.rb #regularise metadata
+  template: custom.html
+  css: custom.css
+  table-of-contents: true
+  toc-depth: 3
+  shift-heading-level-by: 0
+  metadata:
+    lang: 'en-GB'
+    toc-title: "Table of Contents"

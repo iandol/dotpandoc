@@ -1,8 +1,10 @@
 standalone: true
 from: markdown
 to: docx
+output-file: Out.docx
 filters:
   #- removeHR #remove horizontal rules
+  - pagebreak.lua
   - prependAll.rb # prepends institute:, comments: and keywords: metadata into the text
   - simplifyMetadata.rb #collapse down metadata "author: [name: affiliation:]" to author:
-reference-doc: /Users/ian/.local/share/pandoc/templates/custom.docx
+reference-doc: ${USERDATA}/templates/custom.docx

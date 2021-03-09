@@ -1,5 +1,5 @@
 body { 
-	font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+	font-family: "Greta Sans Pro", -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
 	font-size: 16px;
 	margin: auto;
 	max-width: 29cm;
@@ -9,7 +9,7 @@ body {
 q { quotes: "“" "”" "‘" "’"; }
 
 header {
-	font-family: "Athelas", "Palatino", "Avenir Next", sans-serif;
+	font-family: "Greta Text Pro", "Athelas", "Palatino", "Avenir Next", sans-serif;
 	margin: 0;
 	margin-bottom: 2em;
 	border-left: 7px solid rgb(90%,90%,90%);
@@ -17,7 +17,7 @@ header {
 }
 
 h1,h2,h3,h4,h5,h6 {
-	font-family: "Athelas", "Palatino", "Avenir Next", sans-serif;
+	font-family: "Greta Text Pro", "Athelas", "Palatino", "Avenir Next", sans-serif;
 	margin: 2rem 0rem 0.4rem 0.5rem;
 }
 
@@ -50,24 +50,24 @@ h1.title {
 
 @page { 
 	size: A4;
-	margin: 20mm;
+	margin: 18mm;
 	counter-increment: page;
-	/*prince-bleed: 5mm;
-	marks: crop cross;*/
+	/* prince-bleed: 5mm;
+	marks: crop cross; */
 }
 @page:left {
 	margin-right: 35mm;
 	@bottom-left {
-		font-family: "Athelas", "Palatino", "Avenir Next", sans-serif;
-		font-size: 11px;
+		font-family: "Greta Text Pro", "Athelas", "Palatino", "Avenir Next", sans-serif;
+		font-size: 9px;
 		content: "Page " counter(page) " of " counter(pages);
 	}
 }
 @page:right {
 	margin-left: 35mm;
 	@bottom-right {
-		font-family: "Athelas", "Palatino", "Avenir Next", sans-serif;
-		font-size: 11px;
+		font-family: "Greta Text Pro", "Athelas", "Palatino", "Avenir Next", sans-serif;
+		font-size: 9px;
 		content: "Page " counter(page) " of " counter(pages);
 	}
 }
@@ -89,7 +89,7 @@ p {
 }
 
 blockquote {
-	font-family: "Gill Sans", "Avenir Next", sans-serif;
+	font-family: "Graublau Slab", "Gill Sans", "Avenir Next", sans-serif;
 	font-style: italic;
 }
 

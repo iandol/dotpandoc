@@ -2,7 +2,7 @@ from: markdown
 to: latex
 standalone: true
 filters: 
-  - assimilateMetadata # handle academic metadata
+  - assimilateMetadata.rb # handle academic metadata
 template: custom.latex
 shift-heading-level-by: 0
 metadata:
