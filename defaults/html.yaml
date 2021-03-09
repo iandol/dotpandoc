@@ -12,7 +12,7 @@
     - pagebreak.lua
     - assimilateMetadata.rb #regularise metadata
   template: custom.html
-  css: custom.css
+  css: ${USERDATA}/templates/custom.css
   table-of-contents: true
   toc-depth: 3
   shift-heading-level-by: 0
