@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="$lang$" xml:lang="$lang$"$if(dir)$ dir="$dir$"$endif$>
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="pandoc" />
+  <meta name="generator" content="pandoc,pandocomatic" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 $if(title)$
   <meta name="title" content="$title$" />
@@ -14,9 +14,6 @@ $for(author)$
   <meta name="citation_author" content="$author.name$" />
 $endfor$
 $endif$
-$if(date)$
-  <meta name="citation_date" content="$date$" />
-$endif$
 $if(date-meta)$
   <meta name="dcterms.date" content="$date-meta$" />
 $endif$
@@ -27,19 +24,11 @@ $if(description-meta)$
   <meta name="description" content="$description-meta$" />
 $endif$
   <title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
-  <style type="text/css">
-      $styles.html()$
-      code{white-space: pre-wrap;}
-      .smallcaps{font-variant: small-caps;}
-      .line-block{white-space: pre-line;}
+  <style>
+    $styles.html()$
   </style>
-$if(highlighting-css)$
-  <style type="text/css">
-$highlighting-css$
-  </style>
-$endif$
 $for(css)$
-  <link rel="stylesheet" href="$css$">
+  <link rel="stylesheet" href="$css$" />
 $endfor$
 $if(math)$
   $math$
@@ -107,13 +96,9 @@ $table-of-contents$
 </nav>
 $endif$
 
-<div id="content">
 $body$
-</div>
-
 $for(include-after)$
 $include-after$
 $endfor$
-
 </body>
 </html>
