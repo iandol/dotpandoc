@@ -445,15 +445,15 @@ $endif$
 $endif$
 $if(author)$
 \ifPDFTeX % if pdftex
-  \author{$for(author)$$it.name$\textsuperscript{$for(author.affiliation)$$it.affiliation$$sep$,$endfor$$if(author.correspondence)$*$endif$$if(author.equal_contributor)$†$endif$}$sep$ \and $endfor$}
+  \author{$for(author)$$it.name$$if(it.affiliation)$\textsuperscript{$for(author.affiliation)$$it.affiliation$$sep$,$endfor$$endif$}$if(author.correspondence)$\textsuperscript{*}$endif$$if(author.equal_contributor)$\textsuperscript{†}$endif$$sep$ \and $endfor$}
 \else
-  \author{$for(author)$$it.name$\textsuperscript{$for(author.affiliation)$$it.affiliation$$sep$,$endfor$$if(author.correspondence)$\fixfontB{✉︎}$endif$$if(author.equal_contributor)$†$endif$}$sep$ \and $endfor$}
+  \author{$for(author)$$it.name$$if(it.affiliation)$\textsuperscript{$for(author.affiliation)$$it.affiliation$$sep$,$endfor$}$endif$$if(author.correspondence)$\textsuperscript{\fixfontB{✉︎}}$endif$$if(author.equal_contributor)$\textsuperscript{†}$endif$$sep$ \and $endfor$}
 \fi
 $endif$
 \date{$date$}
 $if(beamer)$
 $if(institute)$
-\institute{$for(institute)$\textsuperscript{$it.index$} $it.name$$sep$ \and $endfor$}
+\institute{$for(institute)$$if(it.index)$\textsuperscript{$it.index$}$endif$ $it.name$$sep$ \and $endfor$}
 $endif$
 $if(titlegraphic)$
 \titlegraphic{\includegraphics{$titlegraphic$}}

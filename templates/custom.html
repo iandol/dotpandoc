@@ -54,13 +54,11 @@ $endif$
 $if(author)$
 <p class="author-list">
 $for(author)$
-  $if(author.last)$and $endif$<span property="author" typeof="Person">
-    $author.name$</span><sup>$for(author.affiliation)$$author.affiliation$$sep$,$endfor$
-    $if(author.correspondence)$<a href="mailto:$author.correspondence$">✉</a>$endif$
-    $if(author.equal_contributor)$†$endif$</sup>$sep$,
+  $if(author.last)$ and $endif$<span property="author" typeof="Person">$author.name$</span><sup>$if(author.affiliation)$$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$endif$$if(author.correspondence)$<a href="mailto:$author.correspondence$">✉</a>$endif$$if(author.equal_contributor)$†$endif$</sup>$sep$, 
 $endfor$
 </p>
 $endif$
+
 $if(equal_contributors)$
 <p class="author_contributions"><sup>†</sup> Authors contributed equally to this work.</p>
 $endif$

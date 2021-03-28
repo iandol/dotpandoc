@@ -4,6 +4,9 @@ subtitle: A test document
 author:
   - name: Joanna Doe
   - name: Joe Doe
+institute:
+  - University of X
+  - Institute of Y
 abstract: This is the abstract for a test file
 keywords: pandoc, pandocomatic
 date: 1^st^ January 2025

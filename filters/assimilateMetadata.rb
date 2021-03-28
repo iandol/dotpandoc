@@ -17,7 +17,7 @@
 # You should be able to use several different input styles, including strings
 # like 'Joanna Doe^1,2^' and lists without specifying the name: subfield
 #
-# VERSION: 1.0.0
+# VERSION: 1.0.1
 
 require 'paru/filter'
 
@@ -33,7 +33,7 @@ end
 def instituteSuperscript(inst, index = 1)
 	cp = inst.match(/^\s?\^([\w\d]+)\^\s?/)
 	if cp.nil?
-		Hash['index' => index.to_s, 'name' => inst]
+		Hash['name' => inst]
 	else
 		Hash['index' => cp[1], 'name' => cp.post_match.strip]
 	end
