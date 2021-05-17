@@ -179,7 +179,7 @@ templates:
       monofont: 'Fira Code'
       mathfont: 'Cambria Math'
       mathfontoptions: 'math-style=ISO,bold-style=ISO'
-      CJKmainfont: 'Heiti SC'
+      #CJKmainfont: 'Heiti SC'
       colorlinks: true
       linkcolor: Mahogany
       citecolor: Sepia
@@ -200,6 +200,15 @@ templates:
       nonumberfigures: false
       titleDelim: '&nbsp;—&nbsp;'
       figPrefix: ['Fig.','Figs.']
+#-----------------------------------------------------------------------------
+  latex-biblatex:
+    extends: [latex]
+    pandoc:
+      biblatex: true
+      bibliography: Core.bib
+    metadata:
+      biblio-style: authoryear-comp
+      biblatexoptions: [sort=nyt,backend=biber,maxcitenames=2]
 #-----------------------------------------------------------------------------
   latex-endnote:
     extends: [latex-refs]
