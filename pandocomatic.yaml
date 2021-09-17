@@ -67,7 +67,7 @@ templates:
 #-----------------------------------------------------------------------------
 #:::::::::::::::::::::::::::::::::: ICML :::::::::::::::::::::::::::::::::::::
 #-----------------------------------------------------------------------------
-  icml-test:
+  icml:
     pandoc:
       from: markdown
       to: icml
@@ -113,7 +113,8 @@ templates:
 #-----------------------------------------------------------------------------
   docx-changes:
     extends: [docx,refs]
-    preprocessors: preprocessors/criticmarkup.rb #process criticmarkup to HTML that pandoc can use
+    preprocessors: 
+      add: preprocessors/criticmarkup.rb #process criticmarkup to HTML that pandoc can use
 #-----------------------------------------------------------------------------
   odt-refs:
     extends: [docx,refs]

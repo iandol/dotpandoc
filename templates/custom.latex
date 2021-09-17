@@ -36,50 +36,6 @@ $for(classoption)$
   $classoption$$sep$,
 $endfor$
 ]{$documentclass$}
-$if(title)$
-\usepackage{titling}
-$if(linestretch)$
-\pretitle{\begin{center}\setstretch{1}\LARGE\sffamily\bfseries\itshape}
-$else$
-\pretitle{\begin{center}\LARGE\sffamily\bfseries\itshape}
-$endif$
-\posttitle{\par\end{center}} 
-\predate{\begin{center}\sffamily} 
-\postdate{\par\end{center}}
-\title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
-$endif$
-$if(subtitle)$
-$if(beamer)$
-$else$
-\usepackage{etoolbox}
-\makeatletter
-\providecommand{\subtitle}[1]{% add subtitle to \maketitle
-  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
-}
-\makeatother
-$endif$
-\subtitle{$subtitle$}
-$endif$
-$if(author)$
-\ifPDFTeX % if pdftex
-  \author{$for(author)$$it.name$$if(it.affiliation)$\textsuperscript{$for(author.affiliation)$$it.affiliation$$sep$,$endfor$$endif$}$if(author.correspondence)$\textsuperscript{*}$endif$$if(author.equal_contributor)$\textsuperscript{†}$endif$$sep$ \and $endfor$}
-\else
-  \author{$for(author)$$it.name$$if(it.affiliation)$\textsuperscript{$for(author.affiliation)$$it.affiliation$$sep$,$endfor$}$endif$$if(author.correspondence)$\textsuperscript{\fixfontB{✉︎}}$endif$$if(author.equal_contributor)$\textsuperscript{†}$endif$$sep$ \and $endfor$}
-\fi
-$endif$
-\date{$date$}
-$if(beamer)$
-$if(institute)$
-\institute{$for(institute)$$if(it.index)$\textsuperscript{$it.index$}$endif$ $it.name$$sep$ \and $endfor$}
-$endif$
-$if(titlegraphic)$
-\titlegraphic{\includegraphics{$titlegraphic$}}
-$endif$
-$if(logo)$
-\logo{\includegraphics{$logo$}}
-$endif$
-$endif$
-
 $if(beamer)$
 $if(background-image)$
 \usebackgroundtemplate{%
@@ -135,7 +91,7 @@ $if(beamerarticle)$
 $endif$
 \usepackage{amsmath,amssymb}
 $if(fontfamily)$
-\usepackage[${ for(fontfamilyoptions) }${ it }${ sep },${ endfor }]{$fontfamily$}
+\usepackage[$for(fontfamilyoptions)$$fontfamilyoptions$$sep$,$endfor$]{$fontfamily$}
 $else$
 \usepackage{lmodern}
 $endif$
@@ -190,12 +146,12 @@ $if(CJKmainfont)$
 $endif$
 $if(luatexjapresetoptions)$
   \ifLuaTeX
-    \usepackage[$for(luatexjapresetoptions)$$it$$sep$,$endfor$]{luatexja-preset}
+    \usepackage[$for(luatexjapresetoptions)$$luatexjapresetoptions$$sep$,$endfor$]{luatexja-preset}
   \fi
 $endif$
 $if(CJKmainfont)$
   \ifLuaTeX
-    \usepackage[$for(luatexjafontspecoptions)$$it$$sep$,$endfor$]{luatexja-fontspec}
+    \usepackage[$for(luatexjafontspecoptions)$$luatexjafontspecoptions$$sep$,$endfor$]{luatexja-fontspec}
     \setmainjfont[$for(CJKoptions)$$CJKoptions$$sep$,$endfor$]{$CJKmainfont$}
   \fi
 $endif$
@@ -218,6 +174,7 @@ $if(zero-width-non-joiner)$
   \protected\def ^^^^200c{\zerowidthnonjoiner}
 \fi
 %% End of ZWNJ support
+$endif$
 % use Cambria/Arial Unicode to fix some font substitution problems for e.g. ⬄
 \newfontfamily\fixfont[]{Cambria}
 \newfontfamily\fixfontB[]{Arial Unicode MS}
@@ -258,7 +215,7 @@ $endif$
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \IfFileExists{microtype.sty}{% use microtype if available
-  \usepackage[$for(microtypeoptions)$$it$$sep$,$endfor$]{microtype}
+  \usepackage[$for(microtypeoptions)$$microtypeoptions$$sep$,$endfor$]{microtype}
   \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
 \usepackage[format=hang,labelfont=bf,labelsep=endash,font={sf,small}]{caption}
@@ -302,10 +259,10 @@ $if(keywords)$
 $endif$
 $if(colorlinks)$
   colorlinks=true,
-  linkcolor=$if(linkcolor)$$linkcolor$$else$Mahogany$endif$,
-  filecolor=$if(filecolor)$$filecolor$$else$Mahogany$endif$,
-  citecolor=$if(citecolor)$$citecolor$$else$Sepia$endif$,
-  urlcolor=$if(urlcolor)$$urlcolor$$else$BrickRed$endif$,
+  linkcolor={$if(linkcolor)$$linkcolor$$else$Mahogany$endif$},
+  filecolor={$if(filecolor)$$filecolor$$else$Mahogany$endif$},
+  citecolor={$if(citecolor)$$citecolor$$else$Sepia$endif$},
+  urlcolor={$if(urlcolor)$$urlcolor$$else$BrickRed$endif$},
 $else$
   hidelinks,
 $endif$
@@ -318,7 +275,7 @@ $if(geometry)$
 $if(beamer)$
 \geometry{$for(geometry)$$geometry$$sep$,$endfor$}
 $else$
-\usepackage[$for(geometry)$$it$$sep$,$endfor$]{geometry}
+\usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
 $endif$
 $endif$
 $if(beamer)$
@@ -379,6 +336,7 @@ $if(links-as-notes)$
 \DeclareRobustCommand{\href}[2]{#2\footnote{\url{#1}}}
 $endif$
 $if(strikeout)$
+$-- also used for underline
 \usepackage[normalem]{ulem}
 % Avoid problems with \sout in headers with hyperref
 \pdfstringdefDisableCommands{\renewcommand{\sout}{}}
@@ -475,7 +433,7 @@ $if(natbib)$
 \bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
 $endif$
 $if(biblatex)$
-\usepackage[$if(biblio-style)$style=$biblio-style$,$endif$$for(biblatexoptions)$$it$$sep$,$endfor$]{biblatex}
+\usepackage[$if(biblio-style)$style=$biblio-style$,$endif$$for(biblatexoptions)$$biblatexoptions$$sep$,$endfor$]{biblatex}
 $for(bibliography)$
 \addbibresource{$bibliography$}
 $endfor$
@@ -485,6 +443,50 @@ $if(nocite-ids)$
 $endif$
 $if(csquotes)$
 \usepackage{csquotes}
+$endif$
+
+$if(title)$
+\usepackage{titling}
+$if(linestretch)$
+\pretitle{\begin{center}\setstretch{1}\LARGE\sffamily\bfseries\itshape}
+$else$
+\pretitle{\begin{center}\LARGE\sffamily\bfseries\itshape}
+$endif$
+\posttitle{\par\end{center}} 
+\predate{\begin{center}\sffamily} 
+\postdate{\par\end{center}}
+\title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
+$endif$
+$if(subtitle)$
+$if(beamer)$
+$else$
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+$endif$
+\subtitle{$subtitle$}
+$endif$
+$if(author)$
+\ifPDFTeX % if pdftex
+  \author{$for(author)$$it.name$$if(it.affiliation)$\textsuperscript{$for(author.affiliation)$$it.affiliation$$sep$,$endfor$$endif$}$if(author.correspondence)$\textsuperscript{*}$endif$$if(author.equal_contributor)$\textsuperscript{†}$endif$$sep$ \and $endfor$}
+\else
+  \author{$for(author)$$it.name$$if(it.affiliation)$\textsuperscript{$for(author.affiliation)$$it.affiliation$$sep$,$endfor$}$endif$$if(author.correspondence)$\textsuperscript{\fixfontB{✉︎}}$endif$$if(author.equal_contributor)$\textsuperscript{†}$endif$$sep$ \and $endfor$}
+\fi
+$endif$
+\date{$date$}
+$if(beamer)$
+$if(institute)$
+\institute{$for(institute)$$if(it.index)$\textsuperscript{$it.index$}$endif$ $it.name$$sep$ \and $endfor$}
+$endif$
+$if(titlegraphic)$
+\titlegraphic{\includegraphics{$titlegraphic$}}
+$endif$
+$if(logo)$
+\logo{\includegraphics{$logo$}}
+$endif$
 $endif$
 
 \begin{document}
