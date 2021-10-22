@@ -14,7 +14,7 @@ require 'paru/filter'
 
 testKey = 'author'
 pmaticKey = 'pandocomatic-fileinfo'
-insertKey = 'name'
+insertKey = 'testname'
 
 Paru::Filter.run do
   byebug
@@ -22,7 +22,6 @@ Paru::Filter.run do
     if metadata.key?(pmaticKey) && (metadata[pmaticKey]['to'].match(/docx|odt/))
       stop!
     end
-    nau = nil[]
     au = metadata[testKey]
     if au.is_a?(String)
       nau = [ Hash[ insertKey => au ] ]
@@ -42,7 +41,7 @@ Paru::Filter.run do
       end
     end
     if not nau.nil?
-      metadata[testKey] = nau
+      metadata['testFilterOutput'] = nau
     end
   end
   if metadata['keywords']

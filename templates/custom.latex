@@ -471,9 +471,9 @@ $endif$
 $endif$
 $if(author)$
 \ifPDFTeX % if pdftex
-  \author{$for(author)$$it.name$$if(it.affiliation)$\textsuperscript{$for(author.affiliation)$$it.affiliation$$sep$,$endfor$$endif$}$if(author.correspondence)$\textsuperscript{*}$endif$$if(author.equal_contributor)$\textsuperscript{†}$endif$$sep$ \and $endfor$}
+  \author{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.equal_contributor)$ †$endif$$if(author.correspondence)$ *$endif$}$sep$,\quad $endfor$}
 \else
-  \author{$for(author)$$it.name$$if(it.affiliation)$\textsuperscript{$for(author.affiliation)$$it.affiliation$$sep$,$endfor$}$endif$$if(author.correspondence)$\textsuperscript{\fixfontB{✉︎}}$endif$$if(author.equal_contributor)$\textsuperscript{†}$endif$$sep$ \and $endfor$}
+  \author{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.equal_contributor)$ †$endif$$if(author.correspondence)$ ✉︎$endif$}$sep$,\quad $endfor$}
 \fi
 $endif$
 \date{$date$}
