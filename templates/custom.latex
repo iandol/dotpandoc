@@ -473,7 +473,7 @@ $if(author)$
 \ifPDFTeX % if pdftex
   \author{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.equal_contributor)$ †$endif$$if(author.correspondence)$ *$endif$}$sep$,\quad $endfor$}
 \else
-  \author{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.equal_contributor)$ †$endif$$if(author.correspondence)$ ✉︎$endif$}$sep$,\quad $endfor$}
+  \author{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.equal_contributor)$ †$endif$$if(author.correspondence)$ \fixfontB{✉︎}$endif$}$sep$,\quad $endfor$}
 \fi
 $endif$
 \date{$date$}

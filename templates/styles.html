@@ -4,7 +4,7 @@ html {
   font-family: $if(mainfont)$$mainfont$$else$Georgia, serif$endif$;
   font-size: $if(fontsize)$$fontsize$$else$20px$endif$;
   color: $if(fontcolor)$$fontcolor$$else$#1a1a1a$endif$;
-  background-color: $if(backgroundcolor)$$backgroundcolor$$else$#FFF$endif$;
+  background-color: $if(backgroundcolor)$$backgroundcolor$$else$#fdfdfd$endif$;
 }
 body {
   margin: 0 auto;
@@ -14,7 +14,7 @@ body {
   padding-top: $if(margin-top)$$margin-top$$else$50px$endif$;
   padding-bottom: $if(margin-bottom)$$margin-bottom$$else$50px$endif$;
   hyphens: auto;
-  word-wrap: break-word;
+  overflow-wrap: break-word;
   text-rendering: optimizeLegibility;
   font-kerning: normal;
 }
@@ -93,6 +93,7 @@ $endif$
 pre code {
   padding: 0;
   overflow: visible;
+  overflow-wrap: normal;
 }
 .sourceCode {
  background-color: transparent;
@@ -157,12 +158,8 @@ $if(csl-css)$
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-left: 1em;
-  margin-right: 1em;
 $if(csl-entry-spacing)$
   margin-bottom: $csl-entry-spacing$;
-$else$
-  margin-bottom: 0.5em;
 $endif$
 }
 .hanging div.csl-entry {
