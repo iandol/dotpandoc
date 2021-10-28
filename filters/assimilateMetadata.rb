@@ -9,6 +9,9 @@
 #     afilliation: [1,2]
 #     correspondence: jdoe@example.ac.cn
 #     equal_contributor: true
+#   - name: John Doe
+#     affiliation: 2
+#     equal_contributor: true
 # institute:
 #   - 1: Institute of Cool
 #   - 2: Centre for Assimilation
