@@ -2,7 +2,16 @@
 # testing filter, uses byebug to remote debug
 
 # DEBUG BLOCK START
-require 'debug/open_nonstop' # debug gem https://github.com/ruby/debug
+require 'byebug/core'
+require 'byebug'
+PORT = 1234
+warn "\n!!!DEBUG Server started: localhost:#{PORT} @ " + Time.now.to_s + "\n\n"
+Byebug.wait_connection = true
+Byebug.start_server('127.0.0.1', PORT)
+# DEBUG BLOCK END
+
+byebug
+
 require 'paru/filter'
 
 testKey = 'author'
@@ -10,7 +19,7 @@ pmaticKey = 'pandocomatic-fileinfo'
 insertKey = 'testname'
 
 Paru::Filter.run do
-  binding.break # we will halt here, connect with `rdbg -A` or use VS Code
+  byebug
   if metadata.key?(testKey) 
     if metadata.key?(pmaticKey) && (metadata[pmaticKey]['to'].match(/docx|odt/))
       stop!

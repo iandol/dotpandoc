@@ -24,14 +24,27 @@
 			"program": "${file}",
 			"args": [" < ${workspaceROOT}/test.json"]
 		},
-		{ //see https://github.com/rubyide/vscode-ruby/wiki/3.-Attaching-to-a-debugger -  rdebug-ide -- file.rb
-			"name": "RDebug-ide Attach",
-			"type": "Ruby",
-			"request": "attach",
-			"cwd": "${workspaceRoot}",
-			"remoteWorkspaceRoot": "${workspaceRoot}",
-			"remoteHost": "127.0.0.1",
-			"remotePort": "1234"
+		{ // Name: VSCode rdbg Ruby Debugger https://marketplace.visualstudio.com/items?itemName=KoichiSasada.vscode-rdbg
+			"type": "rdbg",
+			"name": "Debug current file with rdbg",
+			"request": "launch",
+			"script": "${file}",
+			"args": [],
+			"askParameters": true
+		},
+		{ // Name: VSCode rdbg Ruby Debugger https://marketplace.visualstudio.com/items?itemName=KoichiSasada.vscode-rdbg
+				"type": "rdbg",
+				"name": "Attach with Ruby Debug rdbg",
+				"request": "attach"
 		}
+		// { //see https://github.com/rubyide/vscode-ruby/wiki/3.-Attaching-to-a-debugger -  rdebug-ide -- file.rb
+		// 	"name": "RDebug-ide Attach",
+		// 	"type": "Ruby",
+		// 	"request": "attach",
+		// 	"cwd": "${workspaceRoot}",
+		// 	"remoteWorkspaceRoot": "${workspaceRoot}",
+		// 	"remoteHost": "127.0.0.1",
+		// 	"remotePort": "1234"
+		// }
 	]
 }

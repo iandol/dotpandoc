@@ -604,6 +604,16 @@ templates:
         - filters/noop.rb
     metadata:
       lang: 'EN-GB'
+  test-debug:
+    pandoc:
+      from: markdown
+      to: html5
+      standalone: true
+      self-contained: true
+      filter:
+        - filters/testFilter.rb
+    metadata:
+      lang: 'EN-GB'
   test-markdown:
     pandoc:
       from: markdown
