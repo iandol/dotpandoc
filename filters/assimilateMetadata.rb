@@ -92,9 +92,9 @@ Paru::Filter.run do
 
 			newAuthor[i] = fixAffiliations(newAuthor[i])
 
-			newAuthor[i]['correspondence'] = newAuthor[i]['email'] if newAuthor[i].key?('email')
-			if newAuthor[i].key?('correspondence')
-				correspondenceList.push(newAuthor[i]['name'] + ' <' + newAuthor[i]['correspondence'] + '>')
+			newAuthor[i]['email'] = newAuthor[i]['correspondence'] if newAuthor[i].key?('correspondence')
+			if newAuthor[i].key?('email')
+				correspondenceList.push(newAuthor[i]['name'] + ' <' + newAuthor[i]['email'] + '>')
 			end
 
 			if newAuthor[i].key?('equal_contributor')
