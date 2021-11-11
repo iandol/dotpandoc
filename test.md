@@ -3,10 +3,16 @@ title: Test Pandoc/Scrivomatic Workflows
 subtitle: A test document
 author:
   - name: Joanna Doe
-  - name: Joe Doe
+    affiliation: [1, 2]
+    equal_contributor: true
+    correspondence: joanna@doe.org
+  - name: John Doe
+    affiliation: 2
+    equal_contributor: true
+    email: john@doe.org
 institute:
-  - University of X
-  - Institute of Y
+  - 1: University of X
+  - 2: Institute of Y
 abstract: This is the abstract for a test file
 keywords: pandoc, pandocomatic
 date: 1^st^ January 2025

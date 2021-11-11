@@ -460,9 +460,9 @@ $endif$
 $endif$
 $if(author)$
 \ifPDFTeX % if pdftex
-  \author{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.equal_contributor)$ †$endif$$if(author.correspondence)$ *$endif$}$sep$,\quad $endfor$}
+  \author{\textsf{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.equal_contributor)$ †$endif$$if(author.correspondence)$ *$endif$}$sep$,\quad $endfor$}}
 \else
-  \author{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.equal_contributor)$ †$endif$$if(author.correspondence)$ \fixfontB{✉︎}$endif$}$sep$,\quad $endfor$}
+  \author{\textsf{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.equal_contributor)$ †$endif$$if(author.correspondence)$ \fixfontB{✉︎}$endif$}$sep$,\quad $endfor$}}
 \fi
 $endif$
 \date{$date$}
@@ -499,16 +499,21 @@ $if(institute)$
 $endif$
 
 $if(correspondence_list)$
-\ifPDFTeX % if pdftex
-\textsf{* $for(correspondence_list)$\emph{$it$}$sep$\quad\&\quad$endfor$}
+\ifPDFTeX
+\textsf{$for(correspondence_list)$*\emph{$it$}$sep$ \quad $endfor$}
 \else
-\textsf{\fixfontB{✉︎} $for(correspondence_list)$\emph{$it$}$sep$\quad\&\quad$endfor$}
+\textsf{$for(correspondence_list)$\fixfontB{✉︎} \emph{$it$}$sep$ \quad $endfor$}
 \fi
 $endif$
 
 $if(equal_contributors)$
 \textsf{\textsuperscript{†} \small{\emph{These authors contributed equally to this work.}}}
 $endif$
+
+$if(email_list)$
+\textsf{\small{\emph{Mail: $for(email_list)$$it$$sep$, $endfor$}}}
+$endif$
+
 \end{center}
 
 $if(abstract)$

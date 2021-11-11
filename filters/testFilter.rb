@@ -1,5 +1,9 @@
 #!/usr/bin/env ruby
-# testing filter, uses byebug to remote debug
+# testing filter, uses new debug gem to remote debug.
+#
+# > gem install debug
+#
+# In VSCode: https://marketplace.visualstudio.com/items?itemName=KoichiSasada.vscode-rdbg
 
 # DEBUG BLOCK START
 require 'debug/open_nonstop' # debug gem https://github.com/ruby/debug
@@ -10,7 +14,7 @@ pmaticKey = 'pandocomatic-fileinfo'
 insertKey = 'testname'
 
 Paru::Filter.run do
-  binding.break # we will halt here, connect with `rdbg -A` or use VS Code
+  binding.break # we will halt here, connect with `rdbg -A` or use VS Code extension
   if metadata.key?(testKey) 
     if metadata.key?(pmaticKey) && (metadata[pmaticKey]['to'].match(/docx|odt/))
       stop!

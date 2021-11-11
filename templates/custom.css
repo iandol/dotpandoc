@@ -72,10 +72,22 @@ h1.title {
 	}
 }
 
-p.author {
+p.subtitle {
+	text-align: center;
 	font-weight: bold;
+	font-style: italic;
+	font-size: 115%;
+}
+
+p.author {
 	margin: 0em 1em 0em 0em;
 	display: inline-block;
+}
+
+p.author-list {
+	text-align: center;
+	font-weight: bold;
+	font-size: 125%;
 }
 
 p {
@@ -93,7 +105,14 @@ blockquote {
 	font-style: italic;
 }
 
-.author_affiliations {padding-left: 1em; margin-top:1em;}
+p.author_contributions {
+	font-size: 90%;
+	text-align: center;
+	font-style: italic;
+
+}
+
+.author_affiliations {padding-left: 1em; margin-top:2em;}
 .author_affiliations::before {
 	content: "Affiliations: ";
 	font-weight: bold;
@@ -101,10 +120,10 @@ blockquote {
 }
 .affiliation-item {
 	display: inline-block;
-	margin-right: 20px;
+	margin-right: 15px;
 }
 
-.correspondence {display: none; padding-left: 1em; margin-top:1em;}
+.correspondence {padding-left: 1em; margin-top:2em;}
 .correspondence::before {
 	content: "Correspondence: ";
 	font-weight: bold;
@@ -112,9 +131,28 @@ blockquote {
 }
 .correspondence-item {
 	display: inline-block;
-	margin-right: 20px;
+	margin-right: 15px;
 }
 
+.email {padding-left: 1em; margin-top:2em;}
+.email::before {
+	content: "E-mail: ";
+	font-weight: bold;
+	color: grey;
+}
+.email-item {
+	display: inline-block;
+	margin-right: 15px;
+}
+
+.abstract {padding-left: 1em; margin-top:2em;}
+.abstract::before {
+	content: "Abstract: ";
+	font-weight: bold;
+	color: grey;
+}
+
+.abstract {padding-left: 1em; margin-top:2em;}
 .date::before {
 	content: "Date: ";
 	font-weight: bold;

@@ -30,12 +30,14 @@
 			"request": "launch",
 			"script": "${file}",
 			"args": [],
-			"askParameters": true
+			"askParameters": true,
+			"rdbgPath": "~/.rbenv/shims/rdbg"
 		},
 		{ // Name: VSCode rdbg Ruby Debugger https://marketplace.visualstudio.com/items?itemName=KoichiSasada.vscode-rdbg
 				"type": "rdbg",
 				"name": "Attach with Ruby Debug rdbg",
-				"request": "attach"
+				"request": "attach",
+				"rdbgPath": "~/.rbenv/shims/rdbg"
 		}
 		// { //see https://github.com/rubyide/vscode-ruby/wiki/3.-Attaching-to-a-debugger -  rdebug-ide -- file.rb
 		// 	"name": "RDebug-ide Attach",

@@ -20,7 +20,7 @@
 # You should be able to use several different input styles, including strings
 # like 'Joanna Doe^1,2^' and lists without specifying the name: subfield
 #
-# VERSION: 1.0.1
+# VERSION: 1.0.3
 
 require 'paru/filter'
 
@@ -79,6 +79,7 @@ Paru::Filter.run do
 	newAuthor = nil
 	newInst = nil
 	correspondenceList = []
+	emailList = []
 	equalContributors = false
 	#============Standardise author fields
 	authors = metadata['author']
@@ -94,10 +95,13 @@ Paru::Filter.run do
 			end
 
 			newAuthor[i] = fixAffiliations(newAuthor[i])
-
-			newAuthor[i]['email'] = newAuthor[i]['correspondence'] if newAuthor[i].key?('correspondence')
+			
+			#newAuthor[i]['email'] = newAuthor[i]['correspondence'] if newAuthor[i].key?('correspondence')
+			if newAuthor[i].key?('correspondence')
+				correspondenceList.push(newAuthor[i]['name'] + ' <' + newAuthor[i]['correspondence'] + '>')
+			end
 			if newAuthor[i].key?('email')
-				correspondenceList.push(newAuthor[i]['name'] + ' <' + newAuthor[i]['email'] + '>')
+				emailList.push(newAuthor[i]['name'] + ' <' + newAuthor[i]['email'] + '>')
 			end
 
 			if newAuthor[i].key?('equal_contributor')
@@ -124,6 +128,7 @@ Paru::Filter.run do
 	metadata['author'] = newAuthor unless newAuthor.nil?
 	metadata['institute'] = newInst unless newInst.nil?
 	metadata['correspondence_list'] = correspondenceList unless correspondenceList.empty?
+	metadata['email_list'] = emailList unless emailList.empty?
 	metadata['equal_contributors'] = true if equalContributors == true
 	# just in case a template uses tags instead of keywords
 	metadata['tags'] = metadata['keywords'] if metadata['keywords']
