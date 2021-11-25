@@ -1,5 +1,5 @@
 # --------------------------- Pandocomatic templates -------------------------
-# Remember that YAML requires SPACES NOT TABS, and indentation is important!
+# Remember: YAML REQUIRES SPACES NOT TABS, and indentation is important!
 # Paths are relative to the Pandoc data dir, you can also use ./ to make
 # them relative to the working directory.
 settings:
@@ -14,7 +14,7 @@ templates:
 #-----------------------------------------------------------------------------
   crossref: # note crossref should come before citeproc!
     setup: []
-    preprocessors: 
+    preprocessors:
       - preprocessors/fixCrossref.rb #allows to put crossref labels in styled captions
     pandoc:
       verbose: true # verbose by default
@@ -459,6 +459,25 @@ templates:
     metadata:
       documentclass: 'memoir'
 #-----------------------------------------------------------------------------
+  elsevier:
+    pandoc:
+      verbose: true
+      from: markdown
+      to: latex
+      standalone: true
+      filter:
+        - filters/assimilateMetadata.rb # handle academic metadata
+      template: templates/elsevier.latex
+      bibliography: Core.bib
+      natbib: true
+    metadata:
+      journalname: 'Elsevier'
+      documentclass: 'elsarticle'
+      classoption: ['5p','number']
+      linestretch: '1.4'
+      colorlinks: true
+      lang: 'en-GB'
+#-----------------------------------------------------------------------------
 #:::::::::::::::::::::::::::::::::: HTML :::::::::::::::::::::::::::::::::::::
 #-----------------------------------------------------------------------------
   html:
@@ -592,6 +611,7 @@ templates:
 #:::::::::::::::::::::::::::::::::: TEST :::::::::::::::::::::::::::::::::::::
 #-----------------------------------------------------------------------------
 # VARIOUS TEST TEMPLATES
+#-----------------------------------------------------------------------------
   test:
     pandoc:
       from: markdown
@@ -604,6 +624,7 @@ templates:
         - filters/noop.rb
     metadata:
       lang: 'EN-GB'
+#-----------------------------------------------------------------------------
   test-debug:
     pandoc:
       from: markdown
@@ -614,6 +635,7 @@ templates:
         - filters/testFilter.rb
     metadata:
       lang: 'EN-GB'
+#-----------------------------------------------------------------------------
   test-markdown:
     pandoc:
       from: markdown
