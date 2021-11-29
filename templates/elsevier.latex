@@ -45,7 +45,6 @@ $endif$
 \def\fps@figure{htbp}
 \makeatother
 
-
 $for(header-includes)$
 $header-includes$
 $endfor$
@@ -56,7 +55,10 @@ $endfor$
 %% Elsevier bibliography styles
 %%%%%%%%%%%%%%%%%%%%%%%
 %% `Elsevier LaTeX' style
-\bibliographystyle{elsarticle-num}
+%\bibliographystyle{elsarticle-num}
+%% Generic authordate
+\bibliographystyle{abbrvnat}
+\setcitestyle{authoryear,open={(},close={)}} %Citation-related commands
 %%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
@@ -105,9 +107,8 @@ $endif$
 
 $body$
 
-
-  \setstretch{1.2}
-  \bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
+\setstretch{1.2}
+\bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
 
 $for(include-after)$
 $include-after$

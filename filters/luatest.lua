@@ -45,6 +45,16 @@ But Zerobrane offers richer functionality…
 md = require("mobdebug")
 md.start()
 
+function Meta(m)
+  md.pause() --breakpoint
+  return m
+end
+
+function Cite(elem)
+  md.pause() --breakpoint
+  return elem
+end
+
 function Emph(elem)
 	md.pause() --breakpoint
 	return elem.content
