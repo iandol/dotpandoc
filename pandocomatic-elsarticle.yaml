@@ -1,0 +1,101 @@
+### Pandocomatic Configuration for ELSEVIER only ###
+# IMPORTANT: 
+#
+# This specifies the templates for ELSEVIER only, building on the elsarticle.cls,
+# a document class for formatting LATEX submissions to Elsevier journals.
+# For all elsarticle specific information, please refer to https://ctan.org/pkg/elsarticle
+#
+# Specifics for its confguration:
+# - This template applies to the elsarticle.latex template.
+# - The `classoption` parameter specifies the formats as specifed by Elsevier.
+#   Refer to section 4 (Usage) in Elsevier's elsdoc.pdf / package documentation.
+# - Elsevier only accepts natbib, hence turn off the citeproc CSL engine and enable natbib.
+#
+#
+# Elsevier bibliography styles (natbib):
+# - The citation style is controlled through documentclass options:
+#   * Numbered, use `number`
+#   * Author Year, use `authoryear`
+# - More options of the natbib package can be specified with the `biboptions:`
+#   parameter. For details on this please take a look at the natbib documentation.
+# - An additional 10 journal specific .bst files also available. Specify your
+#   style of choice with the `bst-file` parameter:
+#     * Numbered: model1-num-names.bst
+#     * Numbered without titles: model1a-num-names.bst
+#     * Harvard: model2-names.bst, use biboptions{authoryear}
+#     * Vancouver numbered: model3-num-names.bst, ???\usepackage{numcompress}???
+#     * Vancouver name/year: model4-names.bst, use \biboptions{authoryear}, \usepackage{numcompress}???
+#     * APA style: model5-names.bst, use \biboptions{authoryear}
+#     * AMA style: model6-num-names.bst, ???\usepackage{numcompress}???
+#     * `Elsevier LaTeX' style: elsarticle-num.bst
+#   Instruction for using these .bst files can be found at 
+#   https://support.stmdocs.in/wiki/index.php?title=Model-wise_bibliographic_style_files
+
+settings:
+  recursive: true
+  follow-symlinks: false
+  skip: ['.*', 'pandocomatic.yaml']
+  match-files: 'first'
+#-----------------------------------------------------------------------------
+templates:
+#-----------------------------------------------------------------------------
+#:::::::::::::::::::::::::::::::::: ELSEVIER only ::::::::::::::::::::::::::::
+#-----------------------------------------------------------------------------
+  natbib-refs:
+    pandoc:
+      verbose: true           # Verbose by default.
+                              # Elsevier only accepts natbib, hence:
+      natbib: true            # - enable natbib, and
+      citeproc: false         # - turn off the citeproc CSL engine.
+      bibliography: ./test_elsarticle.bib # The name of your bib-file. Respect 
+                              # the directory naming conventions of pandocomatic.
+      citation-abbreviations: cite-abbr.json # Journal abbreviations
+      reference-links: true   # Refer to pandoc manual.
+    metadata:
+      bst-file: elsarticle-harv   # The name of a bib-style .bst-file without 
+                              # the .bst extension.
+      reference-section-title: Bibliography # Refer to pandoc manual, section 
+                              # `Placement of the bibliography`.
+      notes-after-punctuation: false    # Refer to pandoc manual, section
+                              # `Other relevant metadata fields`.
+      link-citations: true    # Refer to pandoc manual, section `Other
+                              # relevant metadata fields`. Deactivate this for 
+                              # paper print.
+#-----------------------------------------------------------------------------
+  elsevier:
+    extends: ['natbib-refs']
+    pandoc:
+      verbose: true
+      from: markdown
+      to: latex
+      standalone: true
+      filter:
+        - filters/assimilateMetadata.rb # Handle academic metadata.
+      template: elsarticle.latex        # Latex template supporing elsarticle.cls
+      include-in-header: './addstyles.sty' # To easily include packages; refer
+                               # to elsarticle.latex
+    metadata:
+      documentclass: 'elsarticle'       # Specifying Elsevier's documentclass.
+      classoption: ['preprint','authoryear','3p'] # Elsevier defines
+                               # several options for their various journal styles.
+#      classoption: ['sort&compress','preprint','authoryear','3p'] # 
+                               # The `sort&compress` fails on the `&`; refer 
+                               # to elsarticle.latex
+#      classoption: ['preprint','authoryear','3p']  # e.g., single column style.
+#      biboptions: [longnamesfirst,angle,semicolon] # Add extra options of natbib.sty
+      colorlinks: true         # Deactivate this for paper print.
+      lang: 'en-GB'
+#-----------------------------------------------------------------------------
+  elsevier-1col:               # FOR TESTING PURPOSES ONLY
+    extends: ['elsevier']
+    pandoc:
+      output: test_elsarticle_1col.tex
+    metadata:
+      classoption: ['preprint','authoryear','3p'] # Single column style.
+#-----------------------------------------------------------------------------
+  elsevier-2col:               # FOR TESTING PURPOSES ONLY
+    extends: ['elsevier']
+    pandoc:
+      output: test_elsarticle_2col.tex
+    metadata:
+      classoption: ['preprint','authoryear','3p','twocolumn'] # Double column style.

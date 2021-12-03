@@ -1,0 +1,40 @@
+%% File   : addstyles.sty
+%% Purpose: To include project specific packages without the need to insert
+%%          multiplpe `header-includes:` statements in the 
+%%          pandocomatic.yaml configuration file. 
+%%          Although there is no functional difference between both approaches,
+%%          for me this file seems to provide me with a more simple overview
+%%          about which packages and their whereabouts. 
+%%          Note that for this approach to work, you need to insert the name
+%%          of this file in the `header-includes:` statement.     
+%% Author : Paul Brandt, date Nov. 11, 2021
+%%%%%%%%%%%
+%
+% Add your .sty files below
+%
+%   One can make a differentiation in where to store specific addons to your
+%   LaTeX environment:
+%   - Generics, i.e., re-usable ones, are maintained in folders below your TeX  
+%     home directory. Use `kpsewhich -var-value=TEXMFHOME` at the command prompt 
+%     to find your TeX Home. But respect the TeX Directory Structure (TDS) from
+%     TeX Home downwards.
+%   - Project specific stuff can be maintained in the same folder as your 
+%     document for this project. 
+%   No particular assumptions are made by the elsarticle templates with regard to 
+%   locations of files.
+%
+%%%%%%%%%%%
+
+%\usepackage{myBrilliantlyGenericStyleFile}
+
+\usepackage{cleveref}		% sourced from http://tug.ctan.org/macros/latex/contrib/cleveref/cleveref.pdf 
+                            % Makes varioref clever, and reuses its work to improve its own workings. 
+							% The cleveref package must be loaded after all other packages that 
+                            % don’t specifically support it. Therefore, to be safe, we declare it as last 
+                            % in the document's preamble.
+							% Also note that all \newtheorem definitions must be placed after the 
+                            % cleveref package is loaded.
+
+%%%%%%%%%%%
+%% End of File: addstyles.sty
+%%%%%%%%%%%
