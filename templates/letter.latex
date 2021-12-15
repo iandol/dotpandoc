@@ -17,10 +17,13 @@
 %   signature : Image file for a signature.
 %   signature-before, signature-after : Allows adjustment of vertical space surrounding signature.
 
-\PassOptionsToPackage{unicode=true$for(hyperrefoptions)$,$hyperrefoptions$$endfor$}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{unicode$for(hyperrefoptions)$,$hyperrefoptions$$endfor$}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
 $if(colorlinks)$
-\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+$endif$
+$if(CJKmainfont)$
+\PassOptionsToPackage{space}{xeCJK}
 $endif$
 %
 \documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$paper,$else$a4paper,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{letter}
@@ -35,13 +38,13 @@ $if(linestretch)$
 $endif$
 \usepackage{amssymb,amsmath}
 \usepackage{iftex}
-\ifpdflatex
+\ifPDFTeX
   \usepackage[$if(fontenc)$$fontenc$$else$T1$endif$]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provides euro and other symbols
 \else % if luatex or xelatex
 $if(mathspec)$
-  \ifxetex
+  \ifXeTeX
     \usepackage{mathspec}
   \else
     \usepackage{unicode-math}
@@ -80,12 +83,12 @@ $if(CJKmainfont)$
   \fi
 $endif$
 $if(luatexjapresetoptions)$
-  \ifluatex
+  \ifLuaTeX
     \usepackage[$for(luatexjapresetoptions)$$luatexjapresetoptions$$sep$,$endfor$]{luatexja-preset}
   \fi
 $endif$
 $if(CJKmainfont)$
-  \ifluatex
+  \ifLuaTeX
     \usepackage[$for(luatexjafontspecoptions)$$luatexjafontspecoptions$$sep$,$endfor$]{luatexja-fontspec}
     \setmainjfont[$for(CJKoptions)$$CJKoptions$$sep$,$endfor$]{$CJKmainfont$}
   \fi
@@ -143,16 +146,7 @@ $endif$
 $if(geometry)$
 \usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
 $endif$
-$if(natbib)$
-\usepackage[$natbiboptions$]{natbib}
-\bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
-$endif$
-$if(biblatex)$
-\usepackage[$if(biblio-style)$style=$biblio-style$,$endif$$for(biblatexoptions)$$biblatexoptions$$sep$,$endfor$]{biblatex}
-$for(bibliography)$
-\addbibresource{$bibliography$}
-$endfor$
-$endif$
+
 $if(listings)$
 \usepackage{listings}
 \newcommand{\passthrough}[1]{#1}
@@ -231,7 +225,7 @@ $for(header-includes)$
 $header-includes$
 $endfor$
 $if(lang)$
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\ifPDFTeX
   \usepackage[shorthands=off,$for(babel-otherlangs)$$babel-otherlangs$,$endfor$main=$babel-lang$]{babel}
 $if(babel-newcommands)$
   $babel-newcommands$
@@ -239,14 +233,53 @@ $endif$
 \else
   % load polyglossia as late as possible as it *could* call bidi if RTL lang (e.g. Hebrew or Arabic)
   \usepackage{polyglossia}
-  \setmainlanguage[$polyglossia-lang.options$]{$polyglossia-lang.name$}
+  \setmainlanguage[variant=british]{english}
+  %\setmainlanguage[$polyglossia-lang.options$]{$polyglossia-lang.name$}
 $for(polyglossia-otherlangs)$
   \setotherlanguage[$polyglossia-otherlangs.options$]{$polyglossia-otherlangs.name$}
 $endfor$
 \fi
 $endif$
+
+$if(natbib)$
+\usepackage[$natbiboptions$]{natbib}
+\bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
+$endif$
+$if(biblatex)$
+\usepackage{csquotes,xpatch}
+\usepackage[$if(biblio-style)$style=$biblio-style$,$endif$$for(biblatexoptions)$$biblatexoptions$$sep$,$endfor$]{biblatex}
+$for(bibliography)$
+\addbibresource{$bibliography$}
+$endfor$
+$endif$
+$if(csl-refs)$
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[1] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+$endif$
+
 $if(dir)$
-\ifxetex
+\ifXeTeX
   % load bidi as late as possible as it modifies e.g. graphicx
   $if(latex-dir-rtl)$
   \usepackage[RTLdocument]{bidi}
@@ -254,7 +287,7 @@ $if(dir)$
   \usepackage{bidi}
   $endif$
 \fi
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\ifPDFTeX
   \TeXXeTstate=1
   \newcommand{\RL}[1]{\beginR #1\endR}
   \newcommand{\LR}[1]{\beginL #1\endL}
@@ -323,20 +356,16 @@ $endif$
 $if(natbib)$
 $if(bibliography)$
 $if(biblio-title)$
-$if(book-class)$
 \renewcommand\bibname{$biblio-title$}
-$else$
-\renewcommand\refname{$biblio-title$}
-$endif$
 $endif$
 \bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
+$endif$
+$endif$
 
-$endif$
-$endif$
 $if(biblatex)$
 \printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
-
 $endif$
+
 $for(include-after)$
 $include-after$
 

@@ -38,7 +38,7 @@ output.gsub!(/^\\includegraphics{/, '\\includegraphics[center]{')
 #output.gsub!(/^\\includegraphics\[([^\]]*)\]/, '\\includegraphics[\1,center]')
 
 # make sure reference typography is small and sans-font
-output.gsub!(/\\label{(.*(references|bibliography))}/, '\\label{\1}\\setstretch{0.75}\\sffamily\\small')
+output.gsub!(/\\label{(.*(references|bibliography))}/, '\\label{\1}\\sffamily\\small')
 
 # simplify DOI links
 output.gsub!(/\\url{https:\/\/doi.org\/([^\}]+)}/,'\\href{https://doi.org/\1}{doi:\1}')

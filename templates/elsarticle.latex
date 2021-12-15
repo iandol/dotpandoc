@@ -3,8 +3,8 @@
 %%          To that end turn the generic `elsarticle-template.tex` into
 %%          a template that can be used in conjunction with
 %%          pandocomatic and scrivomatic.
-%% Authors: Ian Max Andolina, Paul Brandt
-%% Date   : Nov. 11, 2021
+%% Authors: Paul Brandt, Ian Max Andolina
+%% Date   : Dec. 06, 2021
 %% 
 %% This file is a manual integration of:
 %%      *   elsarticle-template.tex (NOT the `elsarticle-template-*.tex` 
@@ -90,7 +90,7 @@ $if(title-meta)$
   pdftitle={$title-meta$},
 $endif$
 $if(author)$
-  pdfauthor={${ for(author) }${ it.name }${ sep }, ${ endfor }},
+  pdfauthor={$for(author)$ $it.name$ $sep$, $endfor$},
 $endif$
 $if(lang)$
   pdflang={$lang$},
@@ -99,7 +99,7 @@ $if(subject)$
   pdfsubject={$subject$},
 $endif$
 $if(keywords)$
-  pdfkeywords={$for(keywords)$$keywords$$sep$, $endfor$},
+  pdfkeywords={$for(keywords)$ $it$ $sep$, $endfor$},
 $endif$
 $if(colorlinks)$
   colorlinks=true,
@@ -114,10 +114,10 @@ $endif$
 %% Elsevier bibliography styles
 %% ----------------------------
 %% 
-$if(bst-file)$\bibliographystyle{$bst-file$}$endif$
-\setcitestyle{authoryear,open={(},close={)}} %Citation-related commands
+\bibliographystyle{$if(biblio-style)$$biblio-style$$else$abbrvnat$endif$}
+\setcitestyle{open={(},close={)}} %Citation-related commands
 %% Add extra options of natbib.sty, if any specified.
-$if(biboptions)$\biboptions{$for(biboptions)$$biboptions$$sep$,$endfor$}$endif$
+$if(natbiboptions)$\biboptions{$for(natbiboptions)$$natbiboptions$$sep$,$endfor$}$endif$
 %%
 %% !Todo!: Check the specifics of reference styles from elsarticle-template-*.tex
 %%         as mentioned in https://support.stmdocs.in/wiki/index.php?title=Model-wise_bibliographic_style_files
@@ -272,12 +272,14 @@ $endif$
 %% AUTHOR elements
 $if(author)$
 $for(author)$\author[$for(author.affiliation)$$author.affiliation$$sep$,$endfor$]{$it.name$$if(it.orcid)$\fnref{$it.orcid$}$endif$$if(it.correspondence)$\corref{corrauth}$endif$}$if(it.orcid)$\fntext[$it.orcid$]{ORCID: \orcidlink{$it.orcid$}$it.orcid$}$endif$$if(it.correspondence)$\ead{$it.correspondence$}\cortext[corrauth]{Corresponding author}$endif$$if(it.email)$\ead{$it.email$}$endif$$sep$ $endfor$
+
 $endif$
 %%
 
 %% INSTITUTE elements
 $if(institute)$
 $for(institute)$\affiliation[$if(it.index)$$it.index$$endif$]{organization={$it.name$}} $endfor$
+
 $endif$
 %%
 
@@ -336,10 +338,22 @@ $body$
 %% 1. Set the `bibliography` parameter in the pandocomatic configuration;
 %% 2. Respect the related remarks from pandocomatic-elsarticle.template.
 %%
-\bibliography{$bibliography$}
+$if(bibliography)$
+$if(biblio-title)$
+$if(has-chapters)$
+\renewcommand\bibname{$biblio-title$}
+$else$
+\renewcommand\refname{$biblio-title$}
+$endif$
+$endif$
+  \bibliography{$for(bibliography)$$bibliography$$sep$, $endfor$}
+$endif$
 %%
 
+$for(include-after)$
+$include-after$
 
+$endfor$
 \end{document}
 
 %%

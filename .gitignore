@@ -5,3 +5,11 @@ CoreTest.bib
 Core.bib
 Core.json
 pandoclog.json
+*.spl
+*.log
+*.bbl
+*.aux
+*.fls
+*.xdv
+*.blg
+*.out
