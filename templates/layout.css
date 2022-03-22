@@ -1,0 +1,128 @@
+body{
+    --bleed: 6mm;
+}
+
+@media print {
+
+    /* ALL PAGES ----------------------------------------------------------------------- */
+
+    @page {
+        size: 165mm 235mm;
+        margin-top: 36px;
+        margin-bottom: 76px;
+        bleed: 6mm; 
+        marks: crop;
+    }
+    
+
+    /* LEFT PAGES ----------------------------------------------------------------------- */
+
+    @page:left {
+        margin-right: 36mm;
+        margin-left: 14mm;
+        @bottom-left {
+            content: counter(page);
+            text-align: left;
+            font-family: var(--font-title);
+            font-size: 20px;
+            position: relative;
+            top: 4px;
+        }
+    }
+    
+
+    /* RIGHT PAGES ----------------------------------------------------------------------- */
+    
+    @page:right {
+        margin-left: 36mm;
+        margin-right: 14mm;
+        @bottom-right {
+            content: counter(page);
+            text-align: right;
+            font-family: var(--font-title);
+            font-size: 20px; 
+            position: relative;
+            top: 4px;
+        }
+        @bottom-center {
+            /* content: string(title) */
+        }
+    }
+
+    /* h2 {  string-set: title content(text) } */
+    
+
+    
+
+    /* BREAKS ----------------------------------------------------------------------- */
+
+    #copyright {  break-before: page; }
+    #title-page { break-before: page; }
+    #a-propos { break-before: right; }
+    #toc { break-before: right; }
+
+    #colophon {  break-before: right; }
+    #citation {  break-before: page; }
+
+    .page-title-part { break-before: right; }
+    .partie-texte { break-before: right; }
+
+    .refs-biblio { break-before: page; }
+    #refs-biblio-03 { break-before: right; }
+
+    .notice { break-before: page; }
+    .notice figure { break-before: page; }
+
+
+    #notice-ra178{ break-before: right; }
+    #figure-ra52 { break-before: right!important; }
+    #refs-biblio-04 { break-before: right!important; }
+    #grid-2-01-right { break-before: right!important; }
+    #grid-3-01-right{ break-before: right; }
+    
+    .notices-list{ break-before: right; }
+
+    /* BLANK PAGES --------------------------------------------------------------------- */
+
+     @page :blank {
+        @bottom-left { content: none; }
+        @bottom-center { content: none; }
+        @bottom-right { content: none; }
+    }
+
+
+
+    /* NAMED PAGES --------------------------------------------------------------------- */
+
+    #half-title, 
+    #copyright, 
+    #title-page, 
+    #a-propos, 
+    #toc { 
+        page: frontmatter; 
+    }
+
+    @page frontmatter {
+
+        /* background-color: moccasin; */
+
+        @bottom-left { content: none; }
+        @bottom-center { content: none; }
+        @bottom-right { content: none; }
+
+    }
+
+
+    /* SPECIFIC PAGES --------------------------------------------------------------------- */
+
+    @page :nth(8) { 
+        @bottom-left { content: none; } 
+    }
+    
+    @page :nth(114) { 
+        @bottom-left { content: none; } 
+    }
+
+
+}
+

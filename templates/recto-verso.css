@@ -1,0 +1,33 @@
+@media screen {
+
+  .pagedjs_pages {
+      flex-direction: column;
+      width: 100%;
+  }
+
+  .pagedjs_first_page {
+      margin-left: 0;
+  }
+
+  .pagedjs_page {
+      margin: 0 auto;
+      margin-top: 10mm;
+  } 
+
+  .pagedjs_left_page{
+      width: calc(var(--pagedjs-bleed-left) + var(--pagedjs-pagebox-width) + var(--pagedjs-bleed-left))!important;
+  }
+
+  .pagedjs_left_page .pagedjs_bleed-right .pagedjs_marks-crop{
+      border-color: var(--pagedjs-crop-color);
+  }
+
+  .pagedjs_left_page .pagedjs_bleed-right .pagedjs_marks-middle{
+      width: var(--pagedjs-cross-size)!important;
+  } 
+
+  .pagedjs_right_page{
+      left: 0; 
+  } 
+  
+}

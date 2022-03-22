@@ -1,0 +1,16 @@
+
+
+@media screen {
+
+    .pagedjs_pagebox{
+        --pagedjs-baseline: 12px;
+        --pagedjs-baseline-position: 1px;
+        --pagedjs-baseline-color: cyan;
+        background: linear-gradient( var(--color-paper) 0%, var(--color-paper) calc(var(--pagedjs-baseline) - 1px), var(--pagedjs-baseline-color) calc(var(--pagedjs-baseline) - 1px),  var(--pagedjs-baseline-color) var(--pagedjs-baseline)), transparent;
+        background-size: 100% var(--pagedjs-baseline);
+        background-repeat: repeat-y;
+        background-position-y: var(--pagedjs-baseline-position);
+    }
+
+
+}

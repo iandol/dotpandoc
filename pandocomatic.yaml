@@ -13,7 +13,7 @@ templates:
 #:::::::::::::::::::::::::::::::::: GENERAL ::::::::::::::::::::::::::::::::::
 #-----------------------------------------------------------------------------
   crossref: # note crossref should come before citeproc!
-    preprocessors: preprocessors/fixCrossref.rb # allows to put crossref labels in styled captions
+    preprocessors: [preprocessors/fixCrossref.rb] # allows to put crossref labels in styled captions
     pandoc:
       verbose: true # verbose by default
       filter: pandoc-crossref # process crossrefs
@@ -116,8 +116,13 @@ templates:
     pandoc:
       reference-doc: templates/custom.docx
 #-----------------------------------------------------------------------------
-  docx-refs-crossref:
+  docx-crossref:
     extends: [docx,refs,crossref]
+#-----------------------------------------------------------------------------
+  docx-native-numbering:
+    extends: [docx,refs]
+    pandoc:
+      to: docx+native_numbering
 #-----------------------------------------------------------------------------
   docx-refs-not-linked:
     extends: [docx,refs]
@@ -209,7 +214,7 @@ templates:
       - postprocessors/fixLaTeX.rb
 #-----------------------------------------------------------------------------
   latex-crossref:
-    extends: [latex, crossref, refs]
+    extends: [latex, refs, crossref]
     pandoc:
       include-in-header: blank.txt
     metadata:
@@ -588,6 +593,14 @@ templates:
       pdf-engine-opt: ['--page-size=A4']
     metadata:
       backgroundcolor: "#FFFFFF"
+#-----------------------------------------------------------------------------
+  html-pagedjs:
+    extends: [html]
+    pandoc:
+      template: 'templates/pagedjs.html'
+      css: ['templates/interface.css','templates/recto-verso.css','templates/layout.css','templates/baseline.css']
+    metadata:
+      document-css: false
 #-----------------------------------------------------------------------------
   html-refs-pdf:
     extends: [refs, crossref, html-pdf]
