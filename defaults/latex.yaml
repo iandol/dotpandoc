@@ -12,12 +12,12 @@ metadata:
   fontsize: '12pt'
   linestretch: '1.5'
   geometry: ['inner=2.2cm','outer=1.8cm','bottom=2.5cm','twoside']
-  mainfont: 'Greta Text Pro'
+  mainfont: 'STIX Two Text'
   mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
-  sansfont: 'Greta Sans Pro'
+  sansfont: 'Source Sans 3'
   sansfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
-  monofont: 'Fira Code'
-  mathfont: 'Cambria Math'
+  monofont: 'Rec Mono Duotone'
+  mathfont: 'STIX Two Math'
   mathfontoptions: 'math-style=ISO,bold-style=ISO'
   CJKmainfont: 'PingFang SC'
   colorlinks: true

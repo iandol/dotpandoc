@@ -1,6 +1,12 @@
 #!/usr/bin/env ruby
 #encoding: utf-8
-#allows to put crossref labels in styled captions
+
+# This script is used to move pandoc-crossref labels from inside markup,
+# which is what Scrivener would generate from it style system, moving the
+# labels to the correct places so that pandoc-crossref can find them.
+# https://lierdakil.github.io/pandoc-crossref/#image-labels
+# This script only corrects figures and equations.
+
 Encoding.default_external = Encoding::UTF_8
 Encoding.default_internal = Encoding::UTF_8
 

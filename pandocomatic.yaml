@@ -1,6 +1,6 @@
 # --------------------------- Pandocomatic templates -------------------------
-# Remember: YAML REQUIRES SPACES NOT TABS, and indentation is important!
-# Paths are relative to the Pandoc data dir, you can also use ./ to make
+# Remember: YAML requires SPACES NOT TABS, and indentation is important!!!
+# Paths are relative to the Pandoc data dir; you can also use ./ to make
 # them relative to the working directory.
 settings:
   recursive: true
@@ -12,6 +12,7 @@ templates:
 #-----------------------------------------------------------------------------
 #:::::::::::::::::::::::::::::::::: GENERAL ::::::::::::::::::::::::::::::::::
 #-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------CROSSREF
   crossref: # note crossref should come before citeproc!
     preprocessors: [preprocessors/fixCrossref.rb] # allows to put crossref labels in styled captions
     pandoc:
@@ -76,10 +77,10 @@ templates:
       lua-filter:
         - filters/modifyHeadings.lua #makes headings stand out a bit more
         #- filters/removeEmphasis.lua # remove emphasis for plain and turn strong to UPPER
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------PLAIN REFS
   plain-refs:
     extends: [plain,refs]
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------PLAIN CROSSREF
   plain-refs-crossref:
     extends: [plain,crossref,refs]
 #-----------------------------------------------------------------------------
@@ -95,6 +96,7 @@ templates:
 #-----------------------------------------------------------------------------
 #:::::::::::::::::::::::::::::::::: DOCX :::::::::::::::::::::::::::::::::::::
 #-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------DOCX
   docx:
     pandoc:
       from: markdown
@@ -107,38 +109,38 @@ templates:
         - filters/prependAll.rb # prepends institute:, comments: and keywords: metadata into the text
         - filters/simplifyMetadata.rb #collapse down metadata "author: [name: affiliation:]" to author:
       reference-doc: templates/custom.docx
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------DOCX REFS
   docx-refs:
     extends: [docx,refs]
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------DOCX NSFC
   docx-refs-nsfc:
     extends: [docx,refs]
     pandoc:
       reference-doc: templates/custom.docx
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------DOCX CROSSREF
   docx-crossref:
     extends: [docx,refs,crossref]
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------DOCX NUMBERING
   docx-native-numbering:
     extends: [docx,refs]
     pandoc:
       to: docx+native_numbering
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------DOCX REFS NOLINK
   docx-refs-not-linked:
     extends: [docx,refs]
     metadata: 
       link-citations: false
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------DOCX ENDNOTE
   docx-endnote:
     extends: [docx,refs]
     preprocessors: 
       add: preprocessors/convertEndnoteRefs.rb  #turns endnote citations to pandoc citations
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------DOCX CHANGES
   docx-changes:
     extends: [docx,refs]
     preprocessors: 
       add: preprocessors/criticmarkup.rb #process criticmarkup to HTML that pandoc can use
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------ODT
   odt-refs:
     extends: [docx,refs]
     pandoc:
@@ -184,7 +186,7 @@ templates:
       #- preprocessors/removeImageDimensions.rb # remove image dimensions
     pandoc:
       from: markdown
-      to: latex-smart # turn off smart to leave — … “” etc. as unicode
+      to: latex-smart # turn off smart to leave — … “” etc. as unicode, needs xetex or luatex
       standalone: true
       filter: 
         - filters/assimilateMetadata.rb # handle academic metadata
@@ -200,10 +202,10 @@ templates:
       mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
       sansfont: 'Greta Sans Pro'
       sansfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
-      monofont: 'Fira Code'
-      mathfont: 'Cambria Math'
+      monofont: 'Rec Mono Duotone'
+      mathfont: 'STIX Two Math'
       mathfontoptions: 'math-style=ISO,bold-style=ISO'
-      #CJKmainfont: 'Heiti SC'
+      CJKmainfont: 'Heiti SC'
       colorlinks: true
       linkcolor: Mahogany
       citecolor: Sepia
@@ -324,7 +326,7 @@ templates:
       mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
       sansfont: 'Greta Sans Pro'
       sansfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
-      monofont: 'Fira Code'
+      monofont: 'Rec Mono Duotone'
       leaflet-logo:
       leaflet-no-cutlines: true
       leaflet-no-tumble: true
@@ -370,8 +372,8 @@ templates:
       closing: Sincerely yours,
       mainfont: 'Graublau Sans'
       mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
-      monofont: 'Fira Code'
-      mathfont: 'Cambria Math'
+      monofont: 'Rec Mono Duotone'
+      mathfont: 'STIX Two Math'
       mathfontoptions: 'math-style=ISO,bold-style=ISO'
       CJKmainfont: 'PingFang SC'
       fontsize: '11pt'
@@ -424,8 +426,8 @@ templates:
       mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
       sansfont: 'Graublau Slab'
       sansfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
-      monofont: 'Fira Code'
-      mathfont: 'Cambria Math'
+      monofont: 'Rec Mono Duotone'
+      mathfont: 'STIX Two Math'
       mathfontoptions: 'math-style=ISO,bold-style=ISO'
       CJKmainfont: 'PingFang SC'
       CJKsansfont: 'PingFang SC'
@@ -536,7 +538,7 @@ templates:
       document-css: true #use the html partial
       lang: 'en-GB'
       mainfont: "'Greta Sans Pro',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-serif"
-      monofont: "'Fantasque Sans mono','Fira code','Jetbrains Mono',menlo,consolas,monospace"
+      monofont: "'Rec Mono Duotone','Fira code','Jetbrains Mono',menlo,consolas,monospace"
       linestretch: 1.3
       fontsize: 20
       fontcolor: "#1A1A1A"
