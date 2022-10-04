@@ -27,13 +27,13 @@ $endif$
   <style>
     $styles.html()$
   </style>
+  <script src="https://unpkg.com/pagedjs/dist/paged.polyfill.js"></script>
 $for(css)$
   <link rel="stylesheet" href="$css$"/>
 $endfor$
 $if(math)$
   $math$
 $endif$
-  <script src="https://unpkg.com/pagedjs/dist/paged.polyfill.js"></script>
 $for(header-includes)$
   $header-includes$
 $endfor$

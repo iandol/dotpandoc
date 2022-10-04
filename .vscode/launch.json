@@ -4,7 +4,49 @@
 	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
 	"version": "0.2.0",
 	"configurations": [
+	
 
+		{
+			"name": "Lua MobDebug: Current File",
+			"type": "luaMobDebug",
+			"request": "launch",
+			"workingDirectory": "${workspaceFolder}",
+			"sourceBasePath": "${workspaceFolder}",
+			"listenPort": 8172,
+			"stopOnEntry": true,
+			"sourceEncoding": "UTF-8",
+			"interpreter": "lua",
+			"arguments": [
+				"${relativeFile}"
+			]
+		},
+		{
+			"name": "Lua MobDebug: Listen",
+			"type": "luaMobDebug",
+			"request": "attach",
+			"workingDirectory": "${workspaceFolder}",
+			"sourceBasePath": "${workspaceFolder}",
+			"listenPublicly": false,
+			"listenPort": 8172,
+			"stopOnEntry": true,
+			"sourceEncoding": "UTF-8"
+		},
+		{
+			"type": "lrdb",
+			"request": "launch",
+			"name": "Lua: Launch Program",
+			"program": "Lua program file or Lua host executable.",
+			"args": [],
+			"cwd": ""
+		},
+		{
+			"type": "lrdb",
+			"request": "attach",
+			"name": "Lua: Attach",
+			"host": "localhost",
+			"port": 21110,
+			"sourceRoot": ""
+		},
 		{
 			"name": "Debug Ruby File",
 			"type": "Ruby",

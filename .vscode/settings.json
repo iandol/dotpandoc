@@ -4,5 +4,8 @@
 		"**/.project": true,
 		"**/.settings": true,
 		"**/.factorypath": true
+	},
+	"yaml.schemas": {
+		"https://json.schemastore.org/prettierrc.json": "file:///Users/ian/Code/dotpandoc/defaults/refs.yaml"
 	}
 }

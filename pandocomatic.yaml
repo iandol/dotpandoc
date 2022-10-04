@@ -1,18 +1,18 @@
-# --------------------------- Pandocomatic templates -------------------------
-# Remember: YAML requires SPACES NOT TABS, and indentation is important!!!
-# Paths are relative to the Pandoc data dir; you can also use ./ to make
-# them relative to the working directory.
+# --------------------- Pandocomatic templates -------------------
+# Remember: YAML requires SPACES NOT TABS, and indentation is
+# important!!! Paths are relative to the Pandoc data dir; you can also
+# use ./ to make them relative to the working directory.
 settings:
   recursive: true
   follow-symlinks: false
   skip: ['.*', 'pandocomatic.yaml']
   match-files: 'first'
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
 templates:
-#-----------------------------------------------------------------------------
-#:::::::::::::::::::::::::::::::::: GENERAL ::::::::::::::::::::::::::::::::::
-#-----------------------------------------------------------------------------
-#-----------------------------------------------------------------------------CROSSREF
+#-----------------------------------------------------------------
+#:::::::::::::::::::::::::::: GENERAL ::::::::::::::::::::::::::::
+#-----------------------------------------------------------------
+#-----------------------------------------------------------------CROSSREF
   crossref: # note crossref should come before citeproc!
     preprocessors: [preprocessors/fixCrossref.rb] # allows to put crossref labels in styled captions
     pandoc:
@@ -20,7 +20,7 @@ templates:
       filter: pandoc-crossref # process crossrefs
     metadata:
       linkReferences: true
-#-----------------------------------------------------------------------------CITEPROC
+#-----------------------------------------------------------------CITEPROC
   refs:
     pandoc:
       verbose: true # verbose by default
@@ -30,11 +30,10 @@ templates:
       citation-abbreviations: cite-abbr.json # some journal abbreviations
       reference-links: true
     metadata:
-      reference-section-title: Bibliography
       notes-after-punctuation: false
       link-citations: true 
       csl-hanging-indent: true
-#-----------------------------------------------------------------------------BIBLATEX
+#-----------------------------------------------------------------BIBLATEX
   biblatex:
     pandoc:
       verbose: true           # Verbose by default.
@@ -46,7 +45,7 @@ templates:
       biblatexoptions: [backend=biber,sorting=ynt]
       biblio-title: Bibliography # see variables for latex
       biblio-style: authoryear-comp
-#-----------------------------------------------------------------------------NATBIB
+#-----------------------------------------------------------------NATBIB
   natbib:
     pandoc:
       verbose: true           # Verbose by default.
@@ -57,7 +56,7 @@ templates:
     metadata:
       biblio-title: Bibliography # see variables for latex
       biblio-style: numeric
-#-----------------------------------------------------------------------------PLAIN TXT
+#-----------------------------------------------------------------PLAIN TXT
   plain:
     pandoc:
       from: markdown
@@ -77,15 +76,15 @@ templates:
       lua-filter:
         - filters/modifyHeadings.lua #makes headings stand out a bit more
         #- filters/removeEmphasis.lua # remove emphasis for plain and turn strong to UPPER
-#-----------------------------------------------------------------------------PLAIN REFS
+#-----------------------------------------------------------------PLAIN REFS
   plain-refs:
     extends: [plain,refs]
-#-----------------------------------------------------------------------------PLAIN CROSSREF
+#-----------------------------------------------------------------PLAIN CROSSREF
   plain-refs-crossref:
     extends: [plain,crossref,refs]
-#-----------------------------------------------------------------------------
-#:::::::::::::::::::::::::::::::::: ICML :::::::::::::::::::::::::::::::::::::
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
+#:::::::::::::::::::::::::::: ICML :::::::::::::::::::::::::::::::
+#-----------------------------------------------------------------
   icml:
     pandoc:
       from: markdown
@@ -93,10 +92,10 @@ templates:
       standalone: true
       template: templates/custom.icml
       verbose: true
-#-----------------------------------------------------------------------------
-#:::::::::::::::::::::::::::::::::: DOCX :::::::::::::::::::::::::::::::::::::
-#-----------------------------------------------------------------------------
-#-----------------------------------------------------------------------------DOCX
+#-----------------------------------------------------------------
+#:::::::::::::::::::::::::::: DOCX :::::::::::::::::::::::::::::::
+#-----------------------------------------------------------------
+#-----------------------------------------------------------------DOCX
   docx:
     pandoc:
       from: markdown
@@ -104,51 +103,52 @@ templates:
       standalone: true
       lua-filter:
         - filters/pagebreak.lua # use \newpage{} also for HTML, DOCX, ODT & EPUB
+        - filters/abstract-section.lua # move an abstract heading to metadata
       filter:
         #- filters/removeHR #remove horizontal rules
         - filters/prependAll.rb # prepends institute:, comments: and keywords: metadata into the text
         - filters/simplifyMetadata.rb #collapse down metadata "author: [name: affiliation:]" to author:
       reference-doc: templates/custom.docx
-#-----------------------------------------------------------------------------DOCX REFS
+#-----------------------------------------------------------------DOCX REFS
   docx-refs:
     extends: [docx,refs]
-#-----------------------------------------------------------------------------DOCX NSFC
+#-----------------------------------------------------------------DOCX NSFC
   docx-refs-nsfc:
     extends: [docx,refs]
     pandoc:
       reference-doc: templates/custom.docx
-#-----------------------------------------------------------------------------DOCX CROSSREF
+#-----------------------------------------------------------------DOCX CROSSREF
   docx-crossref:
     extends: [docx,refs,crossref]
-#-----------------------------------------------------------------------------DOCX NUMBERING
+#-----------------------------------------------------------------DOCX NUMBERING
   docx-native-numbering:
     extends: [docx,refs]
     pandoc:
       to: docx+native_numbering
-#-----------------------------------------------------------------------------DOCX REFS NOLINK
+#-----------------------------------------------------------------DOCX REFS NOLINK
   docx-refs-not-linked:
     extends: [docx,refs]
     metadata: 
       link-citations: false
-#-----------------------------------------------------------------------------DOCX ENDNOTE
+#-----------------------------------------------------------------DOCX ENDNOTE
   docx-endnote:
     extends: [docx,refs]
     preprocessors: 
       add: preprocessors/convertEndnoteRefs.rb  #turns endnote citations to pandoc citations
-#-----------------------------------------------------------------------------DOCX CHANGES
+#-----------------------------------------------------------------DOCX CHANGES
   docx-changes:
     extends: [docx,refs]
     preprocessors: 
       add: preprocessors/criticmarkup.rb #process criticmarkup to HTML that pandoc can use
-#-----------------------------------------------------------------------------ODT
+#-----------------------------------------------------------------ODT
   odt-refs:
     extends: [docx,refs]
     pandoc:
       to: odt
       reference-doc: templates/custom.odt
-#-----------------------------------------------------------------------------
-#:::::::::::::::::::::::::::::: PRESENTATIONS ::::::::::::::::::::::::::::::::
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
+#:::::::::::::::::::::::: PRESENTATIONS ::::::::::::::::::::::::::
+#-----------------------------------------------------------------
 # Note for reveal.js standalone download the files  and put them 
 # in a reveal.js/ folder relative to the markdown file.
 #   wget https://github.com/hakimel/reveal.js/archive/master.tar.gz
@@ -178,9 +178,9 @@ templates:
     pandoc:
       from: markdown
       to: pptx
-#-----------------------------------------------------------------------------
-#:::::::::::::::::::::::::::::::::: LATEX ::::::::::::::::::::::::::::::::::::
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
+#:::::::::::::::::::::::::::: LATEX ::::::::::::::::::::::::::::::
+#-----------------------------------------------------------------
   latex:
     preprocessors:
       #- preprocessors/removeImageDimensions.rb # remove image dimensions
@@ -188,6 +188,9 @@ templates:
       from: markdown
       to: latex-smart # turn off smart to leave — … “” etc. as unicode, needs xetex or luatex
       standalone: true
+      lua-filter:
+        - filters/pagebreak.lua # use \newpage{} also for HTML, DOCX, ODT & EPUB
+        - filters/abstract-section.lua # move an abstract heading to metadata
       filter: 
         - filters/assimilateMetadata.rb # handle academic metadata
       template: templates/custom.latex
@@ -214,7 +217,7 @@ templates:
       nonumberfigures: true # I use Scrivener autonumbering, so disable for LaTeX
     postprocessors: 
       - postprocessors/fixLaTeX.rb
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   latex-crossref:
     extends: [latex, refs, crossref]
     pandoc:
@@ -223,22 +226,22 @@ templates:
       nonumberfigures: false
       titleDelim: '&nbsp;—&nbsp;'
       figPrefix: ['Fig.','Figs.']
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   latex-refs:
     extends: [latex, refs]
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   pdf-refs:
     extends: latex-refs
     pandoc:
       to: pdf
       pdf-engine: 'xelatex'
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   pdf-crossref:
     extends: latex-crossref
     pandoc:
       to: pdf
       pdf-engine: 'xelatex'
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   latex-biblatex:
     extends: 'latex'
     pandoc:
@@ -247,7 +250,7 @@ templates:
     metadata:
       biblio-style: authoryear-comp
       biblatexoptions: [sort=nyt,backend=biber,maxcitenames=2]
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   elsevier:
     extends: 'natbib'
     pandoc:
@@ -255,7 +258,7 @@ templates:
       filter:
         - filters/assimilateMetadata.rb    # Handle academic metadata.
       template: elsarticle.latex           # Latex template supporing elsarticle.cls
-      include-in-header: './addstyles.sty' # To easily include packages; refer to elsarticle.latex
+      include-in-header: './addpackages.sty' # To easily include packages; refer to elsarticle.latex
     metadata:
       documentclass: 'elsarticle'          # Specifying Elsevier's documentclass.
       classoption: ['authoryear','preprint'] # Elsevier options
@@ -264,32 +267,32 @@ templates:
       colorlinks: true
       linestretch: '1.5'
       lang: 'en-GB'
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   elsevier-1col:
     extends: 'elsevier'
     pandoc:
-      output: test_elsarticle_1col.tex
+      output: elsarticle_1col.tex
     metadata:
       classoption: ['3p'] # Single column style.
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   elsevier-2col:
     extends: 'elsevier'
     pandoc:
-      output: test_elsarticle_2col.tex
+      output: elsarticle_2col.tex
     metadata:
       classoption: ['3p','twocolumn'] # Double column style.
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   latex-endnote:
     extends: 'latex-refs'
     preprocessors: 
       - preprocessors/convertEndnoteRefs.rb
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   pdf-endnote:
     extends: 'latex-endnote'
     pandoc:
       to: pdf
       pdf-engine: 'xelatex'
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   latex-chemfig: # example of using header-includes with yaml block scalar data http://yaml-multiline.info/
     extends: [latex-refs]
     metadata:
@@ -298,13 +301,13 @@ templates:
           ```{=latex}
           \usepackage[]{chemfig}
           ```
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   latex-with-toc:
     extends: [latex-refs]
     pandoc:
       toc: true
       toc-depth: 3
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   latex-with-lof:
     extends: [latex-refs]
     pandoc:
@@ -312,7 +315,7 @@ templates:
       toc-depth: 3
     metadata:
       lof: true
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
 # see https://gitlab.com/daamien/pandoc-leaflet-template/
   leaflet:
     pandoc:
@@ -332,7 +335,7 @@ templates:
       leaflet-no-tumble: true
       leaflet-page1-background-image:
       leaflet-page6-background-color: "DDCCAA"
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
 # see https://github.com/aaronwolen/pandoc-letter
 #   address : Name and address of the recipient; takes a list for a multi-line address.
 #   author : Writer of the letter; can take a list for a multi-line signature.
@@ -394,7 +397,7 @@ templates:
       biblio-style: numeric
     postprocessors:
       - postprocessors/fixLaTeX.rb
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
 # https://github.com/Wandmalfarbe/pandoc-latex-template
   eisvogel:
     extends: 'refs'
@@ -404,6 +407,9 @@ templates:
       from: markdown
       to: latex-smart # turn off smart leaves — … “” as unicode
       standalone: true
+      lua-filter:
+        - filters/pagebreak.lua # use \newpage{} also for HTML, DOCX, ODT & EPUB
+        - filters/abstract-section.lua # move an abstract heading to metadata
       filter: 
         - filters/assimilateMetadata.rb # handle academic matadata
       template: templates/eisvogel.latex
@@ -450,7 +456,7 @@ templates:
       footnotes-disable-backlinks: false
     postprocessors: 
       - postprocessors/fixLaTeX.rb
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
 # https://github.com/Wandmalfarbe/pandoc-latex-template
   eisvogel-logo:
     extends: [eisvogel]
@@ -460,7 +466,7 @@ templates:
       page-background-opacity:
       titlepage-text-color: 555555
       titlepage-rule-color: 555555
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
 # https://github.com/Wandmalfarbe/pandoc-latex-template
   eisvogel-crossref:
     extends: [eisvogel,crossref]
@@ -470,7 +476,7 @@ templates:
       nonumberfigures: false
       titleDelim: '&nbsp;—&nbsp;'
       figPrefix: ['Fig.','Figs.']
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
 # https://github.com/Wandmalfarbe/pandoc-latex-template
   eisvogel-pdf:
     extends: [eisvogel]
@@ -478,26 +484,26 @@ templates:
       to: pdf
       pdf-engine: 'xelatex'
     cleanup: []
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
 # https://github.com/Wandmalfarbe/pandoc-latex-template
   eisvogel-original:
     extends: [eisvogel]
     pandoc:
       template: templates/eisvogel.latex
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
 # https://github.com/Wandmalfarbe/pandoc-latex-template
   eisvogel-endnote:
     extends: [eisvogel]
     preprocessors: 
       - preprocessors/convertEndnoteRefs.rb
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   latex-ieee:
     extends: [latex-refs]
     pandoc:
       template: templates/ieee.latex
     metadata: 
       fontsize: '10pt'
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
 # https://github.com/pandoc-scholar/pandoc-scholar
   latex-scholar:
     extends: [latex-refs]
@@ -505,7 +511,7 @@ templates:
       template: templates/pandoc-scholar.latex
     metadata: 
       fontsize: '10pt'
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   memoir-with-refs:
     extends: [latex-refs]
     pandoc:
@@ -515,14 +521,14 @@ templates:
       base-header-level: 1
     metadata:
       documentclass: 'memoir'
-#-----------------------------------------------------------------------------
-#:::::::::::::::::::::::::::::::::: HTML :::::::::::::::::::::::::::::::::::::
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
+#:::::::::::::::::::::::::::: HTML :::::::::::::::::::::::::::::::
+#-----------------------------------------------------------------
   html:
     pandoc:
       from: markdown
       to: html5
-      standalone: true
+      embed-resources: true
       number-sections: false
       section-divs: true
       mathjax: true
@@ -533,7 +539,7 @@ templates:
       template: 'templates/custom.html'
       css: 'templates/custom.css'
       toc: true
-      toc-depth: 3
+      toc-depth: 4
     metadata:
       document-css: true #use the html partial
       lang: 'en-GB'
@@ -552,41 +558,41 @@ templates:
       csl-css: true
       postprocessors: 
       - postprocessors/fixHTML.rb
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   html-selfcontained:
     extends: [html]
     pandoc:
       self-contained: true
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   html-changes:
     extends: ['html']
     preprocessors: 
       - preprocessors/criticmarkup.rb
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   html-refs:
     extends: [refs, html]
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   html-refs-crossref:
     extends: [refs, html, crossref]
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   html-endnote:
     extends: [refs, html]
     preprocessors: 
       - preprocessors/convertEndnoteRefs.rb
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   html-scholar:
     extends: [refs, crossref, html]
     pandoc: 
       template: 'templates/pandoc-scholar.html'
       css: 'templates/pandoc-scholar.css'
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   html-scholar-pdf:
     extends: [html-scholar]
     pandoc:
       to: pdf
       pdf-engine: prince
       pdf-engine-opt: ['--page-size=A4','--page-margin=10mm']
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   html-pdf:
     extends: [html]
     pandoc:
@@ -595,23 +601,34 @@ templates:
       pdf-engine-opt: ['--page-size=A4']
     metadata:
       backgroundcolor: "#FFFFFF"
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   html-pagedjs:
-    extends: [html]
     pandoc:
-      template: 'templates/pagedjs.html'
-      css: ['templates/interface.css','templates/recto-verso.css','templates/layout.css','templates/baseline.css']
+      pdf-engine: pagedjs-cli
+      output: pagedjs.pdf
+      from: markdown
+      to: html5
+      standalone: true
+      section-divs: true
+      mathjax: true
+      lua-filter:
+        - filters/pagebreak.lua # use \newpage{} also for HTML and docx
+      filter: 
+        - filters/assimilateMetadata.rb #regularise metadata
     metadata:
-      document-css: false
-#-----------------------------------------------------------------------------
+      document-css: true #don't use the html partial
+      lang: 'en-GB'
+      template: 'templates/pagedjs.html'
+      #css: ['templates/interface.css','templates/recto-verso.css','templates/layout.css','templates/baseline.css']
+#-----------------------------------------------------------------
   html-refs-pdf:
     extends: [refs, crossref, html-pdf]
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   html-endnote-pdf:
     extends: [html-refs-pdf]
     preprocessors: 
       - preprocessors/convertEndnoteRefs.rb
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
 # https://github.com/jez/tufte-pandoc-css
   tufte:
     pandoc:
@@ -631,19 +648,19 @@ templates:
         - 'templates/tuftepandoc.css'
     metadata:
       lang: 'en-GB'
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   tufte-refs:
     extends: [refs,tufte,crossref]
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   tufte-refs-pdf:
     extends: [tufte-refs]
     pandoc:
       to: pdf
       pdf-engine: prince
       pdf-engine-opt: ['--page-size=A4']
-#-----------------------------------------------------------------------------
-#:::::::::::::::::::::::::::::::::: EPUB :::::::::::::::::::::::::::::::::::::
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
+#:::::::::::::::::::::::::::: EPUB :::::::::::::::::::::::::::::::
+#-----------------------------------------------------------------
   epub-test:
     pandoc:
       from: markdown
@@ -653,11 +670,11 @@ templates:
     metadata:
       stylesheet: epub.css
       cover-image: templates/VPMLogoBlack.png
-#-----------------------------------------------------------------------------
-#:::::::::::::::::::::::::::::::::: TEST :::::::::::::::::::::::::::::::::::::
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
+#:::::::::::::::::::::::::::: TEST :::::::::::::::::::::::::::::::
+#-----------------------------------------------------------------
 # VARIOUS TEST TEMPLATES
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   test:
     pandoc:
       from: markdown
@@ -670,7 +687,7 @@ templates:
         - filters/noop.rb
     metadata:
       lang: 'EN-GB'
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   test-debug:
     pandoc:
       from: markdown
@@ -681,7 +698,7 @@ templates:
         - filters/testFilter.rb
     metadata:
       lang: 'EN-GB'
-#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------
   test-markdown:
     pandoc:
       from: markdown

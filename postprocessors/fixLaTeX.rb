@@ -11,14 +11,14 @@ output = $stdin.read
 
 # make sure we perform font substitutions for characters that may not have a font entry
 # fixfont uses Cambria Math with a huge glyph range
-list = %w[⬄ ↔ ⇔ ⇄ ⇨ ⇦ → ← ⇳ Δ ⟳ ⟲ ‐ ⌲ ⌖ ⌽ ⌀ ⎆ ⎅ ⎌ ⎊ ⏎ ⌨︎]
+list = %w[⌘ ⬄ ↔ ⇔ ⇄ ⇨ ⇦ → ← ⇳ Δ ⟳ ⟲ ‐ ⌲ ⌖ ⌽ ⌀ ⎆ ⎅ ⎌ ⎊ ⏎ ⌨︎]
 list.each do |ch|
   output.gsub!(/(?<!fixfont\{)(#{ch})(?!\})/, "\\fixfont\{#{ch}\}")
 end
 
 # make sure we perform font substitutions for characters that may not have a font entry
 # fixfontB uses Arial Unicode MS with a huge glyph range
-list = %w[⌦ ⌫ ⌘ ✉ ☢︎ ✆ ☠︎ ✎ ♂︎ ♀︎ ☍ ☤ ☁︎]
+list = %w[⌦ ⌫ ✉ ☢︎ ✆ ☠︎ ✎ ♂︎ ♀︎ ☍ ☤ ☁︎]
 list.each do |ch|
   output.gsub!(/(?<!fixfontB\{)(#{ch})(?!\})/, "\\fixfontB\{#{ch}\}")
 end

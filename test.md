@@ -15,7 +15,8 @@ author:
 institute:
   - 1: University of XYZ
   - 2: Institute of ZYX
-abstract: This is the abstract for a test file. Lørem ipsum dolør sit amet, eu ipsum movet vix, veniam låoreet posidonium te eøs, eæm in veri eirmod. Sed illum minimum at, est mægna alienum mentitum ne.
+abstract: |
+  "This is the **abstract** for a test file. Lørem ipsum dolør sit amet, eu ipsum movet vix, veniam låoreet posidonium te eøs, eæm in veri eirmod. Sed illum minimum at, est mægna alienum mentitum ne."
 keywords: [pandoc, pandocomatic]
 date: 1^st^ January 2025
 toc: true
@@ -77,6 +78,11 @@ No meæ menandri mediøcritatem, meis tibique convenire vis id! Delicata intelle
 
 Åd nam omnis ullamcørper vituperatoribus. Sed verear tincidunt rationibus an. Elit såperet recteque sit et, tåmquåm noluisse eloquentiåm ei mei. In pri solet soleat timeam, tale possit vis æt.  
 
+# References {.unnumbered}
+
+::: {#refs}
+
+:::
 
 [xkcd_brain_hemispheres]: xkcd.png {width=200 height=295}
 

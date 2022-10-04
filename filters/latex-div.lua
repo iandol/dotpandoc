@@ -2,10 +2,14 @@
      A Pandoc 2 Lua filter converting Pandoc native divs to LaTeX environments
      Author: Romain Lesur, Christophe Dervieux, Atsushi Yasumoto and Yihui Xie
      License: Public domain
+     https://github.com/rstudio/rmarkdown/tree/main/inst/rmarkdown/lua
 --]]
 
 -- REQUIREMENTS: Load shared lua filter - see `shared.lua` for more details.
-dofile(os.getenv 'RMARKDOWN_LUA_SHARED')
+-- dofile(os.getenv 'RMARKDOWN_LUA_SHARED')
+require('./filters/shared')
+--md = require("mobdebug")
+--md.start()
 
 --[[
   About the requirement:
@@ -21,6 +25,7 @@ end
 text = require 'text'
 
 Div = function (div)
+  --md.pause() --breakpoint
   -- look for 'latex' or 'data-latex' and at least 1 class
   local options = div.attributes['latex']
   if not options then
