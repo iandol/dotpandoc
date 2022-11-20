@@ -104,6 +104,7 @@ templates:
       lua-filter:
         - filters/pagebreak.lua # use \newpage{} also for HTML, DOCX, ODT & EPUB
         - filters/abstract-section.lua # move an abstract heading to metadata
+        - filters/pretty-url.lua # clean up URLs a bit
       filter:
         #- filters/removeHR #remove horizontal rules
         - filters/prependAll.rb # prepends institute:, comments: and keywords: metadata into the text
@@ -160,6 +161,8 @@ templates:
       from: markdown
       to: revealjs
       toc: true
+      lua-filter:
+        - filters/pretty-url.lua # clean up URLs a bit
     metadata:
       revealjs-url: http://lab.hakim.se/reveal-js
       slideNumber: true
@@ -188,11 +191,12 @@ templates:
       from: markdown
       to: latex-smart # turn off smart to leave — … “” etc. as unicode, needs xetex or luatex
       standalone: true
+      filter: 
+        - filters/assimilateMetadata.rb # handle academic metadata
       lua-filter:
         - filters/pagebreak.lua # use \newpage{} also for HTML, DOCX, ODT & EPUB
         - filters/abstract-section.lua # move an abstract heading to metadata
-      filter: 
-        - filters/assimilateMetadata.rb # handle academic metadata
+        - filters/pretty-url.lua # clean up URLs a bit
       template: templates/custom.latex
     metadata:
       documentclass: 'article'
@@ -359,6 +363,8 @@ templates:
       pdf-engine: xelatex
       standalone: true
       template: templates/letter.latex
+      lua-filter:
+        - filters/pretty-url.lua # clean up URLs a bit
     metadata:
       papersize: a4
       return-address: |
@@ -410,6 +416,7 @@ templates:
       lua-filter:
         - filters/pagebreak.lua # use \newpage{} also for HTML, DOCX, ODT & EPUB
         - filters/abstract-section.lua # move an abstract heading to metadata
+        - filters/pretty-url.lua # clean up URLs a bit
       filter: 
         - filters/assimilateMetadata.rb # handle academic matadata
       template: templates/eisvogel.latex
@@ -534,6 +541,8 @@ templates:
       mathjax: true
       lua-filter:
         - filters/pagebreak.lua # use \newpage{} also for HTML and docx
+        - filters/abstract-section.lua # move an abstract heading to metadata
+        - filters/pretty-url.lua # clean up URLs a bit
       filter: 
         - filters/assimilateMetadata.rb #regularise metadata
       template: 'templates/custom.html'
