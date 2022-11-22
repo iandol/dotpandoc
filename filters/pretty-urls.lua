@@ -9,13 +9,26 @@ local stringify = pandoc.utils.stringify
 
 local function prettify_url (link)
   -- Do not change the link if the description does not match the
-  -- target
-  if stringify(link.content) ~= link.target then
+  -- target and it is not an autolink (marked by the 'uri' class).
+  if stringify(link.content) ~= link.target and
+     not link.classes:includes 'uri' then
     return nil
   end
 
-  link.content = link.target:gsub('^https%:%/%/', '')
-  link.content = link.content:gsub('^(dx%.?)doi%.org%/', 'DOI:') --prettify DOIs
+  -- Remove http and https protocol prefix
+  --local is_unsafe_protocol = link.target:match '^http%:%/%/' ~= nil
+  link_text = link.target
+    :gsub('^https?%:%/%/', '')
+    :gsub('^(d?x?%.?)doi%.org%/', 'doi:') --prettify DOIs
+
+  --if is_unsafe_protocol then
+  --  link_text = link_text .. ' 🔓'
+  --end
+  link.content = {pandoc.Str(link_text)}
+
+  -- fix DOI links
+  link.target = link.target:gsub('^doi%:', 'https://doi.org/')
+
   return link
 end
 
