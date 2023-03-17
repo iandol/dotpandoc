@@ -60,7 +60,7 @@
 %% 
 %%%%%%%%%%%%%
 
-\documentclass[sort&compress,$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
+\documentclass[sort&compress,$for(classoption)$$classoption$$sep$,$endfor$$if(twocolumn)$,twocolumn$endif$]{$documentclass$}
 %%
 %% !Todo!: Resolve the conflicting `&` in `sort&compress` when parameterized as
 %%         `classoption` in pandocomatic-elsarticle.yaml configuration.
@@ -113,9 +113,10 @@ $endif$
 %%
 %% Elsevier bibliography styles
 %% ----------------------------
-%% 
+%% Elsevier requires natbib. 
+\usepackage[authoryear]{natbib}
+\setcitestyle{authoryear,open={(},close={)}} %Citation-related commands; modify for your convenience.
 $if(bst-file)$\bibliographystyle{$bst-file$}$endif$
-\setcitestyle{authoryear,open={(},close={)}} %Citation-related commands
 %% Add extra options of natbib.sty, if any specified.
 $if(biboptions)$\biboptions{$for(biboptions)$$biboptions$$sep$,$endfor$}$endif$
 %%
@@ -136,7 +137,8 @@ $if(biboptions)$\biboptions{$for(biboptions)$$biboptions$$sep$,$endfor$}$endif$
 %%   environments. This floats the environment to the top/bottom of page over
 %%   both columns.
 %%   Source: https://tex.stackexchange.com/questions/89462/page-wide-table-in-two-column-mode
-%%   Hence, redefine those environments:
+%%   Hence, redefine those environments when 'twocolumn' has been specified
+$if(twocolumn)$    
 \makeatletter
 \renewenvironment{figure}{%
   \begin{figure*}
@@ -144,9 +146,16 @@ $if(biboptions)$\biboptions{$for(biboptions)$$biboptions$$sep$,$endfor$}$endif$
   \end{figure*}
  }
 \makeatother
+\makeatletter
+\renewenvironment{table}{%
+  \begin{table*}
+ }{% 
+  \end{table*}
+ }
+\makeatother
 %%
-%% - Longtable does not work well with multicolumns. Therefore, 
-%%   redefine the longtable environment to enforce a single column mode before
+%% - Longtable & xltabular do not work well with multicolumns. Therefore, 
+%%   redefine these environments to enforce a single column mode before
 %%   its definition, and restore the two-column mode afterwards:
 \usepackage{stackengine}    % !!See Note (1) at the bottom!! 
 \usepackage{xltabular}		% Include longtable with column specifier X as in tabularx
@@ -155,10 +164,19 @@ $if(biboptions)$\biboptions{$for(biboptions)$$biboptions$$sep$,$endfor$}$endif$
                             % good table in this context.
 \usepackage{etoolbox}       % Used for the \BeforeBegin- & \AfterEndEnvironment
 \BeforeBeginEnvironment{longtable}{%
-  \onecolumn%
+    \onecolumn%
 }
 \AfterEndEnvironment{longtable}{%
-  \twocolumn%
+    \twocolumn%
+}
+\AtBeginEnvironment{longtable}{%
+    \scriptsize%
+}
+\BeforeBeginEnvironment{xltabular}{%
+    \onecolumn%
+}
+\AfterEndEnvironment{xltabular}{%
+    \twocolumn%
 }
 %%   This is not an optimal solution since it can result in pages around the
 %%   longtables that are partly blank unintentionally. Other solutions to
@@ -168,6 +186,7 @@ $if(biboptions)$\biboptions{$for(biboptions)$$biboptions$$sep$,$endfor$}$endif$
 %% !ToDo!: Make this part conditional on the documentclass-defined one- or
 %%         two-column mode. That is, only include it when necessary.
 %%
+$endif$
 
 %%
 %%%%%%%%%%%%% end REQUIRED PACKAGES
@@ -180,17 +199,21 @@ $if(biboptions)$\biboptions{$for(biboptions)$$biboptions$$sep$,$endfor$}$endif$
 %% elsarticle.cls. If you prefer to use the old commands
 %% please give \usepackage{epsfig}
 
+$if(modulolineno)$
 %% The lineno packages adds line numbers. Start line numbering with
 %% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
 %% for the whole article with \linenumbers.
+%% If you set the 'modulolineno' variable in pandocomatic (to, e.g., 5),
+%%   it will set \linenumbers for the whole article.
 \usepackage{lineno}
-\modulolinenumbers[5]
+\modulolinenumbers[modulolineno]
+$endif$
 
 %% When you have an Orcid ID (refer to) you might want to include that
 %% in your author-field as \orcidlink{<orcid>}
 \usepackage{orcidlink}
 
-%% \usepackage{blindtext}
+\usepackage{blindtext}
 
 %%
 %% Some pandocomatic-specified options require additional packages
@@ -261,17 +284,21 @@ $if(journalname)$\journal{$journalname$}$endif$
 \begin{frontmatter}
 
 %% TITLE elements
-$if(tnotetext)$
-\title{$title$\tnoteref{tlabel}}
-\tnotetext[tlabel]{$tnotetext$}
+$if(tnote)$
+  \title{$title$\tnoteref{$for(tnote/pairs)$id$it.key$$sep$,$endfor$$if(version)$,version$endif$}}
+  $for(tnote/pairs)$\tnotetext[id$it.key$]{$it.value$}$endfor$$if(version)$\tnotetext[version]{version $version$}$endif$
+$elseif(version)$
+  \title{$title$\tnoteref{version}}
+  \tnotetext[version]{version $version$, $compiled$}
 $else$
-\title{$title$}
+  \title{$title$}
 $endif$
 %%
 
 %% AUTHOR elements
 $if(author)$
-$for(author)$\author[$for(author.affiliation)$$author.affiliation$$sep$,$endfor$]{$it.name$$if(it.orcid)$\fnref{$it.orcid$}$endif$$if(it.correspondence)$\corref{corrauth}$endif$}$if(it.orcid)$\fntext[$it.orcid$]{ORCID: \orcidlink{$it.orcid$}$it.orcid$}$endif$$if(it.correspondence)$\ead{$it.correspondence$}\cortext[corrauth]{Corresponding author}$endif$$if(it.email)$\ead{$it.email$}$endif$$sep$ $endfor$
+$for(author)$
+  \author[$for(author.affiliation)$$author.affiliation$$sep$,$endfor$]{$it.name$$if(it.orcid)$\fnref{$it.orcid$}$endif$$if(it.correspondence)$\corref{corrauth}$endif$}$if(it.orcid)$\fntext[$it.orcid$]{ORCID: \orcidlink{$it.orcid$}$it.orcid$}$endif$$if(it.correspondence)$\ead{$it.correspondence$}\cortext[corrauth]{Corresponding author}$endif$$if(it.email)$\ead{$it.email$}$endif$$sep$ $endfor$
 $endif$
 %%
 
@@ -311,7 +338,9 @@ $endif$
 \end{frontmatter}
 
 %% Consider the use of line numbers
+$if(modulolineno)$
 \linenumbers
+$endif$
 
 $if(linestretch)$
 \setstretch{$linestretch$}
@@ -329,6 +358,13 @@ $body$
 %% \appendix
 %% \section{}
 %% \label{}
+
+%%%%%%%%%%%%% ACKNOWLEDGMENTS
+$if(ack)$
+\section*{Acknowledgments}
+$ack$
+$endif$
+
 
 %%%%%%%%%%%%% BIBLIOGRAPHY
 %% If you have bibdatabase file and want bibtex to generate the

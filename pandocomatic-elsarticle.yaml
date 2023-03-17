@@ -47,8 +47,10 @@ templates:
                               # Elsevier only accepts natbib, hence:
       natbib: true            # - enable natbib, and
       citeproc: false         # - turn off the citeproc CSL engine.
-      bibliography: ./test_elsarticle.bib # The name of your bib-file. Respect 
-                              # the directory naming conventions of pandocomatic.
+      bibliography: ./src/bib/CitedByMe-2021-swSemantics.bib # The name of your 
+                              # bib-file. Respect the directory naming 
+                              # conventions of pandocomatic. DON'T USE 
+                              # UNDERSCORES IN THE BIBNAME
       citation-abbreviations: cite-abbr.json # Journal abbreviations
       reference-links: true   # Refer to pandoc manual.
     metadata:
@@ -62,8 +64,12 @@ templates:
                               # relevant metadata fields`. Deactivate this for 
                               # paper print.
 #-----------------------------------------------------------------------------
+  version:
+    preprocessor:
+      - preprocessors/preludeGitVersion.py
+#-----------------------------------------------------------------------------
   elsevier:
-    extends: ['natbib-refs']
+    extends: ['natbib-refs','version']
     pandoc:
       verbose: true
       from: markdown
@@ -72,12 +78,15 @@ templates:
       filter:
         - filters/assimilateMetadata.rb # Handle academic metadata.
       template: elsarticle.latex        # Latex template supporing elsarticle.cls
-      include-in-header: './addstyles.sty' # To easily include packages; refer
+      include-in-header: './../../templates/addstyles.sty' # To easily include packages; refer
                                # to elsarticle.latex
     metadata:
       documentclass: 'elsarticle'       # Specifying Elsevier's documentclass.
+      twocolumn: true          # Single column (False) or double column (True) style. 
+                               # DO NOT include 'twocolumn' in the classoption parameter;
+                               # that will be taken care of by this parameter.
       classoption: ['preprint','authoryear','3p'] # Elsevier defines
-                               # several options for their various journal styles.
+                               # several more options for their various journal styles.
 #      classoption: ['sort&compress','preprint','authoryear','3p'] # 
                                # The `sort&compress` fails on the `&`; refer 
                                # to elsarticle.latex
@@ -86,16 +95,3 @@ templates:
       colorlinks: true         # Deactivate this for paper print.
       lang: 'en-GB'
 #-----------------------------------------------------------------------------
-  elsevier-1col:               # FOR TESTING PURPOSES ONLY
-    extends: ['elsevier']
-    pandoc:
-      output: test_elsarticle_1col.tex
-    metadata:
-      classoption: ['preprint','authoryear','3p'] # Single column style.
-#-----------------------------------------------------------------------------
-  elsevier-2col:               # FOR TESTING PURPOSES ONLY
-    extends: ['elsevier']
-    pandoc:
-      output: test_elsarticle_2col.tex
-    metadata:
-      classoption: ['preprint','authoryear','3p','twocolumn'] # Double column style.
