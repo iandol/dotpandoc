@@ -24,6 +24,11 @@ To include the to-be-bumped version into the document generation process, prelud
 Assume we not only want to apply versioning on the level of patches, viz the number of commits, but also on the other two levels. In order to align/match the preluded version as included in the document with the actual git version, it is the responsibility of the user to foretell the type of versioning of the commit already during document processing, and include this as proper <major|minor|commit> parameter to the preludeGitVersion process. In case of a major or minor version bump, we need to tell git that we don't want a patch-level bump but a major or minor instead. Besides, we need to instruct git with the tag command to create a new tag at the correct level. 
 
 ## USAGE
+
+### Prerequisites
+
+The folder that contains your `project.scriv` must be under git control and, hence, contain the `.git` folder.
+
 ### Testing
 
 From the command line, one can test the proper operation of the command: input your markdown document into the command by pipe  (```cat document.md```) and it will output the result back to the command line. The result is the very same markdown document, but modified to include a
