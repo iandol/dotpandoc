@@ -1,7 +1,7 @@
 #!/usr/local/bin/python3
+import datetime
 import logging
 import sys
-import datetime
 
 import git.exc
 from git import Repo

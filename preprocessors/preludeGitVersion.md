@@ -58,5 +58,7 @@ version-incr: commit # major, minor or commit
 ```
 This specifies to use the ```preludeGitVersion``` preprocessor, and indicates to prelude on the version-level of your choice (major.minor-commit). The result of the preprocessor will be piped into pandocomatic for processing.
 
+Logging can be found in ./preludeGitVersion.log
+
 ## RULES
 * Command line arguments take precedence over YAML-block arguments (this is mostly for testing purposes)
