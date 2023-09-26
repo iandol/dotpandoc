@@ -6,6 +6,9 @@
 		"**/.factorypath": true
 	},
 	"yaml.schemas": {
-		"https://json.schemastore.org/prettierrc.json": "file:///Users/ian/Code/dotpandoc/defaults/refs.yaml"
+		"https://json.schemastore.org/prettierrc.json": [
+			"file:///Users/ian/Code/dotpandoc/defaults/refs.yaml",
+			"file:///Users/ian/Code/dotpandoc/defaults/typst.yaml"
+		]
 	}
 }

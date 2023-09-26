@@ -30,7 +30,8 @@ local pagebreak = {
   latex = '\\newpage{}',
   ms = '.bp',
   ooxml = '<w:p><w:r><w:br w:type="page"/></w:r></w:p>',
-  odt = '<text:p text:style-name="Pagebreak"/>'
+  odt = '<text:p text:style-name="Pagebreak"/>',
+  typst = '\n#pagebreak(weak: true)\n'
 }
 
 local function pagebreaks_from_config (meta)
@@ -67,6 +68,8 @@ local function newpage(format)
     return pandoc.RawBlock('ms', pagebreak.ms)
   elseif format:match 'odt' then
     return pandoc.RawBlock('opendocument', pagebreak.odt)
+  elseif format:match 'typst' then
+    return pandoc.RawBlock('typst', pagebreak.typst)
   else
     -- fall back to insert a form feed character
     return pandoc.Para{pandoc.Str '\f'}

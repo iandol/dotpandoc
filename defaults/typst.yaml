@@ -1,0 +1,13 @@
+standalone: true
+from: markdown
+to: typst
+verbosity: INFO
+template: custom.typst
+filters:
+  - pagebreak.lua
+  - abstract-section.lua
+table-of-contents: true
+metadata:
+  mainfont: "Alegreya Sans"
+  lang: "en-GB"
+  toc-title: "Table of Contents"

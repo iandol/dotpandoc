@@ -31,7 +31,8 @@ templates:
       reference-links: true
     metadata:
       notes-after-punctuation: false
-      link-citations: true 
+      link-citations: true
+      link-bibliography: true
       csl-hanging-indent: true
 #-----------------------------------------------------------------BIBLATEX
   biblatex:

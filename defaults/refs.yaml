@@ -9,3 +9,5 @@ metadata:
   reference-section-title: Bibliography
   notes-after-punctuation: false
   link-citations: true
+  link-bibliography: true
+
