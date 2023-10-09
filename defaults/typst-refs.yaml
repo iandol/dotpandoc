@@ -1,0 +1,4 @@
+defaults:
+  - refs
+  - typst
+csl: ${USERDATA}/csl/apa-ian.csl

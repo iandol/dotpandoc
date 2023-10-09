@@ -42,7 +42,7 @@
           align(center)[
             #strong[#emph[#author.name]] \
             #text(size: 0.75em)[#emph[#author.affiliation] \
-            #author.email]
+            #underline[#author.email]]
           ]
       )
     )

@@ -3,7 +3,7 @@ citeproc: true
 cite-method: citeproc
 bibliography: ${USERDATA}/Core.json #JSON faster than BIB, symlinked into Pandoc data dir
 citation-abbreviations: ${USERDATA}/cite-abbr.json # my journal abbreviations
-csl: ${USERDATA}/csl/cell-doi.csl
+csl: ${USERDATA}/csl/apa-ian.csl
 reference-links: true
 metadata:
   reference-section-title: Bibliography

@@ -1,13 +1,24 @@
 standalone: true
 from: markdown
-to: typst
+to: typst-citations
 verbosity: INFO
 template: custom.typst
 filters:
   - pagebreak.lua
   - abstract-section.lua
+  - pretty-urls.lua
 table-of-contents: true
 metadata:
   mainfont: "Alegreya Sans"
+  fontsize: 12pt
+  papersize: a4
+  margin:
+    x: 2cm
+    y: 2cm
+  section-numbering: "1."
+  columns: 1
   lang: "en-GB"
   toc-title: "Table of Contents"
+  header-includes: |
+    #set heading(numbering: "I.")
+    #set text(font: "Alegreya Sans", size: 12pt, discretionary-ligatures: true, number-type: "old-style")
