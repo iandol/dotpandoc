@@ -37,11 +37,12 @@
     grid(
       columns: (1fr,) * ncols,
       row-gutter: 1.5em,
+      column-gutter: 1.25em,
       ..authors.map(author =>
           align(center)[
-            #author.name \
-            #author.affiliation \
-            #author.email
+            #strong[#emph[#author.name]] \
+            #text(size: 0.75em)[#emph[#author.affiliation] \
+            #author.email]
           ]
       )
     )
