@@ -1,0 +1,2 @@
+header-includes: |
+    `#set heading(numbering: "(I)")`{=typst}
