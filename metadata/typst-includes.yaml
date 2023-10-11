@@ -1,2 +1,15 @@
 header-includes: |
-    `#set heading(numbering: "(I)")`{=typst}
+  ```{=typst}
+  #set heading(numbering: "«I»")
+  #set text(font: "Alegreya", size: 14pt, discretionary-ligatures: true, number-type: "old-style")
+  ```
+mainfont: "Alegreya Sans"
+fontsize: 12pt
+papersize: a4
+margin:
+  x: 4cm
+  y: 2cm
+section-numbering: "1."
+columns: 1
+lang: "en-GB"
+toc-title: "Table of Contents"

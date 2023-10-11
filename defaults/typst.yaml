@@ -8,16 +8,4 @@ filters:
   - abstract-section.lua
   - pretty-urls.lua
 table-of-contents: true
-metadata-file:
-  - typst-includes.yaml
-metadata:
-  mainfont: "Alegreya Sans"
-  fontsize: 12pt
-  papersize: a4
-  margin:
-    x: 4cm
-    y: 2cm
-  section-numbering: "I."
-  columns: 1
-  lang: "en-GB"
-  toc-title: "Table of Contents"
+metadata-file: typst-includes.yaml
