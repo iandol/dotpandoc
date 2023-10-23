@@ -1,7 +1,27 @@
-defaults: html
-css: ${USERDATA}/templates/print.css
+standalone: true
 from: markdown
 to: pdf
-output-file: Out.pdf
+output-file: Prince.pdf
 pdf-engine: prince
 pdf-engine-opt: ['--page-size=A4']
+fail-if-warnings: false
+number-sections: false
+section-divs: true
+template: custom.html
+css:
+  - ${USERDATA}/templates/custom.css
+  - ${USERDATA}/templates/print.css
+eol: lf
+html-math-method:
+  method: mathjax
+  #url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+filters:
+  - pretty-urls.lua
+  - pagebreak.lua
+  - list-table.lua
+table-of-contents: true
+toc-depth: 3
+shift-heading-level-by: 0
+metadata:
+  lang: 'en-GB'
+  toc-title: "Table of Contents"

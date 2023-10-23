@@ -4,10 +4,10 @@ header-includes: |
   #set text(font: "Alegreya", size: 14pt, discretionary-ligatures: true, number-type: "old-style")
   ```
 mainfont: "Alegreya Sans"
-fontsize: 12pt
+fontsize: 14pt
 papersize: a4
 margin:
-  x: 4cm
+  x: 3cm
   y: 2cm
 section-numbering: "1."
 columns: 1

@@ -4,6 +4,7 @@ to: typst-citations
 verbosity: INFO
 template: custom.typst
 filters:
+  - list-table.lua
   - pagebreak.lua
   - abstract-section.lua
   - pretty-urls.lua

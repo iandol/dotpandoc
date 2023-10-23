@@ -89,8 +89,13 @@ local function dump_(prefix, value, maxlen, level, add)
     local typ = (({boolean=1, number=1, string=1, table=1, userdata=1})
                  [typename] and '' or typename)
 
+    -- light userdata is just a pointer (can't iterate over it)
+    -- XXX is there a better way of checking for light userdata?
+    if type(value) == 'userdata' and not pcall(pairs(value)) then
+        value = tostring(value):gsub('userdata:%s*', '')
+
     -- modify the value heuristically
-    if ({table=1, userdata=1})[type(value)] then
+    elseif ({table=1, userdata=1})[type(value)] then
         local valueCopy, numKeys, lastKey = {}, 0, nil
         for key, val in pairs(value) do
             -- pandoc >= 2.15 includes 'tag', nil values and functions
@@ -102,7 +107,9 @@ local function dump_(prefix, value, maxlen, level, add)
         end
         if numKeys == 0 then
             -- this allows empty tables to be formatted on a single line
-            value = typename == 'Space' and '' or '{}'
+            -- XXX experimental: render Doc objects
+            value = typename == 'Doc' and '|' .. value:render() .. '|' or
+            typename == 'Space' and '' or '{}'
         elseif numKeys == 1 and lastKey == 'text' then
             -- this allows text-only types to be formatted on a single line
             typ = typename
@@ -110,6 +117,10 @@ local function dump_(prefix, value, maxlen, level, add)
             typename = 'string'
         else
             value = valueCopy
+            -- XXX experimental: indicate array sizes
+            if #value > 0 then
+                typ = typ .. '[' .. #value .. ']'
+            end
         end
     end
 
@@ -125,6 +136,11 @@ local function dump_(prefix, value, maxlen, level, add)
         local quo = typename == 'string' and '"' or ''
         add(string.format('%s%s%s%s%s%s%s%s', indent, prefix, presep, typ,
                           typsep, quo, value, quo))
+    -- light userdata is just a pointer (can't iterate over it)
+    -- XXX is there a better way of checking for light userdata?
+    elseif valtyp == 'userdata' and not pcall(pairs(value)) then
+        add(string.format('%s%s%s%s %s', indent, prefix, presep, typ,
+                          tostring(value):gsub('userdata:%s*', '')))
     elseif ({table=1, userdata=1})[valtyp] then
         add(string.format('%s%s%s%s%s{', indent, prefix, presep, typ, typsep))
         -- Attr and Attr.attributes have both numeric and string keys, so
@@ -135,18 +151,23 @@ local function dump_(prefix, value, maxlen, level, add)
         if prefix ~= 'attributes:' and typ ~= 'Attr' then
             for i, val in ipairs(value) do
                 local pre = maxlen and not first and ', ' or ''
-                local text = dump_(string.format('%s[%s]', pre, i), val,
-                                   maxlen, level + 1, add)
+                dump_(string.format('%s[%s]', pre, i), val, maxlen,
+                      level + 1, add)
                 first = false
             end
         end
         -- report keys in alphabetical order to ensure repeatability
         for key, val in logging.spairs(value) do
+            local pre = maxlen and not first and ', ' or ''
+            -- this check can avoid an infinite loop, e.g. with metatables
+            -- XXX should have more general and robust infinite loop avoidance
+            if key:match('^__') and type(val) ~= 'string' then
+                add(string.format('%s%s: %s', pre, key, tostring(val)))
+
             -- pandoc >= 2.15 includes 'tag'
-            if not tonumber(key) and key ~= 'tag' then
-                local pre = maxlen and not first and ', ' or ''
-                local text = dump_(string.format('%s%s:', pre, key), val,
-                                   maxlen, level + 1, add)
+            elseif not tonumber(key) and key ~= 'tag' then
+                dump_(string.format('%s%s:', pre, key), val, maxlen,
+                      level + 1, add)
             end
             first = false
         end
