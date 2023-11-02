@@ -6,6 +6,8 @@ filters:
 template: eisvogel.latex
 toc: true
 metadata:
+  titlepage-logo: "${HOME}/Dropbox/Images/Logos/Platform-ION-Banner-White.png"
+  logo-width: 350
   titlepage-background: ${HOME}/Dropbox/Images/Logos/backgroundlogo.pdf
   titlepage-text-color: 555555
   titlepage-rule-color: 555555

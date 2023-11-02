@@ -12,9 +12,9 @@ metadata:
   fontsize: '12pt'
   linestretch: '1.5'
   geometry: ['inner=2.2cm','outer=1.8cm','bottom=2.5cm','twoside']
-  mainfont: 'STIX Two Text'
+  mainfont: 'Greta Text Pro'
   mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
-  sansfont: 'Source Sans 3'
+  sansfont: 'Greta Sans Pro'
   sansfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
   monofont: 'Rec Mono Duotone'
   mathfont: 'STIX Two Math'
