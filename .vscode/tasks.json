@@ -22,6 +22,28 @@
 			"problemMatcher": []
 		},
 		{
+			"label": "Pandoc Tufte",
+			"type": "shell",
+			"options": {
+				"cwd": "${fileDirname}"
+			},
+			"command": "pandoc",
+			"args": [
+				"-d tufte-book",
+				"-o tuftebook.tex",
+				"${file}"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"presentation": {
+				"reveal": "always",
+				"panel": "new"
+			},
+			"problemMatcher": []
+		},
+		{
 			"label": "Scrivomatic+Build",
 			"type": "shell",
 			"options": {
@@ -33,10 +55,7 @@
 				"-b",
 				"${file}"
 			],
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
+			"group": "build",
 			"presentation": {
 				"reveal": "always",
 				"panel": "new"

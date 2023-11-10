@@ -1,0 +1,7 @@
+verbosity: INFO # verbose by default
+cite-method: biblatex
+bibliography: ${USERDATA}/Core.bib
+metadata:
+  biblio-style: authoryear #verbose for tufte
+  biblatexoptions:
+    - backend=biber

@@ -439,6 +439,8 @@ $endif$
 $if(pagestyle)$
 \pagestyle{$pagestyle$}
 $endif$
+
+
 $if(csl-refs)$
 % definitions for citeproc citations
 \NewDocumentCommand\citeproctext{}{}
@@ -474,6 +476,8 @@ $if(csl-refs)$
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 $endif$
+
+
 $if(lang)$
 \ifLuaTeX
 \usepackage[bidi=basic]{babel}
@@ -589,8 +593,6 @@ $endif$
 $if(author)$
 \author{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.correspondence)$*$endif$$if(author.equal_contributor)$†$endif$}$sep$ \& $endfor$}
 $endif$
-
-\date{$date$}
 
 $if(beamer)$
 $if(institute)$
@@ -1019,10 +1021,11 @@ $if(equal_contributors)$
 \textsf{\textsuperscript{†} \emph{\small{These authors contributed equally to this work.}}}
 $endif$
 
-$if(date)$
-\vskip 2em
-\textsf{\emph{$date$}}
-$endif$
+%$if(date)$
+%\vskip 2em
+%\textsf{\emph{$date$}}
+%$endif$
+
 }
 
 \vfill

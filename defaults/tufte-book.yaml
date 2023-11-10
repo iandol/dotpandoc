@@ -1,0 +1,52 @@
+defaults: [refs-biblatex]
+from: markdown
+to: latex
+pdf-engine: xelatex
+standalone: true
+template: tufte-book.latex
+top-level-division: chapter # part | chapter | section |default
+number-sections: false
+toc: true
+toc-depth: 4
+wrap: none
+filters:
+  - pretty-urls.lua
+metadata:
+  documentclass: 'tufte-book' # try also tufte-handout
+  lang: 'en-GB'
+  papersize: a4
+  #linestretch: 1.4
+  classoption:
+    - symmetric
+    - british
+    - justified
+    - notoc
+    - nobib # needed with biblattex
+  publisher: Octopoda Publishing • Shanghai • China
+  epigraph:
+    - author: Anaïs Nin
+      text: "“We don’t see things as they are, we see them as we are.”"
+    - author: Michael Shermer
+      text: "“Humans are pattern-seeking story-telling animals, and we are quite adept at telling stories about patterns, whether they exist or not.”"
+  dedication: |
+    This book is was written to honour all the myriad cephalopods in the deep blue sea…
+  copyright-link: https://creativecommons.org/licenses/by-nc-sa/4.0/
+  copyright-image: /Users/ian/Code/dotpandoc/by-nc-sa.png
+  copyright: |
+    © Creative Commons CC BY-NC-SA 4.0 — This license enables reusers to distribute, remix, adapt, and build upon the material in any medium or format for noncommercial purposes only, and only so long as attribution is given to the creator. If you remix, adapt, or build upon the material, you must license the modified material under identical terms. CC BY-NC-SA includes the following elements:  BY: credit must be given to the creator.  NC: Only noncommercial uses of the work are permitted.  SA: Adaptations must be shared under the same terms.
+  biblio-style: verbose #verbose for biblatex, plainnat for natbib
+  biblatexoptions:
+    - backend=biber
+    - autocite=footnote
+  mainfont: 'Alegreya'
+  mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
+  sansfont: 'Alegreya Sans'
+  sansfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
+  monofont: 'Fantasque Sans Mono'
+  mathfont: 'STIX Two Math'
+  mathfontoptions: 'math-style=ISO,bold-style=ISO'
+  colorlinks: true
+  linkcolor: Mahogany
+  citecolor: Sepia
+  urlcolor: BrickRed
+  listings: false

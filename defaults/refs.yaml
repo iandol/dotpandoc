@@ -2,9 +2,8 @@ verbosity: INFO # verbose by default
 citeproc: true
 cite-method: citeproc
 bibliography: ${USERDATA}/Core.json #JSON faster than BIB, symlinked into Pandoc data dir
-citation-abbreviations: ${USERDATA}/cite-abbr.json # my journal abbreviations
 csl: ${USERDATA}/csl/apa-ian.csl
-reference-links: true
+citation-abbreviations: ${USERDATA}/cite-abbr.json # my journal abbreviations
 metadata:
   reference-section-title: Bibliography
   notes-after-punctuation: false

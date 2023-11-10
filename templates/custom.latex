@@ -83,9 +83,11 @@ $if(section-titles)$
 }
 $endif$
 $endif$
+
 $if(beamerarticle)$
 \usepackage{beamerarticle} % needs to be loaded first
 $endif$
+
 \usepackage{amsmath,amssymb}
 $if(linestretch)$
 \usepackage{setspace}
@@ -647,6 +649,7 @@ $body$
 $if(has-frontmatter)$
 \backmatter
 $endif$
+
 $if(natbib)$
 $if(bibliography)$
 $if(biblio-title)$
@@ -664,9 +667,9 @@ $endif$
 $if(beamer)$
 \end{frame}
 $endif$
+$endif$
+$endif$
 
-$endif$
-$endif$
 $if(biblatex)$
 $if(beamer)$
 \begin{frame}[allowframebreaks]{$biblio-title$}
@@ -678,6 +681,7 @@ $else$
 $endif$
 
 $endif$
+
 $for(include-after)$
 $include-after$
 

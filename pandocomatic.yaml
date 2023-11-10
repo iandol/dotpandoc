@@ -93,6 +93,23 @@ templates:
       standalone: true
       template: templates/custom.icml
       verbose: true
+
+#-----------------------------------------------------------------
+#::::::::::::::::::::::::::: TYPST :::::::::::::::::::::::::::::::
+#-----------------------------------------------------------------
+  typst:
+    pandoc:
+      from: markdown
+      to: typst-citations
+      standalone: true
+      template: custom.typst
+      table-of-contents: true
+      metadata-file: typst-includes.yaml
+      lua-filter:
+        - list-table.lua
+        - pagebreak.lua
+        - abstract-section.lua
+        - pretty-urls.lua
 #-----------------------------------------------------------------
 #:::::::::::::::::::::::::::: DOCX :::::::::::::::::::::::::::::::
 #-----------------------------------------------------------------
@@ -102,14 +119,14 @@ templates:
       from: markdown
       to: docx
       standalone: true
-      lua-filter:
-        - filters/pagebreak.lua # use \newpage{} also for HTML, DOCX, ODT & EPUB
-        - filters/abstract-section.lua # move an abstract heading to metadata
-        - filters/pretty-urls.lua # clean up URLs a bit
       filter:
         #- filters/removeHR #remove horizontal rules
         - filters/prependAll.rb # prepends institute:, comments: and keywords: metadata into the text
         - filters/simplifyMetadata.rb #collapse down metadata "author: [name: affiliation:]" to author:
+      lua-filter:
+        - filters/pagebreak.lua # use \newpage{} also for HTML, DOCX, ODT & EPUB
+        - filters/abstract-section.lua # move an abstract heading to metadata
+        - filters/pretty-urls.lua # clean up URLs a bit
       reference-doc: templates/custom.docx
 #-----------------------------------------------------------------DOCX REFS
   docx-refs:
@@ -184,6 +201,59 @@ templates:
       to: pptx
 #-----------------------------------------------------------------
 #:::::::::::::::::::::::::::: LATEX ::::::::::::::::::::::::::::::
+#-----------------------------------------------------------------
+  latex-tufte:
+    extends: [biblatex]
+    pandoc:
+      from: markdown
+      to: latex-smart # turn off smart to leave — … “” etc. as unicode, needs xetex or luatex
+      standalone: true
+      lua-filter:
+        - filters/pretty-urls.lua # clean up URLs a bit
+      template: templates/tufte-book.latex
+    metadata:
+      biblio-style: verbose #verbose for biblatex, plainnat for natbib
+      biblatexoptions:
+        - backend=biber
+        - autocite=footnote
+      documentclass: 'tufte-book' # try also tufte-handout
+      lang: 'en-GB'
+      papersize: a4
+      #linestretch: 1.4
+      classoption:
+        - symmetric
+        - british
+        - justified
+        - notoc
+        - nobib # needed with biblattex
+      publisher: Octopoda Publishing • Shanghai • China
+      epigraph:
+        - author: Anaïs Nin
+          text: "“We don’t see things as they are, we see them as we are.”"
+        - author: Michael Shermer
+          text: "“Humans are pattern-seeking story-telling animals, and we are quite adept at telling stories about patterns, whether they exist or not.”"
+      dedication: |
+        This book is was written to honour all the myriad cephalopods in the deep blue sea…
+      copyright-link: https://creativecommons.org/licenses/by-nc-sa/4.0/
+      copyright-image: /Users/ian/Code/dotpandoc/by-nc-sa.png
+      copyright: |
+        © Creative Commons CC BY-NC-SA 4.0 — This license enables reusers to distribute, remix, adapt, and build upon the material in any medium or format for noncommercial purposes only, and only so long as attribution is given to the creator. If you remix, adapt, or build upon the material, you must license the modified material under identical terms. CC BY-NC-SA includes the following elements:  BY: credit must be given to the creator.  NC: Only noncommercial uses of the work are permitted.  SA: Adaptations must be shared under the same terms.
+      biblio-style: verbose #verbose for biblatex, plainnat for natbib
+      biblatexoptions:
+        - backend=biber
+        - autocite=footnote
+      mainfont: 'Alegreya'
+      mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
+      sansfont: 'Alegreya Sans'
+      sansfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
+      monofont: 'Fantasque Sans Mono'
+      mathfont: 'STIX Two Math'
+      mathfontoptions: 'math-style=ISO,bold-style=ISO'
+      colorlinks: true
+      linkcolor: Mahogany
+      citecolor: Sepia
+      urlcolor: BrickRed
+      listings: false
 #-----------------------------------------------------------------
   latex:
     preprocessors:
