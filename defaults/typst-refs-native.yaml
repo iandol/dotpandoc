@@ -1,0 +1,4 @@
+defaults: typst
+to: typst
+bibliography: ${USERDATA}/Core.bib
+csl: ${USERDATA}/csl/apa-ian.csl

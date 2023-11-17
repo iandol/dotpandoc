@@ -1,13 +1,13 @@
 header-includes: |
   ```{=typst}
-  #set heading(numbering: "«I»")
-  #set text(font: "Alegreya", size: 14pt, discretionary-ligatures: true, number-type: "old-style")
+  //#set heading(numbering: "«I»")
+  //#set text(font: "Alegreya", size: 12pt, discretionary-ligatures: true, number-type: "old-style")
   ```
 mainfont: "Alegreya Sans"
-fontsize: 14pt
+fontsize: 12pt
 papersize: a4
 margin:
-  x: 3cm
+  x: 2cm
   y: 2cm
 section-numbering: "1."
 columns: 1

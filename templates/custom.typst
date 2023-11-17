@@ -24,15 +24,36 @@ $if(author)$
 $for(author)$
 $if(author.name)$
     ( name: [$author.name$],
+$if(author.affiliation)$
       affiliation: [$author.affiliation$],
-      email: [$author.email$] ),
+$endif$
+$if(author.email)$
+      email: [$author.email$],
+$endif$
+$if(author.orcid)$
+      orcid: [$author.orcid$]
+$endif$
 $else$
     ( name: [$author$],
-      affiliation: [],
-      email: [] ),
 $endif$
 $endfor$
     ),
+$endif$
+$if(institute)$
+  affiliations: (
+$for(institute)$
+    (id: "$it.index$", name: "$it.name$"),
+$endfor$
+  ),
+$elseif(affiliations)$
+  affiliations: (
+$for(affiliations)$
+    (id: "$it.index$", name: "$it.name$"),
+$endfor$
+  ),
+$endif$
+$if(keywords)$
+  keywords: ($for(keywords)$"$it$"$sep$, $endfor$),
 $endif$
 $if(date)$
   date: [$date$],
@@ -78,12 +99,20 @@ $if(toc)$
   title: auto,
   depth: none
 );
+
+$endif$
+$if(linestretch)$
+#set par(justify: true, leading: $linestretch$em)
+
 $endif$
 
 $body$
 
 $if(citations)$
-$if(bibliographystyle)$
+$if(csl)$
+
+#set bibliography(style: "$csl$")
+$elseif(bibliographystyle)$
 
 #set bibliography(style: "$bibliographystyle$")
 $endif$

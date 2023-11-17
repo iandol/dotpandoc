@@ -1,3 +1,2 @@
-defaults:
-  - refs
-  - typst
+defaults: [refs, typst]
+to: typst-citations

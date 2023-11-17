@@ -1,0 +1,14 @@
+verbosity: INFO
+standalone: true
+from: markdown
+to: typst
+citeproc: false
+bibliography: Core.bib
+csl: nature.csl
+template: lapreprint.typst
+wrap: none
+filters:
+  - pagebreak.lua
+  - abstract-section.lua
+  - pretty-urls.lua
+

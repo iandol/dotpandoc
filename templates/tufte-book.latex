@@ -7,10 +7,14 @@
 % can break TOC or bibliography easily depending on the
 % margin contents.
 %
+% Update to V3.6 of tufte-layout https://github.com/Tufte-LaTeX/tufte-latex/pull/176
+%
+% Version 1.0.2
+%
 % Creative Commons CC BY-NC-SA 4.0 © 2023 Ian Max Andolina
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Options for packages loaded elsewhere
+%==============================Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode$for(hyperrefoptions)$,$hyperrefoptions$$endfor$}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
 $if(colorlinks)$
@@ -36,6 +40,8 @@ $endfor$
 \usepackage{lipsum}
 \usepackage{iftex}
 \usepackage{amsmath,amssymb}
+\usepackage{fancyvrb}
+\fvset{fontsize=\normalsize}
 $if(linestretch)$
 \usepackage{setspace} % for \setstretch{}
 $endif$
@@ -46,6 +52,11 @@ $endif$
 \definecolor{Sepia}{rgb}{.4,.1,.1}
 \definecolor{Mahogany}{rgb}{.6,.2,.2}
 \definecolor{BrickRed}{rgb}{.7,.3,.3}
+%\usepackage{titlesec} % TODO for some reason \chapter and \part mod cause errors
+%\titleformat*{\part}{\Huge\bfseries\itshape\sffamily\color{Sepia}}
+%\titleformat*{\chapter}{\huge\bfseries\itshape\sffamily\color{Sepia}}
+%\titleformat*{\section}{\LARGE\bfseries\itshape\sffamily\color{Sepia}}
+%\titleformat*{\subsection}{\Large\bfseries\itshape\sffamily\color{Sepia}}
 
 %%
 %==============================Font setup
@@ -108,23 +119,21 @@ $if(CJKmainfont)$
 $endif$
 \fi
 
-%%
+%% !enable only if you are using tufte-latex V3.5
 %==============================FIX XE/LUA for tufte-book https://tex.stackexchange.com/questions/202142/problems-compiling-tufte-title-page-in-xelatex
-\ifPDFTeX\else
-  \newcommand{\textls}[2][5]{\begingroup\addfontfeatures{LetterSpace=#1}#2\endgroup}
-  \renewcommand{\allcapsspacing}[1]{\textls[15]{#1}}
-  \renewcommand{\smallcapsspacing}[1]{\textls[10]{#1}}
-  \renewcommand{\allcaps}[1]{\textls[15]{\MakeTextUppercase{#1}}}
-  \renewcommand{\smallcaps}[1]{\smallcapsspacing{\scshape\MakeTextLowercase{#1}}}
-  \renewcommand{\textsc}[1]{\smallcapsspacing{\textsmallcaps{#1}}}
-\fi
+%\ifPDFTeX\else
+%  \newcommand{\textls}[2][5]{\begingroup\addfontfeatures{LetterSpace=#1}#2\endgroup}
+%  \renewcommand{\allcapsspacing}[1]{\textls[15]{#1}}
+%  \renewcommand{\smallcapsspacing}[1]{\textls[10]{#1}}
+%  \renewcommand{\allcaps}[1]{\textls[15]{\MakeTextUppercase{#1}}}
+%  \renewcommand{\smallcaps}[1]{\smallcapsspacing{\scshape\MakeTextLowercase{#1}}}
+%  \renewcommand{\textsc}[1]{\smallcapsspacing{\textsmallcaps{#1}}}
+%\fi
 
-$if(verbatim-in-note)$%==============================verbatim
-\usepackage{fancyvrb}
-$endif$
 $if(geometry)$%==============================geometry
 \usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
 $endif$
+
 $if(highlighting-macros)$%==============================listings
 $highlighting-macros$
 $endif$
@@ -143,6 +152,47 @@ $endif$
 % Allow footnotes in longtable head/foot
 \IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
 \makesavenoteenv{longtable}
+%==============================fix longtable captions 
+% https://tex.stackexchange.com/questions/182653/caption-in-the-outer-margin-using-longtable-within-a-tufte-latex-document
+% WARNING: disable if you use symmetric
+$if(symmetric)$
+\makeatletter
+\def\LT@makecaption#1#2#3{% ateb David Carlisle: https://tex.stackexchange.com/a/183344/ -> +symmetry: https://tex.stackexchange.com/a/701116/
+  \ifodd\c@page 
+    \noalign{%
+      \smash{%
+        \hbox{\kern\textwidth\kern-\parindent\rlap{\kern\marginparsep
+            \parbox[t]{\marginparwidth}{\vspace{16pt}%
+              \@tufte@caption@font \@tufte@caption@justification \noindent 
+              #1{#2: }\ignorespaces #3}}%
+        }%
+      }%
+    }%
+  \else
+    \noalign{%
+      \smash{%
+        \hbox{\llap{%
+            \parbox[t]{\marginparwidth}{\vspace{16pt}%
+              \@tufte@caption@font \@tufte@caption@justification \noindent 
+              #1{#2: }\ignorespaces #3}%
+            \kern\marginparsep
+          }%
+        }%
+      }%
+    }%  
+  \fi
+}
+\makeatother
+$else$
+\makeatletter
+\def\LT@makecaption#1#2#3{%
+  \noalign{\smash{\hbox{\kern\textwidth\rlap{\kern\marginparsep
+  \parbox[t]{\marginparwidth}{\vspace{16pt}%
+\@tufte@caption@font \@tufte@caption@justification \noindent 
+   #1{#2: }\ignorespaces #3}}}}}}
+\makeatother
+$endif$
+%==============================
 $endif$
 
 $if(graphics)$%==============================graphics
@@ -161,9 +211,7 @@ $if(graphics)$%==============================graphics
 \makeatother
 $endif$
 
-%%
-%==============================Used CITEPROC
-$if(csl-refs)$
+$if(csl-refs)$%==============================Used CITEPROC
 \NewDocumentCommand\citeproctext{}{}
 \NewDocumentCommand\citeproc{mm}{%
   \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
@@ -205,7 +253,9 @@ $if(natbib)$
 \bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
 $endif$
 $if(biblatex)$
-\usepackage[$if(biblio-style)$style=$biblio-style$,$endif$$for(biblatexoptions)$$biblatexoptions$$sep$,$endfor$]{biblatex}
+%biblatex loaded by tufte-book
+%\usepackage[$if(biblio-style)$style=$biblio-style$,$endif$$for(biblatexoptions)$$biblatexoptions$$sep$,$endfor$]{biblatex}
+\ExecuteBibliographyOptions{$for(biblatexoptions)$$biblatexoptions$$sep$,$endfor$}
 $for(bibliography)$
 \addbibresource{$bibliography$}
 $endfor$
@@ -293,7 +343,8 @@ $else$
   hidelinks,
 $endif$
 $endif$
-  pdfcreator={Pandoc and LaTeX}}
+  pdfcreator={Pandoc and LaTeX}
+}
 
 %%
 %==============================CUSTOM
@@ -303,6 +354,7 @@ $endif$
 % Prints an asterisk that takes up no horizontal space. 
 % Useful in tabular environments.
 \newcommand{\hangstar}{\makebox[0pt][l]{*}}
+\usepackage{xspace}
 % Prints the month name (e.g., January) and the year (e.g., 2008)
 \newcommand{\monthyear}{%
   \ifcase\month\or January\or February\or March\or April\or May\or June\or
@@ -386,7 +438,6 @@ $if(copyright)$%==============================copyright page
 \newpage\thispagestyle{empty}
 \begin{fullwidth}
 ~\vfill
-\thispagestyle{empty}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{\baselineskip}
 Copyright \copyright\ \the\year\ \thanklessauthor
@@ -402,14 +453,6 @@ $endif$
 
 $if(toc)$%==============================TOC
 \tableofcontents
-
-$endif$
-$if(lof)$%==============================LOF
-\listoffigures
-
-$endif$
-$if(lot)$%==============================LOT
-\listoftables
 
 $endif$
 $if(linestretch)$
@@ -432,8 +475,15 @@ $if(has-frontmatter)$
 \backmatter
 
 $endif$
+$if(lof)$%==============================LOF
+\listoffigures
 
-$if(natbib)$
+$endif$
+$if(lot)$%==============================LOT
+\listoftables
+
+$endif$
+$if(natbib)$%==============================Natbib
 $if(bibliography)$
 $if(biblio-title)$
 $if(has-chapters)$
@@ -445,11 +495,11 @@ $endif$
 \bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
 $endif$
 $endif$
-$if(biblatex)$
+$if(biblatex)$%==============================BibLaTeX
 \printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
 $endif$
 
-$if(index)$
+$if(index)$%==============================Index
 \printindex
 $endif$
 

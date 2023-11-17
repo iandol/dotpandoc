@@ -1,4 +1,4 @@
-defaults: [refs-biblatex]
+verbosity: INFO # verbose by default
 from: markdown
 to: latex
 pdf-engine: xelatex
@@ -9,19 +9,26 @@ number-sections: false
 toc: true
 toc-depth: 4
 wrap: none
+cite-method: biblatex
+bibliography: ${USERDATA}/Core.bib
 filters:
+  - latex-div.lua
   - pretty-urls.lua
 metadata:
-  documentclass: 'tufte-book' # try also tufte-handout
+  documentclass: 'tufte-book' # also: tufte-handout
   lang: 'en-GB'
   papersize: a4
   #linestretch: 1.4
   classoption:
-    - symmetric
+    #- debug
+    #- nobib # !!! needed with V3.5.2 & biblatex
+    #- notoc # disbles Tufte TOC style
+    #- nofonts #do not auto-specify fonts
+    #- symmetric # note this is buggy...
+    - sfsidenotes # sans-serif side notes
     - british
     - justified
-    - notoc
-    - nobib # needed with biblattex
+  symmetric: false # set to true if you use symmetric margins
   publisher: Octopoda Publishing • Shanghai • China
   epigraph:
     - author: Anaïs Nin
@@ -34,9 +41,7 @@ metadata:
   copyright-image: /Users/ian/Code/dotpandoc/by-nc-sa.png
   copyright: |
     © Creative Commons CC BY-NC-SA 4.0 — This license enables reusers to distribute, remix, adapt, and build upon the material in any medium or format for noncommercial purposes only, and only so long as attribution is given to the creator. If you remix, adapt, or build upon the material, you must license the modified material under identical terms. CC BY-NC-SA includes the following elements:  BY: credit must be given to the creator.  NC: Only noncommercial uses of the work are permitted.  SA: Adaptations must be shared under the same terms.
-  biblio-style: verbose #verbose for biblatex, plainnat for natbib
   biblatexoptions:
-    - backend=biber
     - autocite=footnote
   mainfont: 'Alegreya'
   mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
