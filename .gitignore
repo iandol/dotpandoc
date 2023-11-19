@@ -13,3 +13,5 @@ pandoclog.json
 *.xdv
 *.blg
 *.out
+
+/.luarc.json

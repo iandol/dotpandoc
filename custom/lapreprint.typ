@@ -38,7 +38,7 @@
   // To hide the date, set this to `none`. You can also supply a list of dicts with `title` and `date`.
   date: datetime.today(),
   // Feel free to change this, the font applies to the whole document
-  font-face: "IBM Plex Sans",
+  font-face: "Alegreya Sans",
   // The path to a bibliography file if you want to cite some external works.
   bibliography-file: none,
   bibliography-style: "apa",

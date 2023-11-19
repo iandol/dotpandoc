@@ -3,6 +3,7 @@
     Copyright:   (c) 2022 William Lupton
     License:     MIT - see LICENSE file for details
     Usage:       See README.md for details
+    URL: https://github.com/pandoc-ext/logging
 ]]
 
 -- if running standalone, create a 'pandoc' global
