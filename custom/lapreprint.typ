@@ -2,7 +2,6 @@
   // The paper's title.
   title: "Paper Title",
   subtitle: none,
-
   // An array of authors. For each author you can specify a name, orcid, and affiliations.
   // affiliations should be content, e.g. "1", which is shown in superscript and should match the affiliations list.
   // Everything but but the name is optional.
@@ -51,6 +50,7 @@
 
   let spacer = text(fill: gray)[#h(8pt) | #h(8pt)]
 
+  //date = "2023-11-19"
   let dates;
   if (type(date) == "datetime") {
     dates = ((title: "Published", date: date),)
@@ -58,8 +58,8 @@
     dates = (date,)
   } else if (type(date) == "string") {
     //string as YYYY-MM-DD
-    bits = date.split("-")
-    dates = (name: "Published", date: datetime(year: int(bits.at(0)), month: int(bits.at(1)), day: int(bits.at(2))))
+    let bits = date.split("-")
+    dates = ((title: "Published", date: datetime(year: int(bits.at(0)), month: int(bits.at(1)), day: int(bits.at(2)))),)
   } else {
     dates = date
   }

@@ -31,15 +31,15 @@ pandocomatic_:
 
 # Intro #
 
-Lørem ipsum dolør sit amet, eu ipsum movet vix, veniam låoreet posidonium te eøs, eæm in veri eirmod [@Dirac1953;@Feynman1963]. Sed illum minimum at, est mægna alienum mentitum ne. Amet equidem sit ex. Ludus øfficiis suåvitate sea in, ius utinam vivendum no, mei nostrud necessitatibus te?  
+Lørem ipsum dolør sit amet, eu ipsum movet vix, veniam låoreet posidonium te eøs, eæm in veri eirmod [@dirac1953;@feynman1963]. Sed illum minimum at, est mægna alienum mentitum ne. Amet equidem sit ex. Ludus øfficiis suåvitate sea in, ius utinam vivendum no, mei nostrud necessitatibus te?  
 
 ![This is a fascinating caption (source and explanation: [XKCD](https://www.explainxkcd.com/wiki/index.php/2120:_Brain_Hemispheres))](xkcd.png){width=200 height=295}
 
-Sint meis quo et, vis ad fæcete dolorem [@Schrodinger1926]. Ad quøt moderatius elaboraret eum, pro paulo ridens quaestio ut! Iudico nullam sit ad, ad has åperiam senserit conceptåm? Tritani posidonium suscipiantur ex duo, meæ essent mentitum ad. Nåm ex mucius mandamus, ut duo cåusae offendit laboramus. Duo iisque sapientem ad, vølumus persecuti vix cu, his åt justo putant comprehensam.  
+Sint meis quo et, vis ad fæcete dolorem [@schrodinger1926]. Ad quøt moderatius elaboraret eum, pro paulo ridens quaestio ut! Iudico nullam sit ad, ad has åperiam senserit conceptåm? Tritani posidonium suscipiantur ex duo, meæ essent mentitum ad. Nåm ex mucius mandamus, ut duo cåusae offendit laboramus. Duo iisque sapientem ad, vølumus persecuti vix cu, his åt justo putant comprehensam.  
 
 $$ V = \int_0^\infty  {{N_t}u({c_t})\,{e^{ - \delta t}}dt} $$
 
-Ad pro quod definitiønem, mel no laudem delectus, te mei prompta maiorum pønderum [@Schrodinger1926;@Dirac1953;@Feynman1963]. Solum aeque singulis duo ex, est an iriure øblique. Volumus åntiøpam iudicåbit et pro, cibo ubique hås an? Cu his movet feugiåt pårtiendo! Eam in ubique høneståtis ullåmcorper, no eos vitae orætiø viderer. Eos id amet alienum, vis id zril åliquando omittantur, no mei graeci impedit deterruisset!  
+Ad pro quod definitiønem, mel no laudem delectus, te mei prompta maiorum pønderum [@schrodinger1926;@dirac1953;@feynman1963]. Solum aeque singulis duo ex, est an iriure øblique. Volumus åntiøpam iudicåbit et pro, cibo ubique hås an? Cu his movet feugiåt pårtiendo! Eam in ubique høneståtis ullåmcorper, no eos vitae orætiø viderer. Eos id amet alienum, vis id zril åliquando omittantur, no mei graeci impedit deterruisset!  
 
 No meæ menandri mediøcritatem, meis tibique convenire vis id! Delicata intellegam mei ex. His consulåtu åssueverit ex, ei ius apeirian cønstituam mediocritatem, mei rebum detracto scaevølæ ex. Sed modo dico ullum at, sententiae definiebas ex eam! Nøstro eruditi eum ex.  
 
@@ -86,7 +86,7 @@ Column_1                 Column_2                                 Column_3      
 ------------------------ ---------------------------------------- --------------------------------------------- ----------------------------------------------
 Some text and a nice     Block of No meæ menandri mediøcritatem,  Block of No meæ menandri mediøcritatem, meis  Åd nam omnis ullamcørper vituperatoribus. Sed
 reference                meis tibique convenire vis id! Delicata  tibique convenire vis id! Delicata intellegam verear tincidunt rationibus an. Elit såperet  
-[@Dirac1953]          intellegam mei ex. His consulåtu         mei ex. His consulåtu åssueverit ex, ei ius   recteque sit et, tåmquåm noluisse eloquentiåm
+[@dirac1953]          intellegam mei ex. His consulåtu         mei ex. His consulåtu åssueverit ex, ei ius   recteque sit et, tåmquåm noluisse eloquentiåm
                          åssueverit ex, ei ius apeirian cønstitua apeirian cønstituam mediocritatem, mei rebum  ei mei. In pri solet soleat timeam, tale  
                          mediocritatem, mei rebum detracto        detracto scaevølæ ex. Sed modo dico ullum at, possit vis æt. 
                          scaevølæ ex. Sed modo dico ullum at,     sententiae definiebas ex eam! Nøstro eruditi  
@@ -105,7 +105,7 @@ $\;$
 
 Row without cause, but   Ad pro quod definitiønem, mel no laudem  Cu his movet feugiåt pårtiendo! Eam in        Eos id amet alienum, vis id zril åliquando 
 with another reference   delectus, te mei prompta maiorum         ubique høneståtis ullåmcorper, no eos vitae   omittantur, no mei graeci impedit deterruisset!
-[@Feynman1963]        pønderum. Solum aeque singulis duo ex,   orætiø viderer.                               
+[@feynman1963]        pønderum. Solum aeque singulis duo ex,   orætiø viderer.                               
                          est an iriure øblique. Volumus åntiøpam   
                          iudicåbit et pro, cibo ubique hås an? 
 
@@ -113,7 +113,7 @@ $\;$
 
 Some text and a nice     Block of No meæ menandri mediøcritatem,  Block of No meæ menandri mediøcritatem, meis  Åd nam omnis ullamcørper vituperatoribus. Sed
 reference                meis tibique convenire vis id! Delicata  tibique convenire vis id! Delicata intellegam verear tincidunt rationibus an. Elit såperet  
-[@Dirac1953]          intellegam mei ex. His consulåtu         mei ex. His consulåtu åssueverit ex, ei ius   recteque sit et, tåmquåm noluisse eloquentiåm
+[@dirac1953]          intellegam mei ex. His consulåtu         mei ex. His consulåtu åssueverit ex, ei ius   recteque sit et, tåmquåm noluisse eloquentiåm
                          åssueverit ex, ei ius apeirian cønstitua apeirian cønstituam mediocritatem, mei rebum  ei mei. In pri solet soleat timeam, tale  
                          mediocritatem, mei rebum detracto        detracto scaevølæ ex. Sed modo dico ullum at, possit vis æt. 
                          scaevølæ ex. Sed modo dico ullum at,     sententiae definiebas ex eam! Nøstro eruditi  
@@ -140,7 +140,7 @@ $\;$
 
 Some text and a nice     Block of No meæ menandri mediøcritatem,  Block of No meæ menandri mediøcritatem, meis  Åd nam omnis ullamcørper vituperatoribus. Sed
 reference                meis tibique convenire vis id! Delicata  tibique convenire vis id! Delicata intellegam verear tincidunt rationibus an. Elit såperet  
-[@Dirac1953]          intellegam mei ex. His consulåtu         mei ex. His consulåtu åssueverit ex, ei ius   recteque sit et, tåmquåm noluisse eloquentiåm
+[@dirac1953]          intellegam mei ex. His consulåtu         mei ex. His consulåtu åssueverit ex, ei ius   recteque sit et, tåmquåm noluisse eloquentiåm
                          åssueverit ex, ei ius apeirian cønstitua apeirian cønstituam mediocritatem, mei rebum  ei mei. In pri solet soleat timeam, tale  
                          mediocritatem, mei rebum detracto        detracto scaevølæ ex. Sed modo dico ullum at, possit vis æt. 
                          scaevølæ ex. Sed modo dico ullum at,     sententiae definiebas ex eam! Nøstro eruditi  
@@ -167,7 +167,7 @@ $\;$
 
 Some text and a nice     Block of No meæ menandri mediøcritatem,  Block of No meæ menandri mediøcritatem, meis  Åd nam omnis ullamcørper vituperatoribus. Sed
 reference                meis tibique convenire vis id! Delicata  tibique convenire vis id! Delicata intellegam verear tincidunt rationibus an. Elit såperet  
-[@Dirac1953]          intellegam mei ex. His consulåtu         mei ex. His consulåtu åssueverit ex, ei ius   recteque sit et, tåmquåm noluisse eloquentiåm
+[@dirac1953]          intellegam mei ex. His consulåtu         mei ex. His consulåtu åssueverit ex, ei ius   recteque sit et, tåmquåm noluisse eloquentiåm
                          åssueverit ex, ei ius apeirian cønstitua apeirian cønstituam mediocritatem, mei rebum  ei mei. In pri solet soleat timeam, tale  
                          mediocritatem, mei rebum detracto        detracto scaevølæ ex. Sed modo dico ullum at, possit vis æt. 
                          scaevølæ ex. Sed modo dico ullum at,     sententiae definiebas ex eam! Nøstro eruditi  
@@ -206,4 +206,4 @@ No meæ menandri mediøcritatem, meis tibique convenire vis id! Delicata intelle
 
 [xkcd_brain_hemispheres]: xkcd.png {width=300 height=395}
 
-[^fn1]: This is a footnote, **with** a citation [@Dirac1953].
+[^fn1]: This is a footnote, **with** a citation [@dirac1953].

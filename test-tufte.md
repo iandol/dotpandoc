@@ -1,10 +1,12 @@
 ---
-title: Pandoc & Tufte
+title: "Pandoc & Tufte"
 author: Jane Doe
 toc: true
-date: 2023-11-08
+date: "2023-11-19"
 pandocomatic_:
-  use-template: [latex-tufte]
+  use-template: latex-tufte
+  pandoc:
+    bibliography: ./test.bib
 ---
 
 # Introduction

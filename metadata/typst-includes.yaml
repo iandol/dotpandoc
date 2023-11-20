@@ -1,7 +1,7 @@
 header-includes: |
   ```{=typst}
-  //#set heading(numbering: "«I»")
-  //#set text(font: "Alegreya", size: 12pt, discretionary-ligatures: true, number-type: "old-style")
+  #set text(discretionary-ligatures: true, number-type: "old-style")
+  #show table: set par(justify: false)
   ```
 mainfont: "Alegreya Sans"
 fontsize: 12pt
@@ -9,7 +9,7 @@ papersize: a4
 margin:
   x: 2cm
   y: 2cm
-section-numbering: "1."
+section-numbering: "1.1.1"
 columns: 1
 lang: "en-GB"
 toc-title: "Table of Contents"

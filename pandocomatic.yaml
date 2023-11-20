@@ -43,9 +43,9 @@ templates:
       standalone: true        # Generate full document
       bibliography: Core.bib # The name of the bib-file.
     metadata:
-      biblatexoptions: [backend=biber,sorting=ynt]
+      biblatexoptions: []
       biblio-title: Bibliography # see variables for latex
-      biblio-style: authoryear-comp
+      biblio-style: []
 #-----------------------------------------------------------------NATBIB
   natbib:
     pandoc:
@@ -97,19 +97,41 @@ templates:
 #-----------------------------------------------------------------
 #::::::::::::::::::::::::::: TYPST :::::::::::::::::::::::::::::::
 #-----------------------------------------------------------------
+#-----------------------------------------------------------------Standard
   typst:
     pandoc:
+      verbose: true
       from: markdown
-      to: typst-citations
+      to: typst
       standalone: true
       template: custom.typst
       table-of-contents: true
       metadata-file: typst-includes.yaml
+      wrap: none
       lua-filter:
-        - list-table.lua
-        - pagebreak.lua
-        - abstract-section.lua
-        - pretty-urls.lua
+        - filters/typstFix.lua
+        - filters/list-table.lua
+        - filters/pagebreak.lua
+        - filters/abstract-section.lua
+        - filters/pretty-urls.lua
+  typst-refs:
+    extends: [typst,refs]
+    pandoc:
+      to: typst-citations
+  typst-nativerefs:
+    extends: typst
+    pandoc:
+      to: typst
+      bibliography: Core.bib
+      csl: csl/apa-ian.csl
+  lapreprint:
+    extends: typst
+    pandoc:
+      to: typst
+      template: lapreprint.typst
+      toc: false
+    metadata:
+
 #-----------------------------------------------------------------
 #:::::::::::::::::::::::::::: DOCX :::::::::::::::::::::::::::::::
 #-----------------------------------------------------------------
@@ -212,20 +234,22 @@ templates:
         - filters/pretty-urls.lua # clean up URLs a bit
       template: templates/tufte-book.latex
     metadata:
-      biblio-style: verbose #verbose for biblatex, plainnat for natbib
-      biblatexoptions:
-        - backend=biber
-        - autocite=footnote
-      documentclass: 'tufte-book' # try also tufte-handout
+      documentclass: 'tufte-book' # also: tufte-handout
       lang: 'en-GB'
       papersize: a4
       #linestretch: 1.4
+      #biblio-style: verbose #verbose for biblatex, plainnat for natbib
+      biblatexoptions:
+        - autocite=footnote
       classoption:
-        - symmetric
+        #- debug
+        #- nobib # !!! needed with V3.5.2 & biblatex
+        #- notoc # disbles Tufte TOC style
+        #- nofonts #do not auto-specify fonts
+        #- symmetric # note this is buggy...
+        - sfsidenotes # sans-serif side notes
         - british
         - justified
-        - notoc
-        - nobib # needed with biblattex
       publisher: Octopoda Publishing • Shanghai • China
       epigraph:
         - author: Anaïs Nin

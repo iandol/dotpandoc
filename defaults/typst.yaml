@@ -5,7 +5,7 @@ verbosity: INFO
 template: custom.typst
 wrap: none
 filters:
-#  - lua-log-test.lua
+  - typstFix.lua
   - list-table.lua
   - pagebreak.lua
   - abstract-section.lua
