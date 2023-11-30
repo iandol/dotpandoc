@@ -8,6 +8,7 @@ csl: nature.csl
 template: lapreprint.typst
 wrap: none
 filters:
+  - typstFix.lua
   - pagebreak.lua
   - abstract-section.lua
   - pretty-urls.lua

@@ -458,18 +458,18 @@ $if(csl-refs)$
 \newlength{\csllabelwidth}
 \setlength{\csllabelwidth}{3em}
 \newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
- {\begin{list}{}{%
-  \setlength{\itemindent}{0pt}
-  \setlength{\leftmargin}{0pt}
-  \setlength{\parsep}{0pt}
-  % turn on hanging indent if param 1 is 1
-  \ifodd #1
-   \setlength{\leftmargin}{\cslhangindent}
-   \setlength{\itemindent}{-1\cslhangindent}
-  \fi
-  % set entry spacing
-  \setlength{\itemsep}{#2\baselineskip}}}
- {\end{list}}
+  {\begin{list}{}{%
+   \setlength{\itemindent}{0pt}
+   \setlength{\leftmargin}{0pt}
+   \setlength{\parsep}{0pt}
+   % turn on hanging indent if param 1 is 1
+   \ifodd #1
+    \setlength{\leftmargin}{\cslhangindent}
+    \setlength{\itemindent}{-1\cslhangindent}
+   \fi
+   % set entry spacing
+   \setlength{\itemsep}{#2\baselineskip}}}
+  {\end{list}}
 \usepackage{calc}
 \newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
@@ -740,11 +740,6 @@ $if(tables)$
 \renewcommand{\arraystretch}{1.3}     % spacing (padding)
 
 $if(table-use-row-colors)$
-% TODO: This doesn't work anymore. I don't know why.
-% Reset rownum counter so that each table
-% starts with the same row colors.
-% https://tex.stackexchange.com/questions/170637/restarting-rowcolors
-%
 % Unfortunately the colored cells extend beyond the edge of the
 % table because pandoc uses @-expressions (@{}) like so:
 %
@@ -752,18 +747,16 @@ $if(table-use-row-colors)$
 % \end{longtable}
 %
 % https://en.wikibooks.org/wiki/LaTeX/Tables#.40-expressions
-\let\oldlongtable\longtable
-\let\endoldlongtable\endlongtable
-\renewenvironment{longtable}{
-\rowcolors{3}{}{table-row-color!100}  % row color
-\oldlongtable} {
-\endoldlongtable
-\global\rownum=0\relax}
+\usepackage{etoolbox}
+\AtBeginEnvironment{longtable}{\rowcolors{2}{}{table-row-color!100}}
+\preto{\toprule}{\hiderowcolors}{}{}
+\appto{\endhead}{\showrowcolors}{}{}
+\appto{\endfirsthead}{\showrowcolors}{}{}
 $endif$
 $endif$
 
 %
-% remove paragraph indention
+% remove paragraph indentation
 %
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
@@ -903,20 +896,17 @@ $if(beamer)$
 $else$
 $if(disable-header-and-footer)$
 $else$
-\definecolor{DarkGray}{rgb}{.6,.6,.6}
-\usepackage{fancyhdr}
+\usepackage[headsepline,footsepline]{scrlayer-scrpage}
 
-\fancypagestyle{eisvogel-header-footer}{
-  \fancyhead{}
-  \fancyfoot{}
-  \lhead[$if(header-right)$$header-right$$else$$date$$endif$]{\footnotesize{}\color{DarkGray}$if(header-left)$$header-left$$else$$title$$endif$}
-  \chead[$if(header-center)$$header-center$$else$$endif$]{\footnotesize{}\color{DarkGray}$if(header-center)$$header-center$$else$$endif$}
-  \rhead[$if(header-left)$$header-left$$else$$title$$endif$]{\footnotesize{}\color{DarkGray}$if(header-right)$$header-right$$else$$date$$endif$}
-  \lfoot[$if(footer-right)$$footer-right$$else$\thepage$endif$]{\footnotesize{}\color{DarkGray}$if(footer-left)$$footer-left$$else$$for(author)$$author.name$$sep$, $endfor$$endif$}
-  \cfoot[$if(footer-center)$$footer-center$$else$$endif$]{\footnotesize{}\color{DarkGray}$if(footer-center)$$footer-center$$else$$endif$}
-  \rfoot[$if(footer-left)$$footer-left$$else$$for(author)$$author.name$$sep$, $endfor$$endif$]{\footnotesize{}\color{DarkGray}$if(footer-right)$$footer-right$$else$\thepage$endif$}
-  \renewcommand{\headrulewidth}{0.4pt}
-  \renewcommand{\footrulewidth}{0.4pt}
+\newpairofpagestyles{eisvogel-header-footer}{
+  \clearpairofpagestyles
+  \ihead*{$if(header-left)$$header-left$$else$$title$$endif$}
+  \chead*{$if(header-center)$$header-center$$else$$endif$}
+  \ohead*{$if(header-right)$$header-right$$else$$date$$endif$}
+  \ifoot*{$if(footer-left)$$footer-left$$else$$for(author)$$author$$sep$, $endfor$$endif$}
+  \cfoot*{$if(footer-center)$$footer-center$$else$$endif$}
+  \ofoot*{$if(footer-right)$$footer-right$$else$\thepage$endif$}
+  \addtokomafont{pageheadfoot}{\upshape}
 }
 \pagestyle{eisvogel-header-footer}
 
@@ -953,7 +943,7 @@ $else$
 $if(titlepage)$
 \begin{titlepage}
 $if(titlepage-background)$
-  \newgeometry{top=2cm, right=4cm, bottom=3.25cm, left=4cm}
+\newgeometry{top=2cm, right=4cm, bottom=3cm, left=4cm}
 $else$
 \newgeometry{left=6cm}
 $endif$
@@ -1030,9 +1020,9 @@ $endif$
 
 \vfill
 
-$if(logo)$
+$if(titlepage-logo)$
 \noindent
-\includegraphics[width=$if(logo-width)$$logo-width$$else$100$endif$pt, center]{$logo$}
+\includegraphics[width=$if(logo-width)$$logo-width$$else$35mm$endif$, left]{$titlepage-logo$}
 $endif$
 
 $if(titlepage-background)$
@@ -1042,7 +1032,7 @@ $endif$
 \end{flushleft}
 \end{titlepage}
 \restoregeometry
-\pagenumbering{arabic} 
+\pagenumbering{arabic}
 $endif$
 $endif$
 

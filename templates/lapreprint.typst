@@ -2,6 +2,8 @@
 // It should probably be in the same folder
 #import "./lapreprint.typ": template
 
+$definitions.typst()$
+
 #show: template.with(
 $if(title)$
   title: "$title$",

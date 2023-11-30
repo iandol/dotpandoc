@@ -14,8 +14,6 @@ $if(fontsize)$
 $endif$
 $if(papersize)$
   $papersize$paper,
-$else$
-  paper=a4,
 $endif$
 $if(beamer)$
   ignorenonframetext,
@@ -83,11 +81,9 @@ $if(section-titles)$
 }
 $endif$
 $endif$
-
 $if(beamerarticle)$
 \usepackage{beamerarticle} % needs to be loaded first
 $endif$
-
 \usepackage{amsmath,amssymb}
 $if(linestretch)$
 \usepackage{setspace}
@@ -478,7 +474,7 @@ $endif$
 $if(csquotes)$
 \usepackage{csquotes}
 $endif$
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{$if(urlstyle)$$urlstyle$$else$same$endif$}
 $if(links-as-notes)$

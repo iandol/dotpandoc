@@ -13,16 +13,20 @@
 ]]
 
 function RawInline(r)
+	--convert html to typst format as typst uses <label>
 	if string.match(r.format, "html") then
-		--convert html to typst format
 		return pandoc.RawInline("typst", r.text)
 	end
 end
 
 function Cite(cite)
 	c = cite.content[1].text
-	if string.match(c, "@fig%-") or string.match(c, "@tbl%-") or string.match(c, "@eq%-") or string.match(c, "@sec%-") then
-		-- convert the cite to a RawInline
+	if string.match(c, "@fig%-") or
+	string.match(c, "@tbl%-") or
+	string.match(c, "@eq%-") or
+	string.match(c, "@lst%-") or 
+	string.match(c, "@sec%-") then
+		-- convert the crossref to a RawInline
 		return pandoc.RawInline("typst", c)
 	end
 end
