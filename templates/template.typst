@@ -35,15 +35,16 @@
 
   if authors != none {
     let count = authors.len()
-    let ncols = calc.min(count, 4)
+    let ncols = calc.min(count, 3)
     grid(
       columns: (1fr,) * ncols,
       row-gutter: 1.5em,
       column-gutter: 1.25em,
       ..authors.map(author =>
           align(center)[
-            #strong[#emph[#author.name]#super[#author.affiliation]] \
-            #underline[#text(9pt, author.email)]
+            #strong[#emph[#author.name]] \
+            #text(size: 0.7em)[#emph[#author.affiliation] \
+            #underline[#author.email]]
           ]
       )
     )

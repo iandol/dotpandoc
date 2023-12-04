@@ -94,6 +94,7 @@ $for(include-before)$
 $include-before$
 
 $endfor$
+
 $if(toc)$
 #outline(
   title: auto,
@@ -105,6 +106,9 @@ $if(linestretch)$
 #set par(justify: true, leading: $linestretch$em)
 
 $endif$
+
+#show table: set par(justify: false)
+#show ref: strong
 
 $body$
 
