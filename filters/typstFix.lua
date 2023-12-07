@@ -36,8 +36,7 @@ end
 function Image(im)
 	if not im.attributes.width then
 		im.attributes.width = "100%"
+		return im
 	end
-	return im
 end
-
 
