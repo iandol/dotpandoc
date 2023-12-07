@@ -12,6 +12,7 @@
 	injects a physical width into Images, causing them to overflow the page
 	margins, if no width has been set, we set it to 100%.
 ]]
+local logging = require 'logging'
 
 --convert raw html to raw typst: typst uses <label> for #ID
 function RawInline(r)
@@ -34,8 +35,15 @@ end
 
 -- make sure images have a 100% width if not specified
 function Image(im)
+	local env = pandoc.system.environment()
+	local var = env["FIGWIDTH"] -- possible override with ENV
+	if not var or var == "" then
+		newwidth = "100%"
+	else
+		newwidth = var
+	end
 	if not im.attributes.width then
-		im.attributes.width = "100%"
+		im.attributes.width = newwidth
 		return im
 	end
 end

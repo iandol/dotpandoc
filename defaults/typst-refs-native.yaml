@@ -1,4 +1,3 @@
 defaults: typst
 to: typst
 bibliography: ${USERDATA}/Core.bib
-csl: ${USERDATA}/csl/cell-doi.csl

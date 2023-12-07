@@ -6,7 +6,7 @@
   date: none,
   abstract: none,
   cols: 1,
-  margin: (x: 2cm, y: 2cm),
+  margin: (x: 1.75cm, y: 2cm),
   paper: "a4",
   lang: "en",
   region: "GB",
@@ -42,9 +42,13 @@
       column-gutter: 1.25em,
       ..authors.map(author =>
           align(center)[
-            #strong[#emph[#author.name]] \
-            #text(size: 0.7em)[#emph[#author.affiliation] \
-            #underline[#author.email]]
+            #strong[#emph[#author.name]]
+            #if "affiliation" in author [
+              \ #text(size: 0.7em)[#emph[#author.affiliation]]
+            ]
+            #if "email" in author [
+              \ #text(size: 0.7em)[#underline[#author.email]]
+            ]
           ]
       )
     )

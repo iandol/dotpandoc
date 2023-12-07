@@ -22,22 +22,22 @@ $endif$
 $if(author)$
   authors: (
 $for(author)$
-$if(author.name)$
-    ( name: [$author.name$],
-$if(author.affiliation)$
-      affiliation: [$author.affiliation$],
+$if(it.name)$
+    ( name: [$it.name$],
+$if(it.affiliation)$
+      affiliation: [$it.affiliation$],
 $endif$
-$if(author.email)$
-      email: [$author.email$],
+$if(it.email)$
+      email: [$it.email$],
 $endif$
-$if(author.orcid)$
-      orcid: [$author.orcid$]
-$endif$
+$if(it.orcid)$
+      orcid: [$it.orcid$]
+$endif$  ),
 $else$
-    ( name: [$author$],
+    ( name: [$it$] ),
 $endif$
 $endfor$
-    ),
+  ),
 $endif$
 $if(institute)$
   affiliations: (

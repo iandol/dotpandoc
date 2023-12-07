@@ -1,14 +1,13 @@
 header-includes: |
   ```{=typst}
-  #set text(discretionary-ligatures: true, number-type: "old-style")
-  #show table: set par(justify: false)
+  #set text(ligatures: true, discretionary-ligatures: false, number-type: "old-style")
   ```
 mainfont: "Alegreya Sans"
 fontsize: 12pt
 papersize: a4
-margin:
-  x: 2cm
-  y: 2cm
+#margin:
+#  x: 1.75cm
+#  y: 2cm
 section-numbering: "1.1.1"
 columns: 1
 lang: "en-GB"
