@@ -1,16 +1,30 @@
 --[[
-	typstFix.lua: typst fix filter for pandoc
-	Version:     1.00
-	Copyright:   (c) 2023 Ian max Andolina
-	License:     MIT - see LICENSE file for details
+	typstFix.lua: typst fix filter for pandoc Version:     1.00 Copyright:
+	(c) 2023 Ian max Andolina License:     MIT - see LICENSE file for
+	details
 
 	Usage: Typst uses <label> syntax for #ids, which is not compatible with
-	Raw HTML. We take advantage of Raw HTML to convert <...> to a RawInline,
-	where we can easily change the format. The second problem is that Typst
-	uses @fig- and @tbl- to refer to figures and tables, which is not
-	compatible with the use of @ for citations. So we check if the ref
-	starts with fig- or tbl- and convert it to RawInline.
+	Raw HTML extension. We still take advantage of Raw HTML extension to
+	convert <...> to a RawInline, where we change the format to raw typst.
+	The second problem is that Typst uses @fig- and @tbl- to refer to
+	figures and tables, which is not compatible with the use of @ for Pandoc
+	citations. So we check if the ref starts with fig- or tbl- and convert
+	it to a typst RawInline. Finally, Pandoc injects a physical width into
+	Images, causing them to overflow the page margins, if no width has been
+	set we set it to 100%.
 ]]
+
+--local logging = require 'logging' -- for development only
+--function Pandoc(pandoc)
+--	logging.temp('pandoc', pandoc)
+--end
+
+function Image(im)
+	if im.attributes.width == nil then
+		im.attributes.width = "100%"
+	end
+	return im
+end
 
 function RawInline(r)
 	--convert html to typst format as typst uses <label>
