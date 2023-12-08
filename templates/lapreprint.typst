@@ -129,6 +129,16 @@ $endfor$
       ],
     ),
 $endif$
+$if(margin-funding)$
+    (
+      title: "Funding",
+      content: [
+$for(margin-funding)$
+        $it$$sep$. 
+$endfor$
+      ],
+    ),
+$endif$
     (
       title: "Competing Interests",
       content: [
