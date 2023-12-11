@@ -6,9 +6,11 @@
 		"**/.factorypath": true
 	},
 	"yaml.schemas": {
+		"none": "*.yaml",
 		"https://json.schemastore.org/prettierrc.json": [
 			"file:///Users/ian/Code/dotpandoc/defaults/refs.yaml",
 			"file:///Users/ian/Code/dotpandoc/defaults/typst.yaml"
-		]
+		],
+		"https://json.schemastore.org/sourcehut-build-0.65.0.json": "file:///Users/ian/Code/dotpandoc/defaults/typst-refs-native.yaml"
 	}
 }

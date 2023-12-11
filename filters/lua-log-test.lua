@@ -4,5 +4,7 @@
 local logging = require 'logging'
 
 function Pandoc(pandoc)
-	logging.temp('pandoc', pandoc.meta)
+	logging.temp('PANDOC', pandoc)
+	logging.temp('READ',PANDOC_READER_OPTIONS)
+	logging.temp('WRITE',PANDOC_WRITER_OPTIONS)
 end

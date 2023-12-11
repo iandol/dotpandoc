@@ -12,7 +12,6 @@
 	injects a physical width into Images, causing them to overflow the page
 	margins, if no width has been set, we set it to 100%.
 ]]
-local logging = require 'logging'
 
 --convert raw html to raw typst: typst uses <label> for #ID
 function RawInline(r)
