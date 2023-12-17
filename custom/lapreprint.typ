@@ -4,7 +4,7 @@
 	subtitle: none,
 	// An array of authors. For each author you can specify a name, orcid, and affiliations.
 	// affiliations should be content, e.g. "1", which is shown in superscript and should match the affiliations list.
-	// Everything but but the name is optional.
+	// Everything but the name is optional.
 	authors: (),
 	// This is the affiliations list. Include an id and `name` in each affiliation. These are shown below the authors.
 	affiliations: (),

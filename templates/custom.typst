@@ -23,7 +23,7 @@ $if(author)$
   authors: (
 $for(author)$
 $if(it.name)$
-    ( name: [$it.name$],
+    ( name: "$it.name$",
 $if(it.affiliation)$
       affiliation: [$it.affiliation$],
 $endif$
@@ -34,7 +34,9 @@ $if(it.orcid)$
       orcid: [$it.orcid$]
 $endif$  ),
 $else$
-    ( name: [$it$] ),
+    ( name: "$it$",
+      affiliation: "",
+      email: "" ),
 $endif$
 $endfor$
   ),
@@ -98,7 +100,7 @@ $endfor$
 $if(toc)$
 #outline(
   title: auto,
-  depth: none
+  depth: $toc-depth$
 );
 
 $endif$
@@ -109,6 +111,10 @@ $endif$
 
 #show table: set par(justify: false)
 #show ref: strong
+#set quote(block: true)
+#show quote: set align(center)
+#show quote: set text(style: "italic")
+#show quote: set pad(x: 5em, y: 1.75em)
 
 $body$
 

@@ -9,14 +9,20 @@ your Lua installed versions.
 If you don't have Lua installed on your system, should update the environment 
 search path to use mobdebug.lua and luasocket from Zerobrane's install location. 
 See [documentation](https://studio.zerobrane.com/doc-remote-debugging) for details. For e.g. macOS 
-this would be:
+this would be for zsh:
 
 export ZBS=/Applications/ZeroBraneStudio.app/Contents/ZeroBraneStudio 
 export LUA_PATH="./?.lua;$ZBS/lualibs/?/?.lua;$ZBS/lualibs/?.lua"  
 export LUA_CPATH="$ZBS/bin/?.dylib;$ZBS/bin/clibs53/?.dylib;$ZBS/bin/clibs53/?/?.dylib"
 
+Elvish: 
+
+set-env ZBS /Applications/ZeroBraneStudio.app/Contents/ZeroBraneStudio
+set-env LUA_PATH "./?.lua;"$E:ZBS"/lualibs/?/?.lua;"$E:ZBS"/lualibs/?.lua"
+set-env LUA_CPATH $E:ZBS"/bin/?.dylib;"$E:ZBS"/bin/clibs54/?.dylib;"$E:ZBS"/bin/clibs54/?/?.dylib"
+
 ## With Lua installed:
-If you have installed Lua v5.3 and added mobdebug + luasocket using luarocks then 
+If you have installed Lua v5.4 and added mobdebug + luasocket using luarocks then 
 they should be available in the default path locations (at least for POSIX systems), 
 and you shouldn't need to set any path variables.
 
@@ -42,7 +48,7 @@ without running an IDE:
 But Zerobrane offers richer functionality…
 ]]
 
-sp = require("serpent") -- use as print(sp.dump(object))
+--sp = require("serpent") -- use as print(sp.dump(object))
 md = require("mobdebug")
 md.start()
 

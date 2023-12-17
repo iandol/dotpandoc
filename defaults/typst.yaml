@@ -10,4 +10,4 @@ filters:
   - pagebreak.lua
   - abstract-section.lua
   - pretty-urls.lua
-table-of-contents: true
+toc: true
