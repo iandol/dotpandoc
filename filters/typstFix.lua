@@ -3,17 +3,18 @@
 	Version:   1.01 
 	Copyright: (c) 2023 Ian Max Andolina License=MIT, see LICENSE for details
 
-	Usage: Typst uses <label> syntax for #ids, which is not compatible with
+	Usage: Solves 3 problems for Typst outputs:
+  (1) Typst uses <label> syntax for #ids, which is not compatible with
 	Raw HTML extension. We take advantage of Raw HTML extension to convert
-	<...> to a typst RawInline. The second problem is that Typst uses @fig-
+	<...> to a typst RawInline. (2) The second problem is that Typst uses @fig-
 	and @tbl- to refer to figures and tables, which is not compatible with
 	the use of @ for Pandoc citations. So we check if the ref starts with
-	fig- or tbl- and convert it to a typst RawInline. Finally, Pandoc
+	fig- or tbl- and convert it to a typst RawInline. (3) Finally, Pandoc
 	injects a physical width into Images, causing them to overflow the page
 	margins, if no width has been set, we set it to 100%.
 ]]
 
---convert raw html to raw typst: typst uses <label> for #ID
+-- convert raw html to raw typst as typst uses <label> for #ID
 function RawInline(r)
 	if string.match(r.format, "html") then
 		return pandoc.RawInline("typst", r.text)
@@ -21,6 +22,7 @@ function RawInline(r)
 end
 
 -- convert Typst crossreferences to RawInlines
+-- everything else stays a bibliographic citation
 function Cite(cite)
 	c = cite.content[1].text
 	if string.match(c, "@fig%-") or
@@ -32,7 +34,8 @@ function Cite(cite)
 	end
 end
 
--- make sure images have a 100% width if not specified
+-- make sure images without width attribute have a 100% width
+-- see https://github.com/jgm/pandoc/issues/9236
 function Image(im)
 	local env = pandoc.system.environment()
 	local var = env["FIGWIDTH"] -- possible override with ENV
