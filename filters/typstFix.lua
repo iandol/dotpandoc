@@ -1,10 +1,10 @@
 --[[
 	typstFix.lua: typst fix filter for pandoc 
-	Version:   1.01 
+	Version:   1.02 
 	Copyright: (c) 2023 Ian Max Andolina License=MIT, see LICENSE for details
 
 	Usage: Solves 3 problems for Typst outputs:
-  (1) Typst uses <label> syntax for #ids, which is not compatible with
+	(1) Typst uses <label> syntax for #ids, which is not compatible with
 	Raw HTML extension. We take advantage of Raw HTML extension to convert
 	<...> to a typst RawInline. (2) The second problem is that Typst uses @fig-
 	and @tbl- to refer to figures and tables, which is not compatible with
