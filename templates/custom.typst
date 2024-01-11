@@ -88,6 +88,12 @@ $endif$
   doc,
 )
 
+$if(monofont)$
+#show raw: set text(font: "$monofont$")
+$else$
+#show raw: set text(font: "Rec Mono Duotone")
+$endif$
+
 $for(header-includes)$
 $header-includes$
 
@@ -108,7 +114,6 @@ $if(linestretch)$
 #set par(justify: true, leading: $linestretch$em)
 
 $endif$
-
 #show table: set par(justify: false)
 #show ref: strong
 #set quote(block: true)
