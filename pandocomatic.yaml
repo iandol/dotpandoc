@@ -153,14 +153,19 @@ templates:
 #-----------------------------------------------------------------DOCX REFS
   docx-refs:
     extends: [docx,refs]
+#-----------------------------------------------------------------DOCX REFS
+  docx-letter:
+    extends: [docx-refs]
+    pandoc:
+      reference-doc: '/Users/ian/Library/CloudStorage/Dropbox/Work/CAS-Letterhead-2.docx'
 #-----------------------------------------------------------------DOCX NSFC
   docx-refs-nsfc:
-    extends: [docx,refs]
+    extends: [docx-refs]
     pandoc:
-      reference-doc: templates/custom.docx
+      reference-doc: templates/custom-nsfc.docx
 #-----------------------------------------------------------------DOCX CROSSREF
   docx-crossref:
-    extends: [docx,refs,crossref]
+    extends: [docx-refs,crossref]
 #-----------------------------------------------------------------DOCX NUMBERING
   docx-native-numbering:
     extends: [docx,refs]
@@ -303,7 +308,7 @@ templates:
       monofont: 'Rec Mono Duotone'
       mathfont: 'STIX Two Math'
       mathfontoptions: 'math-style=ISO,bold-style=ISO'
-      CJKmainfont: 'Heiti SC'
+      #CJKmainfont: 'Heiti SC'
       colorlinks: true
       linkcolor: Mahogany
       citecolor: Sepia
@@ -459,17 +464,18 @@ templates:
     metadata:
       papersize: a4
       return-address: |
-        Cognitive \& Behavioural Analysis Platform  
+        Cognitive-Behavioural Research Platform  
         Institute of Neuroscience, CAS  
         Room 307, Systems Building  
-        320 Yueyang Rd, Shanghai 200031, CHINA  
+        320 Yueyang Rd, Shanghai  
+        200031, CHINA  
         ✉ <i.andolina@ion.ac.cn>  
         ✆ +86 021 54921747  
       author: |
         Ian Max Andolina Ph.D.  
-        Director, Cognitive \& Behavioural Analysis Platform
-      opening: To whom it may concern,
-      closing: Sincerely yours,
+        Director, Cognitive \& Behavioural Research Platform  
+      opening: To whom it may concern,  
+      closing: Sincerely yours,  
       mainfont: 'Graublau Sans'
       mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
       monofont: 'Rec Mono Duotone'
@@ -478,10 +484,10 @@ templates:
       CJKmainfont: 'PingFang SC'
       fontsize: '11pt'
       linestretch: '1.2'
-      letterhead: "/Users/ian/Library/CloudStorage/Dropbox/Work/ION-Letterhead.pdf"
+      letterhead: "/Users/ian/Library/CloudStorage/Dropbox/Work/CEBSIT-Letterhead.pdf"
       signature: "/Users/ian/Library/CloudStorage/Dropbox/Work/Ian-Signature-Small.png"
       signature-width: 45mm
-      signature-before: -11ex
+      signature-before: -12ex
       signature-after: -1.5ex
       closing-indentation: 12pt
       links-as-notes: false
@@ -490,7 +496,7 @@ templates:
       citecolor: Sepia
       urlcolor: BrickRed
       lang: 'en-GB'
-      geometry: ['margin=1.2cm','top=2.1cm']
+      geometry: ['margin=1.2cm','top=2.5cm']
       biblio-style: numeric
     postprocessors:
       - postprocessors/fixLaTeX.rb
