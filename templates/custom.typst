@@ -1,13 +1,17 @@
 $definitions.typst()$
 
 #show terms: it => {
-  it.children
-    .map(child => [
-      #strong[#child.term]
-      #block(inset: (left: 1.5em, top: -0.4em))[#child.description]
-      ])
-    .join()
+	it.children
+		.map(child => [
+			#strong[#child.term]
+			#block(inset: (left: 1.5em, top: -0.4em))[#child.description]
+			])
+		.join()
 }
+
+#set table(
+	inset: 6pt
+)
 
 $if(template)$
 #import "$template$": conf
@@ -17,75 +21,75 @@ $endif$
 
 #show: doc => conf(
 $if(title)$
-  title: [$title$],
+	title: [$title$],
 $endif$
 $if(author)$
-  authors: (
+	authors: (
 $for(author)$
 $if(it.name)$
-    ( name: "$it.name$",
+		( name: "$it.name$",
 $if(it.affiliation)$
-      affiliation: [$it.affiliation$],
+			affiliation: [$it.affiliation$],
 $endif$
 $if(it.email)$
-      email: [$it.email$],
+			email: [$it.email$],
 $endif$
 $if(it.orcid)$
-      orcid: [$it.orcid$]
+			orcid: [$it.orcid$]
 $endif$  ),
 $else$
-    ( name: "$it$",
-      affiliation: "",
-      email: "" ),
+		( name: "$it$",
+			affiliation: "",
+			email: "" ),
 $endif$
 $endfor$
-  ),
+	),
 $endif$
 $if(institute)$
-  affiliations: (
+	affiliations: (
 $for(institute)$
-    (id: "$it.index$", name: "$it.name$"),
+		(id: "$it.index$", name: "$it.name$"),
 $endfor$
-  ),
+	),
 $elseif(affiliations)$
-  affiliations: (
+	affiliations: (
 $for(affiliations)$
-    (id: "$it.index$", name: "$it.name$"),
+		(id: "$it.index$", name: "$it.name$"),
 $endfor$
-  ),
+	),
 $endif$
 $if(keywords)$
-  keywords: ($for(keywords)$"$it$"$sep$, $endfor$),
+	keywords: ($for(keywords)$"$it$"$sep$, $endfor$),
 $endif$
 $if(date)$
-  date: [$date$],
+	date: [$date$],
 $endif$
 $if(lang)$
-  lang: "$lang$",
+	lang: "$lang$",
 $endif$
 $if(region)$
-  region: "$region$",
+	region: "$region$",
 $endif$
 $if(abstract)$
-  abstract: [$abstract$],
+	abstract: [$abstract$],
 $endif$
 $if(margin)$
-  margin: ($for(margin/pairs)$$margin.key$: $margin.value$,$endfor$),
+	margin: ($for(margin/pairs)$$margin.key$: $margin.value$,$endfor$),
 $endif$
 $if(papersize)$
-  paper: "$papersize$",
+	paper: "$papersize$",
 $endif$
 $if(mainfont)$
-  font: ("$mainfont$",),
+	font: ("$mainfont$",),
 $endif$
 $if(fontsize)$
-  fontsize: $fontsize$,
+	fontsize: $fontsize$,
 $endif$
 $if(section-numbering)$
-  sectionnumbering: "$section-numbering$",
+	sectionnumbering: "$section-numbering$",
 $endif$
-  cols: $if(columns)$$columns$$else$1$endif$,
-  doc,
+	cols: $if(columns)$$columns$$else$1$endif$,
+	doc,
 )
 
 $if(monofont)$
@@ -105,8 +109,8 @@ $endfor$
 
 $if(toc)$
 #outline(
-  title: auto,
-  depth: $toc-depth$
+	title: auto,
+	depth: $toc-depth$
 );
 
 $endif$

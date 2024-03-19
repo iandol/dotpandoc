@@ -1,6 +1,6 @@
 --[[
 	typstFix.lua: typst fix filter for pandoc 
-	Version:   1.02 
+	Version:   1.03
 	Copyright: (c) 2023 Ian Max Andolina License=MIT, see LICENSE for details
 
 	Usage: Solves 3 problems for Typst outputs:
@@ -36,17 +36,18 @@ end
 
 -- make sure images without width attribute have a 100% width
 -- see https://github.com/jgm/pandoc/issues/9236
-function Image(im)
-	local env = pandoc.system.environment()
-	local var = env["FIGWIDTH"] -- possible override with ENV
-	if not var or var == "" then
-		newwidth = "100%"
-	else
-		newwidth = var
-	end
-	if not im.attributes.width then
-		im.attributes.width = newwidth
-		return im
-	end
-end
+-- now fixed V0.11.0 of Typst + Pandoc v3.1.12.3, so not needed
+-- function Image(im)
+-- 	local env = pandoc.system.environment()
+-- 	local var = env["FIGWIDTH"] -- possible override with ENV
+-- 	if not var or var == "" then
+-- 		newwidth = "100%"
+-- 	else
+-- 		newwidth = var
+-- 	end
+-- 	if not im.attributes.width then
+-- 		im.attributes.width = newwidth
+-- 		return im
+-- 	end
+-- end
 
