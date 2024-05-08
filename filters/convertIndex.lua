@@ -1,6 +1,9 @@
 --[[
 	convertIndex.lua: convert \index{item} markup for marking up words for an 
-	index into ODT and Typst native alternatives.
+	index into ODT and Typst native alternatives. You can use \index{Grandparent!Parent!item}
+	to mark up an index item with a grandparent, parent and item.
+	You can use custom tag \indext{item} to also include the term in the 
+	text. This makes writing easier as you can markup words directly.
 	For ODT it uses the native XML markup for index items.
 	For Typst, you also need https://typst.app/universe/package/in-dexter
 	Author: Ian Max Andolina
