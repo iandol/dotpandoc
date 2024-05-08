@@ -6,6 +6,7 @@ verbosity: INFO
 template: custom.typst
 filters:
   - typstFix.lua
+  - convertIndex.lua
   - citeproc
   - list-table.lua
   - pagebreak.lua

@@ -1,6 +1,6 @@
 --[[
 	typstFix.lua: typst fix filter for pandoc 
-	Version:   1.03
+	Version:   1.04
 	Copyright: (c) 2023 Ian Max Andolina License=MIT, see LICENSE for details
 
 	Usage: Solves some problems for Typst outputs:
@@ -16,6 +16,7 @@
 
 -- convert raw html to raw typst as typst uses <label> for #IDs
 function RawInline(r)
+	if not FORMAT:match('typst') then return end
 	if string.match(r.format, "html") then
 		return pandoc.RawInline("typst", r.text)
 	end
@@ -24,7 +25,8 @@ end
 -- convert Typst crossreferences like @fig-one to RawInlines
 -- everything else stays a bibliographic citation
 function Cite(cite)
-	c = cite.content[1].text
+	if not FORMAT:match('typst') then return end
+	local c = cite.content[1].text
 	if string.match(c, "@fig%-") or
 	string.match(c, "@tbl%-") or
 	string.match(c, "@eq%-") or

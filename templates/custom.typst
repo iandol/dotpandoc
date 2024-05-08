@@ -1,3 +1,5 @@
+#import "@preview/in-dexter:0.2.0": *
+
 $definitions.typst()$
 
 #show terms: it => {
