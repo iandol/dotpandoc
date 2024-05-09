@@ -58,8 +58,9 @@ local function formatIndex(format, key, isterm) --returns a rawinline index entr
 		end
 		return pandoc.RawInline('typst', key)
 	elseif format:match 'latex' then -- latex support for \indext
+		key = key:gsub("[:/]", "!") -- replace : or / with !
 		if isterm then
-			key = keys[3] .. "\\index{" .. key .. "}"
+			key = keys[3] .. " \\index{" .. key .. "}"
 		else
 			key = "\\index{" .. key .. "}"
 		end
@@ -74,7 +75,7 @@ function RawInline(r) -- parse rawinlines looking for raw latex \index{key} and 
 	local isterm = false -- default to not use terms
 	if fmt:match("odt") then fmt = "opendocument" end
 	kw = stringify(r.text)
-	if string.match(r.format, "tex") and kw:match("\\index") and not fmt:match("latex") then
+	if string.match("tex", r.format) and kw:match("\\index") then
 		if kw:match("\\indext{") then
 			kw = kw:match("\\indext{(.-)}")
 			isterm = true
