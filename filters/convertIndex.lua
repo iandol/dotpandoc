@@ -65,13 +65,13 @@ local function formatIndex(format, key, isterm) --returns a rawinline index entr
 			key = '#index("' .. keys[1] .. '", "' .. keys[2] .. '", "' .. ukey .. '")'
 		end
 		if isterm then
-			key = keys[3] .. ' ' .. key
+			key = keys[3] .. key
 		end
 		return pandoc.RawInline(format, key)
-	elseif format:match 'latex' then -- latex support for \indext
+	elseif format:match 'latex' then -- latex support
 		key = key:gsub("[:/]", "!") -- replace : or / with !
 		if isterm then
-			key = keys[3] .. " \\index{" .. key .. "}"
+			key = keys[3] .. "\\index{" .. key .. "}"
 		else
 			key = "\\index{" .. key .. "}"
 		end
