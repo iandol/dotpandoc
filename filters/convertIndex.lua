@@ -1,12 +1,23 @@
 --[[
-	convertIndex.lua: convert \index{item} markup for marking up words for an 
-	index into ODT, DOCX, Typst & LaTeX native alternatives. You can use \index{Ancestor!Parent!item}
-	to mark up an index item with an ancestor, parent and item.
-	You can use custom tag \indext{item} to also include the term in the 
-	text. This makes writing easier as you can markup words directly.
-	For ODT it uses the native XML markup for index items. You need to add the index.
-	For Typst, you also need https://typst.app/universe/package/in-dexter
-	For LaTeX you need a template that contains the makeindex command in the right place.
+	convertIndex.lua: convert \index{item} for marking up words for an index
+	for ODT, DOCX, Typst & LaTeX native output. 
+	
+	You can use \index{Ancestor:Parent:item} to mark up an index item with
+	an ancestor, parent and item.
+	
+	You can use a custom tag \indext{item} to include the term in the text.
+	This makes writing easier as you can markup words directly. For example
+	"This fall \indext{here}." will become "This fall here#index[Here]." for
+	Typst output.
+	
+	For ODT it uses the native XML markup for index items. You need to add
+	the index.
+	
+	For Typst, you also need https://typst.app/universe/package/in-dexter 
+	
+	For LaTeX you need a template that contains the makeindex command in the
+	right place.
+
 	Version:   1.06
 	Copyright: (c) 2024 Ian Max Andolina License=MIT, see LICENSE for details
 ]]
