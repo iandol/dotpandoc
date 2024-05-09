@@ -1,17 +1,15 @@
 --[[
 	convertIndex.lua: convert \index{item} markup for marking up words for an 
-	index into ODT, Typst & LaTeX native alternatives. You can use \index{Ancestor!Parent!item}
+	index into ODT, DOCX, Typst & LaTeX native alternatives. You can use \index{Ancestor!Parent!item}
 	to mark up an index item with an ancestor, parent and item.
 	You can use custom tag \indext{item} to also include the term in the 
 	text. This makes writing easier as you can markup words directly.
 	For ODT it uses the native XML markup for index items. You need to add the index.
 	For Typst, you also need https://typst.app/universe/package/in-dexter
 	For LaTeX you need a template that contains the makeindex command in the right place.
-	Version:   1.04
+	Version:   1.05
 	Copyright: (c) 2024 Ian Max Andolina License=MIT, see LICENSE for details
 ]]
-
-local stringify = (require 'pandoc.utils').stringify
 
 local function split(inputString, delimiter) -- split a string based on a delimiter
 	local list = {}
@@ -34,17 +32,25 @@ local function formatIndex(format, key, isterm) --returns a rawinline index entr
 		nkeys = 2
 	end
 	local ukey = keys[3]:gsub("(%w)(%w*)", function(firstChar, rest) return firstChar:upper() .. rest end) -- make term titlecase
-	if format:match 'odt' or format:match 'opendocument' then --odt
+	if format:match 'opendocument' then --odt
 		if isterm then
-			key = '<text:alphabetical-index-mark-start text:id="00' .. stringify(counter) .. 
+			key = '<text:alphabetical-index-mark-start text:id="IMarkX' .. stringify(counter) .. 
 			'" text:key1="' .. keys[1] .. '" text:key2="' .. keys[2] .. 
-			'"/>' .. keys[3] .. '<text:alphabetical-index-mark-end text:id="00' .. stringify(counter) .. '"/>'
+			'"/>' .. keys[3] .. '<text:alphabetical-index-mark-end text:id="IMarkX' .. stringify(counter) .. '"/>'
 			counter = counter + 1
 		else
 			key = '<text:alphabetical-index-mark text:key1="' .. keys[1] .. 
 			'" text:key2="' .. keys[2] .. '" text:string-value="' .. keys[3] .. '"/>'
 		end
-		return pandoc.RawInline('opendocument', key)
+		return pandoc.RawInline(format, key)
+	elseif format:match 'openxml' then
+		prefix = '<w:r><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:instrText> XE "</w:instrText></w:r><w:r ><w:instrText>'
+		suffix = '</w:instrText></w:r><w:r><w:instrText>" </w:instrText></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r>'
+		if isterm then
+			prefix = '<w:r><w:t>' .. keys[3] .. '</w:t></w:r>' .. prefix
+		end
+		key = prefix .. keys[3] .. suffix
+		return pandoc.RawInline(format, key)
 	elseif format:match 'typst' then -- typst with in-dexter
 		if nkeys == 1 then
 			key = '#index[' .. ukey .. ']'
@@ -56,7 +62,7 @@ local function formatIndex(format, key, isterm) --returns a rawinline index entr
 		if isterm then
 			key = keys[3] .. ' ' .. key
 		end
-		return pandoc.RawInline('typst', key)
+		return pandoc.RawInline(format, key)
 	elseif format:match 'latex' then -- latex support for \indext
 		key = key:gsub("[:/]", "!") -- replace : or / with !
 		if isterm then
@@ -64,7 +70,7 @@ local function formatIndex(format, key, isterm) --returns a rawinline index entr
 		else
 			key = "\\index{" .. key .. "}"
 		end
-		return pandoc.RawInline('tex', key)
+		return pandoc.RawInline(format, key)
 	else
 		return key
 	end
@@ -74,7 +80,8 @@ function RawInline(r) -- parse rawinlines looking for raw latex \index{key} and 
 	local fmt = FORMAT
 	local isterm = false -- default to not use terms
 	if fmt:match("odt") then fmt = "opendocument" end
-	kw = stringify(r.text)
+	if fmt:match("docx") then fmt = "openxml" end
+	kw = r.text
 	if string.match("tex", r.format) and kw:match("\\index") then
 		if kw:match("\\indext{") then
 			kw = kw:match("\\indext{(.-)}")
