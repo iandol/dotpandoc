@@ -7,7 +7,7 @@
 	For ODT it uses the native XML markup for index items. You need to add the index.
 	For Typst, you also need https://typst.app/universe/package/in-dexter
 	For LaTeX you need a template that contains the makeindex command in the right place.
-	Version:   1.05
+	Version:   1.06
 	Copyright: (c) 2024 Ian Max Andolina License=MIT, see LICENSE for details
 ]]
 
@@ -44,12 +44,17 @@ local function formatIndex(format, key, isterm) --returns a rawinline index entr
 		end
 		return pandoc.RawInline(format, key)
 	elseif format:match 'openxml' then
+		if nkeys == 1 then
+			key = ukey
+		else
+			key = keys[2] .. ':' .. ukey -- openxml only supports one level of hierarchy
+		end
 		prefix = '<w:r><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:instrText> XE "</w:instrText></w:r><w:r ><w:instrText>'
 		suffix = '</w:instrText></w:r><w:r><w:instrText>" </w:instrText></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r>'
 		if isterm then
-			prefix = '<w:r><w:t>' .. keys[3] .. '</w:t></w:r>' .. prefix
+			prefix = '<w:r><w:t>' .. key .. '</w:t></w:r>' .. prefix
 		end
-		key = prefix .. keys[3] .. suffix
+		key = prefix .. key .. suffix
 		return pandoc.RawInline(format, key)
 	elseif format:match 'typst' then -- typst with in-dexter
 		if nkeys == 1 then
