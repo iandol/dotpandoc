@@ -1,17 +1,17 @@
 --[[
 	typstFix.lua: typst fix filter for pandoc 
-	Version:   1.04
+	Version:   1.05
 	Copyright: (c) 2023 Ian Max Andolina License=MIT, see LICENSE for details
 
-	Usage: Solves some problems for Typst outputs:
-	(1) Typst uses <label> syntax for #ids, which is not compatible with
+	Usage: Solves some problems for Typst output from Pandoc:
+	(1) Typst uses <label> syntax for #ids, which is not compatible with the
 	Raw HTML extension. We take advantage of Raw HTML extension to convert
 	<...> to a typst RawInline. (2) The second problem is that Typst uses @fig-
 	and @tbl- to refer to figures and tables, which is not compatible with
 	the use of @ for Pandoc citations. So we check if the ref starts with
-	fig- or tbl- and convert it to a typst RawInline. (3) Finally, Pandoc
-	injects a physical width into Images, causing them to overflow the page
-	margins, if no width has been set, we set it to 100%.
+	fig- or tbl- and convert it to a typst RawInline. (3) [this is now fixed] 
+	Finally, Pandoc injects a physical width into Images, causing them to 
+	overflow the page margins, if no width has been set, we set it to 100%.
 ]]
 
 -- convert raw html to raw typst as typst uses <label> for #IDs
@@ -26,12 +26,13 @@ end
 -- everything else stays a bibliographic citation
 function Cite(cite)
 	if not FORMAT:match('typst') then return end
-	local c = cite.content[1].text
-	if string.match(c, "@fig%-") or
-	string.match(c, "@tbl%-") or
-	string.match(c, "@eq%-") or
-	string.match(c, "@lst%-") or 
-	string.match(c, "@sec%-") then
+	local c = cite.citations[1].id
+	if string.match(c, "^fig%-") or
+	string.match(c, "^tbl%-") or
+	string.match(c, "^eq%-") or
+	string.match(c, "^lst%-") or 
+	string.match(c, "^sec%-") then
+		c = "@" .. c
 		return pandoc.RawInline("typst", c)
 	end
 end
