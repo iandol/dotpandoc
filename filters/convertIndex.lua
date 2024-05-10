@@ -19,7 +19,7 @@
 	For LaTeX you need a template that contains the makeindex command in the
 	right place.
 
-	Version:   1.06
+	Version:   1.07
 	Copyright: (c) 2024 Ian Max Andolina License=MIT, see LICENSE for details
 ]]
 
@@ -46,9 +46,9 @@ local function formatIndex(format, key, isterm) --returns a rawinline index entr
 	local ukey = keys[3]:gsub("(%w)(%w*)", function(firstChar, rest) return firstChar:upper() .. rest end) -- make term titlecase
 	if format:match 'opendocument' then --odt
 		if isterm then
-			key = '<text:alphabetical-index-mark-start text:id="IMarkX' .. stringify(counter) .. 
+			key = '<text:alphabetical-index-mark-start text:id="IMarkX' .. tostring(counter) .. 
 			'" text:key1="' .. keys[1] .. '" text:key2="' .. keys[2] .. 
-			'"/>' .. keys[3] .. '<text:alphabetical-index-mark-end text:id="IMarkX' .. stringify(counter) .. '"/>'
+			'"/>' .. keys[3] .. '<text:alphabetical-index-mark-end text:id="IMarkX' .. tostring(counter) .. '"/>'
 			counter = counter + 1
 		else
 			key = '<text:alphabetical-index-mark text:key1="' .. keys[1] .. 
