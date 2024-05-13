@@ -1,8 +1,8 @@
 standalone: true
+verbosity: INFO
 from: markdown
 to: typst-citations
 metadata-file: typst-includes.yaml
-verbosity: INFO
 template: custom.typst
 filters:
   - typstFix.lua

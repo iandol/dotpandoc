@@ -1,7 +1,4 @@
-#currently we cannot run our ruby script to fix references in styled captions, this is one reason I still prefer pandocomatic
-standalone: true
 verbosity: INFO # verbose by default
-cite-method: citeproc
 filters: 
   - pandoc-crossref # process cross-references
 metadata:

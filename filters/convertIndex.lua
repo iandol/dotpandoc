@@ -1,29 +1,33 @@
 --[[
-	convertIndex.lua: convert \index{item} for marking up words for an index
+	convertIndex.lua: parse \index{item} for marking up words for an index
 	for ODT, DOCX, Typst & LaTeX native output. 
 	
 	You can use \index{Ancestor:Parent:item} to mark up an index item with
 	an ancestor, parent and item. {note: DOCX only supports Parent:item}
+
+	You can use a cross-reference: \index{item|see{term1, term2}}
+
+	For ODT and TYPST you can make a main index entry page number (bolded) 
+	by using a leading asterisk: \index{*item}.
 	
 	You can use a custom tag \indext{item} to include the term itself in the
 	text. This makes writing easier as you can markup words directly. For
-	example "This fall \indext{here}." will become "This fall
+	example "This falls \indext{here}." will become "This falls
 	here#index[Here]." for Typst output.
 	
-	For ODT or DOCX it uses the native XML markup for index items. ODT
-	supports keeping index words visible or hiding them, but Word doesn't.
-	You'll need to add the index itself.
+	For ODT or DOCX it uses the native XML markup for index items.
 	
 	For Typst, you'll need https://typst.app/universe/package/in-dexter 
 	
 	For LaTeX you need a template that contains the makeindex command in the
 	right place.
 
-	Version:   1.07
+	Version:   1.09
 	Copyright: (c) 2024 Ian Max Andolina License=MIT, see LICENSE for details
 ]]
 
-local function split(inputString, delimiter) -- split a string based on a delimiter
+-- split a string based on a delimiter
+local function split(inputString, delimiter)
 	local list = {}
 	for token in string.gmatch(inputString, "[^" .. delimiter .. "]+") do
 		table.insert(list, token)
@@ -31,81 +35,120 @@ local function split(inputString, delimiter) -- split a string based on a delimi
 	return list
 end
 
+-- Replace |see{term} with " \t "See: term in the given string
+local function replaceSeeClause(input)
+	return input:gsub("|see{(.-)}", ", see: %1")
+end
+
+-- Title case the given string
+local function titleCase(input)
+	return input:gsub("(%w)(%w*)", function(firstChar, rest) return firstChar:upper() .. rest end) 
+end
+
+--returns a rawinline index entry for tex, odt and typst
 local counter = nil
-local function formatIndex(format, key, isterm) --returns a rawinline index entry for tex, odt and typst
+local function formatIndex(format, item, isTerm, isMain)
 	if not counter then counter = 1 end -- counter is used for odt
-	local keys = split(key, "!:/") -- split our input for ancestor!parent!item
-	local nkeys = 3
-	if #keys == 1 then -- if there is only one key
+	
+	-- split our input for ancestor!parent!item
+	local keys = split(item, "!:/") 
+	if #keys == 1 then -- if there is only an item
 		keys = {"","",keys[1]}
 		nkeys = 1
-	elseif #keys == 2 then -- if there is only two keys
+	elseif #keys == 2 then -- if there is only parent and item
 		keys = {"",keys[1],keys[2]}
 		nkeys = 2
+	else -- two ancestors and an item
+		keys = {keys[1],keys[2],keys[3]}
+		nkeys = 3
 	end
-	local ukey = keys[3]:gsub("(%w)(%w*)", function(firstChar, rest) return firstChar:upper() .. rest end) -- make term titlecase
-	if format:match 'opendocument' then --odt
-		if isterm then
-			key = '<text:alphabetical-index-mark-start text:id="IMarkX' .. tostring(counter) .. 
+
+	-- process the items
+	keys[3] = replaceSeeClause(keys[3]) -- deal with |see{term} in the item
+	local tcItem = titleCase(keys[3]) -- use title case for the index
+	tcItem = tcItem:gsub('See','see') -- lowercase See
+
+	-- ODT
+	if format:match 'opendocument' then
+		if isMain then main = 'text:main-entry="true"' else main = '' end
+		if isTerm then
+			item = '<text:alphabetical-index-mark-start ' .. main .. ' text:id="IMarkX' .. tostring(counter) .. 
 			'" text:key1="' .. keys[1] .. '" text:key2="' .. keys[2] .. 
 			'"/>' .. keys[3] .. '<text:alphabetical-index-mark-end text:id="IMarkX' .. tostring(counter) .. '"/>'
 			counter = counter + 1
 		else
-			key = '<text:alphabetical-index-mark text:key1="' .. keys[1] .. 
-			'" text:key2="' .. keys[2] .. '" text:string-value="' .. keys[3] .. '"/>'
+			item = '<text:alphabetical-index-mark ' .. main .. ' text:key1="' .. keys[1] .. 
+			'" text:key2="' .. keys[2] .. '" text:string-value="' .. tcItem .. '"/>'
 		end
-		return pandoc.RawInline(format, key)
+		return pandoc.RawInline(format, item)
+
+	-- DOCX
 	elseif format:match 'openxml' then
 		if nkeys == 1 then
-			key = ukey
+			item = tcItem
 		else
-			key = keys[2] .. ':' .. ukey -- openxml only supports one level of hierarchy
+			item = keys[2] .. ':' .. tcItem -- openxml only supports one level of hierarchy I think
 		end
 		prefix = '<w:r><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:instrText> XE "</w:instrText></w:r><w:r ><w:instrText>'
 		suffix = '</w:instrText></w:r><w:r><w:instrText>" </w:instrText></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r>'
-		if isterm then
-			prefix = '<w:r><w:t>' .. key .. '</w:t></w:r>' .. prefix
+		if isTerm then
+			prefix = '<w:r><w:t>' .. item .. '</w:t></w:r>' .. prefix
 		end
-		key = prefix .. key .. suffix
-		return pandoc.RawInline(format, key)
+		item = prefix .. item .. suffix
+		return pandoc.RawInline(format, item)
+
+	-- TYPST
 	elseif format:match 'typst' then -- typst with in-dexter
+		tcItem = tcItem:gsub(':','')
+		if isMain then prefix = '#index-main' else prefix = '#index' end
 		if nkeys == 1 then
-			key = '#index[' .. ukey .. ']'
+			item = prefix .. '[' .. tcItem .. ']'
 		elseif nkeys == 2 then
-			key = '#index("' .. keys[2] .. '", "' .. ukey .. '")'
+			item = prefix .. '("' .. keys[2] .. '", "' .. tcItem .. '")'
 		else
-			key = '#index("' .. keys[1] .. '", "' .. keys[2] .. '", "' .. ukey .. '")'
+			item = prefix .. '("' .. keys[1] .. '", "' .. keys[2] .. '", "' .. tcItem .. '")'
 		end
-		if isterm then
-			key = keys[3] .. key
+		if isTerm then
+			item = keys[3] .. item
 		end
-		return pandoc.RawInline(format, key)
+		return pandoc.RawInline(format, item)
+
+	-- LATEX
 	elseif format:match 'latex' then -- latex support
-		key = key:gsub("[:/]", "!") -- replace : or / with !
-		if isterm then
-			key = keys[3] .. "\\index{" .. key .. "}"
+		item = item:gsub("[:/]", "!") -- replace : or / with !
+		if isMain then item = item .. '|texmf' end
+		if isTerm then
+			item = keys[3] .. "\\index{" .. item .. "}"
 		else
-			key = "\\index{" .. key .. "}"
+			item = "\\index{" .. item .. "}"
 		end
-		return pandoc.RawInline(format, key)
+		return pandoc.RawInline(format, item)
+
+	-- OTHERS
 	else
-		return key
+		return item
 	end
 end
 
-function RawInline(r) -- parse rawinlines looking for raw latex \index{key} and \indext{key} to convert
-	local fmt = FORMAT
-	local isterm = false -- default to not use terms
-	if fmt:match("odt") then fmt = "opendocument" end
-	if fmt:match("docx") then fmt = "openxml" end
-	kw = r.text
-	if string.match("tex", r.format) and kw:match("\\index") then
-		if kw:match("\\indext{") then
-			kw = kw:match("\\indext{(.-)}")
-			isterm = true
-		else
-			kw = kw:match("\\index{(.-)}")
+-- Pandoc filter parses rawinlines looking for 
+-- raw latex \index{key} and \indext{key} to convert
+function RawInline(r)
+	local isTerm = false -- default to not use terms
+	local isMain = false -- default to not use main index
+	if FORMAT:match("odt") then fmt = "opendocument" end
+	if FORMAT:match("docx") then fmt = "openxml" end
+	indexItem = r.text
+	if string.match("tex", r.format) and indexItem:match("\\index") then
+		if indexItem:match("\\indext{") then -- check if it's a term+index entry
+			indexItem = indexItem:match("\\indext{(.*)}")
+			isTerm = true
+		else -- it is a normal index entry
+			indexItem = indexItem:match("\\index{(.*)}")
 		end
-		if string.len(kw) > 0 then return formatIndex(fmt, kw, isterm) end
+		if indexItem:match("^%*") then -- a leading * means it's a main index
+			indexItem = indexItem:sub(2,-1)
+			isMain = true
+		end
+		if string.len(indexItem) > 0 then return formatIndex(FORMAT, indexItem, isTerm, isMain) end
 	end
 end

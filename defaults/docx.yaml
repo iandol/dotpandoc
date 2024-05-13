@@ -3,8 +3,9 @@ from: markdown
 to: docx
 output-file: Out.docx
 filters:
-  #- removeHR #remove horizontal rules
-  - pagebreak.lua
   - prependAll.rb # prepends institute:, comments: and keywords: metadata into the text
   - simplifyMetadata.rb #collapse down metadata "author: [name: affiliation:]" to author:
+  - pretty-urls.lua
+  - convertIndex.lua
+  - pagebreak.lua
 reference-doc: ${USERDATA}/templates/custom.docx

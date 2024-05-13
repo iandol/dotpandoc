@@ -110,6 +110,7 @@ templates:
       wrap: none
       lua-filter:
         - filters/typstFix.lua
+        - filters/convertIndex.lua
         - filters/list-table.lua
         - filters/pagebreak.lua
         - filters/abstract-section.lua
@@ -118,6 +119,10 @@ templates:
     extends: [typst,refs]
     pandoc:
       to: typst-citations
+  typst-full:
+    extends: [crossref,typst-refs]
+    metadata:
+      doindex: true
   typst-nativerefs:
     extends: typst
     pandoc:
@@ -146,6 +151,7 @@ templates:
         - filters/prependAll.rb # prepends institute:, comments: and keywords: metadata into the text
         - filters/simplifyMetadata.rb #collapse down metadata "author: [name: affiliation:]" to author:
       lua-filter:
+        - filters/convertIndex.lua
         - filters/pagebreak.lua # use \newpage{} also for HTML, DOCX, ODT & EPUB
         - filters/abstract-section.lua # move an abstract heading to metadata
         - filters/pretty-urls.lua # clean up URLs a bit
@@ -290,6 +296,7 @@ templates:
       filter: 
         - filters/assimilateMetadata.rb # handle academic metadata
       lua-filter:
+        - filters/convertIndex.lua
         - filters/pagebreak.lua # use \newpage{} also for HTML, DOCX, ODT & EPUB
         - filters/abstract-section.lua # move an abstract heading to metadata
         - filters/pretty-urls.lua # clean up URLs a bit
@@ -308,14 +315,15 @@ templates:
       monofont: 'Rec Mono Duotone'
       mathfont: 'STIX Two Math'
       mathfontoptions: 'math-style=ISO,bold-style=ISO'
-      #CJKmainfont: 'Heiti SC'
+      #CJKmainfont: 'Heiti SC' # need to install xecjk in tinytex
       colorlinks: true
       linkcolor: Mahogany
       citecolor: Sepia
       urlcolor: BrickRed
       lang: 'en-GB'
       nonumberfigures: true # I use Scrivener autonumbering, so disable for LaTeX
-    postprocessors: 
+      doindex: false # don't add index by default
+      postprocessors: 
       - postprocessors/fixLaTeX.rb
 #-----------------------------------------------------------------
   latex-crossref:
@@ -329,6 +337,11 @@ templates:
 #-----------------------------------------------------------------
   latex-refs:
     extends: [latex, refs]
+#-----------------------------------------------------------------
+  latex-index:
+    extends: [latex-crossref]
+    metadata:
+      doindex: true
 #-----------------------------------------------------------------
   pdf-refs:
     extends: latex-refs

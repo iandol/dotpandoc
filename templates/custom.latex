@@ -139,13 +139,37 @@ $endif$
 \ifPDFTeX\else
   % xetex/luatex font selection
 $if(mainfont)$
-  \setmainfont[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$]{$mainfont$}
+  $if(mainfontfallback)$
+    \ifLuaTeX
+      \usepackage{luaotfload}
+      \directlua{luaotfload.add_fallback("mainfontfallback",{
+        $for(mainfontfallback)$"$mainfontfallback$"$sep$,$endfor$
+      })}
+    \fi
+  $endif$
+  \setmainfont[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$$if(mainfontfallback)$,RawFeature={fallback=mainfontfallback}$endif$]{$mainfont$}
 $endif$
 $if(sansfont)$
-  \setsansfont[$for(sansfontoptions)$$sansfontoptions$$sep$,$endfor$]{$sansfont$}
+  $if(sansfontfallback)$
+    \ifLuaTeX
+      \usepackage{luaotfload}
+      \directlua{luaotfload.add_fallback("sansfontfallback",{
+        $for(sansfontfallback)$"$sansfontfallback$"$sep$,$endfor$
+      })}
+    \fi
+  $endif$
+  \setsansfont[$for(sansfontoptions)$$sansfontoptions$$sep$,$endfor$$if(sansfontfallback)$,RawFeature={fallback=sansfontfallback}$endif$]{$sansfont$}
 $endif$
 $if(monofont)$
-  \setmonofont[$for(monofontoptions)$$monofontoptions$$sep$,$endfor$]{$monofont$}
+  $if(monofontfallback)$
+    \ifLuaTeX
+      \usepackage{luaotfload}
+      \directlua{luaotfload.add_fallback("monofontfallback",{
+        $for(monofontfallback)$"$monofontfallback$"$sep$,$endfor$
+      })}
+    \fi
+  $endif$
+  \setmonofont[$for(monofontoptions)$$monofontoptions$$sep$,$endfor$$if(monofontfallback)$,RawFeature={fallback=monofontfallback}$endif$]{$monofont$}
 $endif$
 $for(fontfamilies)$
   \newfontfamily{$fontfamilies.name$}[$for(fontfamilies.options)$$fontfamilies.options$$sep$,$endfor$]{$fontfamilies.font$}
@@ -206,46 +230,17 @@ $if(zero-width-non-joiner)$
 $endif$
 % use Cambria/Arial Unicode to fix some font substitution problems for e.g. ⬄
 \ifPDFTeX
-
 \else
 \newfontfamily\fixfont[]{Cambria Math}
 \newfontfamily\fixfontB[]{Arial Unicode MS}
 \fi
 
-$if(logo)$
-\usepackage[export]{adjustbox}
-\usepackage{graphicx}
+$if(doindex)$
+\usepackage{makeidx}
+\let\indext\index
+\makeindex
 $endif$
-% customise titles
-\usepackage{xcolor}
-\usepackage{titlesec}
-\definecolor{Sepia}{rgb}{.4,.1,.1}
-\definecolor{Mahogany}{rgb}{.6,.2,.2}
-\definecolor{BrickRed}{rgb}{.7,.3,.3}
-\titleformat*{\section}{\LARGE\bfseries\itshape\center\sffamily\color{Sepia}}
-\titleformat*{\subsection}{\Large\bfseries\itshape\sffamily\color{Sepia}}
-\titleformat*{\subsubsection}{\large\bfseries\itshape\sffamily\color{Mahogany}}
-%\titleformat*{\subsubsubsection}{\large\itshape\sffamily}
-$if(beamer)$
-$if(theme)$
-\usetheme[$for(themeoptions)$$themeoptions$$sep$,$endfor$]{$theme$}
-$endif$
-$if(colortheme)$
-\usecolortheme{$colortheme$}
-$endif$
-$if(fonttheme)$
-\usefonttheme{$fonttheme$}
-$endif$
-$if(mainfont)$
-\usefonttheme{serif} % use mainfont rather than sansfont for slide text
-$endif$
-$if(innertheme)$
-\useinnertheme{$innertheme$}
-$endif$
-$if(outertheme)$
-\useoutertheme{$outertheme$}
-$endif$
-$endif$
+
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \IfFileExists{microtype.sty}{% use microtype if available
@@ -290,7 +285,7 @@ $if(listings)$
 \lstset{defaultdialect=[x86masm]Assembler}
 $endif$
 $if(lhs)$
-\lstnewenvironment{code}{\lstset{language=Ruby,basicstyle=\small\ttfamily}}{}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
 $endif$
 $if(highlighting-macros)$
 $highlighting-macros$
@@ -343,6 +338,15 @@ $-- also used for underline
   \usepackage[soul]{lua-ul}
 \else
   \usepackage{soul}
+$if(beamer)$
+  \makeatletter
+  \let\HL\hl
+  \renewcommand\hl{% fix for beamer highlighting
+    \let\set@color\beamerorig@set@color
+    \let\reset@color\beamerorig@reset@color
+    \HL}
+  \makeatother
+$endif$
 $if(CJKmainfont)$
   \ifXeTeX
     % soul's \st doesn't work for CJK:
@@ -367,14 +371,28 @@ $if(beamer)$
 $else$
 $if(block-headings)$
 % Make \paragraph and \subparagraph free-standing
+\makeatletter
 \ifx\paragraph\undefined\else
   \let\oldparagraph\paragraph
-  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
 \fi
 \ifx\subparagraph\undefined\else
   \let\oldsubparagraph\subparagraph
-  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
 \fi
+\makeatother
 $endif$
 $endif$
 $if(pagestyle)$
@@ -426,7 +444,7 @@ $if(babel-lang)$
 $if(mainfont)$
 \ifPDFTeX
 \else
-\babelfont{rm}[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$]{$mainfont$}
+\babelfont{rm}[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$$if(mainfontfallback)$,RawFeature={fallback=mainfontfallback}$endif$]{$mainfont$}
 \fi
 $endif$
 $endif$
@@ -573,11 +591,9 @@ $endif$
 $if(logo)$
 \vspace{-1em}\includegraphics[width=$if(logo-width)$$logo-width$$else$100$endif$pt, center]{$logo$}\vspace{-0.8em}
 $endif$
-
 $if(institute)$
 \textsf{$for(institute)$\textsuperscript{$it.index$} $it.name$$sep$\quad\&\quad$endfor$}
 $endif$
-
 $if(correspondence_list)$
 \ifPDFTeX
 \textsf{$for(correspondence_list)$* \emph{$it$}$sep$ \quad $endfor$}
@@ -585,15 +601,12 @@ $if(correspondence_list)$
 \textsf{$for(correspondence_list)$\fixfontB{✻} \emph{$it$}$sep$ \quad $endfor$}
 \fi
 $endif$
-
 $if(equal_contributors)$
 \textsf{\textsuperscript{†} \small{\emph{These authors contributed equally to this work.}}}
 $endif$
-
 $if(email_list)$
 \textsf{\small{\emph{Mail: $for(email_list)$$it$$sep$, $endfor$}}}
 $endif$
-
 \end{center}
 
 $if(abstract)$
@@ -676,6 +689,10 @@ $else$
 \printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
 $endif$
 
+$endif$
+
+$if(doindex)$
+\printindex
 $endif$
 
 $for(include-after)$

@@ -10,3 +10,4 @@ margin: {x: 1.75cm, y: 2cm}
 columns: 1
 lang: "en-GB"
 toc-title: "Table of Contents"
+doindex: false

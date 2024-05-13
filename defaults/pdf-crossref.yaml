@@ -1,0 +1,4 @@
+defaults: [crossref, refs, latex]
+to: pdf
+pdf-engine: xelatex
+output-file: Out.pdf

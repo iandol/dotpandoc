@@ -1,4 +1,7 @@
+$if(doindex)$
 #import "@preview/in-dexter:0.2.0": *
+$endif$
+#import "@preview/gentle-clues:0.8.0": info, task, memo, warning, error, example, tip
 
 $definitions.typst()$
 
@@ -14,6 +17,11 @@ $definitions.typst()$
 #set table(
 	inset: 6pt
 )
+
+$for(header-includes)$
+$header-includes$
+
+$endfor$
 
 $if(template)$
 #import "$template$": conf
@@ -100,10 +108,6 @@ $else$
 #show raw: set text(font: "Rec Mono Duotone")
 $endif$
 
-$for(header-includes)$
-$header-includes$
-
-$endfor$
 $for(include-before)$
 $include-before$
 
@@ -141,6 +145,15 @@ $if(bibliography)$
 
 #bibliography($for(bibliography)$"$bibliography$"$sep$,$endfor$)
 $endif$
+$endif$
+
+$if(doindex)$
+#pagebreak()
+= Index
+#columns(2)[
+  #make-index(title: none)
+]
+
 $endif$
 $for(include-after)$
 
