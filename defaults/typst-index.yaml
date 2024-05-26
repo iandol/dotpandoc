@@ -1,0 +1,3 @@
+defaults: [typst-refs]
+metadata:
+  doindex: true

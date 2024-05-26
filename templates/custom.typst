@@ -1,5 +1,5 @@
 $if(doindex)$
-#import "@preview/in-dexter:0.2.0": *
+#import "@preview/in-dexter:0.3.0": *
 $endif$
 #import "@preview/gentle-clues:0.8.0": info, task, memo, warning, error, example, tip
 

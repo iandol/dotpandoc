@@ -20,6 +20,12 @@ templates:
       filter: pandoc-crossref # process crossrefs
     metadata:
       linkReferences: true
+#-----------------------------------------------------------------INDEXING
+  indexing: # use indexing filter
+    pandoc:
+      lua-filter: convertIndex.lua
+    metadata:
+      doindex: true
 #-----------------------------------------------------------------CITEPROC
   refs:
     pandoc:
@@ -76,7 +82,6 @@ templates:
         - filters/prependAuthor.rb #prepends authors
       lua-filter:
         - filters/modifyHeadings.lua #makes headings stand out a bit more
-        #- filters/removeEmphasis.lua # remove emphasis for plain and turn strong to UPPER
 #-----------------------------------------------------------------PLAIN REFS
   plain-refs:
     extends: [plain,refs]
@@ -115,6 +120,8 @@ templates:
         - filters/pagebreak.lua
         - filters/abstract-section.lua
         - filters/pretty-urls.lua
+    metadata:
+      doindex: false
   typst-refs:
     extends: [typst,refs]
     pandoc:

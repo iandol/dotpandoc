@@ -569,7 +569,7 @@ $if(institute)$
 \institute{$for(institute)$$if(it.index)$\textsuperscript{$it.index$}$endif$ $it.name$$sep$ \and $endfor$}
 $endif$
 $if(titlegraphic)$
-\titlegraphic{\includegraphics{$titlegraphic$}}
+\titlegraphic{\includegraphics$if(titlegraphicoptions)$[$for(titlegraphicoptions)$$titlegraphicoptions$$sep$, $endfor$]$endif${$titlegraphic$}}
 $endif$
 $if(logo)$
 \logo{\includegraphics{$logo$}}

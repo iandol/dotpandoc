@@ -44,7 +44,7 @@ to examine the environment and execute Lua commands while stepping through the c
 With mobdebug and luasocket installed, you can also debug from your teminal 
 without running an IDE:
 
-> lua -e "require('mobdebug').listen()"
+> pandoc-lua -e "require('mobdebug').listen()"
 
 But Zerobrane offers richer functionality…
 ]]

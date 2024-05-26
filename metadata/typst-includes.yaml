@@ -1,6 +1,12 @@
 header-includes: |
   ```{=typst}
   #set text(ligatures: true, discretionary-ligatures: false, number-type: "old-style")
+  #set par(leading: 0.85em, justify: true)
+  #show figure.caption: it => [
+    #set text(font: "Alegreya", size: 12pt, discretionary-ligatures: false, number-type: "lining")
+    #emph[#it.supplement~#it.counter.display(it.numbering) — #it.body]
+  ]
+  #show heading.where(level:1): it=> [#pagebreak() #it]
   ```
 mainfont: "Dolly Pro"
 fontsize: 12pt
