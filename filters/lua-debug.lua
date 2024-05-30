@@ -11,15 +11,15 @@ search path to use mobdebug.lua and luasocket from Zerobrane's install location.
 See [documentation](https://studio.zerobrane.com/doc-remote-debugging) for details. For e.g. macOS 
 this would be for zsh:
 
-    export ZBS=/Applications/ZeroBraneStudio.app/Contents/ZeroBraneStudio 
-    export LUA_PATH="./?.lua;$ZBS/lualibs/?/?.lua;$ZBS/lualibs/?.lua"  
-    export LUA_CPATH="$ZBS/bin/?.dylib;$ZBS/bin/clibs53/?.dylib;$ZBS/bin/clibs53/?/?.dylib"
+	export ZBS=/Applications/ZeroBraneStudio.app/Contents/ZeroBraneStudio 
+	export LUA_PATH="./?.lua;$ZBS/lualibs/?/?.lua;$ZBS/lualibs/?.lua"  
+	export LUA_CPATH="$ZBS/bin/?.dylib;$ZBS/bin/clibs53/?.dylib;$ZBS/bin/clibs53/?/?.dylib"
 
 Elvish: 
 
-    set-env ZBS /Applications/ZeroBraneStudio.app/Contents/ZeroBraneStudio
-    set-env LUA_PATH "./?.lua;"$E:ZBS"/lualibs/?/?.lua;"$E:ZBS"/lualibs/?.lua"
-    set-env LUA_CPATH $E:ZBS"/bin/?.dylib;"$E:ZBS"/bin/clibs54/?.dylib;"$E:ZBS"/bin/clibs54/?/?.dylib"
+	set-env ZBS /Applications/ZeroBraneStudio.app/Contents/ZeroBraneStudio
+	set-env LUA_PATH "./?.lua;"$E:ZBS"/lualibs/?/?.lua;"$E:ZBS"/lualibs/?.lua"
+	set-env LUA_CPATH $E:ZBS"/bin/?.dylib;"$E:ZBS"/bin/clibs54/?.dylib;"$E:ZBS"/bin/clibs54/?/?.dylib"
 
 ## With Lua installed:
 If you have installed Lua v5.4 and added mobdebug + luasocket using luarocks then 
@@ -33,9 +33,9 @@ is turned ON; and editor.autoactivate = true is enabled in your user.lua setting
 
 2) Then run pandoc from terminal with the filter that is open in the editor:
 
-    > pandoc --lua-filter luatest.lua 
-    Here is a *test* for **REPL** debugging.
-    [ctrl]+[d]
+	> pandoc --lua-filter luatest.lua 
+	Here is a *test* for **REPL** debugging.
+	[ctrl]+[d]
 
 3) Zerobrane's debugger will activate. Use the Stack window and Remote console
 to examine the environment and execute Lua commands while stepping through the code.
@@ -49,9 +49,32 @@ without running an IDE:
 But Zerobrane offers richer functionality…
 ]]
 
---sp = require("serpent") -- use as print(sp.dump(object))
+lg = require("logging")
 md = require("mobdebug")
+
 md.start()
+
+function OrderedList(l)
+	md.pause() --breakpoint
+	i = 0
+	ll = l:walk {
+		Plain = function (p)
+			i = i + 1
+			if i == 1 then
+				d = pandoc.Div(p, {['custom-style'] = 'Numbered 1'})
+			else
+				d = pandoc.Div(p, {['custom-style'] = 'Numbered'})
+			end
+			return d
+		end 
+	}
+	return ll
+end
+
+function Div(d)
+	md.pause()
+	return d
+end
 
 function Meta(m)
 	md.pause() --breakpoint
