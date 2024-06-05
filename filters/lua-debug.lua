@@ -52,10 +52,8 @@ But Zerobrane offers richer functionality…
 lg = require("logging")
 md = require("mobdebug")
 
-md.start()
-
 function OrderedList(l)
-	md.pause() --breakpoint
+	md.start() --breakpoint
 	i = 0
 	ll = l:walk {
 		Plain = function (p)
@@ -72,26 +70,26 @@ function OrderedList(l)
 end
 
 function Div(d)
-	md.pause()
+	md.start()
 	return d
 end
 
 function Meta(m)
-	md.pause() --breakpoint
+	md.start() --breakpoint
 	return m
 end
 
 function Cite(elem)
-	md.pause() --breakpoint
+	md.start() --breakpoint
 	return elem
 end
 
 function Emph(elem)
-	md.pause() --breakpoint
+	md.start() --breakpoint
 	return elem.content
 end
 
 function Strong(elem)
-	md.pause() --breakpoint
+	md.start() --breakpoint
 	return pandoc.SmallCaps(elem.content)
 end

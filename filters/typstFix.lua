@@ -1,7 +1,7 @@
 --[[
 	typstFix.lua: typst fix filter for pandoc 
 	Version:   1.05
-	Copyright: (c) 2023 Ian Max Andolina License=MIT, see LICENSE for details
+	Copyright: (c) 2024 Ian Max Andolina License=MIT, see LICENSE for details
 
 	Usage: Solves some problems for Typst output from Pandoc:
 	(1) Typst uses <label> syntax for #ids, which is not compatible with the
