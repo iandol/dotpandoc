@@ -103,12 +103,18 @@ end
 local function addClassAndStyle(alert)
 	return pandoc.Attr({class = alert,['custom-style'] = titleCase(alert)})
 end
+
+--- Converts alert to a Typst Raw block
+--
+-- @param content the content of the alert
+-- @param alert the alert name
+-- @param customTitle the [optional] custom title
+-- @return the wrapped content
 local function wrapTypst(content, alert, customTitle)
 	local prefix = createTypstPrefix(alert, customTitle)
 	local rawcontent = pandoc.write(pandoc.Pandoc(content),'typst'):gsub("\n$","")
 	return pandoc.RawBlock('typst', prefix .. rawcontent .. "]\n\n")
 end
-
 
 --- Wraps the content of a Plain alert in a Div with line breaks and custom style
 --
