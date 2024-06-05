@@ -8,6 +8,12 @@ For Typst, install https://typst.app/universe/package/gentle-clues/
 > Some **Tip content**.
 > More content: H~2~O.
 
+> [!warning] A Custom title
+> GFM Alert with custom title.
+>
+> My **warning** content.
+> Some *more* content.
+
 :::note
 Fenced Div. 
 
@@ -15,17 +21,13 @@ Some note content.
 More *content*.
 :::
 
-> [!warning] A Custom title
-> GFM Alert with custom title.
->
-> My **warning** content.
-> Some *more* content.
+::: {.important title="Custom Title"}
+Some content.
+:::
 
-Version:   0.1
+Version:   0.11
 Copyright: (c) 2024 Ian Max Andolina License=MIT, see LICENSE for details
 ]]--
-l = require("logging") -- inspection
-md = require("mobdebug") -- debugging use md.start() | md.pause()
 
 stringify = pandoc.utils.stringify
 pdType = pandoc.utils.type
@@ -41,8 +43,11 @@ local function titleCase(input)
 end
 
 -- Check if the given value is a pandoc.List or pandoc.Inlines.
-local function isPandocList(list)
-	return pdType(list) == 'List' or pdType(list) == 'Inlines'
+--
+-- @param input item
+-- @return true / false
+local function isPandocList(input)
+	return pdType(input) == 'List' or pdType(input) == 'Inlines'
 end
 
 -- Inject alert Title text into the content
@@ -105,7 +110,7 @@ local function wrapTypst(content, alert, customTitle)
 end
 
 
---- Wraps the content of a Plain alert in a Div with custom style and line breaks
+--- Wraps the content of a Plain alert in a Div with line breaks and custom style
 --
 -- @param content the content of the alert
 -- @param alert the alert name
@@ -139,11 +144,11 @@ function Div(d)
 	if not alerts:includes(alert) then return end
 	
 	if d.content[1].classes and d.content[1].classes:includes('title') then
-		d.content:remove(1) -- remove title paragraph
+		d.content:remove(1) -- remove title paragraph to give us more flexibility
 	end
 	
 	if not FORMAT:match 'typst' then
-		d.content[1].content = injectTitle(d.content[1].content, alert, customTitle)
+		d.content[1].content = injectTitle(d.content[1].content, alert, customTitle) -- add our alert title inline to the content
 	end
 	
 	if FORMAT:match('typst') then
@@ -174,7 +179,7 @@ function BlockQuote(bq)
 	if #newContent > 0 and newContent[1].tag == "SoftBreak" then newContent:remove(1) end
 
 	if not FORMAT:match 'typst' then
-		newContent = injectTitle(newContent, alert, stringify(customTitle))
+		newContent = injectTitle(newContent, alert, stringify(customTitle)) -- add our alert title inline to the content
 	end
 	
 	local content = bq.content:clone()
