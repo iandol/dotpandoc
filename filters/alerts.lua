@@ -73,7 +73,7 @@ local function injectTitle(content, alert, customTitle)
 	return content
 end
 
---- Create the gentle clues prefix from the alert name and optional custom title
+-- Create the gentle clues prefix from the alert name and optional custom title
 --
 -- @param alert the alert name
 -- @param customTitle the [optional] custom title
@@ -99,7 +99,7 @@ local function createTypstPrefix(alert, customTitle)
 	end
 end
 
---- Creates an attribute with a class and a custom style
+-- Creates an attribute with a class and a custom style
 --
 -- @param alert the alert name
 -- @return the attributes table
@@ -107,7 +107,7 @@ local function addClassAndStyle(alert)
 	return pandoc.Attr({class = alert,['custom-style'] = titleCase(alert)})
 end
 
---- Converts alert to a Typst Raw block
+-- Converts alert to a Typst Raw block
 --
 -- @param content the content of the alert
 -- @param alert the alert name
@@ -119,7 +119,7 @@ local function wrapTypst(content, alert, customTitle)
 	return pandoc.RawBlock('typst', prefix .. rawcontent .. "]\n\n")
 end
 
---- Wraps the content of a Plain alert in a Div with line breaks and custom style
+-- Wraps the content of a Plain alert in a Div with line breaks and custom style
 --
 -- @param content the content of the alert
 -- @param alert the alert name
@@ -132,7 +132,7 @@ local function wrapPlain(content, alert)
 	return pandoc.Div(content, addClassAndStyle(alert)) -- Add class and style to the Div
 end
 
---- Wraps the content of an alert in a Div with custom style
+-- Wraps the content of an alert in a Div with custom style
 --
 -- @param content the content of the alert
 -- @param alert the alert name
