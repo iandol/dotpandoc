@@ -27,7 +27,7 @@ Some content.
 
 Version:   0.11
 Copyright: (c) 2024 Ian Max Andolina License=MIT, see LICENSE for details
-]]--
+]]
 
 stringify = pandoc.utils.stringify
 pdType = pandoc.utils.type
@@ -131,7 +131,6 @@ local function wrapPlain(content, alert)
 	content[#content].content:insert(pandoc.Str('----------------------------------')) -- Insert separator line
 	return pandoc.Div(content, addClassAndStyle(alert)) -- Add class and style to the Div
 end
-
 
 --- Wraps the content of an alert in a Div with custom style
 --
