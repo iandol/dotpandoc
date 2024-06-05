@@ -38,6 +38,9 @@ local gentleClues = pandoc.List{'abstract', 'info', 'question', 'memo', 'task',
 	'tip', 'success', 'warning', 'error', 'example'}
 
 -- Convert the given string to title case using gsub
+--
+-- @param input string
+-- @return string
 local function titleCase(input)
 	return input:gsub("(%w)(%w*)",function(firstChar, rest) return pandoc.text.upper(firstChar) .. rest end)
 end
