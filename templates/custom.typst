@@ -34,11 +34,14 @@ $endif$
 $if(title)$
 	title: [$title$],
 $endif$
+$if(subtitle)$
+  subtitle: [$subtitle$],
+$endif$
 $if(author)$
 	authors: (
 $for(author)$
 $if(it.name)$
-		( name: "$it.name$",
+		( name: [$it.name$],
 $if(it.affiliation)$
 			affiliation: [$it.affiliation$],
 $endif$
@@ -46,10 +49,10 @@ $if(it.email)$
 			email: [$it.email$],
 $endif$
 $if(it.orcid)$
-			orcid: [$it.orcid$]
+			orcid: [$it.orcid$],
 $endif$  ),
 $else$
-		( name: "$it$",
+		( name: [$it$],
 			affiliation: "",
 			email: "" ),
 $endif$

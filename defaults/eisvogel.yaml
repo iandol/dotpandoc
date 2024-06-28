@@ -20,8 +20,6 @@ metadata:
   toc-own-page: true
   listings-disable-line-numbers: false
   float-placement-figure: H
-  #logo: "${HOME}/Library/CloudStorage/Dropbox/Images/Logos/Platform-ION-Banner-White.png"
-  #logo-width: 350
   mainfont: 'Greta Sans Pro'
   mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
   sansfont: 'Graublau Slab'
@@ -29,8 +27,6 @@ metadata:
   monofont: 'Fira Code'
   mathfont: 'Cambria Math'
   mathfontoptions: 'math-style=ISO,bold-style=ISO'
-  CJKmainfont: 'PingFang SC'
-  CJKsansfont: 'PingFang SC'
   fontsize: '12pt'
   linestretch: '1.5'
   colorlinks: true
