@@ -1,0 +1,5 @@
+defaults:
+- refs
+standalone: true
+from: markdown
+to: jats

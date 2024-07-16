@@ -63,6 +63,17 @@ templates:
     metadata:
       biblio-title: Bibliography # see variables for latex
       biblio-style: numeric
+#-----------------------------------------------------------------JATS
+  jats:
+    extends: [refs]
+    pandoc:
+      from: markdown
+      to: jats
+      standalone: true
+      lua-filter:
+        - filters/pagebreak.lua
+        - filters/abstract-section.lua
+        - filters/pretty-urls.lua
 #-----------------------------------------------------------------PLAIN TXT
   plain:
     pandoc:
@@ -98,7 +109,6 @@ templates:
       standalone: true
       template: templates/custom.icml
       verbose: true
-
 #-----------------------------------------------------------------
 #::::::::::::::::::::::::::: TYPST :::::::::::::::::::::::::::::::
 #-----------------------------------------------------------------
@@ -669,8 +679,8 @@ templates:
     metadata:
       document-css: true #use the html partial
       lang: 'en-GB'
-      mainfont: "'Greta Sans Pro',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-serif"
-      monofont: "'Rec Mono Duotone','Fira code','Jetbrains Mono',menlo,consolas,monospace"
+      mainfont: Alegreya Sans, Greta Sans Pro, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif"
+      monofont: Rec Mono Duotone, Fira code, Jetbrains Mono, menlo, consolas, monospace
       linestretch: 1.3
       fontsize: 20
       fontcolor: "#1A1A1A"

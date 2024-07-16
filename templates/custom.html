@@ -51,7 +51,7 @@ $endif$
 $if(author)$
 <p class="author-list">
 $for(author)$
-  $if(author.last)$ and $endif$<span class="author" property="author" typeof="Person">$author.name$</span><sup>$if(author.affiliation)$$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$endif$$if(author.correspondence)$<a href="mailto:$author.correspondence$">✉</a>$endif$$if(author.equal_contributor)$†$endif$</sup>$sep$, 
+  $if(author.last)$ and $endif$<span class="author" property="author" typeof="Person">$author.name$</span><sup>$if(author.affiliation)$$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$endif$$if(author.equal_contributor)$†$endif$$if(author.correspondence)$<a class="email-svg" href="mailto:$author.correspondence$"></a>$endif$$if(author.orcid)$<span class="orcid-svg"></span>$endif$</sup>$sep$, 
 $endfor$
 </p>
 $endif$
@@ -74,7 +74,7 @@ $if(correspondence_list)$
 </div>
 $endif$
 $if(email_list)$
-<div class="email">
+<div class="emails">
   $for(email_list)$<span class="email-item">$email_list$</span>$sep$ | $endfor$
 </div>
 $endif$

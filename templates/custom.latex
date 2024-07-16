@@ -596,25 +596,35 @@ $endif$
 
 \begin{center}
 $if(logo)$
+\begin{center}
 \vspace{-1em}\includegraphics[width=$if(logo-width)$$logo-width$$else$100$endif$pt, center]{$logo$}\vspace{-0.8em}
+
 $endif$
 $if(institute)$
+\begin{center}
 \textsf{$for(institute)$\textsuperscript{$it.index$} $it.name$$sep$\quad\&\quad$endfor$}
+\end{center}
 $endif$
 $if(correspondence_list)$
+\begin{center}
 \ifPDFTeX
 \textsf{$for(correspondence_list)$* \emph{$it$}$sep$ \quad $endfor$}
 \else
 \textsf{$for(correspondence_list)$\fixfontB{✻} \emph{$it$}$sep$ \quad $endfor$}
 \fi
+\end{center}
 $endif$
 $if(equal_contributors)$
+\begin{center}
 \textsf{\textsuperscript{†} \small{\emph{These authors contributed equally to this work.}}}
+\end{center}
 $endif$
 $if(email_list)$
+\begin{center}
 \textsf{\small{\emph{Mail: $for(email_list)$$it$$sep$, $endfor$}}}
-$endif$
 \end{center}
+$endif$
+
 
 $if(abstract)$
 \begin{abstract}
