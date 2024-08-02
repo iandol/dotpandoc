@@ -114,6 +114,7 @@ templates:
 #-----------------------------------------------------------------
 #-----------------------------------------------------------------Standard
   typst:
+    preprocessors: [preprocessors/removeImageDimensions.rb] 
     pandoc:
       verbose: true
       from: markdown
@@ -121,7 +122,7 @@ templates:
       standalone: true
       template: custom.typst
       table-of-contents: true
-      metadata-file: typst-includes.yaml
+      metadata-file: typst-plain.yaml
       wrap: none
       lua-filter:
         - filters/typstFix.lua
@@ -132,20 +133,28 @@ templates:
         - filters/pretty-urls.lua
     metadata:
       doindex: false
+#-----------------------------------------------------------------
   typst-refs:
     extends: [typst,refs]
     pandoc:
       to: typst-citations
+#-----------------------------------------------------------------
+  typstpdf:
+    extends: typst-refs
+    cleanup: [postprocessors/typst2pdf]
+#-----------------------------------------------------------------
   typst-full:
     extends: [crossref,typst-refs]
     metadata:
       doindex: true
+#-----------------------------------------------------------------
   typst-nativerefs:
     extends: typst
     pandoc:
       to: typst
       bibliography: Core.bib
       csl: csl/apa-ian.csl
+#-----------------------------------------------------------------
   lapreprint:
     extends: typst
     pandoc:
@@ -168,7 +177,7 @@ templates:
         - filters/prependAll.rb # prepends institute:, comments: and keywords: metadata into the text
         - filters/simplifyMetadata.rb #collapse down metadata "author: [name: affiliation:]" to author:
       lua-filter:
-        - filters/convertIndex.lua
+        - filters/convertIndex.lua # enable indexing
         - filters/pagebreak.lua # use \newpage{} also for HTML, DOCX, ODT & EPUB
         - filters/abstract-section.lua # move an abstract heading to metadata
         - filters/pretty-urls.lua # clean up URLs a bit
@@ -176,16 +185,16 @@ templates:
 #-----------------------------------------------------------------DOCX REFS
   docx-refs:
     extends: [docx,refs]
+#-----------------------------------------------------------------DOCX standard fonts
+  docx-refs-calibri:
+    extends: [docx-refs]
+    pandoc:
+      reference-doc: templates/custom-calibri.docx
 #-----------------------------------------------------------------DOCX REFS
   docx-letter:
     extends: [docx-refs]
     pandoc:
       reference-doc: '/Users/ian/Library/CloudStorage/Dropbox/Work/CAS-Letterhead-2.docx'
-#-----------------------------------------------------------------DOCX NSFC
-  docx-refs-nsfc:
-    extends: [docx-refs]
-    pandoc:
-      reference-doc: templates/custom-nsfc.docx
 #-----------------------------------------------------------------DOCX CROSSREF
   docx-crossref:
     extends: [docx-refs,crossref]
@@ -215,6 +224,12 @@ templates:
     pandoc:
       to: odt
       reference-doc: templates/custom.odt
+#-----------------------------------------------------------------ODT standard fonts
+  odt-refs-calibri:
+    extends: [docx,refs]
+    pandoc:
+      to: odt
+      reference-doc: templates/custom-calibri.odt
 #-----------------------------------------------------------------
 #:::::::::::::::::::::::: PRESENTATIONS ::::::::::::::::::::::::::
 #-----------------------------------------------------------------
@@ -340,7 +355,7 @@ templates:
       lang: 'en-GB'
       nonumberfigures: true # I use Scrivener autonumbering, so disable for LaTeX
       doindex: false # don't add index by default
-      postprocessors: 
+    postprocessors: 
       - postprocessors/fixLaTeX.rb
 #-----------------------------------------------------------------
   latex-crossref:
@@ -569,8 +584,8 @@ templates:
       monofont: 'Rec Mono Duotone'
       mathfont: 'STIX Two Math'
       mathfontoptions: 'math-style=ISO,bold-style=ISO'
-      CJKmainfont: 'PingFang SC'
-      CJKsansfont: 'PingFang SC'
+      #CJKmainfont: 'PingFang SC'
+      #CJKsansfont: 'PingFang SC'
       fontsize: '12pt'
       linestretch: '1.5'
       colorlinks: true

@@ -9,3 +9,6 @@ filters:
   - convertIndex.lua
   - pagebreak.lua
 reference-doc: ${USERDATA}/templates/custom.odt
+template: ${USERDATA}/templates/custom.opendocument
+metadata:
+  doindex: true

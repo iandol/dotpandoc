@@ -160,6 +160,31 @@ $body$
 $for(include-after)$
 $include-after$
 $endfor$
+$if(doindex)$
+<text:alphabetical-index text:style-name="Sect1" text:protected="true" text:name="Alphabetical Index1">
+  <text:alphabetical-index-source text:main-entry-style-name="Main_20_index_20_entry" text:sort-algorithm="alphanumeric" fo:language="en" fo:country="GB">
+    <text:index-title-template text:style-name="Index_20_Heading">Alphabetical Index</text:index-title-template>
+    <text:alphabetical-index-entry-template text:outline-level="separator" text:style-name="Index_20_Separator">
+      <text:index-entry-text/>
+    </text:alphabetical-index-entry-template>
+    <text:alphabetical-index-entry-template text:outline-level="1" text:style-name="Index_20_1">
+      <text:index-entry-text/>
+      <text:index-entry-tab-stop style:type="right" style:leader-char="."/>
+      <text:index-entry-page-number/>
+    </text:alphabetical-index-entry-template>
+    <text:alphabetical-index-entry-template text:outline-level="2" text:style-name="Index_20_2">
+      <text:index-entry-text/>
+      <text:index-entry-tab-stop style:type="right" style:leader-char="."/>
+      <text:index-entry-page-number/>
+    </text:alphabetical-index-entry-template>
+    <text:alphabetical-index-entry-template text:outline-level="3" text:style-name="Index_20_3">
+      <text:index-entry-text/>
+      <text:index-entry-tab-stop style:type="right" style:leader-char="."/>
+      <text:index-entry-page-number/>
+    </text:alphabetical-index-entry-template>
+  </text:alphabetical-index-source>
+</text:alphabetical-index>
+$endif$
 </office:text>
 </office:body>
 </office:document-content>

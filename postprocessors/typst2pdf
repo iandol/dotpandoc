@@ -1,0 +1,6 @@
+#!/usr/bin/env elvish
+#VERSION: 0.1.0
+
+var @files = (put *.typst)
+
+each {|f| e:typst compile $f $f".pdf" } $files

@@ -22,7 +22,7 @@
 	For LaTeX you need a template that contains the makeindex command in the
 	right place.
 
-	Version:   1.09
+	Version:   1.10
 	Copyright: (c) 2024 Ian Max Andolina License=MIT, see LICENSE for details
 ]]
 
@@ -45,7 +45,7 @@ local function titleCase(input)
 	return input:gsub("(%w)(%w*)", function(firstChar, rest) return firstChar:upper() .. rest end) 
 end
 
---returns a rawinline index entry for tex, odt and typst
+--returns a rawinline index entry for tex, odt, docx and typst
 local counter = nil
 local function formatIndex(format, item, isTerm, isMain)
 	if not counter then counter = 1 end -- counter is used for odt
@@ -135,6 +135,7 @@ end
 function RawInline(r)
 	local isTerm = false -- default to not use terms
 	local isMain = false -- default to not use main index
+	fmt = FORMAT
 	if FORMAT:match("odt") then fmt = "opendocument" end
 	if FORMAT:match("docx") then fmt = "openxml" end
 	indexItem = r.text
@@ -149,6 +150,6 @@ function RawInline(r)
 			indexItem = indexItem:sub(2,-1)
 			isMain = true
 		end
-		if string.len(indexItem) > 0 then return formatIndex(FORMAT, indexItem, isTerm, isMain) end
+		if string.len(indexItem) > 0 then return formatIndex(fmt, indexItem, isTerm, isMain) end
 	end
 end
