@@ -15,6 +15,7 @@ filters:
 table-of-contents: true
 cite-method: citeproc
 bibliography: ${USERDATA}/Core.json #JSON faster than BIB, symlinked into Pandoc data dir
+csl: ${USERDATA}/csl/cell-doi.csl
 citation-abbreviations: ${USERDATA}/cite-abbr.json # my journal abbreviations
 metadata:
   reference-section-title: Bibliography

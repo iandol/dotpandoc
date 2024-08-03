@@ -22,9 +22,12 @@
 	For LaTeX you need a template that contains the makeindex command in the
 	right place.
 
-	Version:   1.10
+	Version:   1.11
 	Copyright: (c) 2024 Ian Max Andolina License=MIT, see LICENSE for details
 ]]
+
+-- do we Title case the words that go into the index?
+local doTitleCase = true
 
 -- split a string based on a delimiter
 local function split(inputString, delimiter)
@@ -37,7 +40,12 @@ end
 
 -- Replace |see{term} with " \t "See: term in the given string
 local function replaceSeeClause(input)
-	return input:gsub("|see{(.-)}", ", see: %1")
+	return input:gsub("|see{(.-)}", ", see—%1")
+end
+
+-- remove |see{term} in the given string
+local function removeSeeClause(input)
+	return input:gsub("|see{(.-)}", "")
 end
 
 -- Title case the given string
@@ -64,21 +72,32 @@ local function formatIndex(format, item, isTerm, isMain)
 	end
 
 	-- process the items
-	keys[3] = replaceSeeClause(keys[3]) -- deal with |see{term} in the item
-	local tcItem = titleCase(keys[3]) -- use title case for the index
-	tcItem = tcItem:gsub('See','see') -- lowercase See
+	local tcItem = keys[3]
+	keys[3] = removeSeeClause(keys[3])
+	tcItem = replaceSeeClause(tcItem) -- deal with |see{term} in the item
+	if doTitleCase then
+		keys[1] = titleCase(keys[1])
+		keys[2] = titleCase(keys[2])
+		tcItem = titleCase(tcItem) -- use title case for the index
+		tcItem = tcItem:gsub('See','see') -- lowercase See
+	end
 
 	-- ODT
 	if format:match 'opendocument' then
 		if isMain then main = 'text:main-entry="true"' else main = '' end
+		local kfrag = ''
+		if nkeys == 2 then
+			kfrag = ' text:key1="' .. keys[2] .. '"'
+		elseif nkeys == 3 then
+			kfrag = ' text:key1="' .. keys[1] .. '" text:key2="' .. keys[2] .. '"'
+		end
 		if isTerm then
-			item = '<text:alphabetical-index-mark-start ' .. main .. ' text:id="IMarkX' .. tostring(counter) .. 
-			'" text:key1="' .. keys[1] .. '" text:key2="' .. keys[2] .. 
-			'"/>' .. keys[3] .. '<text:alphabetical-index-mark-end text:id="IMarkX' .. tostring(counter) .. '"/>'
+			item = '<text:alphabetical-index-mark-start ' .. main .. ' text:id="IMarkX' .. tostring(counter) .. '"' ..
+			kfrag ..
+			'/>' .. keys[3] .. '<text:alphabetical-index-mark-end text:id="IMarkX' .. tostring(counter) .. '"/>'
 			counter = counter + 1
 		else
-			item = '<text:alphabetical-index-mark ' .. main .. ' text:key1="' .. keys[1] .. 
-			'" text:key2="' .. keys[2] .. '" text:string-value="' .. tcItem .. '"/>'
+			item = '<text:alphabetical-index-mark ' .. main .. kfrag .. ' text:string-value="' .. tcItem .. '"/>'
 		end
 		return pandoc.RawInline(format, item)
 
@@ -86,13 +105,15 @@ local function formatIndex(format, item, isTerm, isMain)
 	elseif format:match 'openxml' then
 		if nkeys == 1 then
 			item = tcItem
-		else
-			item = keys[2] .. ':' .. tcItem -- openxml only supports one level of hierarchy I think
+		elseif nkeys == 2 then
+			item = keys[2] .. ':' .. tcItem
+		elseif nkeys == 3 then 
+			item = keys[1] .. ':' .. keys[2] .. ':' .. tcItem
 		end
 		prefix = '<w:r><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:instrText> XE "</w:instrText></w:r><w:r ><w:instrText>'
 		suffix = '</w:instrText></w:r><w:r><w:instrText>" </w:instrText></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r>'
 		if isTerm then
-			prefix = '<w:r><w:t>' .. item .. '</w:t></w:r>' .. prefix
+			prefix = '<w:r><w:t>' .. keys[3] .. '</w:t></w:r>' .. prefix
 		end
 		item = prefix .. item .. suffix
 		return pandoc.RawInline(format, item)

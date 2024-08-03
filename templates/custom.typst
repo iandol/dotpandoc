@@ -1,9 +1,9 @@
 $if(doindex)$
 // https://typst.app/universe/package/in-dexter
-#import "@preview/in-dexter:0.3.0": *
+#import "@preview/in-dexter:0.4.2": *
 $endif$
 //https://typst.app/universe/package/gentle-clues/
-#import "@preview/gentle-clues:0.8.0": abstract, info, question, memo, task, tip, success, warning, error, example
+#import "@preview/gentle-clues:0.9.0": abstract, info, question, memo, task, tip, success, warning, error, example
 $definitions.typst()$
 
 #show terms: it => {
