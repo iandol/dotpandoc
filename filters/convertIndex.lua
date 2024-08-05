@@ -123,7 +123,7 @@ local function formatIndex(format, item, isTerm, isMain, isInline)
 		if isInline then
 			return pandoc.RawInline(format, item)
 		else
-			return pandoc.RawBlock(format, '<w:p>' .. item .. '</w:p>')
+			return pandoc.RawBlock(format, '<w:p><w:pPr><w:pStyle w:val="BodyText" /></w:pPr>' .. item .. '</w:p>')
 		end
 
 	-- TYPST
