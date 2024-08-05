@@ -22,7 +22,7 @@
 	For LaTeX you need a template that contains the makeindex command in the
 	right place.
 
-	Version:   1.11
+	Version:   1.12
 	Copyright: (c) 2024 Ian Max Andolina License=MIT, see LICENSE for details
 ]]
 
@@ -55,7 +55,7 @@ end
 
 --returns a rawinline index entry for tex, odt, docx and typst
 local counter = nil
-local function formatIndex(format, item, isTerm, isMain)
+local function formatIndex(format, item, isTerm, isMain, isInline)
 	if not counter then counter = 1 end -- counter is used for odt
 	
 	-- split our input for ancestor!parent!item
@@ -99,7 +99,11 @@ local function formatIndex(format, item, isTerm, isMain)
 		else
 			item = '<text:alphabetical-index-mark ' .. main .. kfrag .. ' text:string-value="' .. tcItem .. '"/>'
 		end
-		return pandoc.RawInline(format, item)
+		if isInline then
+			return pandoc.RawInline(format, item)
+		else
+			return pandoc.RawBlock(format, item)
+		end
 
 	-- DOCX
 	elseif format:match 'openxml' then
@@ -116,7 +120,11 @@ local function formatIndex(format, item, isTerm, isMain)
 			prefix = '<w:r><w:t>' .. keys[3] .. '</w:t></w:r>' .. prefix
 		end
 		item = prefix .. item .. suffix
-		return pandoc.RawInline(format, item)
+		if isInline then
+			return pandoc.RawInline(format, item)
+		else
+			return pandoc.RawBlock(format, item)
+		end
 
 	-- TYPST
 	elseif format:match 'typst' then -- typst with in-dexter
@@ -132,7 +140,11 @@ local function formatIndex(format, item, isTerm, isMain)
 		if isTerm then
 			item = keys[3] .. item
 		end
-		return pandoc.RawInline(format, item)
+		if isInline then
+			return pandoc.RawInline(format, item)
+		else
+			return pandoc.RawBlock(format, item)
+		end
 
 	-- LATEX
 	elseif format:match 'latex' then -- latex support
@@ -143,7 +155,11 @@ local function formatIndex(format, item, isTerm, isMain)
 		else
 			item = "\\index{" .. item .. "}"
 		end
-		return pandoc.RawInline(format, item)
+		if isInline then
+			return pandoc.RawInline(format, item)
+		else
+			return pandoc.RawBlock(format, item)
+		end
 
 	-- OTHERS
 	else
@@ -154,13 +170,15 @@ end
 -- Pandoc filter parses rawinlines looking for 
 -- raw latex \index{key} and \indext{key} to convert
 function RawInline(r)
+	local isInline = true -- we come from a raw inline
 	local isTerm = false -- default to not use terms
 	local isMain = false -- default to not use main index
 	fmt = FORMAT
 	if FORMAT:match("odt") then fmt = "opendocument" end
 	if FORMAT:match("docx") then fmt = "openxml" end
 	indexItem = r.text
-	if string.match("tex", r.format) and indexItem:match("\\index") then
+	
+  if string.match("tex", r.format) and indexItem:match("\\index") then
 		if indexItem:match("\\indext{") then -- check if it's a term+index entry
 			indexItem = indexItem:match("\\indext{(.*)}")
 			isTerm = true
@@ -171,6 +189,32 @@ function RawInline(r)
 			indexItem = indexItem:sub(2,-1)
 			isMain = true
 		end
-		if string.len(indexItem) > 0 then return formatIndex(fmt, indexItem, isTerm, isMain) end
+		if string.len(indexItem) > 0 then return formatIndex(fmt, indexItem, isTerm, isMain, isInline) end
+	end
+end
+
+-- Pandoc filter parses rawblocks looking for 
+-- raw latex \index{key} and \indext{key} to convert
+function RawBlock(r)
+	local isInline = false -- we come from a raw inline
+	local isTerm = false -- default to not use terms
+	local isMain = false -- default to not use main index
+	fmt = FORMAT
+	if FORMAT:match("odt") then fmt = "opendocument" end
+	if FORMAT:match("docx") then fmt = "openxml" end
+	indexItem = r.text
+	
+  if string.match("tex", r.format) and indexItem:match("^\\index") then
+		if indexItem:match("^\\indext{") then -- check if it's a term+index entry
+			indexItem = indexItem:match("^\\indext{(.*)}$")
+			isTerm = true
+		else -- it is a normal index entry
+			indexItem = indexItem:match("^\\index{(.*)}$")
+		end
+		if indexItem:match("^%*") then -- a leading * means it's a main index
+			indexItem = indexItem:sub(2,-1)
+			isMain = true
+		end
+		if string.len(indexItem) > 0 then return formatIndex(fmt, indexItem, isTerm, isMain, isInline) end
 	end
 end
