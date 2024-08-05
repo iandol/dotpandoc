@@ -22,7 +22,7 @@
 	For LaTeX you need a template that contains the makeindex command in the
 	right place.
 
-	Version:   1.12
+	Version:   1.13
 	Copyright: (c) 2024 Ian Max Andolina License=MIT, see LICENSE for details
 ]]
 
@@ -102,7 +102,7 @@ local function formatIndex(format, item, isTerm, isMain, isInline)
 		if isInline then
 			return pandoc.RawInline(format, item)
 		else
-			return pandoc.RawBlock(format, item)
+			return pandoc.RawBlock(format, '<text:p text:style-name="Text_20_body">' .. item .. '</text:p>')
 		end
 
 	-- DOCX
@@ -123,7 +123,7 @@ local function formatIndex(format, item, isTerm, isMain, isInline)
 		if isInline then
 			return pandoc.RawInline(format, item)
 		else
-			return pandoc.RawBlock(format, item)
+			return pandoc.RawBlock(format, '<w:p>' .. item .. '</w:p>')
 		end
 
 	-- TYPST
