@@ -13,7 +13,8 @@
 	You can use a custom tag \indext{item} to include the term itself in the
 	text. This makes writing easier as you can markup words directly. For
 	example "This falls \indext{here}." will become "This falls
-	here#index[Here]." for Typst output.
+	here#index[Here]." for Typst output. Note \indext{} is not compatible
+	with |see{} cross-references...
 	
 	For ODT or DOCX it uses the native XML markup for index items.
 	
@@ -22,7 +23,7 @@
 	For LaTeX you need a template that contains the makeindex command in the
 	right place.
 
-	Version:   1.13
+	Version:   1.15
 	Copyright: (c) 2024 Ian Max Andolina License=MIT, see LICENSE for details
 ]]
 
@@ -53,11 +54,40 @@ local function titleCase(input)
 	return input:gsub("(%w)(%w*)", function(firstChar, rest) return firstChar:upper() .. rest end) 
 end
 
---returns a rawinline index entry for tex, odt, docx and typst
+-- Parse the \index{...} and \indext{...} tags
+local function parseIndexTag(tag)
+	local isTerm = false -- default to not use terms
+	local isMain = false -- default to not use main index
+	indexItem = tag.text
+	if string.match("tex", tag.format) and indexItem:match("^\\index") then
+		if indexItem:match("^\\indext{") then -- check if it's a term+index entry
+			indexItem = indexItem:match("^\\indext{(.*)}$")
+			isTerm = true
+		else -- it is a normal index entry
+			indexItem = indexItem:match("^\\index{(.*)}$")
+		end
+		if indexItem:match("^%*") then -- a leading * means it's a main index
+			indexItem = indexItem:sub(2,-1)
+			isMain = true
+		end
+	end
+	return indexItem, isTerm, isMain
+end
+
+-- returns the format, note if it is docx or odt we need to use 
+-- openxml and opendocument respectively
+local function getFormat()
+	fmt = FORMAT
+	if FORMAT:match("odt") then fmt = "opendocument" end
+	if FORMAT:match("docx") then fmt = "openxml" end
+	return fmt
+end
+
+--returns a formatted index entry for tex, odt, docx and typst
 local counter = nil
 local function formatIndex(format, item, isTerm, isMain, isInline)
 	if not counter then counter = 1 end -- counter is used for odt
-	
+
 	-- split our input for ancestor!parent!item
 	local keys = split(item, "!:/") 
 	if #keys == 1 then -- if there is only an item
@@ -84,25 +114,25 @@ local function formatIndex(format, item, isTerm, isMain, isInline)
 
 	-- ODT
 	if format:match 'opendocument' then
-		if isMain then main = 'text:main-entry="true"' else main = '' end
+		if isMain then main = 'text:main-entry="true" ' else main = '' end
 		local kfrag = ''
 		if nkeys == 2 then
-			kfrag = ' text:key1="' .. keys[2] .. '"'
+			kfrag = 'text:key1="' .. keys[2] .. '" '
 		elseif nkeys == 3 then
-			kfrag = ' text:key1="' .. keys[1] .. '" text:key2="' .. keys[2] .. '"'
+			kfrag = 'text:key1="' .. keys[1] .. '" text:key2="' .. keys[2] .. '" '
 		end
 		if isTerm then
-			item = '<text:alphabetical-index-mark-start ' .. main .. ' text:id="IMarkX' .. tostring(counter) .. '"' ..
-			kfrag ..
-			'/>' .. keys[3] .. '<text:alphabetical-index-mark-end text:id="IMarkX' .. tostring(counter) .. '"/>'
+			item = '<text:alphabetical-index-mark-start ' .. main .. 'text:id="IMarkX' .. tostring(counter) .. '" ' ..
+			kfrag .. '/>' .. 
+			keys[3] .. '<text:alphabetical-index-mark-end text:id="IMarkX' .. tostring(counter) .. '"/>'
 			counter = counter + 1
 		else
-			item = '<text:alphabetical-index-mark ' .. main .. kfrag .. ' text:string-value="' .. tcItem .. '"/>'
+			item = '<text:alphabetical-index-mark ' .. main .. kfrag .. 'text:string-value="' .. tcItem .. '"/>'
 		end
 		if isInline then
 			return pandoc.RawInline(format, item)
 		else
-			return pandoc.RawBlock(format, '<text:p text:style-name="Text_20_body">' .. item .. '</text:p>')
+			return pandoc.Para(pandoc.RawInline(format, item))
 		end
 
 	-- DOCX
@@ -123,7 +153,7 @@ local function formatIndex(format, item, isTerm, isMain, isInline)
 		if isInline then
 			return pandoc.RawInline(format, item)
 		else
-			return pandoc.RawBlock(format, '<w:p><w:pPr><w:pStyle w:val="BodyText" /></w:pPr>' .. item .. '</w:p>')
+			return pandoc.Para(pandoc.RawInline(format, item))
 		end
 
 	-- TYPST
@@ -143,7 +173,7 @@ local function formatIndex(format, item, isTerm, isMain, isInline)
 		if isInline then
 			return pandoc.RawInline(format, item)
 		else
-			return pandoc.RawBlock(format, item)
+			return pandoc.Para(pandoc.RawInline(format, item))
 		end
 
 	-- LATEX
@@ -158,12 +188,18 @@ local function formatIndex(format, item, isTerm, isMain, isInline)
 		if isInline then
 			return pandoc.RawInline(format, item)
 		else
-			return pandoc.RawBlock(format, item)
+			return pandoc.Para(pandoc.RawInline(format, item))
 		end
 
 	-- OTHERS
 	else
-		return item
+		if isInline and isTerm then
+			return keys[3] -- return item
+		elseif not isInline and not isTerm then
+			return pandoc.Para(keys[3]) -- return item wrapped in paragraph
+		else
+			return ""
+		end
 	end
 end
 
@@ -171,50 +207,17 @@ end
 -- raw latex \index{key} and \indext{key} to convert
 function RawInline(r)
 	local isInline = true -- we come from a raw inline
-	local isTerm = false -- default to not use terms
-	local isMain = false -- default to not use main index
-	fmt = FORMAT
-	if FORMAT:match("odt") then fmt = "opendocument" end
-	if FORMAT:match("docx") then fmt = "openxml" end
-	indexItem = r.text
-	
-  if string.match("tex", r.format) and indexItem:match("\\index") then
-		if indexItem:match("\\indext{") then -- check if it's a term+index entry
-			indexItem = indexItem:match("\\indext{(.*)}")
-			isTerm = true
-		else -- it is a normal index entry
-			indexItem = indexItem:match("\\index{(.*)}")
-		end
-		if indexItem:match("^%*") then -- a leading * means it's a main index
-			indexItem = indexItem:sub(2,-1)
-			isMain = true
-		end
-		if string.len(indexItem) > 0 then return formatIndex(fmt, indexItem, isTerm, isMain, isInline) end
-	end
+	fmt = getFormat()
+	local indexItem, isTerm, isMain = parseIndexTag(r)
+	if string.len(indexItem) > 0 then return formatIndex(fmt, indexItem, isTerm, isMain, isInline) end
 end
 
 -- Pandoc filter parses rawblocks looking for 
 -- raw latex \index{key} and \indext{key} to convert
 function RawBlock(r)
-	local isInline = false -- we come from a raw inline
-	local isTerm = false -- default to not use terms
-	local isMain = false -- default to not use main index
-	fmt = FORMAT
-	if FORMAT:match("odt") then fmt = "opendocument" end
-	if FORMAT:match("docx") then fmt = "openxml" end
-	indexItem = r.text
-	
-  if string.match("tex", r.format) and indexItem:match("^\\index") then
-		if indexItem:match("^\\indext{") then -- check if it's a term+index entry
-			indexItem = indexItem:match("^\\indext{(.*)}$")
-			isTerm = true
-		else -- it is a normal index entry
-			indexItem = indexItem:match("^\\index{(.*)}$")
-		end
-		if indexItem:match("^%*") then -- a leading * means it's a main index
-			indexItem = indexItem:sub(2,-1)
-			isMain = true
-		end
-		if string.len(indexItem) > 0 then return formatIndex(fmt, indexItem, isTerm, isMain, isInline) end
-	end
+	local isInline = false -- we are not a raw inline
+	fmt = getFormat()
+	local indexItem, isTerm, isMain = parseIndexTag(r)
+	if string.len(indexItem) > 0 then return formatIndex(fmt, indexItem, isTerm, isMain, isInline) end
 end
+
