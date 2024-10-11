@@ -133,6 +133,9 @@
 	set enum(indent: 10pt, body-indent: 9pt)
 	set list(indent: 10pt, body-indent: 9pt)
 
+	// Configure line numbering.	
+	set par.line(numbering: (n) => text(fill: rgb(175,130,130), size: 7pt, str(n)), numbering-scope: "page")
+
 	// Configure headings.
 	set heading(numbering: heading-numbering)
 	show heading: it => locate(loc => {
@@ -309,7 +312,6 @@
 	]
 
 	set par(spacing: 2em)
-	set par.line(numbering: (n) => text(fill: rgb(175,130,130), size: 7pt, str(n)), numbering-scope: "page")
 
 	// Display the paper's contents.
 	body
