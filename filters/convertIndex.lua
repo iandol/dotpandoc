@@ -27,6 +27,10 @@
 	Copyright: (c) 2024 Ian Max Andolina License=MIT, see LICENSE for details
 ]]
 
+-- Makes sure users know if their pandoc version is too old for this
+-- filter.
+PANDOC_VERSION:must_be_at_least '2.17'
+
 -- do we Title case the words that go into the index?
 local doTitleCase = true
 

@@ -308,12 +308,17 @@
 		#v(1em)
 	]
 
-	show par: set block(spacing: 2em)
+	set par(spacing: 2em)
+	set par.line(numbering: (n) => text(fill: rgb(175,130,130), size: 7pt, str(n)), numbering-scope: "page")
 
 	// Display the paper's contents.
 	body
 
+	// Display the bibliography.
 	if (bibliography-file != none) {
+		pagebreak(weak: true)
+		set par.line(numbering: none)
+		set par(spacing: 1em)
 		show bibliography: set text(10pt)
 		bibliography(bibliography-file, title: text(12pt, "References"), style: bibliography-style)
 	}
