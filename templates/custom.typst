@@ -134,6 +134,7 @@ $endif$
 #show quote: set align(center)
 #show quote: set text(style: "italic")
 #show quote: set pad(x: 5em, y: 1.75em)
+#set par(spacing: 2em)
 
 $body$
 

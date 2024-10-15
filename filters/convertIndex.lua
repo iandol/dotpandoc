@@ -23,18 +23,21 @@
 	For LaTeX you need a template that contains the makeindex command in the
 	right place.
 
-	Version:   1.15
+	Version:   1.16
 	Copyright: (c) 2024 Ian Max Andolina License=MIT, see LICENSE for details
 ]]
 
--- Makes sure users know if their pandoc version is too old for this
--- filter.
+---Makes sure users know if their pandoc version is too old for this
+---filter.
 PANDOC_VERSION:must_be_at_least '2.17'
 
--- do we Title case the words that go into the index?
+---do we Title case the words that go into the index?
 local doTitleCase = true
 
--- split a string based on a delimiter
+---split a string based on a delimiter
+---@param inputString string
+---@param delimiter string
+---@return table
 local function split(inputString, delimiter)
 	local list = {}
 	for token in string.gmatch(inputString, "[^" .. delimiter .. "]+") do
@@ -43,22 +46,33 @@ local function split(inputString, delimiter)
 	return list
 end
 
--- Replace |see{term} with " \t "See: term in the given string
+---Replace |see{term} with " \t "See: term in the given string
+---@param input string
+---@return string
 local function replaceSeeClause(input)
 	return input:gsub("|see{(.-)}", ", see—%1")
 end
 
--- remove |see{term} in the given string
+---Remove |see{term} in the given string
+---@param input string
+---@return unknown
 local function removeSeeClause(input)
 	return input:gsub("|see{(.-)}", "")
 end
 
--- Title case the given string
+---Title case the given string
+---@param input string
+---@return string
 local function titleCase(input)
 	return input:gsub("(%w)(%w*)", function(firstChar, rest) return firstChar:upper() .. rest end) 
 end
 
 -- Parse the \index{...} and \indext{...} tags
+---comment
+---@param tag table
+---@return string
+---@return boolean
+---@return boolean
 local function parseIndexTag(tag)
 	local isTerm = false -- default to not use terms
 	local isMain = false -- default to not use main index
@@ -78,8 +92,9 @@ local function parseIndexTag(tag)
 	return indexItem, isTerm, isMain
 end
 
--- returns the format, note if it is docx or odt we need to use 
--- openxml and opendocument respectively
+---returns the format, note if it is docx or odt we need to use 
+---openxml and opendocument respectively
+---@return string
 local function getFormat()
 	fmt = FORMAT
 	if FORMAT:match("odt") then fmt = "opendocument" end
@@ -87,12 +102,18 @@ local function getFormat()
 	return fmt
 end
 
---returns a formatted index entry for tex, odt, docx and typst
 local counter = nil
+---returns a formatted index entry for tex, odt, docx and typst
+---@param format string
+---@param item string
+---@param isTerm boolean
+---@param isMain boolean
+---@param isInline boolean
+---@return any
 local function formatIndex(format, item, isTerm, isMain, isInline)
 	if not counter then counter = 1 end -- counter is used for odt
 
-	-- split our input for ancestor!parent!item
+	---split our input for ancestor!parent!item
 	local keys = split(item, "!:/") 
 	if #keys == 1 then -- if there is only an item
 		keys = {"","",keys[1]}
@@ -105,7 +126,7 @@ local function formatIndex(format, item, isTerm, isMain, isInline)
 		nkeys = 3
 	end
 
-	-- process the items
+	---process the items
 	local tcItem = keys[3]
 	keys[3] = removeSeeClause(keys[3])
 	tcItem = replaceSeeClause(tcItem) -- deal with |see{term} in the item
@@ -116,7 +137,7 @@ local function formatIndex(format, item, isTerm, isMain, isInline)
 		tcItem = tcItem:gsub('See','see') -- lowercase See
 	end
 
-	-- ODT
+	---ODT
 	if format:match 'opendocument' then
 		if isMain then main = 'text:main-entry="true" ' else main = '' end
 		local kfrag = ''
@@ -139,7 +160,7 @@ local function formatIndex(format, item, isTerm, isMain, isInline)
 			return pandoc.Para(pandoc.RawInline(format, item))
 		end
 
-	-- DOCX
+	---DOCX
 	elseif format:match 'openxml' then
 		if nkeys == 1 then
 			item = tcItem
@@ -160,7 +181,7 @@ local function formatIndex(format, item, isTerm, isMain, isInline)
 			return pandoc.Para(pandoc.RawInline(format, item))
 		end
 
-	-- TYPST
+	---TYPST
 	elseif format:match 'typst' then -- typst with in-dexter
 		tcItem = tcItem:gsub(':','')
 		if isMain then prefix = '#index-main' else prefix = '#index' end
@@ -180,7 +201,7 @@ local function formatIndex(format, item, isTerm, isMain, isInline)
 			return pandoc.Para(pandoc.RawInline(format, item))
 		end
 
-	-- LATEX
+	---LATEX
 	elseif format:match 'latex' then -- latex support
 		item = item:gsub("[:/]", "!") -- replace : or / with !
 		if isMain then item = item .. '|texmf' end
@@ -195,7 +216,7 @@ local function formatIndex(format, item, isTerm, isMain, isInline)
 			return pandoc.Para(pandoc.RawInline(format, item))
 		end
 
-	-- OTHERS
+	---OTHERS
 	else
 		if isInline and isTerm then
 			return keys[3] -- return item

@@ -134,7 +134,7 @@
 	set list(indent: 10pt, body-indent: 9pt)
 
 	// Configure line numbering.	
-	set par.line(numbering: (n) => text(fill: rgb(175,130,130), size: 7pt, str(n)), numbering-scope: "page")
+	set par.line(numbering: none, numbering-scope: "page")
 
 	// Configure headings.
 	set heading(numbering: heading-numbering)
@@ -277,6 +277,8 @@
 		}),
 	)
 
+	set par.line(numbering: (n) => text(fill: rgb(175,130,130), size: 7pt, str(n)))
+	
 	if (abstract != none) {
 		let abstracts
 		if (type(abstract) == "content") {
@@ -312,7 +314,7 @@
 	]
 
 	set par(spacing: 2em)
-
+	
 	// Display the paper's contents.
 	body
 

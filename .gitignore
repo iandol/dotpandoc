@@ -15,3 +15,4 @@ pandoclog.json
 *.out
 
 /.luarc.json
+custom/lapreprint.pdf
