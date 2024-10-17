@@ -498,7 +498,7 @@ templates:
 #   signature : Image file for a signature.
 #   signature-before, signature-after : Allows adjustment of vertical space surrounding signature.
   latex-letter:
-    extends: natbib
+    extends: refs
     pandoc:
       from: markdown
       to: latex-smart # turn off smart leaves — … “” as unicode
@@ -522,18 +522,17 @@ templates:
         Director, Cognitive \& Behavioural Research Platform  
       opening: To whom it may concern,  
       closing: Sincerely yours,  
-      mainfont: 'Graublau Sans'
+      mainfont: 'Alegreya'
       mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
       monofont: 'Rec Mono Duotone'
       mathfont: 'STIX Two Math'
       mathfontoptions: 'math-style=ISO,bold-style=ISO'
-      CJKmainfont: 'PingFang SC'
-      fontsize: '11pt'
+      fontsize: '12pt'
       linestretch: '1.2'
       letterhead: "/Users/ian/Library/CloudStorage/Dropbox/Work/CEBSIT-Letterhead.pdf"
       signature: "/Users/ian/Library/CloudStorage/Dropbox/Work/Ian-Signature-Small.png"
-      signature-width: 45mm
-      signature-before: -12ex
+      signature-width: 50mm
+      signature-before: -10.5ex
       signature-after: -1.5ex
       closing-indentation: 12pt
       links-as-notes: false
@@ -542,7 +541,7 @@ templates:
       citecolor: Sepia
       urlcolor: BrickRed
       lang: 'en-GB'
-      geometry: ['margin=1.2cm','top=2.5cm']
+      geometry: ['margin=1.2cm','top=2cm']
       biblio-style: numeric
     postprocessors:
       - postprocessors/fixLaTeX.rb
