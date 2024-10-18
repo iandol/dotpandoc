@@ -43,7 +43,6 @@ templates:
 #-----------------------------------------------------------------BIBLATEX
   biblatex:
     pandoc:
-      verbose: true           # Verbose by default.
       biblatex: true            # Enable biblatex
       to: latex               # Has to be LaTeX output
       standalone: true        # Generate full document
@@ -55,7 +54,6 @@ templates:
 #-----------------------------------------------------------------NATBIB
   natbib:
     pandoc:
-      verbose: true           # Verbose by default.
       natbib: true            # Enable natbib
       to: latex               # Has to be LaTeX output
       standalone: true        # Generate full document
@@ -81,7 +79,6 @@ templates:
       to: plain
       template: templates/custom.plain
       standalone: true
-      verbose: true
       wrap: auto
       columns: 80
       tab-stop: 4
@@ -108,7 +105,6 @@ templates:
       to: icml
       standalone: true
       template: templates/custom.icml
-      verbose: true
 #-----------------------------------------------------------------
 #::::::::::::::::::::::::::: TYPST :::::::::::::::::::::::::::::::
 #-----------------------------------------------------------------
