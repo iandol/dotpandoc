@@ -19,10 +19,10 @@ metadata:
   linestretch: '1.5'
   geometry: ['inner=2.2cm','outer=1.8cm','bottom=2.5cm','twoside']
   mainfont: 'Alegreya'
-  #mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
+  mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
   #mainfontfallback: ['Cambria Math','Apple Color Emoji','Noto Color Emoji']
   sansfont: 'Alegreya Sans'
-  #sansfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
+  sansfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
   #sansfontfallback: ['Arial Unicode MS','Apple Color Emoji','Noto Color Emoji']
   monofont: 'Rec Mono Duotone'
   mathfont: 'STIX Two Math'
