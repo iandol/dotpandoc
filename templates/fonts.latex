@@ -76,6 +76,7 @@ $endif$
 $endif$
 $if(CJKmainfont)$
   \ifXeTeX
+  \IfFileExists{xecjk.sty}{
     \usepackage{xeCJK}
     \setCJKmainfont[$for(CJKoptions)$$CJKoptions$$sep$,$endfor$]{$CJKmainfont$}
     $if(CJKsansfont)$
@@ -84,6 +85,7 @@ $if(CJKmainfont)$
     $if(CJKmonofont)$
       \setCJKmonofont[$for(CJKoptions)$$CJKoptions$$sep$,$endfor$]{$CJKmonofont$}
     $endif$
+  }
   \fi
 $endif$
 $if(luatexjapresetoptions)$

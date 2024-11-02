@@ -37,6 +37,7 @@ $hypersetup.latex()$
 % use Cambria/Arial Unicode to fix some font substitution problems for e.g. ⬄
 \ifPDFTeX
 \else
+\newfontfamily\C[]{PingFang SC}
 \newfontfamily\fixfont[]{Cambria Math}
 \newfontfamily\fixfontB[]{Arial Unicode MS}
 \fi

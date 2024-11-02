@@ -1,9 +1,10 @@
-defaults: refs
+defaults: [refs]
 to: latex
 from: markdown
 standalone: true
 filters: 
   - assimilateMetadata.rb # handle academic matadata
+  - pagebreak.lua # use \newpage{} also for HTML, DOCX, ODT & EPUB
   - list-table.lua
   - abstract-section.lua
   - pretty-urls.lua
@@ -27,6 +28,8 @@ metadata:
   monofont: 'Fira Code'
   mathfont: 'Cambria Math'
   mathfontoptions: 'math-style=ISO,bold-style=ISO'
+  #CJKmainfont: 'PingFang SC'
+  #CJKsansfont: 'PingFang SC'
   fontsize: '12pt'
   linestretch: '1.5'
   colorlinks: true

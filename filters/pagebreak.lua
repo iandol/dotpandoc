@@ -27,7 +27,7 @@ local default_pagebreaks = {
   ms = '.bp',
   ooxml = '<w:p><w:r><w:br w:type="page"/></w:r></w:p>',
   odt = '<text:p text:style-name="Pagebreak"/>',
-  typst = '#pagebreak()\n\n'
+  typst = '#pagebreak(weak: true)\n\n'
 }
 
 local function pagebreak_from_config (config)

@@ -9,6 +9,6 @@ var now = (date +%s); # current time in seconds
 each {|f|
 	var mod = (stat -f %c $f) # file modified time in seconds
 	if ( < (- $now $mod) 120 ) { 
-		try { typst compile $f $f".pdf" 2>&1 } catch { } 
+		try { typst compile --pdf-standard a-2b $f $f".pdf" 2>&1 } catch { } 
 	}
 } $files

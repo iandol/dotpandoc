@@ -1,15 +1,18 @@
 standalone: true
+verbosity: INFO
 from: markdown
 to: typst-citations
 metadata-file: typst-includes.yaml
-verbosity: INFO
 template: custom.typst
+wrap: preserve
 filters:
+  - assimilateMetadata.rb
   - typstFix.lua
-  - convertIndex.lua
   - citeproc
-  - list-table.lua
   - pagebreak.lua
+  - removeDimensions.lua
+  - convertIndex.lua
+  - list-table.lua
   - abstract-section.lua
   - pretty-urls.lua
 table-of-contents: true

@@ -4,6 +4,7 @@ $if(doindex)$
 $endif$
 //https://typst.app/universe/package/gentle-clues/
 #import "@preview/gentle-clues:1.0.0": *
+
 $definitions.typst()$
 
 #show terms: it => {
@@ -15,19 +16,37 @@ $definitions.typst()$
 		.join()
 }
 
-#set table(
-	inset: 6pt
-)
+#set table(inset: 6pt)
+#set text(ligatures: true, discretionary-ligatures: false, number-type: "old-style")
+#set par(leading: 0.85em, justify: true)
+#set quote(block: true)
+#show quote: set align(center)
+#show quote: set text(style: "italic")
+#show quote: set pad(x: 5em, y: 1.75em)
+#show heading: set text(weight: "extrabold", font: heading-font, fill: luma(30%))
+#show heading: set block(below: 1.5em)
+#show raw: set text(font: mono-font)
+#show link: set text(fill: rgb(65%, 25%, 0%))
+#show table: set par(justify: false)
+#show ref: strong
 
 $for(header-includes)$
 $header-includes$
 
 $endfor$
 
-$if(template)$
-#import "$template$": conf
+#set page(
+	numbering: "(i)",
+$if(titlepage-background)$
+	footer: none,
+	background: image("$titlepage-background$", width: 100%, height: 100%, fit: "stretch"),
+$endif$
+)
+
+$if(mytemplate)$
+#import "$mytemplate$": conf
 $else$
-$template.typst()$
+$mytemplate.typst()$
 $endif$
 
 #show: doc => conf(
@@ -41,20 +60,31 @@ $if(author)$
 	authors: (
 $for(author)$
 $if(it.name)$
-		( name: [$it.name$],
+		(name: [$it.name$],
 $if(it.affiliation)$
 			affiliation: [$it.affiliation$],
+$endif$
+$if(equal_contributor)$
+			equal_contributor: true,
+$endif$
+$if(it.correspondence)$
+			correspondence: [$it.correspondence$],
 $endif$
 $if(it.email)$
 			email: [$it.email$],
 $endif$
 $if(it.orcid)$
 			orcid: [$it.orcid$],
-$endif$  ),
+$endif$
+		),
 $else$
-		( name: [$it$],
-			affiliation: "",
-			email: "" ),
+		(name: [$it$],
+			affiliation: (),
+			orcid: (),
+			equal_contributor: false,
+			correspondence: (),
+			email: (),
+		),
 $endif$
 $endfor$
 	),
@@ -62,13 +92,7 @@ $endif$
 $if(institute)$
 	affiliations: (
 $for(institute)$
-		(id: "$it.index$", name: "$it.name$"),
-$endfor$
-	),
-$elseif(affiliations)$
-	affiliations: (
-$for(affiliations)$
-		(id: "$it.index$", name: "$it.name$"),
+		(id: "$institute.index$", name: "$institute.name$"),
 $endfor$
 	),
 $endif$
@@ -87,15 +111,15 @@ $endif$
 $if(abstract)$
 	abstract: [$abstract$],
 $endif$
-$if(margin)$
+$if(titlepage-background)$
+	margin: (x: 1.8cm, bottom: 9em),
+$elseif(margin)$
 	margin: ($for(margin/pairs)$$margin.key$: $margin.value$,$endfor$),
 $endif$
 $if(papersize)$
 	paper: "$papersize$",
 $endif$
-$if(mainfont)$
-	font: ("$mainfont$",),
-$endif$
+	font: main-font,
 $if(fontsize)$
 	fontsize: $fontsize$,
 $endif$
@@ -106,12 +130,6 @@ $endif$
 	doc,
 )
 
-$if(monofont)$
-#show raw: set text(font: "$monofont$")
-$else$
-#show raw: set text(font: "Rec Mono Duotone")
-$endif$
-
 $for(include-before)$
 $include-before$
 
@@ -121,20 +139,50 @@ $if(toc)$
 #outline(
 	title: auto,
 	depth: $toc-depth$
-);
-
+)
 $endif$
+
+$if(titlepage-background)$
+#pagebreak(weak: true)
+$endif$
+
+#set page(
+	numbering: "1 – 1",
+	footer: auto,
+	header: auto,
+	background: none,
+$if(margin)$
+	margin: ($for(margin/pairs)$$margin.key$: $margin.value$,$endfor$),
+$else$
+	margin: (x: 1.75cm, y: 2cm),
+$endif$
+)
+#counter(page).update(1)
+
 $if(linestretch)$
-#set par(justify: true, leading: $linestretch$em)
-
+#set par(leading: $linestretch$em)
+$else$
+#set par(leading: 1.5em)
 $endif$
-#show table: set par(justify: false)
-#show ref: strong
-#set quote(block: true)
-#show quote: set align(center)
-#show quote: set text(style: "italic")
-#show quote: set pad(x: 5em, y: 1.75em)
-#set par(spacing: 2em)
+#set par(justify: true, spacing: 2em)
+$if(nonumberfigures)$
+#set figure(numbering: none)
+#show figure.caption: it => [
+	#set align(left)
+	#set par(justify: true, leading: 1em)
+	#set text(font: sans-font, size: 11pt, discretionary-ligatures: false, number-type: "lining")
+	#emph[#it.body]
+]
+$else$
+#show figure.caption: it => [
+	#set align(left)
+	#set par(justify: true, leading: 1em)
+	#set text(font: sans-font, size: 11pt, discretionary-ligatures: false, number-type: "lining")
+	#emph[#it.supplement~#it.counter.display(it.numbering) — #it.body]
+]
+$endif$
+#show <refs>: set par(leading: 0.9em, spacing: 1.75em)
+#show <refs>: set text(size: 11pt, font: sans-font)
 
 $body$
 

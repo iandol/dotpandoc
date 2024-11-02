@@ -1,3 +1,4 @@
+defaults: [refs]
 from: markdown
 to: latex
 standalone: true
@@ -6,9 +7,9 @@ filters:
 template: eisvogel.latex
 toc: true
 metadata:
-  titlepage-logo: "${HOME}/Library/CloudStorage/Dropbox/Images/Logos/Platform-ION-Banner-White.png"
-  logo-width: 350
-  titlepage-background: "${HOME}/Library/CloudStorage/Dropbox/Images/Logos/backgroundlogo.pdf"
+  #titlepage-logo: "${HOME}/Library/CloudStorage/Dropbox/Images/Logos/Platform-CEBSIT-Banner-White.png"
+  #logo-width: 350
+  titlepage-background: /Users/ian/Dropbox/Images/Logos/backgroundlogo.pdf
   titlepage-text-color: 555555
   titlepage-rule-color: 555555
   titlepage: true
@@ -24,8 +25,8 @@ metadata:
   monofont: 'Fira Code'
   mathfont: 'Cambria Math'
   mathfontoptions: 'math-style=ISO,bold-style=ISO'
-  CJKmainfont: 'PingFang SC'
-  CJKsansfont: 'PingFang SC'
+  #CJKmainfont: 'PingFang SC'
+  #CJKsansfont: 'PingFang SC'
   fontsize: '12pt'
   linestretch: '1.5'
   colorlinks: true

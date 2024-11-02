@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg width="210mm" height="297mm" version="1.1" viewBox="0 0 793.7 1122.5" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <clipPath id="clipPath2">
+   <path transform="translate(-595.28 87.214)" d="m0 460.76h595.28v-547.98h-595.28z"/>
+  </clipPath>
+  <clipPath id="clipPath4">
+   <path transform="matrix(1.3333 0 0 -1.3333 0 1122.5)" d="M 0,841.89 H 595.276 V 0 H 0 Z"/>
+  </clipPath>
+  <clipPath id="clipPath5">
+   <path transform="translate(0 -201.73)" d="m0 201.73h412.11v-288.94h-412.11z"/>
+  </clipPath>
+  <clipPath id="clipPath7">
+   <path transform="matrix(1.3333 0 0 -1.3333 0 1122.5)" d="M 0,841.89 H 595.276 V 0 H 0 Z"/>
+  </clipPath>
+ </defs>
+ <g transform="matrix(1 0 0 .9167 1.1125 93.506)" clip-path="url(#clipPath4)" opacity=".4">
+  <path transform="matrix(1.3333 0 0 -1.3333 793.7 1238.8)" d="m0 0v547.98l-595.28-547.98z" clip-path="url(#clipPath2)" fill="#f5b000"/>
+ </g>
+ <g clip-path="url(#clipPath7)" opacity=".6">
+  <path transform="matrix(1.3333 0 0 -1.3333 0 853.54)" d="m0 0 412.11-288.94h-412.11z" clip-path="url(#clipPath5)" fill="#f24900"/>
+ </g>
+</svg>

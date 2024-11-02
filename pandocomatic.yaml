@@ -120,11 +120,13 @@ templates:
       table-of-contents: true
       metadata-file: typst-plain.yaml
       wrap: none
+      filter:
+        - filters/assimilateMetadata.rb
       lua-filter:
+        - filters/pagebreak.lua # use \newpage{} also for HTML, DOCX, ODT & EPUB
         - filters/typstFix.lua
-        - filters/convertIndex.lua
+        #- filters/convertIndex.lua
         - filters/list-table.lua
-        - filters/pagebreak.lua
         - filters/abstract-section.lua
         - filters/pretty-urls.lua
     metadata:
@@ -139,6 +141,18 @@ templates:
   typstpdf:
     extends: typst-refs
     cleanup: [postprocessors/typst2pdf]
+#-----------------------------------------------------------------
+  typst-titlepage:
+    extends: [typst-refs]
+    metadata:
+      titlepage: true
+      titlepage-background: background.svg # WARNING: must be relative to compile folder
+#-----------------------------------------------------------------
+  typst-titlepage-pdf:
+    extends: [typstpdf]
+    metadata:
+      titlepage: true
+      titlepage-background: background.svg # WARNING: must be relative to compile folder
 #-----------------------------------------------------------------
   typst-full:
     extends: [crossref,typst-refs]
@@ -345,6 +359,7 @@ templates:
       mathfont: 'STIX Two Math'
       mathfontoptions: 'math-style=ISO,bold-style=ISO'
       #CJKmainfont: 'Heiti SC' # need to install xecjk in tinytex
+      #CJKsansfont: 'Heiti SC' # need to install xecjk in tinytex
       colorlinks: true
       linkcolor: Mahogany
       citecolor: Sepia
@@ -551,15 +566,16 @@ templates:
       from: markdown
       to: latex-smart # turn off smart leaves — … “” as unicode
       standalone: true
+      filter: 
+        - filters/assimilateMetadata.rb # handle academic matadata
       lua-filter:
         - filters/pagebreak.lua # use \newpage{} also for HTML, DOCX, ODT & EPUB
         - filters/abstract-section.lua # move an abstract heading to metadata
         - filters/pretty-urls.lua # clean up URLs a bit
-      filter: 
-        - filters/assimilateMetadata.rb # handle academic matadata
+        - filters/list-table.lua
       template: templates/eisvogel.latex
       toc: true
-      shift-heading-level-by: 1
+      shift-heading-level-by: 0
     metadata: 
       book: false 
       titlepage: true
@@ -580,8 +596,8 @@ templates:
       monofont: 'Rec Mono Duotone'
       mathfont: 'STIX Two Math'
       mathfontoptions: 'math-style=ISO,bold-style=ISO'
-      #CJKmainfont: 'PingFang SC'
-      #CJKsansfont: 'PingFang SC'
+      #CJKmainfont: 'Heiti SC' # need to install xecjk in tinytex
+      #CJKsansfont: 'Heiti SC' # need to install xecjk in tinytex
       fontsize: '12pt'
       linestretch: '1.5'
       colorlinks: true
@@ -595,7 +611,7 @@ templates:
       header-left:
       header-center:
       footer-right:
-      footer-left: 
+      footer-left: " "
       footer-center:
       footnotes_pretty: true
       footnotes-disable-backlinks: false

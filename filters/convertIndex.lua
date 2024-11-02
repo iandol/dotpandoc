@@ -23,7 +23,7 @@
 	For LaTeX you need a template that contains the makeindex command in the
 	right place.
 
-	Version:   1.16
+	Version:   1.20
 	Copyright: (c) 2024 Ian Max Andolina License=MIT, see LICENSE for details
 ]]
 
@@ -88,6 +88,8 @@ local function parseIndexTag(tag)
 			indexItem = indexItem:sub(2,-1)
 			isMain = true
 		end
+	else
+		indexItem = ""
 	end
 	return indexItem, isTerm, isMain
 end
@@ -231,18 +233,24 @@ end
 -- Pandoc filter parses rawinlines looking for 
 -- raw latex \index{key} and \indext{key} to convert
 function RawInline(r)
+	if not string.match("tex", r.format) then return end
 	local isInline = true -- we come from a raw inline
 	fmt = getFormat()
 	local indexItem, isTerm, isMain = parseIndexTag(r)
-	if string.len(indexItem) > 0 then return formatIndex(fmt, indexItem, isTerm, isMain, isInline) end
+	if string.len(indexItem) > 0 then 
+		return formatIndex(fmt, indexItem, isTerm, isMain, isInline)
+	end
 end
 
 -- Pandoc filter parses rawblocks looking for 
 -- raw latex \index{key} and \indext{key} to convert
 function RawBlock(r)
+	if not string.match("tex", r.format) then return end
 	local isInline = false -- we are not a raw inline
 	fmt = getFormat()
 	local indexItem, isTerm, isMain = parseIndexTag(r)
-	if string.len(indexItem) > 0 then return formatIndex(fmt, indexItem, isTerm, isMain, isInline) end
+	if string.len(indexItem) > 0 then 
+		return formatIndex(fmt, indexItem, isTerm, isMain, isInline)
+	end
 end
 

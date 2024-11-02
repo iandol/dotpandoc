@@ -2,18 +2,16 @@ header-includes: |
   ```{=typst}
   #set text(ligatures: true, discretionary-ligatures: false, number-type: "old-style")
   #set par(leading: 0.85em, justify: true)
-  #show figure.caption: it => [
-    #set text(font: "Alegreya", size: 12pt, discretionary-ligatures: false, number-type: "lining")
-    #emph[#it.supplement~#it.counter.display(it.numbering) — #it.body]
-  ]
-  #show heading.where(level:1): it=> [#pagebreak() #it]
   ```
-mainfont: "Dolly Pro"
 fontsize: 12pt
+linestretch: 1.75
+mainfont: "Dolly Pro"
+headerfont: "Alegreya Sans SC"
+sansfont: "Alegreya Sans"
 monofont: "Rec Mono Casual"
 papersize: a4
 margin: {x: 1.75cm, y: 2cm}
 columns: 1
 lang: "en-GB"
-toc-title: "Table of Contents"
+toc-title: "Contents"
 doindex: false
