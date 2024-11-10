@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # This regularises author:, affiliation: and institute: metadata fields
-# into a standardised structure that is better parsed by my Pandoc templates.
+# into a standardised structure that is better parsed by a Pandoc template.
 # It generates correspondence_list and equal_contribution fields if present in
 # the author list.
 # ---

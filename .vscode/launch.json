@@ -6,45 +6,28 @@
 	"configurations": [
 
 		{
-			"name": "Lua MobDebug: Current File",
-			"type": "luaMobDebug",
+			"type": "LuaHelper-Debug",
 			"request": "launch",
-			"workingDirectory": "${workspaceFolder}",
-			"sourceBasePath": "${workspaceFolder}",
-			"listenPort": 8172,
+			"name": "LuaHelper-DebugFile",
+			"description": "独立文件调试模式",
+			"luaPath": "/opt/homebrew/bin/lua",
+			"packagePath": [],
+			"luaFileExtension": "",
+			"connectionPort": 8818,
 			"stopOnEntry": true,
-			"sourceEncoding": "UTF-8",
-			"interpreter": "lua",
-			"arguments": [
-				"${relativeFile}"
-			]
+			"useCHook": true
 		},
 		{
-			"name": "Lua MobDebug: Listen",
-			"type": "luaMobDebug",
-			"request": "attach",
-			"workingDirectory": "${workspaceFolder}",
-			"sourceBasePath": "${workspaceFolder}",
-			"listenPublicly": false,
-			"listenPort": 8172,
-			"stopOnEntry": true,
-			"sourceEncoding": "UTF-8"
-		},
-		{
-			"type": "lrdb",
+			"type": "LuaHelper-Debug",
 			"request": "launch",
-			"name": "Lua: Launch Program",
-			"program": "Lua program file or Lua host executable.",
-			"args": [],
-			"cwd": ""
-		},
-		{
-			"type": "lrdb",
-			"request": "attach",
-			"name": "Lua: Attach",
-			"host": "localhost",
-			"port": 21110,
-			"sourceRoot": ""
+			"name": "LuaHelper-Attach",
+			"description": "通用模式,通常调试项目请选择此模式",
+			"cwd": "",
+			"luaFileExtension": "",
+			"connectionPort": 8818,
+			"stopOnEntry": true,
+			"useCHook": true,
+			"autoPathMode": true
 		},
 		{
 			"name": "Debug Ruby File",
@@ -73,13 +56,13 @@
 			"script": "${file}",
 			"args": [],
 			"askParameters": true,
-			"rdbgPath": "~/.rbenv/shims/rdbg"
+			"rdbgPath": "~/.pixi/bin/rdbg"
 		},
 		{ // Name: VSCode rdbg Ruby Debugger https://marketplace.visualstudio.com/items?itemName=KoichiSasada.vscode-rdbg
 				"type": "rdbg",
 				"name": "Attach with Ruby Debug rdbg",
 				"request": "attach",
-				"rdbgPath": "~/.rbenv/shims/rdbg"
+				"rdbgPath": "~/.pixi/bin/rdbg"
 		}
 	]
 }
