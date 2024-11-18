@@ -3,51 +3,53 @@
 	// Hover to view descriptions of existing attributes.
 	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
 	"version": "0.2.0",
-	"configurations": [
-
+	"configurations": [	
 		{
-			"type": "LuaHelper-Debug",
+			"type": "emmylua_new",
 			"request": "launch",
-			"name": "LuaHelper-DebugFile",
-			"description": "独立文件调试模式",
-			"luaPath": "/opt/homebrew/bin/lua",
-			"packagePath": [],
-			"luaFileExtension": "",
-			"connectionPort": 8818,
+			"name": "EmmyLua New Debug",
+			"host": "localhost",
+			"port": 9966,
+			"ext": [
+				".lua",
+				".lua.txt",
+				".lua.bytes"
+			],
+			"ideConnectDebugger": true
+		},
+		{
+			"type": "emmylua_launch",
+			"request": "launch",
+			"name": "Attach by launch program",
+			"program": "/opt/homebrew/bin/lua",
+			"workingDir": "",
+			"arguments": [],
+			"newWindow": false
+		},
+		{
+			"name": "Lua MobDebug: Current File",
+			"type": "luaMobDebug",
+			"request": "launch",
+			"workingDirectory": "${workspaceFolder}",
+			"sourceBasePath": "${workspaceFolder}",
+			"listenPort": 8172,
 			"stopOnEntry": true,
-			"useCHook": true
+			"sourceEncoding": "UTF-8",
+			"interpreter": "lua",
+			"arguments": [
+				"${relativeFile}"
+			]
 		},
 		{
-			"type": "LuaHelper-Debug",
-			"request": "launch",
-			"name": "LuaHelper-Attach",
-			"description": "通用模式,通常调试项目请选择此模式",
-			"cwd": "",
-			"luaFileExtension": "",
-			"connectionPort": 8818,
+			"name": "Lua MobDebug: Listen",
+			"type": "luaMobDebug",
+			"request": "attach",
+			"workingDirectory": "${workspaceFolder}",
+			"sourceBasePath": "${workspaceFolder}",
+			"listenPublicly": false,
+			"listenPort": 8172,
 			"stopOnEntry": true,
-			"useCHook": true,
-			"autoPathMode": true
-		},
-		{
-			"name": "Debug Ruby File",
-			"type": "Ruby",
-			"request": "launch",
-			"program": "${file}"
-		},
-		{
-			"name": "Debug < MD",
-			"type": "Ruby",
-			"request": "launch",
-			"program": "${file}",
-			"args": [" < ${workspaceROOT}/test.md"]
-		},
-		{
-			"name": "Debug < JSON",
-			"type": "Ruby",
-			"request": "launch",
-			"program": "${file}",
-			"args": [" < ${workspaceROOT}/test.json"]
+			"sourceEncoding": "UTF-8"
 		},
 		{ // Name: VSCode rdbg Ruby Debugger https://marketplace.visualstudio.com/items?itemName=KoichiSasada.vscode-rdbg
 			"type": "rdbg",
@@ -63,6 +65,20 @@
 				"name": "Attach with Ruby Debug rdbg",
 				"request": "attach",
 				"rdbgPath": "~/.pixi/bin/rdbg"
-		}
+		},
+		{
+			"name": "Debug < MD",
+			"type": "rdbg",
+			"request": "launch",
+			"program": "${file}",
+			"args": [" < ${workspaceROOT}/test.md"]
+		},
+		{
+			"name": "Debug < JSON",
+			"type": "rdbg",
+			"request": "launch",
+			"program": "${file}",
+			"args": [" < ${workspaceROOT}/test.json"]
+		},
 	]
 }

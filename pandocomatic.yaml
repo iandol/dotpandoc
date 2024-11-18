@@ -125,7 +125,7 @@ templates:
       lua-filter:
         - filters/pagebreak.lua # use \newpage{} also for HTML, DOCX, ODT & EPUB
         - filters/typstFix.lua
-        #- filters/convertIndex.lua
+        - filters/convertIndex.lua
         - filters/list-table.lua
         - filters/abstract-section.lua
         - filters/pretty-urls.lua
@@ -839,13 +839,14 @@ templates:
 # VARIOUS TEST TEMPLATES
 #-----------------------------------------------------------------
   test:
+    setup: 
+      - scripts/test.elv
     pandoc:
       from: markdown
-      to: html5
+      to: plain
       standalone: true
-      css: templates/custom.css
-      self-contained: true
-      mathjax: true
+      lua-filter: 
+        #- filters/lua-log.lua
       filter:
         - filters/noop.rb
     metadata:

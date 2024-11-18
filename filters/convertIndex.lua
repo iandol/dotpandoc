@@ -26,6 +26,7 @@
 	Version:   1.20
 	Copyright: (c) 2024 Ian Max Andolina License=MIT, see LICENSE for details
 ]]
+---@diagnostic disable: undefined-global
 
 ---Makes sure users know if their pandoc version is too old for this
 ---filter.

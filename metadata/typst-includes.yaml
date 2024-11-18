@@ -1,7 +1,7 @@
 header-includes: |
   ```{=typst}
+  // header-includes
   #set text(ligatures: true, discretionary-ligatures: false, number-type: "old-style")
-  #set par(leading: 0.85em, justify: true)
   ```
 fontsize: 12pt
 linestretch: 1.75

@@ -12,6 +12,10 @@
 #let conf(
 	title: none,
 	subtitle: none,
+	running-head: none,
+	titlepage: false,
+	titlepage-background: none,
+	toc: none,
 	authors: (),
 	affiliations: (),
 	keywords: (),
@@ -25,17 +29,28 @@
 	font: (),
 	fontsize: 12pt,
 	sectionnumbering: none,
+	numbering: "1",
 	doc,
 ) = {
+	if titlepage-background != none { titlepage = true} else { titlepage = false }
 	set document(
 		title: title,
 		author: authors.map(author => content-to-string(author.name)),
 		keywords: keywords,
 	)
 	set page(
-		paper: paper,
-		margin: margin,
-		numbering: "1",
+			paper: paper,
+			margin: margin,
+			numbering: numbering,
+			background: context {
+				if titlepage { image(titlepage-background, fit: "stretch") } else { none }
+			},
+			header: context {
+				if titlepage { none } else { align(right, text(size: 8pt, title)) }
+			},
+			footer: context {
+				if titlepage { none } else { grid(columns: (1fr, 1fr),align(left, text(style: "italic", font: sans-font, size: 8pt, running-head)),align(right, [#context counter(page).display()]))}
+			},
 	)
 	set par(justify: true)
 	set text(lang: lang,
@@ -108,9 +123,31 @@
 	}
 	v(10pt)
 
-	if cols == 1 {
-		doc
+	if toc != none {
+		outline(
+			title: auto,
+			depth: $toc-depth$
+		)
+	}
+
+	if titlepage { 
+		set page(
+		background: none,
+		fill: none,
+		header: align(right, text(style: "italic", font: sans-font, size: 8pt, title)),
+		footer: grid(columns: (1fr, 1fr),align(left, text(style: "italic", font: sans-font, size: 8pt, running-head)),align(right, [#context counter(page).display()]))
+		)
+		if title != none or subtitle != none or authors != () or affiliations != () or keywords != () or toc != none { counter(page).update(1) }
+		if cols == 1 {
+			doc
+		} else {
+			columns(cols, doc)
+		}
 	} else {
-		columns(cols, doc)
+		if cols == 1 {
+			doc
+		} else {
+			columns(cols, doc)
+		}
 	}
 }
