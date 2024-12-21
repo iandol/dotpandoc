@@ -1,0 +1,8 @@
+standalone: true
+verbosity: INFO
+from: odt
+to: markdown
+extract-media: ./
+output-file: Out.md
+filters:
+  - citation-key.lua

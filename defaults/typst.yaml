@@ -9,7 +9,7 @@ filters:
   - assimilateMetadata.rb
   - typstFix.lua
   - pagebreak.lua
-  - removeDimensions.lua
+  #- removeDimensions.lua
   - convertIndex.lua
   - list-table.lua
   - abstract-section.lua

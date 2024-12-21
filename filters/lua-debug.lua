@@ -69,8 +69,14 @@ lg = require("logging")
 md = require("mobdebug")
 md.logging = true
 
+--package.cpath = package.cpath .. ";/Users/ian/.vscode/extensions/tangzx.emmylua-0.8.20-darwin-arm64/debugger/emmy/mac/arm64/emmy_core.dylib"
+--local dbg = require("emmy_core")
+--dbg.tcpListen("localhost", 9966)
+--dbg.waitIDE()
+
 function OrderedList(l)
 	md.start() --breakpoint
+	--dbg.breakHere()
 	i = 0
 	ll = l:walk {
 		Plain = function (p)
@@ -87,26 +93,37 @@ function OrderedList(l)
 end
 
 function Div(d)
-	md.start()
+	--md.start()
+	dbg.breakHere()
 	return d
 end
 
 function Meta(m)
 	md.start() --breakpoint
+	--dbg.breakHere()
 	return m
 end
 
 function Cite(elem)
 	md.start() --breakpoint
+	--dbg.breakHere()
 	return elem
 end
 
 function Emph(elem)
 	md.start() --breakpoint
+	--dbg.breakHere()
 	return elem.content
 end
 
 function Strong(elem)
 	md.start() --breakpoint
+	--dbg.breakHere()
 	return pandoc.SmallCaps(elem.content)
+end
+
+function Note(elem)
+	md.start() --breakpoint
+	--dbg.breakHere()
+	return elem
 end

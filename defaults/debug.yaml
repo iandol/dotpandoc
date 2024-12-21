@@ -1,0 +1,6 @@
+verbosity: INFO # verbose by default
+standalone: true
+from: markdown
+to: native
+filters:
+  - lua-debug.lua
