@@ -43,6 +43,7 @@ templates:
 #-----------------------------------------------------------------BIBLATEX
   biblatex:
     pandoc:
+      verbose: true # verbose by default
       biblatex: true            # Enable biblatex
       to: latex               # Has to be LaTeX output
       standalone: true        # Generate full document
@@ -54,6 +55,7 @@ templates:
 #-----------------------------------------------------------------NATBIB
   natbib:
     pandoc:
+      verbose: true # verbose by default
       natbib: true            # Enable natbib
       to: latex               # Has to be LaTeX output
       standalone: true        # Generate full document
@@ -79,6 +81,7 @@ templates:
       to: plain
       template: templates/custom.plain
       standalone: true
+      verbose: true # verbose by default
       wrap: auto
       columns: 80
       tab-stop: 4
@@ -104,6 +107,7 @@ templates:
       from: markdown
       to: icml
       standalone: true
+      verbose: true # verbose by default
       template: templates/custom.icml
 #-----------------------------------------------------------------
 #::::::::::::::::::::::::::: TYPST :::::::::::::::::::::::::::::::
@@ -183,6 +187,7 @@ templates:
       from: markdown
       to: docx
       standalone: true
+      verbose: true # verbose by default
       filter:
         #- filters/removeHR #remove horizontal rules
         - filters/prependAll.rb # prepends institute:, comments: and keywords: metadata into the text
@@ -336,6 +341,7 @@ templates:
       from: markdown
       to: latex-smart # turn off smart to leave — … “” etc. as unicode, needs xetex or luatex
       standalone: true
+      verbose: true # verbose by default
       filter: 
         - filters/assimilateMetadata.rb # handle academic metadata
       lua-filter:
@@ -480,6 +486,7 @@ templates:
       to: latex-smart # turn off smart leaves — … “” as unicode
       pdf-engine: 'xelatex'
       standalone: true
+      verbose: true # verbose by default
       template: templates/leaflet.latex
     metadata:
       mainfont: 'Greta Text Pro'
@@ -515,6 +522,7 @@ templates:
       to: latex-smart # turn off smart leaves — … “” as unicode
       pdf-engine: xelatex
       standalone: true
+      verbose: true # verbose by default
       template: templates/letter.latex
       lua-filter:
         - filters/pretty-urls.lua # clean up URLs a bit
@@ -689,6 +697,7 @@ templates:
     pandoc:
       from: markdown
       to: html5
+      verbose: true # verbose by default
       embed-resources: true
       number-sections: false
       section-divs: true
@@ -772,6 +781,7 @@ templates:
       from: markdown
       to: html5
       standalone: true
+      verbose: true # verbose by default
       section-divs: true
       mathjax: true
       lua-filter:
@@ -799,6 +809,7 @@ templates:
       to: html5
       section-divs: true
       standalone: true
+      verbose: true # verbose by default
       mathjax: true
       lua-filter:
         - filters/pagebreak.lua # use \newpage{} also for HTML and docx
@@ -829,6 +840,7 @@ templates:
       from: markdown
       to: epub
       standalone: true
+      verbose: true # verbose by default
       self-contained: true
     metadata:
       stylesheet: epub.css
@@ -845,6 +857,7 @@ templates:
       from: markdown
       to: plain
       standalone: true
+      verbose: true # verbose by default
       lua-filter: 
         #- filters/lua-log.lua
       filter:
@@ -857,6 +870,7 @@ templates:
       from: markdown
       to: html5
       standalone: true
+      verbose: true # verbose by default
       self-contained: true
       filter:
         - filters/testFilter.rb
@@ -869,6 +883,7 @@ templates:
       to: markdown
       output: out.md
       standalone: true
+      verbose: true # verbose by default
       filter: 
         - filters/testFilter.rb
     metadata:

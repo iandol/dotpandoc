@@ -5,6 +5,7 @@ to: typst
 metadata-file: typst-includes.yaml
 template: custom.typst
 wrap: preserve
+pdf-engine-opt: '--pdf-standard=a-2b'
 filters:
   - assimilateMetadata.rb
   - typstFix.lua
