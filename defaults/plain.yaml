@@ -1,9 +1,10 @@
+verbosity: INFO
 from: markdown
 to: plain
 template: custom.plain
 standalone: true
-wrap: auto
-columns: 80
+wrap: preserve
+columns: 120
 tab-stop: 4
 eol: lf
 preserve-tabs: true
@@ -12,5 +13,3 @@ filters:
   - prependAuthor.rb #prepends authors
 #  - prependAbstract
   - modifyHeadings.lua
-verbosity: INFO
-log-file: pandoclog.json
