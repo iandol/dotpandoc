@@ -1,0 +1,58 @@
+stds.pandoc = {
+    read_globals = {
+        'FORMAT',
+        'PANDOC_READER_OPTIONS',
+        'PANDOC_WRITER_OPTIONS',
+        'PANDOC_VERSION',
+        'PANDOC_API_VERSION',
+        'PANDOC_SCRIPT_FILE',
+        'PANDOC_STATE',
+        'pandoc',
+        'lpeg',
+        're'
+    },
+
+    globals = {
+        'traverse',
+        'BlockQuote',
+        'Blocks',
+        'BulletList',
+        'Cite',
+        'Code',
+        'CodeBlock',
+        'DefinitionList',
+        'Div',
+        'Emph',
+        'Figure',
+        'Header',
+        'HorizontalRule',
+        'Image',
+        'Inlines',
+        'LineBlock',
+        'LineBreak',
+        'Link',
+        'Math',
+        'Meta',
+        'Note',
+        'OrderedList',
+        'Pandoc',
+        'Para',
+        'Plain',
+        'Quote',
+        'RawBlock',
+        'RawInline',
+        'SmallCaps',
+        'SoftBreak',
+        'Space',
+        'Span',
+        'Str',
+        'Strikeout',
+        'Strong',
+        'Subscript',
+        'Superscript',
+        'Underline',
+        'Table'
+    }
+}
+
+std = 'lua54+pandoc'
