@@ -1,0 +1,7 @@
+verbosity: INFO # verbose by default
+filters:
+  - zotero.lua
+metadata:
+  reference-section-title: Bibliography
+  zotero_csl_style: 'cell'
+  zotero_client: 'zotero'
