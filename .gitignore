@@ -16,3 +16,4 @@ pandoclog.json
 
 /.luarc.json
 custom/lapreprint.pdf
+.DS_Store
