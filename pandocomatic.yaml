@@ -121,7 +121,7 @@ templates:
       to: typst
       standalone: true
       template: custom.typst
-      table-of-contents: true
+      toc: false
       metadata-file: typst-plain.yaml
       wrap: none
       filter:
