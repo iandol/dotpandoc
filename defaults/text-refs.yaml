@@ -1,0 +1,14 @@
+defaults:
+  - refs
+verbosity: INFO
+from: markdown
+to: plain
+template: custom.plain
+standalone: true
+wrap: preserve
+columns: 120
+tab-stop: 4
+eol: lf
+preserve-tabs: true
+filters:
+  - modifyHeadings.lua
