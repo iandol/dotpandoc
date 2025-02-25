@@ -1,0 +1,1 @@
+Pandoc filter to rewrite author and affiliation metadata for multiple Pandoc outputs.

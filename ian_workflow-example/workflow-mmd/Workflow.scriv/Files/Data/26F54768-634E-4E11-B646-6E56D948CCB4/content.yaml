@@ -1,0 +1,108 @@
+### Pandocomatic Configuration ###
+# Important: YAML configuration files use SPACES for indentation to define structure
+# Path values are normally relative to the Pandoc data dir: /Users/MYNAME/.local/share/pandoc/
+# so csl/apa.csl will be searched as /Users/MYNAME/.local/share/pandoc/csl/apa.csl — pandocomatic
+# also allows you to use ./ to signify the source folder the markdown file is in.
+# This example uses ./ for all accesory files so copy everything to same locations
+# as the markdown file (Scrivener's compile folder). Normally you will want to
+# use the Pandoc data directory to store the filter and config files.
+templates:
+#######################################
+  refs:
+    setup: [] #runs a general script to rename or copy files before etc.
+    preprocessors: [] #runs a script on the markdown file itself
+    pandoc:
+      citeproc: true #this enables the built-in citeproc engine
+      standalone: true #create complete document
+      bibliography: ./workflow.bib #bibtex file
+      csl: ./apa-workflow.csl #CSL style file
+    metadata:
+      notes-after-punctuation: false
+      link-citations: true #hyperlink intext references to the bibliography
+      csl-hanging-indent: true #try to add hanging indents to formatted bibliogrpahy
+    postprocessors: [] #runs on the output file (unless it is binary like docx)
+    cleanup: [] #general cleanup script
+#######################################
+  paper-with-refs-latex:
+    extends: ['refs'] #we can inherit from other templates
+    pandoc:
+      from: markdown
+      to: latex
+      template: ./custom.latex
+      toc: true
+      toc-depth: 4
+      filter: ./assimilateMetadata.rb #regularise metadata fields so pandoc template can use it more easily
+    metadata: 
+      mainfont: 'Hoefler Text'
+      sansfont: 'Gill Sans'
+      monofont: 'Menlo'
+      CJKmainfont: 'PingFang SC'
+      lang: 'en-GB'
+      papersize: 'A4'
+      documentclass: 'article'
+      fontsize: '12pt'
+      linestretch: '1.75'
+      geometry: 'margin=2cm'
+      nonumberfigures: true
+      linkcolor: Mahogany
+      citecolor: Sepia
+      urlcolor: BrickRed
+#######################################
+  paper-with-refs-docx:
+    extends: ['refs'] #we can inherit from other templates
+    pandoc:
+      from: markdown
+      to: docx
+      reference-doc: ./custom.docx
+      toc: false
+      filter:
+        - ./simplifyMetadata.rb #collapse down metadata "author: [name: affiliation:]" to author:
+        - ./prependAll.rb # prepends institute:, comments: and keywords: metadata
+####################################### for debugging, don't run any filters
+  paper-with-refs-docx-nofilters:
+    extends: ['refs'] #we can inherit from other templates
+    pandoc:
+      from: markdown
+      to: docx
+      reference-doc: ./custom.docx
+      toc: false
+#######################################
+  paper-with-refs-text:
+    extends: ['refs'] #we can inherit from other templates
+    pandoc:
+      from: markdown
+      to: plain
+      toc: true
+      standalone: true
+      verbose: true
+      columns: 85
+      filter:
+        - ./prependAll.rb #prepends institute:, comments: and keywords: metadata into the text itself
+        - ./prependAuthor.rb #prepends authors
+#######################################
+  paper-with-refs-html:
+    extends: ['refs'] #we can inherit from other templates
+    pandoc:
+      from: markdown
+      to: html5
+      template: ./custom.html
+      css: ./custom.css
+      standalone: true
+      number-sections: false
+      section-divs: true
+      self-contained: true
+      toc: true
+      toc-depth: 4
+      filter:
+        - ./assimilateMetadata.rb #regularise metadata fields so pandoc template can use it more easily
+#######################################
+  paper-with-refs-icml:
+    extends: ['refs'] #we can inherit from other templates
+    pandoc:
+      from: markdown
+      to: icml
+      standalone: true
+      verbose: true
+      filter:
+        - ./prependAll.rb #prepends institute:, comments: and keywords: metadata into the text itself
+        - ./prependAuthor.rb #prepends authors

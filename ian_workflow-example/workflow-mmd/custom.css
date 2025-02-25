@@ -1,0 +1,341 @@
+body { 
+	font-family: "Greta Sans Pro", -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+	font-size: 18px;
+	margin: auto;
+	max-width: 29cm;
+}
+
+/* For smart quotes */
+q { quotes: "“" "”" "‘" "’"; }
+
+header {
+	font-family: "Greta Text Pro", "Athelas", "Palatino", "Avenir Next", sans-serif;
+	margin: 0;
+	margin-bottom: 2em;
+	border-left: 7px solid rgb(90%,90%,90%);
+	padding: 1em 10% 1em 10%;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	font-family: "Greta Text Pro", "Athelas", "Palatino", "Avenir Next", sans-serif;
+	margin: 2rem 0rem 0.4rem 0.5rem;
+}
+
+h2,h3,h4,h5,h6 {
+		margin-top: 1rem;
+}
+
+/*h1 {
+	position: running(header1)
+}*/
+h1.title {
+	/*position: running(title);*/
+	font-size: 2.5em;
+	line-height: 1.1em;
+}
+/*@page{
+	@top-left {
+		content: element(title);
+		font-size: 10px;
+		line-height: 10px
+		font-weight: normal;
+	}
+	@top-right {
+		content: element(header1);
+		font-size: 10px;
+		line-height: 10px
+		font-weight: normal;
+	}
+}*/
+
+@page { 
+	size: A4;
+	margin: 18mm;
+	counter-increment: page;
+	/* prince-bleed: 5mm;
+	marks: crop cross; */
+}
+@page:left {
+	margin-right: 35mm;
+	@bottom-left {
+		font-family: "Greta Text Pro", "Athelas", "Palatino", "Avenir Next", sans-serif;
+		font-size: 9px;
+		content: "Page " counter(page) " of " counter(pages);
+	}
+}
+@page:right {
+	margin-left: 35mm;
+	@bottom-right {
+		font-family: "Greta Text Pro", "Athelas", "Palatino", "Avenir Next", sans-serif;
+		font-size: 9px;
+		content: "Page " counter(page) " of " counter(pages);
+	}
+}
+
+p.subtitle {
+	text-align: center;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 115%;
+}
+
+p.author {
+	margin: 0em 1em 0em 0em;
+	display: inline-block;
+}
+
+p.author-list {
+	text-align: center;
+	font-weight: bold;
+	font-size: 125%;
+}
+
+p {
+	text-align: justify;
+	line-height: 1.75em;
+	margin: auto;
+	margin-bottom:1em;
+	padding-left: 1em;
+	padding-right: 1em;
+	z-index: 10;
+}
+
+blockquote {
+	font-family: "Graublau Slab", "Gill Sans", "Avenir Next", sans-serif;
+	font-style: italic;
+}
+
+p.author_contributions {
+	font-size: 90%;
+	text-align: center;
+	font-style: italic;
+
+}
+
+.author_affiliations {padding-left: 1em; margin-top:2em;}
+.author_affiliations::before {
+	content: "Affiliations: ";
+	font-weight: bold;
+	color: grey;
+}
+.affiliation-item {
+	display: inline-block;
+	margin-right: 15px;
+}
+
+.correspondence {padding-left: 1em; margin-top:2em;}
+.correspondence::before {
+	content: "Correspondence: ";
+	font-weight: bold;
+	color: grey;
+}
+.correspondence-item {
+	display: inline-block;
+	margin-right: 15px;
+}
+
+.email {padding-left: 1em; margin-top:2em;}
+.email::before {
+	content: "E-mail: ";
+	font-weight: bold;
+	color: grey;
+}
+.email-item {
+	display: inline-block;
+	margin-right: 15px;
+}
+
+.abstract {padding-left: 1em; margin-top:2em;}
+.abstract::before {
+	content: "Abstract: ";
+	font-weight: bold;
+	color: grey;
+}
+
+.abstract {padding-left: 1em; margin-top:2em;}
+.date::before {
+	content: "Date: ";
+	font-weight: bold;
+	color: grey;
+}
+
+del {
+  background: #fae6e6;
+}
+
+ins {
+  background: #ecfce6
+}
+
+.annotation {
+	background: #FFB;
+	color: #333;
+}
+
+aside::before, .comment::before {
+	content: "[";
+	font-weight: bold;
+	color: #222;
+}
+
+aside::after, .comment::after {
+	content: "]";
+	font-weight: bold;
+	color: #222;
+}
+
+aside, .comment {
+	background: #FFB;
+	color: #222;
+	opacity: 0.5;
+	z-index: -1;
+}
+
+aside:hover, .comment:hover {  }
+
+div.infobox, div.info, div.todo, div.warning {
+	font-size: 0.9rem;
+	line-height: 1em;
+	float: right;
+	width: 30%;
+	margin: 5px;
+	padding: 1px;
+	background: #EEE;
+	border-radius: 5px;
+	border: 1px solid #DDD;
+	box-shadow: 2px 2px 5px 0px #888;
+}
+div.info::before { content: "INFO: "; font-weight: bold; }
+div.todo::before { content: "TODO: "; font-weight: bold; }
+div.warning::before { content: "WARNING: "; font-weight: bold; }
+div.warning {background: #CCF;}
+div.warning {background: #FCC;}
+div.info p, div.todo p, div.warning p { padding: 0.25em; }
+
+figure {
+	display: inline-block;
+	text-align: center;
+	vertical-align: top;
+	/*float: outside;*/
+	width: 98%;
+	font-size: 0.8rem;
+	background: white;
+	overflow: visible;
+	border-radius: 5px;
+	border: 1px solid #EEE;
+	box-shadow: 1px 1px 8px 0px #888;
+	padding: 5px;
+	margin: 0 0 0.5em 0;
+}
+
+figure.nofloat {
+	float: none;
+	display: inline-block;
+	text-align: center;
+	vertical-align: top;
+	position: relative;
+}
+
+figure img {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 100%;
+	max-height: 22cm;
+}
+
+figcaption {
+	font-family: "Avenir Next", "helvetica Neue", sans-serif;
+	line-height: 1em;
+	text-align: justify;
+}
+
+a { color: #500; }
+
+div#refs p {
+	font-size: 0.8em;
+	line-height: 1em;
+	border-left: 5px solid rgb(90%,90%,90%);
+	padding-left: 10px;
+}
+
+/* Override section behavior.
+ * We only want the top-level <section> to have padding.
+ * This makes it easier to work with --section-divs. */
+section {
+	padding-top: initial;
+	padding-bottom: initial;
+}
+article > section {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+}
+
+/* Make byline (date and/or author) small */
+p.byline { font-size: 1.2rem; }
+
+
+/* Simulate Pandoc's table output styles */
+table {
+	border-top: 2px solid black;
+	border-bottom: 2px solid black;
+}
+th {
+	border-bottom: 1px solid black;
+}
+td, th {
+	font-size: 0.9rem;
+	padding: 10px;
+	text-align: left;
+}
+
+/* Allow tables to be full width
+ * if they're wrapped in a figure.fullwidth
+ * (Easier to insert from Pandoc than manually adding table) */
+figure.fullwidth table {
+	width: 90%;
+}
+
+@media (max-width: 760px) {
+	figure.fullwidth table {
+		width: 100%;
+	}
+}
+
+/* Code blocks
+ *
+ * Code blocks with a language look like div.sourceCode > pre.sourceCode
+ * Otherwise, it's just a pre (without .sourceCode) */
+div.sourceCode,
+pre:not(.sourceCode) {
+	font-size: 0.9rem;
+	overflow-x: auto;
+}
+
+div.sourceCode code,
+pre:not(.sourceCode) code {
+	font-size: 0.9rem;
+}
+
+.fullwidth div.sourceCode,
+.fullwidth pre:not(.sourceCode) {
+	width: 100%;
+}
+
+/* We've handled all the margin/padding on the outer-most div.sourceCode */
+div.sourceCode pre {
+	padding: 0;
+	margin: 0;
+}
+
+@media (max-width: 760px) {
+	div.sourceCode,
+	pre:not(.sourceCode) {
+		width: 100%;
+	}
+}
+
+/* Pandoc-generated line numbers need the same stylings as normal <code> */
+.lineNumbers pre {
+	line-height: 1.42;
+	font-size: 0.9rem;
+}

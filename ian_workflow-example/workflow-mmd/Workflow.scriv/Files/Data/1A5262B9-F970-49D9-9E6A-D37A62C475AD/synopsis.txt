@@ -1,0 +1,1 @@
+This is the Pandoc metadata and also contains the pandocomatic key to specify which templates to use

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompileSettings>
+    <ProjectSettings>
+        <Content Scope="Included">
+            <Filter State="Off" Exclude="No" Type="Label">
+                <CollectionID>134F3AFC-FE3B-40A6-8BE3-802D123FA6E9</CollectionID>
+                <Label>-1</Label>
+                <Status>-1</Status>
+            </Filter>
+        </Content>
+        <Replacements>
+            <Replacement Ignore="Yes" RegEx="Yes">
+                <Replace><![CDATA[\s+\[@]]></Replace>
+                <With><![CDATA[[@]]></With>
+            </Replacement>
+        </Replacements>
+        <Options>
+            <RemoveAnnotations>Yes</RemoveAnnotations>
+            <ResampleImages DPI="72">No</ResampleImages>
+            <ConvertTablesAndListToMMD>Yes</ConvertTablesAndListToMMD>
+            <ConvertLinksToMMD>Yes</ConvertLinksToMMD>
+            <TreatPFAsRawMarkup>Yes</TreatPFAsRawMarkup>
+            <PDF>
+                <Cover Source="FrontMatter" Bleed="9.0" BleedUnits="pt"/>
+                <Compression Enabled="No">
+                    <ImageResolutionCompressionType>None</ImageResolutionCompressionType>
+                    <ImageResolution>300</ImageResolution>
+                </Compression>
+            </PDF>
+            <Scriptwriting>
+                <IncludeTitles>Yes</IncludeTitles>
+                <IncludeSynopses>Yes</IncludeSynopses>
+                <CommentsAsScriptNotes>Yes</CommentsAsScriptNotes>
+            </Scriptwriting>
+            <Ebook>
+                <StartAfterFrontMatter>Yes</StartAfterFrontMatter>
+                <Cover>
+                    <ImageDocument Source="FrontMatter"/>
+                    <Title>Cover</Title>
+                    <SVG Width="600" Height="800"><![CDATA[]]></SVG>
+                </Cover>
+                <TOC PandocDepth="3">
+                    <HTML Generate="Yes">
+                        <Title>Contents</Title>
+                    </HTML>
+                </TOC>
+            </Ebook>
+        </Options>
+        <MetaData>
+            <ProjectTitle>Scrivener + Pandoc Workflow</ProjectTitle>
+            <ProjectAbbreviatedTitle>Scrivomatic Workflow</ProjectAbbreviatedTitle>
+            <EbookLanguage>en</EbookLanguage>
+            <FountainTitlePageMetaData>
+                <Value Key="Title"><![CDATA[<$projecttitle>]]></Value>
+                <Value Key="Author"><![CDATA[<$author>]]></Value>
+            </FountainTitlePageMetaData>
+        </MetaData>
+    </ProjectSettings>
+    <CurrentFileType>mmd</CurrentFileType>
+    <FormatSettings>
+        <Format ID="5D0CC3FE-F1EF-4958-AF9C-65A2904508F3">
+            <SectionLayouts>
+                <Type ID="51FDC6F7-AF40-4A06-B95C-CD4E0005BD56">3893CAB1-384C-4DE4-B9EC-92287EE73E06</Type>
+                <Type ID="149EB533-8F24-4D6B-852E-B7DC4395E9D0">AS-IS</Type>
+                <Type ID="FE16C4D2-6556-4F53-9CCA-6CABBFE8E713">AS-IS</Type>
+                <Type ID="1570434A-07E4-41CE-A301-66D4F8861A0B">86C08239-3F1D-4125-8BE0-E97ACEC5BDAD</Type>
+            </SectionLayouts>
+            <FrontAndBackMatter>
+                <DefaultFrontMatter Add="Yes">1A5262B9-F970-49D9-9E6A-D37A62C475AD</DefaultFrontMatter>
+            </FrontAndBackMatter>
+        </Format>
+        <Format ID="modern-ms">
+            <SectionLayouts>
+                <Type ID="51FDC6F7-AF40-4A06-B95C-CD4E0005BD56">F06837C7-95F0-41AF-8050-90874CBAAFD8</Type>
+                <Type ID="149EB533-8F24-4D6B-852E-B7DC4395E9D0">AS-IS</Type>
+                <Type ID="FE16C4D2-6556-4F53-9CCA-6CABBFE8E713">14AD3326-9EA8-4D0A-A912-F1A991942157</Type>
+                <Type ID="1570434A-07E4-41CE-A301-66D4F8861A0B">D1848966-5D15-4080-B5FA-EDC5063123B0</Type>
+            </SectionLayouts>
+        </Format>
+        <Format ID="3044CFCE-9649-464C-AC51-E61292FC2B8E">
+            <SectionLayouts>
+                <Type ID="51FDC6F7-AF40-4A06-B95C-CD4E0005BD56">3893CAB1-384C-4DE4-B9EC-92287EE73E06</Type>
+                <Type ID="FE16C4D2-6556-4F53-9CCA-6CABBFE8E713">HEADER</Type>
+                <Type ID="1570434A-07E4-41CE-A301-66D4F8861A0B">86C08239-3F1D-4125-8BE0-E97ACEC5BDAD</Type>
+            </SectionLayouts>
+            <FrontAndBackMatter>
+                <DefaultFrontMatter Add="Yes">1A5262B9-F970-49D9-9E6A-D37A62C475AD</DefaultFrontMatter>
+            </FrontAndBackMatter>
+        </Format>
+        <Format ID="7CC128BA-7399-499C-90B3-7CECDBC3E08A">
+            <SectionLayouts>
+                <Type ID="51FDC6F7-AF40-4A06-B95C-CD4E0005BD56">NEW-PAGE-HEADER</Type>
+                <Type ID="149EB533-8F24-4D6B-852E-B7DC4395E9D0">AS-IS</Type>
+                <Type ID="FE16C4D2-6556-4F53-9CCA-6CABBFE8E713">HEADER</Type>
+                <Type ID="1570434A-07E4-41CE-A301-66D4F8861A0B">TEXT-WITH-HEADER</Type>
+            </SectionLayouts>
+            <FrontAndBackMatter>
+                <DefaultFrontMatter Add="Yes">1A5262B9-F970-49D9-9E6A-D37A62C475AD</DefaultFrontMatter>
+            </FrontAndBackMatter>
+        </Format>
+        <Format ID="DEFAULT">
+            <SectionLayouts>
+                <Type ID="51FDC6F7-AF40-4A06-B95C-CD4E0005BD56">NEW-PAGE-HEADER-WITH-TEXT</Type>
+                <Type ID="1570434A-07E4-41CE-A301-66D4F8861A0B">TEXT-SECTION</Type>
+            </SectionLayouts>
+        </Format>
+        <Format ID="7024E2E6-B00B-43FC-9EE8-F5A70EB86A68">
+            <SectionLayouts>
+                <Type ID="51FDC6F7-AF40-4A06-B95C-CD4E0005BD56">F06837C7-95F0-41AF-8050-90874CBAAFD8</Type>
+                <Type ID="149EB533-8F24-4D6B-852E-B7DC4395E9D0">AS-IS</Type>
+                <Type ID="FE16C4D2-6556-4F53-9CCA-6CABBFE8E713">14AD3326-9EA8-4D0A-A912-F1A991942157</Type>
+                <Type ID="1570434A-07E4-41CE-A301-66D4F8861A0B">D1848966-5D15-4080-B5FA-EDC5063123B0</Type>
+            </SectionLayouts>
+        </Format>
+    </FormatSettings>
+    <LastUsedFormats>
+        <Print>DEFAULT</Print>
+        <mmd>5D0CC3FE-F1EF-4958-AF9C-65A2904508F3</mmd>
+        <pdf>7024E2E6-B00B-43FC-9EE8-F5A70EB86A68</pdf>
+    </LastUsedFormats>
+</CompileSettings>

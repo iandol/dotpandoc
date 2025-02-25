@@ -1,0 +1,606 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\PassOptionsToPackage{space}{xeCJK}
+%
+\documentclass[
+  12pt,
+  a4paper,
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{setspace}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+  \setmainfont[]{Hoefler Text}
+  \setsansfont[]{Gill Sans}
+  \setmonofont[]{Menlo}
+  \ifXeTeX
+    \usepackage{xeCJK}
+    \setCJKmainfont[]{PingFang SC}
+  \fi
+  \ifLuaTeX
+    \usepackage[]{luatexja-fontspec}
+    \setmainjfont[]{PingFang SC}
+  \fi
+\fi
+% use Cambria/Arial Unicode to fix some font substitution problems for e.g. ⬄
+\ifPDFTeX
+
+\else
+\newfontfamily\fixfont[]{Cambria}
+\newfontfamily\fixfontB[]{Arial Unicode MS}
+\fi
+
+% customise titles
+\usepackage{xcolor}
+\usepackage{titlesec}
+\definecolor{Sepia}{rgb}{.4,.1,.1}
+\definecolor{Mahogany}{rgb}{.6,.2,.2}
+\definecolor{BrickRed}{rgb}{.7,.3,.3}
+\titleformat*{\section}{\LARGE\bfseries\itshape\center\sffamily\color{Sepia}}
+\titleformat*{\subsection}{\Large\bfseries\itshape\sffamily\color{Sepia}}
+\titleformat*{\subsubsection}{\large\bfseries\itshape\sffamily\color{Mahogany}}
+%\titleformat*{\subsubsubsection}{\large\itshape\sffamily}
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[format=hang,labelfont=bf,labelsep=endash,font={sf,small}]{caption}
+\captionsetup[figure]{labelformat=empty}% redefines the caption setup of the figures environment
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Scrivener + Pandoc Workflow},
+  pdfauthor={John Doe, Joanna Doe},
+  pdflang={en-GB},
+  pdfkeywords={Pandoc, Scrivener, Workflow},
+  colorlinks=true,
+  linkcolor={Mahogany},
+  filecolor={Mahogany},
+  citecolor={Sepia},
+  urlcolor={BrickRed},
+  pdfcreator={Scrivomatic, Pandoc and LaTeX}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=2cm]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textbf{#1}}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\usepackage[normalem]{ulem}
+% Avoid problems with \sout in headers with hyperref
+\pdfstringdefDisableCommands{\renewcommand{\sout}{}}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+\babelprovide[main,import]{british}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\usepackage{titling}
+\pretitle{\begin{center}\setstretch{1}\LARGE\sffamily\bfseries\itshape}
+\posttitle{\par\end{center}} 
+\predate{\begin{center}\sffamily} 
+\postdate{\par\end{center}}
+\title{Scrivener + Pandoc Workflow}
+\ifPDFTeX % if pdftex
+  \author{\textsf{John Doe\textsuperscript{1 †},\quad Joanna
+Doe\textsuperscript{1,2 † *}}}
+\else
+  \author{\textsf{John Doe\textsuperscript{1 †},\quad Joanna
+Doe\textsuperscript{1,2 † \fixfontB{✉︎}}}}
+\fi
+\date{Tuesday 11 February 2025}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+
+\textsf{\textsuperscript{1} International Cephalopod Research Institute
+(ICRI), Pacific Ocean.\quad\&\quad\textsuperscript{2} Center for
+Advanced Octopod Studies (CAOS), Atlantic Ocean.}
+
+\ifPDFTeX
+\textsf{*\emph{Joanna Doe
+\href{mailto:jo@caos.org}{\nolinkurl{jo@caos.org}}}}
+\else
+\textsf{\fixfontB{✉︎} \emph{Joanna Doe
+\href{mailto:jo@caos.org}{\nolinkurl{jo@caos.org}}}}
+\fi
+
+\textsf{\textsuperscript{†} \small{\emph{These authors contributed equally to this work.}}}
+
+
+\end{center}
+
+
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{4}
+\tableofcontents
+}
+\setstretch{1.75}
+\section{§1 --- Abstract}\label{abstract}
+
+\textsc{Lørem ipsum dolør sit amet}
+(\citeproc{ref-crivellato2007}{{Crivellato} \& {Ribatti} 2007};
+\citeproc{ref-siegel2015}{{Siegel} \& {Silins} 2015}), eu ipsum movet
+vix, veniam låoreet posidonium te eøs, eæm in veri eirmod. Sed illum
+minimum at, est mægna alienum mentitum ne. Amet equidem sit ex. Ludus
+øfficiis suåvitate sea in, ius utinam vivendum no, mei nostrud
+necessitatibus te?
+
+\section{§2 --- Introduction}\label{introduction}
+
+\begin{quote}
+\emph{Humans are pattern-seeking story-telling animals, and we are quite
+adept at telling stories about patterns, whether they exist or not}. ---
+Michael Shermer
+\end{quote}
+
+\ul{Lørem ipsum dolør sit amet}, eu ipsum movet vix, veniam låoreet
+posidonium\footnote{This is a footnote, \textbf{with} a citation
+  (\citeproc{ref-crivellato2007}{{Crivellato} \& {Ribatti} 2007}).} te
+eøs, eæm in veri eirmod (\citeproc{ref-crivellato2007}{{Crivellato} \&
+{Ribatti} 2007}; \citeproc{ref-barrett2015}{{Barrett} \& {Simmons}
+2015}). Sed illum minimum (\hyperref[lunar-cycles]{see Results}) at
+3.25×10⁻⁴⁸, est mægna alienum mentitum ne.
+\href{https://pandoc.org/MANUAL.html}{Amet equidem} sit ex. Ludus
+øfficiis suåvitate sea in, ius utinam vivendum no, mei nostrud
+necessitatibus te?
+
+\begin{figure}
+\centering
+\includegraphics[width=2.08333in,height=3.01042in]{xkcd_brain_hemispheres.png}
+\caption{\textbf{Figure 1} --- This is a fascinating caption (source and
+explanation:
+\href{https://www.explainxkcd.com/wiki/index.php/2120:_Brain_Hemispheres}{XKCD}).}
+\end{figure}
+
+Sint meis quo et, vis ad fæcete dolorem! Ad quøt moderatius elaboraret
+eum(\citeproc{ref-crivellato2007}{{Crivellato} \& {Ribatti} 2007}), pro
+paulo ridens quaestio ut (see \textbf{Fig. 1})! Iudico nullam sit ad, ad
+has åperiam senserit conceptåm? Tritani posidonium suscipiantur ex duo,
+meæ essent mentitum ad. Nåm ex mucius mandamus, ut duo cåusae offendit
+laboramus. Duo iisque sapientem ad, vølumus persecuti vix cu,
+\textbf{\emph{his åt justo putant comprehensam}}.
+
+Ad pro quod \textsuperscript{definitiønem}, mel no laudem
+\textsubscript{delectus}, te mei prompta maiorum pønderum
+(\citeproc{ref-simmons2013}{{Simmons} 2013};
+\citeproc{ref-copenhaver2014}{{Copenhaver} 2014};
+\citeproc{ref-hoffman2014}{{Hoffman} \& {Prakash} 2014};
+\citeproc{ref-barrett2015}{{Barrett} \& {Simmons} 2015};
+\citeproc{ref-siegel2015}{{Siegel} \& {Silins} 2015}). Solum aeque
+singulis duo ex, est an iriure øblique. Volumus åntiøpam iudicåbit et
+pro, cibo ubique hås an? Cu his movet feugiåt pårtiendo
+(\citeproc{ref-crivellato2007}{{Crivellato} \& {Ribatti} 2007};
+\citeproc{ref-barrett2015}{{Barrett} \& {Simmons} 2015})! Eam in ubique
+høneståtis ullåmcorper, no eos vitae orætiø viderer. Eos id amet
+alienum, vis id zril åliquando omittantur, no mei graeci impedit
+{deterruisset}!
+
+\begin{itemize}
+\tightlist
+\item
+  Item 1
+\item
+  Item 2
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Item 2a
+  \item
+    Item 2b
+  \end{itemize}
+\item
+  Item 3
+\end{itemize}
+
+No meæ menandri mediøcritatem, meis tibique convenire vis id! Delicata
+intellegam mei ex. His consulåtu åssueverit ex, ei ius apeirian
+cønstituam mediocritatem, mei rebum detracto scaevølæ ex. Sed modo dico
+ullum at, sententiae definiebas ex eam! Nøstro eruditi eum ex.
+
+\begin{longtable}[]{@{}lll@{}}
+\caption{This is a table caption}\tabularnewline
+\toprule\noalign{}
+\textbf{Table Head 1} & \textbf{Table Head 2} & \textbf{Table Head 3} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\textbf{Table Head 1} & \textbf{Table Head 2} & \textbf{Table Head 3} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Item 1 & Item 2 & Item 3 \\
+Item 4 & Item 5 & Item 6 \\
+\end{longtable}
+
+Åd nam omnis ullamcørper vituperatoribus. Sed verear tincidunt
+rationibus an. Elit såperet recteque sit et, tåmquåm noluisse
+eloquentiåm ei mei. In pri solet soleat timeam, tale possit vis æt.
+
+\section{§3 --- Methods}\label{methods}
+
+\subsection{§3.1 --- Data Recording}\label{data-recording}
+
+Lørem ipsum dolør sit amet, eu ipsum movet vix, veniam låoreet
+posidonium te eøs, eæm in veri eirmod. Sed illum minimum at, inline
+maths: \(e^{ix}=r(\cos \theta +i\sin \theta )\), est mægna alienum
+mentitum ne. Amet equidem sit ex. Ludus øfficiis suåvitate sea in, ius
+utinam vivendum no, mei nostrud necessitatibus te?
+
+\[x^{\alpha} e^{\beta x^{\gamma} e^{\delta x^{\epsilon}}}\]
+
+Sint meis quo et, vis ad fæcete dolorem! Ad quøt moderatius elaboraret
+eum(\citeproc{ref-siegel2015}{{Siegel} \& {Silins} 2015}), pro paulo
+ridens quaestio ut! Iudico nullam sit ad, ad has åperiam senserit
+conceptåm? Tritani posidonium suscipiantur ex duo, meæ essent mentitum
+ad. Nåm ex mucius mandamus, ut duo cåusae offendit laboramus. Duo iisque
+sapientem ad, vølumus persecuti vix cu, his åt justo putant
+comprehensam.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Output "I love Ruby"}
+\NormalTok{say }\OperatorTok{=} \StringTok{"I love Ruby"}
+\FunctionTok{puts}\NormalTok{ say}
+
+\CommentTok{\# Output "I *LOVE* RUBY"}
+\NormalTok{say}\KeywordTok{[}\VerbatimStringTok{\textquotesingle{}love\textquotesingle{}}\KeywordTok{]} \OperatorTok{=} \StringTok{"*love*"}
+\FunctionTok{puts}\NormalTok{ say}\AttributeTok{.upcase}
+
+\CommentTok{\# Output "I *love* Ruby"}
+\CommentTok{\# five times}
+\DecValTok{5}\AttributeTok{.times} \OperatorTok{\{} \FunctionTok{puts}\NormalTok{ say }\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Ad pro quod definitiønem\footnote{Another footnote. Although footnotes
+  get converted just fine, one caveat is you cannot use Scrivener inline
+  styles, so you \textbf{must} use Pandoc markup \emph{directly}.}, mel
+no laudem delectus, te mei prompta maiorum pønderum. Solum aeque
+singulis duo ex (\citeproc{ref-siegel2015}{{Siegel} \& {Silins} 2015}),
+est an iriure øblique. Volumus åntiøpam iudicåbit et pro, cibo ubique
+hås an? Cu his movet feugiåt pårtiendo! Eam in ubique høneståtis
+ullåmcorper, no eos vitae orætiø viderer. Eos id amet alienum, vis id
+zril åliquando omittantur, no mei graeci impedit
+deterruisset\footnote{A test to see how several footnotes are spaced.}!
+
+This is an info box, containing fascinating information.
+
+No meæ menandri mediøcritatem, meis tibique convenire vis id! Delicata
+intellegam mei ex. His consulåtu åssueverit ex
+(\citeproc{ref-siegel2015}{{Siegel} \& {Silins} 2015}), ei ius apeirian
+cønstituam mediocritatem, mei rebum detracto scaevølæ ex. Sed modo dico
+ullum at, sententiae definiebas ex eam! Nøstro eruditi eum ex. No meæ
+menandri mediøcritatem, meis tibique convenire vis id! Delicata
+intellegam mei ex. His consulåtu åssueverit ex
+(\citeproc{ref-siegel2015}{{Siegel} \& {Silins} 2015}), ei ius apeirian
+cønstituam mediocritatem, mei rebum detracto scaevølæ ex. Sed modo dico
+ullum at, sententiae definiebas ex eam! Nøstro eruditi eum ex.
+
+This is a warning box, containing terrifying information.
+
+Åd nam omnis ullamcørper vituperatoribus. Sed verear tincidunt
+rationibus an. Elit såperet recteque sit et
+(\citeproc{ref-siegel2015}{{Siegel} \& {Silins} 2015}), tåmquåm noluisse
+eloquentiåm ei mei. In pri solet soleat timeam, tale possit vis æt.
+
+\subsection{§3.2 --- Experimental
+Perturbations}\label{experimental-perturbations}
+
+Lørem ipsum dolør sit amet, eu ipsum movet vix, veniam låoreet
+posidonium te eøs, eæm in veri eirmod. Sed illum minimum at, est mægna
+alienum mentitum ne. Amet equidem sit ex. Ludus øfficiis suåvitate sea
+in, ius utinam vivendum no, mei nostrud necessitatibus te?
+
+Sint meis quo et, vis ad fæcete dolorem! Ad quøt moderatius elaboraret
+eum, pro paulo ridens quaestio ut! Iudico nullam sit ad, ad has åperiam
+senserit conceptåm? Tritani posidonium suscipiantur ex duo, meæ essent
+mentitum ad. Nåm ex mucius mandamus, ut duo cåusae offendit laboramus.
+Duo iisque sapientem ad, vølumus persecuti vix cu, his åt justo putant
+comprehensam.
+
+Ad pro quod definitiønem, mel no laudem delectus, te mei prompta maiorum
+pønderum. Solum aeque singulis duo ex, est an iriure øblique. Volumus
+åntiøpam iudicåbit et pro, cibo ubique hås an? Cu his movet feugiåt
+pårtiendo! Eam in ubique høneståtis ullåmcorper, no eos vitae orætiø
+viderer. Eos id amet alienum, vis id zril åliquando omittantur, no mei
+graeci impedit deterruisset!
+
+No meæ menandri mediøcritatem, meis tibique convenire vis id! Delicata
+intellegam mei ex. His consulåtu åssueverit ex
+(\citeproc{ref-siegel2015}{{Siegel} \& {Silins} 2015}), ei ius apeirian
+cønstituam mediocritatem, mei rebum detracto scaevølæ ex. Sed modo dico
+ullum at, sententiae definiebas ex eam! Nøstro eruditi eum ex.
+
+Åd nam omnis ullamcørper vituperatoribus. Sed verear tincidunt
+rationibus an. Elit såperet recteque sit et, tåmquåm noluisse
+eloquentiåm ei mei. In pri solet soleat timeam, tale possit vis æt.
+
+\subsection{§3.3 --- Statistical Analysis}\label{statistical-analysis}
+
+Lørem ipsum dolør sit amet, eu ipsum movet vix, veniam låoreet
+posidonium te eøs, eæm in veri eirmod. Sed illum minimum at, est mægna
+alienum mentitum ne. Amet equidem sit ex. Ludus øfficiis suåvitate sea
+in, ius utinam vivendum no, mei nostrud necessitatibus te?
+
+Sint meis quo et, vis ad fæcete dolorem! Ad quøt moderatius elaboraret
+eum, pro paulo ridens quaestio ut! Iudico nullam sit ad, ad has åperiam
+senserit conceptåm? Tritani posidonium suscipiantur ex duo, meæ essent
+mentitum ad. Nåm ex mucius mandamus, ut duo cåusae offendit laboramus.
+Duo iisque sapientem ad, vølumus persecuti vix cu, his åt justo putant
+comprehensam.
+
+Ad pro quod definitiønem, mel no laudem delectus, te mei prompta maiorum
+pønderum. Solum aeque singulis duo ex, est an iriure øblique. Volumus
+åntiøpam iudicåbit et pro, cibo ubique hås an? Cu his movet feugiåt
+pårtiendo! Eam in ubique høneståtis ullåmcorper, no eos vitae orætiø
+viderer. Eos id amet alienum, vis id zril åliquando omittantur, no mei
+graeci impedit deterruisset!
+
+No meæ menandri mediøcritatem, meis tibique convenire vis id! Delicata
+intellegam mei ex. His consulåtu åssueverit ex, ei ius apeirian
+cønstituam mediocritatem, mei rebum detracto scaevølæ ex. Sed modo dico
+ullum at, sententiae definiebas ex eam! Nøstro eruditi eum ex.
+
+Åd nam omnis ullamcørper vituperatoribus. Sed verear tincidunt
+rationibus an. Elit såperet recteque sit et, tåmquåm noluisse
+eloquentiåm ei mei. In pri solet soleat timeam, tale possit vis æt.
+
+\section{§4 --- Results}\label{results}
+
+\subsection{§4.1 --- Lunar Cycles}\label{lunar-cycles}
+
+Lørem ipsum dolør sit amet, eu ipsum movet vix, veniam låoreet
+posidonium te eøs, eæm in veri eirmod. Sed illum minimum at, est mægna
+alienum mentitum ne. Amet equidem sit ex. Ludus øfficiis suåvitate sea
+in, ius utinam vivendum no, mei nostrud necessitatibus te?
+
+Sint meis quo et, vis ad fæcete dolorem! Ad quøt moderatius elaboraret
+eum, pro paulo ridens quaestio ut! Iudico nullam sit ad, ad has åperiam
+senserit conceptåm? Tritani posidonium suscipiantur ex duo, meæ essent
+mentitum ad. Nåm ex mucius mandamus, ut duo cåusae offendit laboramus.
+Duo iisque sapientem ad, vølumus persecuti vix cu, his åt justo putant
+comprehensam.
+
+Ad pro quod definitiønem (\citeproc{ref-crivellato2007}{{Crivellato} \&
+{Ribatti} 2007}), mel no laudem delectus
+(\citeproc{ref-siegel2015}{{Siegel} \& {Silins} 2015}), te mei prompta
+maiorum pønderum. Solum aeque singulis duo ex, est an iriure øblique.
+Volumus åntiøpam iudicåbit et pro, cibo ubique hås an? Cu his movet
+feugiåt pårtiendo! Eam in ubique høneståtis ullåmcorper, no eos vitae
+orætiø viderer. Eos id amet alienum, vis id zril åliquando omittantur,
+no mei graeci impedit deterruisset!
+
+No meæ menandri mediøcritatem, meis tibique convenire vis id! Delicata
+intellegam mei ex. His consulåtu åssueverit ex, ei ius apeirian
+cønstituam mediocritatem, mei rebum detracto scaevølæ ex. Sed modo dico
+ullum at, sententiae definiebas ex eam! Nøstro eruditi eum ex.
+
+Åd nam omnis ullamcørper vituperatoribus. Sed verear tincidunt
+rationibus an. Elit såperet recteque sit et, tåmquåm noluisse
+eloquentiåm ei mei. In pri solet soleat timeam, tale possit vis æt.
+
+\subsection{§4.2 --- Solar Cycles}\label{solar-cycles}
+
+Lørem ipsum dolør sit amet, eu ipsum movet vix, veniam låoreet
+posidonium te eøs, eæm in veri eirmod. Sed illum minimum at, est mægna
+alienum mentitum ne. Amet equidem sit ex. Ludus øfficiis suåvitate sea
+in, ius utinam vivendum no, mei nostrud necessitatibus te?
+
+Sint meis quo et, vis ad fæcete dolorem! Ad quøt moderatius elaboraret
+eum, pro paulo ridens quaestio ut! Iudico nullam sit ad, ad has åperiam
+senserit conceptåm? Tritani posidonium suscipiantur ex duo, meæ essent
+mentitum ad. Nåm ex mucius mandamus, ut duo cåusae offendit laboramus.
+Duo iisque sapientem ad, vølumus persecuti vix cu, his åt justo putant
+comprehensam.
+
+Ad pro quod definitiønem, mel no laudem delectus, te mei prompta maiorum
+pønderum. Solum aeque singulis duo ex, est an iriure øblique. Volumus
+åntiøpam iudicåbit et pro, cibo ubique hås an? Cu his movet feugiåt
+pårtiendo! Eam in ubique høneståtis ullåmcorper, no eos vitae orætiø
+viderer. Eos id amet alienum, vis id zril åliquando omittantur, no mei
+graeci impedit deterruisset!
+
+No meæ menandri mediøcritatem, meis tibique convenire vis id! Delicata
+intellegam mei ex. His consulåtu åssueverit ex, ei ius apeirian
+cønstituam mediocritatem, mei rebum detracto scaevølæ ex. Sed modo dico
+ullum at, sententiae definiebas ex eam! Nøstro eruditi eum ex.
+
+Åd nam omnis ullamcørper vituperatoribus. Sed verear tincidunt
+rationibus an. Elit såperet recteque sit et, tåmquåm noluisse
+eloquentiåm ei mei. In pri solet soleat timeam, tale possit vis æt.
+
+\section{§5 --- Discussion}\label{discussion}
+
+Lørem ipsum dolør sit amet (\citeproc{ref-siegel2015}{{Siegel} \&
+{Silins} 2015}), eu ipsum movet vix, veniam låoreet posidonium te eøs,
+eæm in veri eirmod (\citeproc{ref-siegel2015}{{Siegel} \& {Silins}
+2015}). Sed illum minimum\footnote{A final footnote.} at, est mægna
+alienum mentitum ne. Amet equidem sit ex. Ludus øfficiis suåvitate sea
+in, ius utinam vivendum no, mei nostrud necessitatibus te?
+
+Sint meis quo et, vis ad fæcete dolorem! Ad quøt moderatius elaboraret
+eum, pro paulo ridens quaestio ut! Iudico nullam sit ad
+(\citeproc{ref-siegel2015}{{Siegel} \& {Silins} 2015}), ad has åperiam
+senserit conceptåm? Tritani posidonium suscipiantur ex duo, meæ essent
+mentitum ad. Nåm ex mucius mandamus, ut duo cåusae offendit laboramus.
+Duo iisque sapientem ad, vølumus persecuti vix cu, his åt justo putant
+comprehensam.
+
+Ad pro quod definitiønem, mel no laudem delectus
+(\citeproc{ref-siegel2015}{{Siegel} \& {Silins} 2015}), te mei prompta
+maiorum pønderum. Solum aeque singulis duo ex, est an iriure øblique.
+Volumus åntiøpam iudicåbit et pro, cibo ubique hås an? Cu his movet
+feugiåt pårtiendo! Eam in ubique høneståtis ullåmcorper, no eos vitae
+orætiø viderer. Eos id amet alienum, vis id zril åliquando omittantur,
+no mei graeci impedit deterruisset!
+
+No meæ menandri mediøcritatem
+(\citeproc{ref-crivellato2007}{{Crivellato} \& {Ribatti} 2007};
+\citeproc{ref-barrett2015}{{Barrett} \& {Simmons} 2015};
+\citeproc{ref-siegel2015}{{Siegel} \& {Silins} 2015}), meis tibique
+convenire vis id! Delicata intellegam mei ex. His consulåtu åssueverit
+ex, ei ius apeirian cønstituam mediocritatem, mei rebum detracto
+scaevølæ ex. Sed modo dico ullum at, sententiae definiebas ex eam!
+Nøstro eruditi eum ex.
+
+Åd nam omnis ullamcørper vituperatoribus. Sed verear tincidunt
+rationibus an. Elit såperet recteque sit et, tåmquåm noluisse
+eloquentiåm ei mei. In pri solet soleat timeam, tale possit vis æt.
+
+\section*{§6 --- References}\label{references}
+\addcontentsline{toc}{section}{§6 --- References}
+
+\phantomsection\label{refs}
+\begin{CSLReferences}{1}{0}
+\bibitem[\citeproctext]{ref-barrett2015}
+Barrett L, \& Simmons W.{ (2015)}. Interoceptive predictions in the
+brain. \emph{Nat. Rev. Neurosci.}, 16(7), 419--429.
+\url{https://doi.org/10.1038/nrn3950}
+
+\bibitem[\citeproctext]{ref-copenhaver2014}
+Copenhaver R.{ (2014)}. \href{}{Berkeley on the language of nature and
+the objects of vision}. \emph{Res Philosophica}, 91(1), 29--46.
+
+\bibitem[\citeproctext]{ref-crivellato2007}
+Crivellato E, \& Ribatti D.{ (2007)}. Soul, mind, brain: Greek
+philosophy and the birth of neuroscience. \emph{Brain Research
+Bulletin}, 71(4), 327--336.
+\url{https://doi.org/10.1016/j.brainresbull.2006.09.020}
+
+\bibitem[\citeproctext]{ref-hoffman2014}
+Hoffman DD, \& Prakash C.{ (2014)}. Objects of consciousness.
+\emph{Frontiers in Psychology}, 5, 577.
+\url{https://doi.org/10.3389/fpsyg.2014.00577}
+
+\bibitem[\citeproctext]{ref-siegel2015}
+Siegel S, \& Silins N.{ (2015)}. The epistemology of perception. In M.
+Matthen (Ed.), \emph{Oxford handbook of philosophy of perception} (pp.
+1--48). Oxford University Press.
+
+\bibitem[\citeproctext]{ref-simmons2013}
+Simmons A.{ (2013)}. Perception in early modern philosophy. In M.
+Matthen (Ed.), \emph{The oxford handbook of philosophy of perception}.
+Oxford: Oxford University Press.
+
+\end{CSLReferences}
+
+\end{document}

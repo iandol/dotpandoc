@@ -1,0 +1,46 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2821
+\cocoatextscaling0\cocoaplatform0\stshfdbch0{\fonttbl\f0\fnil\fcharset0 AvenirNext-Regular{\*\falt Avenir Next Regular};\f1\fnil\fcharset0 AvenirNext-Bold{\*\falt Avenir Next Bold};\f2\fnil\fcharset0 Menlo-Regular{\*\falt Menlo Regular};
+}
+{\colortbl;\red255\green255\blue255;}
+{\stylesheet {\s0 Normal;}{\*\cs25 \fs26\cf0 Code Span;}{\*\cs26 \b\cf0 Strong;}}
+{\*\expandedcolortbl;;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}}
+{\info
+{\author }
+{\creatim\yr2025\mo2\dy11\hr17\min29\sec51\timesinceref761005791}
+{\revtim\yr2025\mo2\dy11\hr17\min29\sec51\timesinceref761005791}}\paperw11900\paperh16840\margl1440\margr1440\margb1440\margt1440\viewkind1
+\deftab720
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\tx9360\tx10080\tx10800\tx11520\pardeftab720\sl336\slmult1\pardirnatural\qj\partightenfactor0
+
+\f0\fs28 \cf0 There are several files here to demonstrate this workflow. For this demonstration, all these files will be relative to the folder in which the compiled workflow.md file is placed by Scrivener. Normally most of these files are stored in the {\cs26
+\f1\b Pandoc Data Directory} which is {\cs25
+\f2\fs26 ~/.local/share/pandoc} by default (organised by several subdirectories such as {\cs25
+\f2\fs26 filters/}, {\cs25
+\f2\fs26 templates/} etc.). Scrivener does not show file extensions for items in the Binder so you cannot see the file types, but the filename should help you:  \
+\
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\tx9360\tx10080\tx10800\tx11520\pardeftab720\li720\fi-500\sl336\slmult1\pardirnatural\qj\partightenfactor0
+\ls1\ilvl0\cf0 {\listtext	\uc0\u8226 	}{\cs25
+\f2\fs26 workflow.bib} \'97 the BibTeX bibliography file.\
+{\listtext	\uc0\u8226 	}{\cs25
+\f2\fs26 apa-workflow.csl} \'97 the CSL style file.\
+{\listtext	\uc0\u8226 	}{\cs25
+\f2\fs26 pandocomatic.yaml} \'97 the configuration file for pandocomatic.\
+{\listtext	\uc0\u8226 	}{\cs25
+\f2\fs26 scrivomatic.rb} \'97 the helper script used by Scrivener\'92s post-processing panel; the actual script is embedded in the Scrivener project and this is a copy just if you want to read through it.\
+{\listtext	\uc0\u8226 	}{\cs25
+\f2\fs26 assimilateMetadata.rb} \'97 Pandoc filter to parse metadata for pandoc template use. This is what gets us author affilations and correspondence all neatly organised.\
+{\listtext	\uc0\u8226 	}{\cs25
+\f2\fs26 simplifyMetadata.rb} \'97 Pandoc filter to allow DOCX to better use author metadata.\
+{\listtext	\uc0\u8226 	}{\cs25
+\f2\fs26 prependAll.rb} \'97 Pandoc filter to place metadata directly into a text/DOCX document.\
+{\listtext	\uc0\u8226 	}{\cs25
+\f2\fs26 prependAuthor.rb} \'97 Pandoc filter to add Authors for plain text output.\
+{\listtext	\uc0\u8226 	}{\cs25
+\f2\fs26 templates.zip} \'97 several raw template files that Pandoc uses to generate the final documents.\
+{\listtext	\uc0\u8226 	}{\cs25
+\f2\fs26 RUNME.bash} \'97 a simple bash script to unzip templates.zip into the current folder.\
+\pard\tx560\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\tx9360\tx10080\tx10800\tx11520\pardeftab720\sl336\slmult1\pardirnatural\qj\partightenfactor0
+\cf0 \
+\
+}
