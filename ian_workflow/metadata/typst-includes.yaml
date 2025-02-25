@@ -1,0 +1,17 @@
+header-includes: |
+  ```{=typst}
+  // header-includes
+  #set text(ligatures: true, discretionary-ligatures: false, number-type: "old-style")
+  ```
+fontsize: 12pt
+linestretch: 1.75
+mainfont: "Dolly Pro"
+headerfont: "Alegreya Sans SC"
+sansfont: "Alegreya Sans"
+monofont: "Rec Mono Casual"
+papersize: a4
+margin: {x: 1.75cm, y: 2cm}
+columns: 1
+lang: "en-GB"
+toc-title: "Contents"
+doindex: false

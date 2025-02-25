@@ -1,6 +1,0 @@
-verbosity: INFO # verbose by default
-top-level-division: chapter
-filters: 
-  - pandoc-crossref # process cross-references
-metadata:
-  linkReferences: true

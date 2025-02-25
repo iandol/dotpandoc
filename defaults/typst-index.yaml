@@ -1,5 +1,0 @@
-defaults: [typst-refs]
-filters:
-  - convertIndex.lua
-metadata:
-  doindex: true

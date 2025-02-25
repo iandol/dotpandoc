@@ -1,0 +1,124 @@
+
+/* For smart quotes */
+q { quotes: "“" "”" "‘" "’"; }
+
+/* Override section behavior.
+ * We only want the top-level <section> to have padding.
+ * This makes it easier to work with --section-divs. */
+section {
+  padding-top: initial;
+  padding-bottom: initial;
+}
+article > section {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+/* Make byline (date and/or author) small */
+p.byline { font-size: 1.2rem; }
+
+
+/* Simulate Pandoc's table output styles */
+table {
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+}
+th {
+  border-bottom: 1px solid black;
+}
+td, th {
+  font-size: 1.4rem;
+  padding: 10px;
+  text-align: left;
+}
+
+/* Allow tables to be full width
+ * if they're wrapped in a figure.fullwidth
+ * (Easier to insert from Pandoc than manually adding table) */
+figure.fullwidth table {
+  width: 90%;
+}
+
+@media (max-width: 760px) {
+  figure.fullwidth table {
+    width: 100%;
+  }
+}
+
+/* Code blocks
+ *
+ * Code blocks with a language look like div.sourceCode > pre.sourceCode
+ * Otherwise, it's just a pre (without .sourceCode) */
+div.sourceCode,
+pre:not(.sourceCode) {
+  padding: 1.4rem;
+  margin: -0.7rem -1.4rem;
+  width: 55%;
+  font-size: 0.9rem;
+  overflow-x: auto;
+}
+
+div.sourceCode code,
+pre:not(.sourceCode) code {
+  font-size: 0.9rem;
+}
+
+.fullwidth div.sourceCode,
+.fullwidth pre:not(.sourceCode) {
+  width: 100%;
+}
+
+/* We've handled all the margin/padding on the outer-most div.sourceCode */
+div.sourceCode pre {
+  padding: 0;
+  margin: 0;
+}
+
+@media (max-width: 760px) {
+  div.sourceCode,
+  pre:not(.sourceCode) {
+    width: 100%;
+  }
+}
+
+/* Pandoc-generated line numbers need the same stylings as normal <code> */
+.lineNumbers pre {
+  line-height: 1.42;
+  font-size: 0.9rem;
+}
+
+/* The default x-height for code is slightly too large in side notes */
+.marginnote code, .sidenote code { font-size: 0.9rem; }
+
+
+div.sourceCode, pre:not(.sourceCode) { background: #FDF6E3; }
+pre code { color: #657B83; }
+code > span.kw { color: #859900; font-weight: bold;   font-style: normal; } /* Keyword */
+code > span.dt { color: #B58900; font-weight: normal; font-style: normal; } /* DataType */
+code > span.dv { color: #2AA198; font-weight: normal; font-style: normal; } /* DecVal */
+code > span.bn { color: #2AA198; font-weight: normal; font-style: normal; } /* BaseN */
+code > span.fl { color: #2AA198; font-weight: normal; font-style: normal; } /* Float */
+code > span.ch { color: #2AA198; font-weight: normal; font-style: normal; } /* Char */
+code > span.st { color: #2AA198; font-weight: normal; font-style: normal; } /* String */
+code > span.co { color: #93A1A1; font-weight: normal; font-style: italic; } /* Comment */
+code > span.ot { color: #268BD2; font-weight: normal; font-style: normal; } /* Other */
+code > span.al { color: #DC322F; font-weight: bold;   font-style: normal; } /* Alert */
+code > span.fu { color: #268BD2; font-weight: normal; font-style: normal; } /* Function */
+code > span.er { color: #DC322F; font-weight: bold;   font-style: normal; } /* Error */
+code > span.wa { color: #CB4B16; font-weight: bold;   font-style: italic; } /* Warning */
+code > span.cn { color: #2AA198; font-weight: normal; font-style: normal; } /* Constant */
+code > span.sc { color: #DC322F; font-weight: normal; font-style: normal; } /* SpecialChar */
+code > span.vs { color: #657B83; font-weight: normal; font-style: normal; } /* VerbatimString */
+code > span.ss { color: #DC322F; font-weight: normal; font-style: normal; } /* SpecialString */
+code > span.im { color: #657B83; font-weight: normal; font-style: normal; } /* Import */
+code > span.va { color: #268BD2; font-weight: normal; font-style: normal; } /* Variable */
+code > span.cf { color: #859900; font-weight: bold;   font-style: normal; } /* ControlFlow */
+code > span.op { color: #859900; font-weight: bold;   font-style: normal; } /* Operator */
+code > span.bu { color: #657B83; font-weight: normal; font-style: normal; } /* BuiltIn */
+code > span.ex { color: #657B83; font-weight: normal; font-style: normal; } /* Extension */
+code > span.pp { color: #CB4B16; font-weight: normal; font-style: normal; } /* Preprocessor */
+code > span.at { color: #657B83; font-weight: normal; font-style: normal; } /* Attribute */
+code > span.do { color: #93A1A1; font-weight: normal; font-style: italic; } /* Documentation */
+code > span.an { color: #93A1A1; font-weight: bold;   font-style: italic; } /* Annotation */
+code > span.cv { color: #93A1A1; font-weight: bold;   font-style: italic; } /* CommentVar */
+code > span.in { color: #93A1A1; font-weight: bold;   font-style: italic; } /* Information */

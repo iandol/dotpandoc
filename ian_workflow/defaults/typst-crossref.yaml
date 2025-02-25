@@ -1,0 +1,3 @@
+defaults: [crossref, refs, typst]
+metadata:
+  doindex: true

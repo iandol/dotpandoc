@@ -1,0 +1,153 @@
+#let content-to-string(content) = {
+	if content.has("text") {
+		content.text
+	} else if content.has("children") {
+		content.children.map(content-to-string).join("")
+	} else if content.has("body") {
+		content-to-string(content.body)
+	} else if content == [ ] {
+		" "
+	}
+}
+#let conf(
+	title: none,
+	subtitle: none,
+	running-head: none,
+	titlepage: false,
+	titlepage-background: none,
+	toc: none,
+	authors: (),
+	affiliations: (),
+	keywords: (),
+	date: none,
+	abstract: none,
+	cols: 1,
+	margin: (x: 1.75cm, y: 2cm),
+	paper: "a4",
+	lang: "en",
+	region: "GB",
+	font: (),
+	fontsize: 12pt,
+	sectionnumbering: none,
+	numbering: "1",
+	doc,
+) = {
+	if titlepage-background != none { titlepage = true} else { titlepage = false }
+	set document(
+		title: title,
+		author: authors.map(author => content-to-string(author.name)),
+		keywords: keywords,
+	)
+	set page(
+			paper: paper,
+			margin: margin,
+			numbering: numbering,
+			background: context {
+				if titlepage { image(titlepage-background, fit: "stretch") } else { none }
+			},
+			header: context {
+				if titlepage { none } else { align(right, text(size: 8pt, title)) }
+			},
+			footer: context {
+				if titlepage { none } else { grid(columns: (1fr, 1fr),align(left, text(style: "italic", font: sans-font, size: 8pt, running-head)),align(right, [#context counter(page).display()]))}
+			},
+	)
+	set par(justify: true)
+	set text(lang: lang,
+					 region: region,
+					 font: font,
+					 size: fontsize)
+	set heading(numbering: sectionnumbering)
+
+	if title != none {
+		align(center)[#block(inset: 2em)[
+			#text(fill: luma(30%), font: heading-font, weight: "extrabold", size: 2em)[#title]
+			#(if subtitle != none {
+				parbreak()
+				text(fill: luma(40%), font: heading-font, style: "italic", weight: "bold", size: 1.75em)[#subtitle]
+			})
+		]]
+	}
+
+	if authors != none and authors != [] {
+		let count = authors.len()
+		let ncols = calc.min(count, 3)
+		grid(
+			columns: (1fr,) * ncols,
+			row-gutter: 1.5em,
+			column-gutter: 1.25em,
+			..authors.map(author =>
+					align(center)[
+						#strong[#emph[#author.name]]
+						#if "affiliation" in author [#super[#author.affiliation]]
+						#if "email" in author [ \ 
+						#text(size: 0.7em)[📧 #underline[#author.email]]
+						]
+					]
+			)
+		)
+	}
+
+	if date != none {
+		align(center)[#block(inset: 1em)[
+			#date
+		]]
+	}
+
+	if affiliations.len() > 0 {
+		set text(size: 9pt)
+		block(width: 100%, stroke: none, inset: (top: 20pt, bottom: 20pt), {
+			text(size: 1.2em, style: "italic", weight: "bold", "Affiliations: ")
+			parbreak()
+			affiliations.map(affiliation => {
+				strong([#affiliation.id — ])
+				affiliation.name 
+				parbreak()
+			}).join("")
+		})
+	}
+
+	if abstract != none {
+		block(inset: (left: 2em, right: 2em))[
+		#text(weight: "semibold")[Abstract] #h(1em) #abstract
+		]
+	}
+
+	if (keywords.len() > 0) {
+		text(size: 9pt, {
+			h(2em)
+			text(weight: "semibold", "Keywords")
+			h(8pt)
+			keywords.join(", ")
+		})
+	}
+	v(10pt)
+
+	if toc != none {
+		outline(
+			title: auto,
+			depth: $toc-depth$
+		)
+	}
+
+	if titlepage { 
+		set page(
+		background: none,
+		fill: none,
+		header: align(right, text(style: "italic", font: sans-font, size: 8pt, title)),
+		footer: grid(columns: (1fr, 1fr),align(left, text(style: "italic", font: sans-font, size: 8pt, running-head)),align(right, [#context counter(page).display()]))
+		)
+		if title != none or subtitle != none or authors != () or affiliations != () or keywords != () or toc != none { counter(page).update(1) }
+		if cols == 1 {
+			doc
+		} else {
+			columns(cols, doc)
+		}
+	} else {
+		if cols == 1 {
+			doc
+		} else {
+			columns(cols, doc)
+		}
+	}
+}

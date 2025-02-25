@@ -1,0 +1,9 @@
+mainfont: "Alegreya Sans"
+fontsize: 12pt
+monofont: "Rec Mono Casual"
+papersize: a4
+margin: {x: 1.75cm, y: 2cm}
+columns: 1
+lang: "en-GB"
+toc-title: "Table of Contents"
+doindex: false

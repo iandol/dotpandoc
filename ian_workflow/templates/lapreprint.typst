@@ -1,0 +1,181 @@
+// Update this import to where you put the `lapreprint.typ` file
+// It should probably be in the same folder
+#import "./lapreprint.typ": template
+
+//mail icon
+#let mailSvg = ```<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 199.2 199.3" xmlns:v="https://vecta.io/nano"><path d="M99.6 199.3c54.5 0 99.6-45.1 99.6-99.6C199.2 45.3 154 .1 99.5.1 45.1.1 0 45.3 0 99.7c0 54.5 45.2 99.6 99.6 99.6z" opacity=".49" fill="#404040" fill-opacity=".25"/><path d="M99.6 105c-1.5 0-3.1-.6-4.6-2L45.4 59.3c2.7-1.7 5.7-2.3 9.9-2.3H144c4 0 7 .8 9.9 2.4L104.2 103c-1.5 1.4-3 2-4.6 2zM41 134.4c-.9-2-1.4-4.1-1.4-7.2V72.3c0-3.2.7-5.8 1.2-6.8l36.6 32.3L41 134.4zm12.8 8.1c-3.5 0-6.2-.8-8.2-2.1l37.7-37.6 7.1 6.3c2.8 2.5 6.1 3.8 9.2 3.8s6.3-1.3 9.3-3.8l7-6.3 37.7 37.6c-2 1.2-4.7 2.1-8.2 2.1H53.8zm104.5-8.1l-36.6-36.6 36.7-32.2c.5 1 1.1 3.5 1.1 6.7v54.9c0 3-.4 5.2-1.2 7.2z" fill="#7e8c7b"/></svg>```.text
+
+$definitions.typst()$
+
+#show: template.with(
+$if(title)$
+  title: "$title$",
+$endif$
+$if(subtitle)$
+  subtitle: "$subtitle$",
+$endif$
+$if(short-title)$
+  short-title: "$short-title$",
+$endif$
+  open-access: true,
+  kind: "Original Research",
+$if(theme)$
+  theme: $theme$,
+$else$
+  theme: red.darken(50%),
+$endif$
+$if(venue)$
+  venue: [$venue$],
+$else$
+  venue: [bio#text(fill: red.darken(20%))[R]χiv],
+$endif$
+$if(logo)$
+  logo: "$logo$",
+$endif$
+$if(doi)$
+  doi: "$doi$",
+$endif$
+$if(date)$
+$if(date.year)$
+  date: $for(date)$ (title: $it.title$, date: (year: $it.year$, month: $it.month$, day: $it.day$),$endfor$
+$else$
+  date: $date$,
+$endif$
+$endif$
+$if(papersize)$
+  paper-size: "$papersize$",
+$endif$
+$if(mainfont)$
+  font-face: "$mainfont$",
+$endif$
+$if(bibliography)$
+  bibliography-file: "$bibliography$",
+$endif$
+$if(csl)$
+  bibliography-style: "$csl$",
+$elseif(bibliographystyle)$
+  bibliography-style: "$bibliographystyle$",
+$endif$
+$if(author)$
+  authors: (
+$for(author)$
+$if(author.name)$
+    (
+      name: "$author.name$",
+$if(author.affiliation)$
+      affiliations: "$author.affiliation$",
+$endif$
+$if(author.email)$
+      email: "$author.email$",
+$endif$
+$if(author.orcid)$
+      orcid: "$author.orcid$"
+$endif$
+    ),
+$else$
+    (
+      name: "$author$"
+    ),
+$endif$
+$endfor$
+  ),
+$endif$
+$if(institute)$
+  affiliations: (
+$for(institute)$
+    (id: "$it.index$", name: "$it.name$"),
+$endfor$
+  ),
+$elseif(affiliations)$
+  affiliations: (
+$for(affiliations)$
+    (id: "$it.index$", name: "$it.name$"),
+$endfor$
+  ),
+$endif$
+$if(abstract)$
+  abstract: (
+    (title: "Abstract", content: [$abstract$]),
+  ),
+$endif$
+$if(keywords)$
+  keywords: ($for(keywords)$"$it$"$sep$,$endfor$),
+$endif$
+  margin: (
+$if(margin-keypoints)$
+    (
+      title: "Key Points",
+      content: [
+$for(margin-keypoints)$
+        - $it$
+$endfor$
+      ],
+    ),
+$endif$
+$if(margin-correspondence)$
+    (
+      title: [#box(height: 1.1em, baseline: 13.5%)[#image.decode(mailSvg)]Correspondence],
+      content: [
+$for(margin-correspondence)$
+#strong[#emph[$it$]]$sep$ & 
+$endfor$
+      ],
+    ),
+$endif$
+$if(margin-code)$
+    (
+      title: "Code Availability",
+      content: [
+$for(margin-code)$
+        $it$$sep$. 
+$endfor$
+      ],
+    ),
+$endif$
+$if(margin-funding)$
+    (
+      title: "Funding",
+      content: [
+$for(margin-funding)$
+        $it$$sep$. 
+$endfor$
+      ],
+    ),
+$endif$
+    (
+      title: "Competing Interests",
+      content: [
+        The authors declare no competing interests.
+      ],
+    ),
+  ),
+)
+
+$for(header-includes)$
+$header-includes$
+
+$endfor$
+$for(include-before)$
+$include-before$
+
+$endfor$
+$if(toc)$
+#outline(
+  title: auto,
+  depth: none
+);
+$endif$
+
+$if(linestretch)$
+#set par(leading: $linestretch$em)
+$endif$
+#set par(justify: true)
+#show table: set par(justify: false)
+#show ref: strong
+
+$body$
+
+$for(include-after)$
+
+$include-after$
+$endfor$

@@ -1,0 +1,214 @@
+$if(doindex)$
+// https://typst.app/universe/package/in-dexter
+#import "@preview/in-dexter:0.5.3": *
+$endif$
+// https://typst.app/universe/package/gentle-clues/
+#import "@preview/gentle-clues:1.0.0": *
+
+#show terms: it => {
+	it.children
+		.map(child => [
+			#strong[#child.term]
+			#block(inset: (left: 1.5em, top: -0.4em))[#child.description]
+			])
+		.join()
+}
+
+#let horizontalrule = [
+	#line(start: (5%,0%), end: (95%,0%), stroke: (paint: gray, thickness: 4pt, cap: "round"))
+]
+
+$if(mainfont)$
+#let main-font = ("$mainfont$")
+$else$
+#let main-font = ("Dolly Pro","Alegreya","Libertinus Serif", "Source Serif 4")
+$endif$
+$if(headerfont)$
+#let heading-font = ("$headerfont$")
+$elseif(sansfont)$
+#let heading-font = ("$sansfont$")
+$else$
+#let heading-font = ("Alegreya Sans SC","Graublau Slab","Source Sans 3")
+$endif$
+$if(sansfont)$
+#let sans-font = ("$sansfont$")
+$else$
+#let sans-font = ("Alegreya Sans","Graublau Slab","Source Sans 3")
+$endif$
+$if(monofont)$
+#let mono-font = ("$monofont$")
+$else$
+#let mono-font = ("Rec Mono Casual","Cascadia Code","Menlo")
+$endif$
+
+#set table(inset: 6pt)
+#set text(font: main-font, ligatures: true, discretionary-ligatures: false, number-type: "old-style")
+#set par(leading: 0.85em, justify: true)
+#set quote(block: true)
+#show quote: set align(center)
+#show quote: set text(style: "italic")
+#show quote: set pad(x: 5em, y: 1.75em)
+#show heading: set text(weight: "extrabold", font: heading-font, fill: luma(30%))
+#show heading: set block(below: 1.5em)
+#show raw: set text(font: mono-font)
+#show link: set text(fill: rgb(65%, 25%, 0%))
+#show table: set par(justify: false)
+#show ref: strong
+
+$if(linestretch)$
+#set par(justify: true, spacing: 2em, leading: $linestretch$em)
+$else$
+#set par(justify: true, spacing: 2em, leading: 1.5em)
+$endif$
+$if(nonumberfigures)$
+#set figure(numbering: none)
+#show figure.caption: it => [
+	#set align(left)
+	#set par(justify: true, leading: 1em)
+	#set text(font: sans-font, size: 11pt, discretionary-ligatures: false, number-type: "lining")
+	#emph[#it.body]
+]
+$else$
+#show figure.caption: it => [
+	#set align(left)
+	#set par(justify: true, leading: 1em)
+	#set text(font: sans-font, size: 11pt, discretionary-ligatures: false, number-type: "lining")
+	#emph[#it.supplement~#it.counter.display(it.numbering) — #it.body]
+]
+$endif$
+#show <refs>: set par(leading: 0.9em, spacing: 1.75em)
+#show <refs>: set text(size: 11pt, font: sans-font)
+
+$for(header-includes)$
+$header-includes$
+
+$endfor$
+
+$if(mytemplate)$
+#import "$mytemplate$": conf
+$else$
+$mytemplate.typst()$
+$endif$
+
+#show: doc => conf(
+$if(title)$
+	title: [$title$],
+$endif$
+$if(running-head)$
+	running-head: [$running-head$],
+$endif$
+$if(subtitle)$
+  subtitle: [$subtitle$],
+$endif$
+$if(author)$
+	authors: (
+$for(author)$
+$if(it.name)$
+		(name: [$it.name$],
+$if(it.affiliation)$
+			affiliation: [$it.affiliation$],
+$endif$
+$if(equal_contributor)$
+			equal_contributor: true,
+$endif$
+$if(it.correspondence)$
+			correspondence: [$it.correspondence$],
+$endif$
+$if(it.email)$
+			email: [$it.email$],
+$endif$
+$if(it.orcid)$
+			orcid: [$it.orcid$],
+$endif$
+		),
+$else$
+		(name: [$it$],
+			affiliation: (),
+			orcid: (),
+			equal_contributor: false,
+			correspondence: (),
+			email: (),
+		),
+$endif$
+$endfor$
+	),
+$endif$
+$if(institute)$
+	affiliations: (
+$for(institute)$
+		(id: "$institute.index$", name: "$institute.name$"),
+$endfor$
+	),
+$endif$
+$if(keywords)$
+	keywords: ($for(keywords)$"$it$"$sep$, $endfor$),
+$endif$
+$if(date)$
+	date: [$date$],
+$endif$
+$if(toc)$
+	toc: true,
+$endif$
+$if(lang)$
+	lang: "$lang$",
+$endif$
+$if(region)$
+	region: "$region$",
+$endif$
+$if(abstract)$
+	abstract: [$abstract$],
+$endif$
+$if(titlepage-background)$
+	titlepage-background: "$titlepage-background$",
+$endif$
+$if(margin)$
+	margin: ($for(margin/pairs)$$margin.key$: $margin.value$,$endfor$),
+$endif$
+$if(papersize)$
+	paper: "$papersize$",
+$endif$
+	font: main-font,
+$if(fontsize)$
+	fontsize: $fontsize$,
+$endif$
+	numbering: $if(page-numbering)$"$page-numbering$"$else$none$endif$,
+$if(section-numbering)$
+	sectionnumbering: "$section-numbering$",
+$endif$
+	cols: $if(columns)$$columns$$else$1$endif$,
+	doc,
+)
+
+$for(include-before)$
+$include-before$
+
+$endfor$
+
+$body$
+
+$if(citations)$
+$if(csl)$
+
+#set bibliography(style: "$csl$")
+$elseif(bibliographystyle)$
+
+#set bibliography(style: "$bibliographystyle$")
+$endif$
+$if(bibliography)$
+
+#bibliography($for(bibliography)$"$bibliography$"$sep$,$endfor$)
+$endif$
+$endif$
+
+$if(doindex)$
+#pagebreak()
+= Index
+#columns(2)[
+  #make-index(title: none)
+]
+
+$endif$
+$for(include-after)$
+
+$include-after$
+$endfor$

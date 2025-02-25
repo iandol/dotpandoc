@@ -1,0 +1,204 @@
+$passoptions.latex()$
+\documentclass[
+$if(fontsize)$
+  $fontsize$,
+$endif$
+$if(papersize)$
+  $papersize$paper,
+$endif$
+$for(classoption)$
+  $classoption$$sep$,
+$endfor$
+]{$documentclass$}
+$if(beamerarticle)$
+\usepackage{beamerarticle} % needs to be loaded first
+$endif$
+\usepackage{xcolor}
+$if(geometry)$
+\usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
+$endif$
+\usepackage{amsmath,amssymb}
+$--
+$-- section numbering
+$--
+$if(numbersections)$
+\setcounter{secnumdepth}{$if(secnumdepth)$$secnumdepth$$else$5$endif$}
+$else$
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+$endif$
+$fonts.latex()$
+$common.latex()$
+$for(header-includes)$
+$header-includes$
+$endfor$
+$after-header-includes.latex()$
+$hypersetup.latex()$
+
+% use Cambria/Arial Unicode to fix some font substitution problems for e.g. ⬄
+\ifPDFTeX
+\else
+\newfontfamily\C[]{PingFang SC}
+\newfontfamily\fixfont[]{Cambria Math}
+\newfontfamily\fixfontB[]{Arial Unicode MS}
+\fi
+
+$if(doindex)$
+\usepackage{makeidx}
+\let\indext\index
+\makeindex
+$endif$
+
+$if(nonumberfigures)$
+\usepackage[format=hang,labelfont=bf,labelsep=endash,font={sf,small}]{caption}
+\captionsetup[figure]{labelformat=empty}% redefines the caption setup of the figures environment
+$endif$
+
+\usepackage{orcidlink}
+
+
+$if(title)$
+\usepackage{titling}
+$if(linestretch)$
+\pretitle{\begin{center}\setstretch{1}\LARGE\sffamily\bfseries\itshape}
+$else$
+\pretitle{\begin{center}\LARGE\sffamily\bfseries\itshape}
+$endif$
+\posttitle{\par\end{center}} 
+\predate{\begin{center}\sffamily} 
+\postdate{\par\end{center}}
+\title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
+$endif$
+$if(subtitle)$
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{$subtitle$}
+$endif$
+$if(author)$
+\ifPDFTeX % if pdftex
+  \author{\textsf{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.correspondence)$~*$endif$$if(author.equal_contributor)$~†$endif$}$sep$,\quad $endfor$}}
+\else
+  \author{\textsf{$for(author)$$author.name$\textsuperscript{$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.correspondence)$~\fixfontB{✻}$endif$$if(author.equal_contributor)$~†$endif$$if(it.orcid)$~\orcidlink{$it.orcid$}$endif$}$sep$,\quad $endfor$}}
+\fi
+$endif$
+\date{$date$}
+$if(beamer)$
+$if(institute)$
+\institute{$for(institute)$$if(it.index)$\textsuperscript{$it.index$}$endif$ $it.name$$sep$ \and $endfor$}
+$endif$
+$if(titlegraphic)$
+\titlegraphic{\includegraphics$if(titlegraphicoptions)$[$for(titlegraphicoptions)$$titlegraphicoptions$$sep$, $endfor$]$endif${$titlegraphic$}}
+$endif$
+$if(logo)$
+\logo{\includegraphics{$logo$}}
+$endif$
+$endif$
+
+\begin{document}
+$if(has-frontmatter)$
+\frontmatter
+$endif$
+$if(title)$
+\maketitle
+
+$if(logo)$
+\begin{center}
+\vspace{-1em}\includegraphics[width=$if(logo-width)$$logo-width$$else$100$endif$pt, center]{$logo$}\vspace{-0.8em}
+\end{center}
+$endif$
+$if(institute)$
+\begin{center}
+\textsf{$for(institute)$\textsuperscript{$it.index$} $it.name$$sep$\quad\&\quad$endfor$}
+\end{center}
+$endif$
+$if(correspondence_list)$
+\begin{center}
+\ifPDFTeX
+\textsf{$for(correspondence_list)$* \emph{$it$}$sep$ \quad $endfor$}
+\else
+\textsf{$for(correspondence_list)$\fixfontB{✻} \emph{$it$}$sep$ \quad $endfor$}
+\fi
+\end{center}
+$endif$
+$if(equal_contributors)$
+\begin{center}
+\textsf{\textsuperscript{†} \small{\emph{These authors contributed equally to this work.}}}
+\end{center}
+$endif$
+$if(email_list)$
+\begin{center}
+\textsf{\small{\emph{Mail: $for(email_list)$$it$$sep$, $endfor$}}}
+\end{center}
+$endif$
+
+
+$if(abstract)$
+\begin{abstract}
+\vspace{-2em}\singlespacing\noindent\textsf{$abstract$}
+\end{abstract}
+$endif$
+$endif$
+
+$for(include-before)$
+$include-before$
+
+$endfor$
+$if(toc)$
+$if(toc-title)$
+\renewcommand*\contentsname{$toc-title$}
+$endif$
+{
+$if(colorlinks)$
+\hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$$endif$}
+$endif$
+\setcounter{tocdepth}{$toc-depth$}
+\tableofcontents
+}
+$endif$
+$if(lof)$
+\listoffigures
+$endif$
+$if(lot)$
+\listoftables
+$endif$
+$if(linestretch)$
+\setstretch{$linestretch$}
+$endif$
+$if(has-frontmatter)$
+\mainmatter
+$endif$
+$body$
+
+$if(has-frontmatter)$
+\backmatter
+$endif$
+$if(natbib)$
+$if(bibliography)$
+$if(biblio-title)$
+$if(has-chapters)$
+\renewcommand\bibname{$biblio-title$}
+$else$
+\renewcommand\refname{$biblio-title$}
+$endif$
+$endif$
+\bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
+
+$endif$
+$endif$
+$if(biblatex)$
+\printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
+
+$endif$
+
+$if(doindex)$
+\printindex
+$endif$
+
+$for(include-after)$
+$include-after$
+
+$endfor$
+\end{document}

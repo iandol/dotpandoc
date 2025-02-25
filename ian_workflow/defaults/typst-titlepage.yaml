@@ -1,0 +1,4 @@
+defaults: typst-refs
+metadata:
+  titlepage: true
+  titlepage-background: background.svg # WARNING: must be relative to compile folder

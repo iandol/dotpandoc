@@ -1,0 +1,367 @@
+:root {
+	--orcidsvg: url("data:image/svg+xml,%3Csvg%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%20viewBox%3D%220%200%2024%2024%22%3E%20%3Cpath%20fill%3D%22%23AECD54%22%20d%3D%22M21.8%2C12c0%2C5.4-4.4%2C9.8-9.8%2C9.8S2.2%2C17.4%2C2.2%2C12S6.6%2C2.2%2C12%2C2.2S21.8%2C6.6%2C21.8%2C12z%20M8.2%2C5.8c-0.4%2C0-0.8%2C0.3-0.8%2C0.8s0.3%2C0.8%2C0.8%2C0.8S9%2C7%2C9%2C6.6S8.7%2C5.8%2C8.2%2C5.8z%20M10.5%2C15.4h1.2v-6c0%2C0-0.5%2C0%2C1.8%2C0s3.3%2C1.4%2C3.3%2C3s-1.5%2C3-3.3%2C3s-1.9%2C0-1.9%2C0H10.5v1.1H9V8.3H7.7v8.2h2.9c0%2C0-0.3%2C0%2C3%2C0s4.5-2.2%2C4.5-4.1s-1.2-4.1-4.3-4.1s-3.2%2C0-3.2%2C0L10.5%2C15.4z%22%2F%3E%3C%2Fsvg%3E");
+	--emailsvg: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20199.2%20199.3%22%20xmlns%3Av%3D%22https%3A%2F%2Fvecta.io%2Fnano%22%3E%3Cpath%20d%3D%22M99.6%20199.3c54.5%200%2099.6-45.1%2099.6-99.6C199.2%2045.3%20154%20.1%2099.5.1%2045.1.1%200%2045.3%200%2099.7c0%2054.5%2045.2%2099.6%2099.6%2099.6z%22%20opacity%3D%22.49%22%20fill%3D%22%23404040%22%20fill-opacity%3D%22.25%22%2F%3E%3Cpath%20d%3D%22M99.6%20105c-1.5%200-3.1-.6-4.6-2L45.4%2059.3c2.7-1.7%205.7-2.3%209.9-2.3H144c4%200%207%20.8%209.9%202.4L104.2%20103c-1.5%201.4-3%202-4.6%202zM41%20134.4c-.9-2-1.4-4.1-1.4-7.2V72.3c0-3.2.7-5.8%201.2-6.8l36.6%2032.3L41%20134.4zm12.8%208.1c-3.5%200-6.2-.8-8.2-2.1l37.7-37.6%207.1%206.3c2.8%202.5%206.1%203.8%209.2%203.8s6.3-1.3%209.3-3.8l7-6.3%2037.7%2037.6c-2%201.2-4.7%202.1-8.2%202.1H53.8zm104.5-8.1l-36.6-36.6%2036.7-32.2c.5%201%201.1%203.5%201.1%206.7v54.9c0%203-.4%205.2-1.2%207.2z%22%20fill%3D%22%237e8c7b%22%2F%3E%3C%2Fsvg%3E");
+}
+
+body {
+	font-family: "Alegreya Sans", "Greta Sans Pro", -apple-system,BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+	font-size: 18px;
+	margin: auto;
+	max-width: 29cm;
+}
+
+/* For smart quotes */
+q { quotes: "“" "”" "‘" "’"; }
+
+header {
+	font-family: "Alegreya", "Greta Text Pro", "Athelas", "Palatino", "Avenir Next", sans-serif;
+	margin: 0;
+	margin-bottom: 2em;
+	border-left: 7px solid rgb(90%,90%,90%);
+	padding: 1em 10% 1em 10%;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	font-family: "Alegreya", "Greta Text Pro", "Athelas", "Palatino", "Avenir Next", sans-serif;
+	margin: 2rem 0rem 0.4rem 0.5rem;
+}
+
+h2,h3,h4,h5,h6 {
+		margin-top: 1rem;
+}
+
+/*h1 {
+	position: running(header1)
+}*/
+h1.title {
+	/*position: running(title);*/
+	font-size: 2.5em;
+	line-height: 1.1em;
+}
+/*@page{
+	@top-left {
+		content: element(title);
+		font-size: 10px;
+		line-height: 10px
+		font-weight: normal;
+	}
+	@top-right {
+		content: element(header1);
+		font-size: 10px;
+		line-height: 10px
+		font-weight: normal;
+	}
+}*/
+
+@page { 
+	size: A4;
+	margin: 18mm;
+	counter-increment: page;
+	/* prince-bleed: 5mm;
+	marks: crop cross; */
+}
+@page:left {
+	margin-right: 35mm;
+	@bottom-left {
+		font-family: "Alegreya", "Greta Text Pro", "Athelas", "Palatino", "Avenir Next", sans-serif;
+		font-size: 9px;
+		content: "Page " counter(page) " of " counter(pages);
+	}
+}
+@page:right {
+	margin-left: 35mm;
+	@bottom-right {
+		font-family: "Alegreya", "Greta Text Pro", "Athelas", "Palatino", "Avenir Next", sans-serif;
+		font-size: 9px;
+		content: "Page " counter(page) " of " counter(pages);
+	}
+}
+
+p.subtitle {
+	text-align: center;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 115%;
+}
+
+p.author {
+	margin: 0em 1em 0em 0em;
+	display: inline-block;
+}
+
+p.author-list {
+	text-align: center;
+	font-weight: bold;
+	font-size: 125%;
+}
+
+p {
+	text-align: justify;
+	line-height: 1.75em;
+	margin: auto;
+	margin-bottom:1em;
+	padding-left: 1em;
+	padding-right: 1em;
+	z-index: 10;
+}
+
+blockquote {
+	font-family: "Alegreya Sans", "Graublau Slab", "Gill Sans", "Avenir Next", sans-serif;
+	font-style: italic;
+}
+
+p.author_contributions {
+	font-size: 90%;
+	text-align: center;
+	font-style: italic;
+
+}
+
+.author_affiliations {padding-left: 1em; margin-top:2em;}
+.author_affiliations::before {
+	content: "Affiliations: ";
+	font-weight: bold;
+	color: grey;
+}
+.affiliation-item {
+	display: inline-block;
+	margin-right: 15px;
+}
+
+.correspondence {padding-left: 1em; margin-top:2em;}
+.correspondence::before {
+	content: "Corresponding Authors: ";
+	font-weight: bold;
+	color: grey;
+}
+.correspondence-item {
+	display: inline-block;
+	margin-right: 15px;
+}
+
+.emails {padding-left: 1em; margin-top:2em;}
+.email-item {
+	display: inline-block;
+	margin-right: 15px;
+}
+.email::before {
+	content: "";
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+	margin-right: 5px;
+	background-image: var(--emailsvg);
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+.abstract {padding-left: 1em; margin-top:2em;}
+.abstract::before {
+	content: "Abstract: ";
+	font-weight: bold;
+	color: grey;
+}
+
+.abstract {padding-left: 1em; margin-top:2em;}
+.date::before {
+	content: "Date: ";
+	font-weight: bold;
+	color: grey;
+}
+
+del {
+  background: #fae6e6;
+}
+
+ins {
+  background: #ecfce6
+}
+
+.annotation {
+	background: #FFB;
+	color: #333;
+}
+
+aside::before, .comment::before {
+	content: "[";
+	font-weight: bold;
+	color: #222;
+}
+
+aside::after, .comment::after {
+	content: "]";
+	font-weight: bold;
+	color: #222;
+}
+
+aside, .comment {
+	background: #FFB;
+	color: #222;
+	opacity: 0.5;
+	z-index: -1;
+}
+
+aside:hover, .comment:hover {  }
+
+div.infobox, div.info, div.todo, div.warning {
+	font-size: 0.9rem;
+	line-height: 1em;
+	float: right;
+	width: 30%;
+	margin: 5px;
+	padding: 1px;
+	background: #EEE;
+	border-radius: 5px;
+	border: 1px solid #DDD;
+	box-shadow: 2px 2px 5px 0px #888;
+}
+div.info::before { content: "INFO: "; font-weight: bold; }
+div.todo::before { content: "TODO: "; font-weight: bold; }
+div.warning::before { content: "WARNING: "; font-weight: bold; }
+div.warning {background: #CCF;}
+div.warning {background: #FCC;}
+div.info p, div.todo p, div.warning p { padding: 0.25em; }
+
+figure {
+	display: inline-block;
+	text-align: center;
+	vertical-align: top;
+	/*float: outside;*/
+	width: 98%;
+	font-size: 0.8rem;
+	background: white;
+	overflow: visible;
+	border-radius: 5px;
+	border: 1px solid #EEE;
+	box-shadow: 1px 1px 8px 0px #888;
+	padding: 5px;
+	margin: 0 0 0.5em 0;
+}
+
+figure.nofloat {
+	float: none;
+	display: inline-block;
+	text-align: center;
+	vertical-align: top;
+	position: relative;
+}
+
+figure img {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 100%;
+	max-height: 22cm;
+}
+
+figcaption {
+	font-family: "Avenir Next", "helvetica Neue", sans-serif;
+	line-height: 1em;
+	text-align: justify;
+}
+
+a { color: #500; }
+
+div#refs p {
+	font-size: 0.8em;
+	line-height: 1em;
+	border-left: 5px solid rgb(90%,90%,90%);
+	padding-left: 10px;
+}
+
+/* Override section behavior.
+ * We only want the top-level <section> to have padding.
+ * This makes it easier to work with --section-divs. */
+section {
+	padding-top: initial;
+	padding-bottom: initial;
+}
+article > section {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+}
+
+/* Make byline (date and/or author) small */
+p.byline { font-size: 1.2rem; }
+
+
+/* Simulate Pandoc's table output styles */
+table {
+	border-top: 2px solid black;
+	border-bottom: 2px solid black;
+}
+th {
+	border-bottom: 1px solid black;
+}
+td, th {
+	font-size: 0.9rem;
+	padding: 10px;
+	text-align: left;
+}
+
+/* Allow tables to be full width
+ * if they're wrapped in a figure.fullwidth
+ * (Easier to insert from Pandoc than manually adding table) */
+figure.fullwidth table {
+	width: 90%;
+}
+
+@media (max-width: 760px) {
+	figure.fullwidth table {
+		width: 100%;
+	}
+}
+
+/* Code blocks
+ *
+ * Code blocks with a language look like div.sourceCode > pre.sourceCode
+ * Otherwise, it's just a pre (without .sourceCode) */
+div.sourceCode,
+pre:not(.sourceCode) {
+	font-size: 0.9rem;
+	overflow-x: auto;
+}
+
+div.sourceCode code,
+pre:not(.sourceCode) code {
+	font-size: 0.9rem;
+}
+
+.fullwidth div.sourceCode,
+.fullwidth pre:not(.sourceCode) {
+	width: 100%;
+}
+
+/* We've handled all the margin/padding on the outer-most div.sourceCode */
+div.sourceCode pre {
+	padding: 0;
+	margin: 0;
+}
+
+@media (max-width: 760px) {
+	div.sourceCode,
+	pre:not(.sourceCode) {
+		width: 100%;
+	}
+}
+
+/* Pandoc-generated line numbers need the same stylings as normal <code> */
+.lineNumbers pre {
+	line-height: 1.42;
+	font-size: 0.9rem;
+}
+
+.orcid-svg {
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+	background-image: var(--orcidsvg);
+	background-size: cover;
+}
+
+.email-svg {
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+	background-image: var(--emailsvg);
+	background-size: cover;
+}

@@ -1,0 +1,1 @@
+Here are some Pandoc templates that work alongside the Pandoc filters to handle academic outputs

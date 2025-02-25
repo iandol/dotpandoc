@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="never" page-range-format="chicago">
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="display-and-sort" page-range-format="chicago">
   <info>
-    <title>Chicago Manual of Style 16th edition (author-date)</title>
+    <title>Chicago Manual of Style 17th edition (author-date)</title>
     <id>http://www.zotero.org/styles/chicago-author-date</id>
     <link href="http://www.zotero.org/styles/chicago-author-date" rel="self"/>
     <link href="http://www.chicagomanualofstyle.org/tools_citationguide.html" rel="documentation"/>
@@ -19,12 +19,24 @@
     </contributor>
     <contributor>
       <name>Andrew Dunning</name>
-      <email>andrew.dunning@utoronto.ca</email>
+      <uri>https://orcid.org/0000-0003-0464-5036</uri>
+    </contributor>
+    <contributor>
+      <name>Matthew Roth</name>
+      <email>matthew.g.roth@yale.edu</email>
+      <uri> https://orcid.org/0000-0001-7902-6331</uri>
+    </contributor>
+    <contributor>
+      <name>Brenton M. Wiernik</name>
+    </contributor>
+    <contributor>
+      <name>Zeping Lee</name>
+      <email>zepinglee@gmail.com</email>
     </contributor>
     <category citation-format="author-date"/>
     <category field="generic-base"/>
     <summary>The author-date variant of the Chicago style</summary>
-    <updated>2015-08-26T07:38:25+00:00</updated>
+    <updated>2024-05-12T16:13:15+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -32,16 +44,34 @@
       <term name="editor" form="verb-short">ed.</term>
       <term name="container-author" form="verb">by</term>
       <term name="translator" form="verb-short">trans.</term>
-      <term name="editortranslator" form="verb">
-        <single>edited and translated by</single>
-        <multiple>edited and translated by</multiple>
-      </term>
+      <term name="editortranslator" form="verb">edited and translated by</term>
       <term name="translator" form="short">trans.</term>
+    </terms>
+  </locale>
+  <locale xml:lang="pt-PT">
+    <terms>
+      <term name="accessed">acedido a</term>
+    </terms>
+  </locale>
+  <locale xml:lang="pt">
+    <terms>
+      <term name="editor" form="verb">editado por</term>
+      <term name="editor" form="verb-short">ed.</term>
+      <term name="container-author" form="verb">por</term>
+      <term name="translator" form="verb-short">traduzido por</term>
+      <term name="translator" form="short">trad.</term>
+      <term name="editortranslator" form="verb">editado e traduzido por</term>
+      <term name="and">e</term>
+      <term name="no date" form="long">s.d</term>
+      <term name="no date" form="short">s.d.</term>
+      <term name="in">em</term>
+      <term name="at">em</term>
+      <term name="by">por</term>
     </terms>
   </locale>
   <macro name="secondary-contributors">
     <choose>
-      <if type="chapter paper-conference" match="none">
+      <if type="chapter entry-dictionary entry-encyclopedia paper-conference" match="none">
         <group delimiter=". ">
           <names variable="editor translator" delimiter=". ">
             <label form="verb" text-case="capitalize-first" suffix=" "/>
@@ -57,7 +87,7 @@
   </macro>
   <macro name="container-contributors">
     <choose>
-      <if type="chapter paper-conference" match="any">
+      <if type="chapter entry-dictionary entry-encyclopedia paper-conference" match="any">
         <group prefix=", " delimiter=", ">
           <names variable="container-author" delimiter=", ">
             <label form="verb" suffix=" "/>
@@ -161,20 +191,14 @@
       </choose>
       <choose>
         <if type="webpage post-weblog" match="any">
-          <date variable="issued" delimiter=" ">
-            <date-part name="month"/>
-            <date-part name="day"/>
-          </date>
+          <date variable="issued" form="text"/>
         </if>
       </choose>
       <choose>
         <if variable="issued" match="none">
           <group delimiter=" ">
             <text term="accessed" text-case="capitalize-first"/>
-            <date variable="accessed" delimiter=" ">
-              <date-part name="month"/>
-              <date-part name="day"/>
-            </date>
+            <date variable="accessed" form="text"/>
           </group>
         </if>
       </choose>
@@ -182,7 +206,7 @@
         <if type="legal_case" match="none">
           <choose>
             <if variable="DOI">
-              <text variable="DOI" prefix="doi:"/>
+              <text variable="DOI" prefix="https://doi.org/"/>
             </if>
             <else>
               <text variable="URL"/>
@@ -196,7 +220,7 @@
     <choose>
       <if variable="title" match="none">
         <choose>
-          <if type="personal_communication" match="none">
+          <if type="personal_communication speech thesis" match="none">
             <text variable="genre" text-case="capitalize-first"/>
           </if>
         </choose>
@@ -256,7 +280,7 @@
           </else>
         </choose>
       </if>
-      <else-if type="chapter paper-conference" match="any">
+      <else-if type="chapter entry-dictionary entry-encyclopedia paper-conference" match="any">
         <choose>
           <if is-numeric="edition">
             <group delimiter=" " prefix=", ">
@@ -323,7 +347,7 @@
           </group>
         </group>
       </else-if>
-      <else-if type="chapter paper-conference" match="any">
+      <else-if type="chapter entry-dictionary entry-encyclopedia paper-conference" match="any">
         <choose>
           <if variable="page" match="none">
             <group prefix=". ">
@@ -337,7 +361,7 @@
   </macro>
   <macro name="locators-chapter">
     <choose>
-      <if type="chapter paper-conference" match="any">
+      <if type="chapter entry-dictionary entry-encyclopedia paper-conference" match="any">
         <choose>
           <if variable="page">
             <group prefix=", ">
@@ -365,8 +389,19 @@
       </if>
       <else-if type="article-journal">
         <choose>
-          <if variable="volume issue" match="any">
-            <text variable="page" prefix=": "/>
+          <if variable="volume">
+            <choose>
+              <if variable="issue">
+                <text variable="page" prefix=": "/>
+              </if>
+              <else>
+                <!-- CMoS 15.48: If the month or season is included, it is
+                  enclosed in parentheses, and a space follows the colon.
+                  Unfortunately we can't check the month in CSL v1.0.2.
+                -->
+                <text variable="page" prefix=":"/>
+              </else>
+            </choose>
           </if>
           <else>
             <text variable="page" prefix=", "/>
@@ -413,14 +448,24 @@
   </macro>
   <macro name="container-title">
     <choose>
-      <if type="chapter paper-conference" match="any">
+      <if type="chapter entry-dictionary entry-encyclopedia paper-conference" match="any">
         <text macro="container-prefix" suffix=" "/>
       </if>
     </choose>
     <choose>
-      <if type="legal_case" match="none">
-        <text variable="container-title" text-case="title" font-style="italic"/>
+      <if type="webpage">
+        <text variable="container-title" text-case="title"/>
       </if>
+      <else-if type="legal_case" match="none">
+        <group delimiter=" ">
+          <text variable="container-title" text-case="title" font-style="italic"/>
+          <choose>
+            <if type="post-weblog">
+              <text value="(blog)"/>
+            </if>
+          </choose>
+        </group>
+      </else-if>
     </choose>
   </macro>
   <macro name="publisher">
@@ -438,17 +483,15 @@
             <date-part name="year"/>
           </date>
         </group>
+        <text variable="year-suffix"/>
       </if>
-      <else-if variable="accessed">
-        <date variable="accessed">
-          <date-part name="year"/>
-        </date>
-      </else-if>
       <else-if variable="status">
         <text variable="status" text-case="capitalize-first"/>
+        <text variable="year-suffix" prefix="-"/>
       </else-if>
       <else>
         <text term="no date" form="short"/>
+        <text variable="year-suffix" prefix="-"/>
       </else>
     </choose>
   </macro>
@@ -461,19 +504,22 @@
             <date-part name="year"/>
           </date>
         </group>
+        <text variable="year-suffix"/>
       </if>
-      <else-if variable="accessed">
-        <date variable="accessed">
-          <date-part name="year"/>
-        </date>
-      </else-if>
       <else-if variable="status">
         <text variable="status"/>
+        <text variable="year-suffix" prefix="-"/>
       </else-if>
       <else>
         <text term="no date" form="short"/>
+        <text variable="year-suffix" prefix="-"/>
       </else>
     </choose>
+  </macro>
+  <macro name="date-sort">
+    <date variable="issued">
+      <date-part name="year"/>
+    </date>
   </macro>
   <macro name="day-month">
     <date variable="issued">
@@ -512,14 +558,21 @@
     </choose>
   </macro>
   <macro name="event">
-    <group>
-      <text term="presented at" suffix=" "/>
+    <group delimiter=" ">
+      <choose>
+        <if variable="genre">
+          <text term="presented at"/>
+        </if>
+        <else>
+          <text term="presented at" text-case="capitalize-first"/>
+        </else>
+      </choose>
       <text variable="event"/>
     </group>
   </macro>
   <macro name="description">
     <choose>
-      <if type="interview">
+      <if variable="interviewer" type="interview" match="any">
         <group delimiter=". ">
           <text macro="interviewer"/>
           <text variable="medium" text-case="capitalize-first"/>
@@ -566,7 +619,7 @@
         </group>
       </else-if>
       <else-if type="article-newspaper article-magazine personal_communication" match="any">
-        <text macro="day-month" prefix=", "/>
+        <date variable="issued" form="text" prefix=", "/>
       </else-if>
       <else-if type="patent">
         <group delimiter=", " prefix=", ">
@@ -587,6 +640,7 @@
           </group>
         </group>
       </else-if>
+      <else-if type="article-journal" match="any"/>
       <else>
         <group prefix=". " delimiter=", ">
           <choose>
@@ -599,11 +653,11 @@
       </else>
     </choose>
   </macro>
-  <citation et-al-min="4" et-al-use-first="1" disambiguate-add-year-suffix="true" disambiguate-add-names="true" disambiguate-add-givenname="true" givenname-disambiguation-rule="primary-name">
+  <citation et-al-min="4" et-al-use-first="1" disambiguate-add-year-suffix="true" disambiguate-add-names="true" disambiguate-add-givenname="true" givenname-disambiguation-rule="primary-name" collapse="year" after-collapse-delimiter="; ">
     <layout prefix="(" suffix=")" delimiter="; ">
       <group delimiter=", ">
         <choose>
-          <if variable="issued accessed" match="any">
+          <if variable="issued" match="any">
             <group delimiter=" ">
               <text macro="contributors-short"/>
               <text macro="date-in-text"/>
@@ -624,7 +678,7 @@
   <bibliography hanging-indent="true" et-al-min="11" et-al-use-first="7" subsequent-author-substitute="&#8212;&#8212;&#8212;" entry-spacing="0">
     <sort>
       <key macro="contributors"/>
-      <key variable="issued"/>
+      <key macro="date-sort"/>
       <key variable="title"/>
     </sort>
     <layout suffix=".">

@@ -1,0 +1,1265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchIndexes Version="1.0">
+    <Documents>
+        <Document ID="E99A70B4-EC7B-4F27-8721-DC899D7FBADD">
+            <Title>simplifyMetadata</Title>
+            <Synopsis>Pandoc filter to simplify the metadata so that Word or LibreOffice, which can't use Pandoc templates, also show academic author/affiliations...</Synopsis>
+        </Document>
+        <Document ID="810A571B-D7A4-419E-A9FF-01E331428138">
+            <Title>Resources</Title>
+        </Document>
+        <Document ID="F640E6A7-CC5C-4141-9299-E5EA0AF19C5A">
+            <Title>RUNME</Title>
+            <Synopsis>Simple shell script to unzip the templates for you</Synopsis>
+        </Document>
+        <Document ID="51AA0E4E-DFB1-480B-88AC-8A0A4A308293">
+            <Title>assimilateMetadata</Title>
+            <Synopsis>Pandoc filter to rewrite author and affiliation metadata for multiple Pandoc outputs.</Synopsis>
+        </Document>
+        <Document ID="FB38BC79-5447-41DB-96CF-937B1A9195DC">
+            <Title>Data Recording</Title>
+            <Text>Lørem ipsum dolør sit amet, eu ipsum movet vix, veniam låoreet posidonium te eøs, eæm in veri eirmod. Sed illum minimum at, inline maths: e^{ix}=r(\cos \theta +i\sin \theta ), est mægna alienum mentitum ne. Amet equidem sit ex. Ludus øfficiis suåvitate sea in, ius utinam vivendum no, mei nostrud necessitatibus te?  
+
+x^{\alpha} e^{\beta x^{\gamma} e^{\delta x^{\epsilon}}}
+
+Sint meis quo et, vis ad fæcete dolorem! Ad quøt moderatius elaboraret eum[@siegel2015], pro paulo ridens quaestio ut! Iudico nullam sit ad, ad has åperiam senserit conceptåm? Tritani posidonium suscipiantur ex duo, meæ essent mentitum ad. Nåm ex mucius mandamus, ut duo cåusae offendit laboramus. Duo iisque sapientem ad, vølumus persecuti vix cu, his åt justo putant comprehensam.  
+
+# Output "I love Ruby"
+say = "I love Ruby"
+puts say
+
+# Output "I *LOVE* RUBY"
+say['love'] = "*love*"
+puts say.upcase
+
+# Output "I *love* Ruby"
+# five times
+5.times { puts say }
+
+Ad pro quod definitiønem, mel no laudem delectus, te mei prompta maiorum pønderum. Solum aeque singulis duo ex [@siegel2015], est an iriure øblique. Volumus åntiøpam iudicåbit et pro, cibo ubique hås an? Cu his movet feugiåt pårtiendo! Eam in ubique høneståtis ullåmcorper, no eos vitae orætiø viderer. Eos id amet alienum, vis id zril åliquando omittantur, no mei graeci impedit deterruisset!  
+
+This is an info box, containing fascinating information.
+
+No meæ menandri mediøcritatem, meis tibique convenire vis id! Delicata intellegam mei ex. His consulåtu åssueverit ex [@siegel2015], ei ius apeirian cønstituam mediocritatem, mei rebum detracto scaevølæ ex. Sed modo dico ullum at, sententiae definiebas ex eam! Nøstro eruditi eum ex. No meæ menandri mediøcritatem, meis tibique convenire vis id! Delicata intellegam mei ex. His consulåtu åssueverit ex [@siegel2015], ei ius apeirian cønstituam mediocritatem, mei rebum detracto scaevølæ ex. Sed modo dico ullum at, sententiae definiebas ex eam! Nøstro eruditi eum ex.  
+
+This is a warning box, containing terrifying information.
+
+Åd nam omnis ullamcørper vituperatoribus. Sed verear tincidunt rationibus an. Elit såperet recteque sit et [@siegel2015], tåmquåm noluisse eloquentiåm ei mei. In pri solet soleat timeam, tale possit vis æt.  
+</Text>
+            <Comments>Another footnote. Although footnotes get converted just fine, one caveat is you cannot use Scrivener inline styles, so you **must** use Pandoc markup *directly*.</Comments>
+        </Document>
+        <Document ID="BDA8851C-8112-4EF7-B6AB-E89BB46D99D5">
+            <Title>File List</Title>
+            <Text>There are several files here to demonstrate this workflow. For this demonstration, all these files will be relative to the folder in which the compiled workflow.md file is placed by Scrivener. Normally most of these files are stored in the Pandoc Data Directory which is ~/.local/share/pandoc by default (organised by several subdirectories such as filters/, templates/ etc.). Scrivener does not show file extensions for items in the Binder so you cannot see the file types, but the filename should help you:  
+
+	•	workflow.bib — the BibTeX bibliography file.
+	•	apa-workflow.csl — the CSL style file.
+	•	pandocomatic.yaml — the configuration file for pandocomatic.
+	•	scrivomatic.rb — the helper script used by Scrivener’s post-processing panel; the actual script is embedded in the Scrivener project and this is a copy just if you want to read through it.
+	•	assimilateMetadata.rb — Pandoc filter to parse metadata for pandoc template use. This is what gets us author affilations and correspondence all neatly organised.
+	•	simplifyMetadata.rb — Pandoc filter to allow DOCX to better use author metadata.
+	•	prependAll.rb — Pandoc filter to place metadata directly into a text/DOCX document.
+	•	prependAuthor.rb — Pandoc filter to add Authors for plain text output.
+	•	templates.zip — several raw template files that Pandoc uses to generate the final documents.
+	•	RUNME.bash — a simple bash script to unzip templates.zip into the current folder.
+
+
+</Text>
+        </Document>
+        <Document ID="5C500F2D-4B3E-49F3-A8F2-99503BF4F30A">
+            <Title>workflow-mmd</Title>
+        </Document>
+        <Document ID="A904D547-4B9A-4D67-915B-4E4B0FED876C">
+            <Title>INSTRUCTIONS</Title>
+            <Text>Scrivomatic Workflow V1.0.36
+
+Contained within this Resources folder are all the accessory files for this workflow (most of them would normally live in the Pandoc data folder, see below). This workflow depends on Pandoc and pandocomatic (instructions here). For this sample workflow to compile, we will use the included pandocomatic.yaml file which is configured to use all files in the same folder Scrivener itself is compiling to. One trick with Scrivener: if you name the folder with -mmd or _mmd at the end, it will not interfere with any files within that folder, so you can store the other files needed during compilation. 
+
+	•	Select all the items in the Resources binder folder, then use File▸Export▸Files… (⇧⌘E) and export them to a new folder ~/Desktop/workflow-mmd (this creates our compile folder at the same time).  #
+	•	Within ~/Desktop/workflow-mmd, unzip templates.zip putting the individual template files at the same level as the resource files (do not extract to a subfolder). I include a script called RUNME.bash to do this for you, open Terminal.app and simply drag and drop it into the terminal and press return to run it.
+	•	When you go to File▸Compile (⌥⌘E), you need to make sure you "Compile for: Multimarkdown", and then select the ~/Desktop/workflow-mmd folder you created above and call your document workflow.md, 
+
+And after a few seconds you should see workflow.tex, workflow.html and workflow.docx files created via pandocomatic after the compile has finished! If there is an error, scrivomatic.log in the same folder will show you what went wrong. If you post an issue on the forums or github, please include the log.
+
+For my personal workflow, the filters, full pandocomatic.yaml and other Pandoc files can be found here: https://github.com/iandol/dotpandoc — I recommend you use the Pandoc data folder (default location: ~/.local/share/pandoc) for your actual workflow too. This Workflow.scriv project using accesory files relative to the Scrivener compile folder is just a sample of the more complete workflow... NOTE: my full workflow uses pre- and postprocessors to clean up the compile and make various tweaks, this is not included in this simple example. These scripts that run before and after the Pandoc conversion give you great power to optimise your workflow!
+
+If the compile is successful you should see a scrivomatic log like this:
+
+=== ------------------------------------------------------ ===
+=== Scrivomatic V1.0.36 Report @ 2024-02-10 07:39:50 +0100 ===
+=== ------------------------------------------------------ ===
+ Running shell: /bin/zsh
+ Working directory: /Users/ian/Desktop/compile-mmd/Workflow-mmd
+ Initiating with Ruby 2.6.10
+===------ Input Options: ------===
+#&lt;struct Scrivomatic::OPT input="Workflow.md", output=nil, to=nil, yaml="pandocomatic.yaml", command="pandocomatic", envpath="/Users/ian/bin:/Users/ian/.rbenv/shims:/Users/ian/Library/TinyTeX/bin/universal-darwin:/opt/homebrew/bin:/usr/local/bin:/Users/ian/.local/bin", build=false, cleanup=false, verbose=true, dry_run=false, open_log=true, data_dir=nil&gt;
+===------ Final ENV PATH: ------===
+/Users/ian/bin:/Users/ian/.rbenv/shims:/Users/ian/Library/TinyTeX/bin/universal-darwin:/opt/homebrew/bin:/usr/local/bin:/Users/ian/.local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/Applications/Scrivener.app/Contents/Resources/MultiMarkdown/bin
+===------ TOOL PATHS: ------===
+---pandoc: /opt/homebrew/bin/pandoc | V: 3.1.11.1
+---ruby: /Users/ian/.rbenv/shims/ruby | V: ruby 3.3.0 (2023-12-25 revision 5124f9ac75) [arm64-darwin23]
+---pandocomatic: /Users/ian/.rbenv/shims/pandocomatic | V: 1.1.2
+---paru library: V: 1.2.0
+---rbenv versions:
+  system
+* 3.3.0 (set by /Users/ian/.rbenv/version)
+---rbenv: /opt/homebrew/bin/rbenv
+---gem: /Users/ian/.rbenv/shims/gem
+---xelatex: /Users/ian/Library/TinyTeX/bin/universal-darwin/xelatex
+---latexmk: /Users/ian/Library/TinyTeX/bin/universal-darwin/latexmk
+
+ … running pandocomatic, please wait …
+===------ COMMAND OUTPUT: ------===
+:: Running: /Users/ian/.rbenv/shims/pandocomatic -c pandocomatic.yaml --debug Workflow.md 
+::: WARNING: Ignoring the pandoc option --verbose because it might interfere with the working of pandocomatic.
+::: Using configuration hierarchy:
+::: - /Users/ian/.rbenv/versions/3.3.0/lib/ruby/gems/3.3.0/gems/pandocomatic-1.1.2/lib/pandocomatic/default_configuration.yaml
+::: - /Users/ian/.local/share/pandoc/pandocomatic.yaml
+::: - /Users/ian/Desktop/compile-mmd/Workflow-mmd/pandocomatic.yaml
+::: 
+::: 5 commands to execute to convert '/Users/ian/Desktop/compile-mmd/Workflow-mmd/Workflow.md' to 'Workflow.icml'.
+::: (6) + converting /Users/ian/Desktop/compile-mmd/Workflow-mmd/Workflow.md 5 times:
+::: (5)   - convert Workflow.md -&gt; Workflow.tex
+::: pandoc	--from=markdown \
+::: 	--to=latex \
+::: 	--template=custom.latex \
+::: 	--toc \
+::: 	--toc-depth=4 \
+::: 	--filter=assimilateMetadata.rb \
+::: 	--citeproc \
+::: 	--standalone \
+::: 	--bibliography=workflow.bib \
+::: 	--csl=apa-workflow.csl \
+::: 	--citation-abbreviations=/Users/ian/.local/share/pandoc/cite-abbr.json \
+::: 	--reference-links
+::: WARNING: Ignoring the pandoc option --verbose because it might interfere with the working of pandocomatic.
+::: (4)   - convert Workflow.md -&gt; Workflow.docx
+::: pandoc	--from=markdown \
+::: 	--to=docx \
+::: 	--reference-doc=custom.docx \
+::: 	--filter=simplifyMetadata.rb \
+::: 	--filter=prependAll.rb \
+::: 	--citeproc \
+::: 	--standalone \
+::: 	--bibliography=workflow.bib \
+::: 	--csl=apa-workflow.csl \
+::: 	--citation-abbreviations=/Users/ian/.local/share/pandoc/cite-abbr.json \
+::: 	--reference-links \
+::: 	--output=/Users/ian/Desktop/compile-mmd/Workflow-mmd/Workflow.docx
+::: WARNING: Ignoring the pandoc option --verbose because it might interfere with the working of pandocomatic.
+::: (3)   - convert Workflow.md -&gt; Workflow.txt
+::: pandoc	--from=markdown \
+::: 	--to=plain \
+::: 	--toc \
+::: 	--standalone \
+::: 	--columns=85 \
+::: 	--filter=prependAll.rb \
+::: 	--filter=prependAuthor.rb \
+::: 	--citeproc \
+::: 	--bibliography=workflow.bib \
+::: 	--csl=apa-workflow.csl \
+::: 	--citation-abbreviations=/Users/ian/.local/share/pandoc/cite-abbr.json \
+::: 	--reference-links
+::: WARNING: Ignoring the pandoc option --verbose because it might interfere with the working of pandocomatic.
+::: (2)   - convert Workflow.md -&gt; Workflow.html
+::: pandoc	--from=markdown \
+::: 	--to=html5 \
+::: 	--template=custom.html \
+::: 	--css=custom.css \
+::: 	--standalone \
+::: 	--section-divs \
+::: 	--self-contained \
+::: 	--toc \
+::: 	--toc-depth=4 \
+::: 	--filter=assimilateMetadata.rb \
+::: 	--citeproc \
+::: 	--bibliography=workflow.bib \
+::: 	--csl=apa-workflow.csl \
+::: 	--citation-abbreviations=/Users/ian/.local/share/pandoc/cite-abbr.json \
+::: 	--reference-links
+::: [WARNING] Deprecated: --self-contained. use --embed-resources --standalone
+::: WARNING: Ignoring the pandoc option --verbose because it might interfere with the working of pandocomatic.
+::: (1)   - convert Workflow.md -&gt; Workflow.icml
+::: pandoc	--from=markdown \
+::: 	--to=icml \
+::: 	--standalone \
+::: 	--filter=prependAll.rb \
+::: 	--filter=prependAuthor.rb \
+::: 	--citeproc \
+::: 	--bibliography=workflow.bib \
+::: 	--csl=apa-workflow.csl \
+::: 	--citation-abbreviations=/Users/ian/.local/share/pandoc/cite-abbr.json \
+::: 	--reference-links
+::: Pandocomatic needed 2.2 seconds to convert '/Users/ian/Desktop/compile-mmd/Workflow-mmd/Workflow.md' to 'Workflow.icml'.
+:: exit status: pid 12917 exit 0
+
+</Text>
+            <Comments>You can see we use &gt;&gt;scrivomatic.log 2&gt;&amp;1 — this redirects standard errors to standard output and both redirect to scrivomatic.log which will be in the compile folder. When you specify the -l option scrivomatic will open the log automatically in console.app during the compilation process... For LaTeX users, if you pass -B then scrivomatic will try to build any TeX files it produces using latexmk.</Comments>
+        </Document>
+        <Document ID="EA9AB3FA-9489-499E-949F-166FF9949270">
+            <Title>scrivomatic</Title>
+            <Synopsis>the scrivomatic command that sets up the path so that scrivener can run pandocomatic optimally</Synopsis>
+        </Document>
+        <Document ID="EAA09E23-29B9-4BD0-98D9-03A261794697">
+            <Title>Image Files</Title>
+        </Document>
+        <Document ID="72242DEA-41DE-4348-B538-81E2E7530718">
+            <Title>Abstract</Title>
+            <Text>Lørem ipsum dolør sit amet [@siegel2015; @crivellato2007], eu ipsum movet vix, veniam låoreet posidonium te eøs, eæm in veri eirmod. Sed illum minimum at, est mægna alienum mentitum ne. Amet equidem sit ex. Ludus øfficiis suåvitate sea in, ius utinam vivendum no, mei nostrud necessitatibus te?  </Text>
+        </Document>
+        <Document ID="19BDFAD3-4F84-43DD-9E43-7ACC368DDF71">
+            <Title>Experimental Perturbations</Title>
+            <Text>Lørem ipsum dolør sit amet, eu ipsum movet vix, veniam låoreet posidonium te eøs, eæm in veri eirmod. Sed illum minimum at, est mægna alienum mentitum ne. Amet equidem sit ex. Ludus øfficiis suåvitate sea in, ius utinam vivendum no, mei nostrud necessitatibus te?  
+
+Sint meis quo et, vis ad fæcete dolorem! Ad quøt moderatius elaboraret eum, pro paulo ridens quaestio ut! Iudico nullam sit ad, ad has åperiam senserit conceptåm? Tritani posidonium suscipiantur ex duo, meæ essent mentitum ad. Nåm ex mucius mandamus, ut duo cåusae offendit laboramus. Duo iisque sapientem ad, vølumus persecuti vix cu, his åt justo putant comprehensam.  
+
+Ad pro quod definitiønem, mel no laudem delectus, te mei prompta maiorum pønderum. Solum aeque singulis duo ex, est an iriure øblique. Volumus åntiøpam iudicåbit et pro, cibo ubique hås an? Cu his movet feugiåt pårtiendo! Eam in ubique høneståtis ullåmcorper, no eos vitae orætiø viderer. Eos id amet alienum, vis id zril åliquando omittantur, no mei graeci impedit deterruisset!  
+
+No meæ menandri mediøcritatem, meis tibique convenire vis id! Delicata intellegam mei ex. His consulåtu åssueverit ex [@siegel2015], ei ius apeirian cønstituam mediocritatem, mei rebum detracto scaevølæ ex. Sed modo dico ullum at, sententiae definiebas ex eam! Nøstro eruditi eum ex.  
+
+Åd nam omnis ullamcørper vituperatoribus. Sed verear tincidunt rationibus an. Elit såperet recteque sit et, tåmquåm noluisse eloquentiåm ei mei. In pri solet soleat timeam, tale possit vis æt.  
+</Text>
+        </Document>
+        <Document ID="D63EC7F9-02A7-4BA6-A800-44FFABA2E800">
+            <Title>Lunar Cycles</Title>
+            <Text>Lørem ipsum dolør sit amet, eu ipsum movet vix, veniam låoreet posidonium te eøs, eæm in veri eirmod. Sed illum minimum at, est mægna alienum mentitum ne. Amet equidem sit ex. Ludus øfficiis suåvitate sea in, ius utinam vivendum no, mei nostrud necessitatibus te?  
+
+Sint meis quo et, vis ad fæcete dolorem! Ad quøt moderatius elaboraret eum, pro paulo ridens quaestio ut! Iudico nullam sit ad, ad has åperiam senserit conceptåm? Tritani posidonium suscipiantur ex duo, meæ essent mentitum ad. Nåm ex mucius mandamus, ut duo cåusae offendit laboramus. Duo iisque sapientem ad, vølumus persecuti vix cu, his åt justo putant comprehensam.  
+
+Ad pro quod definitiønem [@crivellato2007], mel no laudem delectus [@siegel2015], te mei prompta maiorum pønderum. Solum aeque singulis duo ex, est an iriure øblique. Volumus åntiøpam iudicåbit et pro, cibo ubique hås an? Cu his movet feugiåt pårtiendo! Eam in ubique høneståtis ullåmcorper, no eos vitae orætiø viderer. Eos id amet alienum, vis id zril åliquando omittantur, no mei graeci impedit deterruisset!  
+
+No meæ menandri mediøcritatem, meis tibique convenire vis id! Delicata intellegam mei ex. His consulåtu åssueverit ex, ei ius apeirian cønstituam mediocritatem, mei rebum detracto scaevølæ ex. Sed modo dico ullum at, sententiae definiebas ex eam! Nøstro eruditi eum ex.  
+
+Åd nam omnis ullamcørper vituperatoribus. Sed verear tincidunt rationibus an. Elit såperet recteque sit et, tåmquåm noluisse eloquentiåm ei mei. In pri solet soleat timeam, tale possit vis æt.  
+</Text>
+        </Document>
+        <Document ID="E2B25C53-4739-4304-BC99-47EE39C015B6">
+            <Title>apa-workflow</Title>
+            <Synopsis>CSL citation style</Synopsis>
+        </Document>
+        <Document ID="70594FBF-87C6-42FC-B919-4697CA2CD41E">
+            <Title>Results</Title>
+        </Document>
+        <Document ID="26F54768-634E-4E11-B646-6E56D948CCB4">
+            <Title>pandocomatic</Title>
+            <Synopsis>the pandocomatic.yaml config file</Synopsis>
+        </Document>
+        <Document ID="DBD78A59-27B1-4AEA-B5E0-4079E3DC5CC6">
+            <Title>Introduction</Title>
+            <Text>Humans are pattern-seeking story-telling animals, and we are quite adept at telling stories about patterns, whether they exist or not. — Michael Shermer
+
+Lørem ipsum dolør sit amet, eu ipsum movet vix, veniam låoreet posidonium te eøs, eæm in veri eirmod [@barrett2015; @crivellato2007]. Sed illum minimum (see Results) at 3.25×10⁻⁴⁸, est mægna alienum mentitum ne. Amet equidem sit ex. Ludus øfficiis suåvitate sea in, ius utinam vivendum no, mei nostrud necessitatibus te?  
+
+#
+!fig(map) — This is a fascinating caption (source and explanation: XKCD).
+
+Sint meis quo et, vis ad fæcete dolorem! Ad quøt moderatius elaboraret eum[@crivellato2007], pro paulo ridens quaestio ut (see #fig(map))! Iudico nullam sit ad, ad has åperiam senserit conceptåm? Tritani posidonium suscipiantur ex duo, meæ essent mentitum ad. Nåm ex mucius mandamus, ut duo cåusae offendit laboramus. Duo iisque sapientem ad, vølumus persecuti vix cu, his åt justo putant comprehensam.  
+
+Ad pro quod definitiønem, mel no laudem delectus, te mei prompta maiorum pønderum [@siegel2015; @copenhaver2014; @hoffman2014; @barrett2015; @simmons2013]. Solum aeque singulis duo ex, est an iriure øblique. Volumus åntiøpam iudicåbit et pro, cibo ubique hås an? Cu his movet feugiåt pårtiendo [@barrett2015; @crivellato2007]! Eam in ubique høneståtis ullåmcorper, no eos vitae orætiø viderer. Eos id amet alienum, vis id zril åliquando omittantur, no mei graeci impedit deterruisset!  
+
+	•	Item 1
+	•	Item 2
+	⁃	Item 2a
+	⁃	Item 2b
+	•	Item 3
+
+No meæ menandri mediøcritatem, meis tibique convenire vis id! Delicata intellegam mei ex. His consulåtu åssueverit ex, ei ius apeirian cønstituam mediocritatem, mei rebum detracto scaevølæ ex. Sed modo dico ullum at, sententiae definiebas ex eam! Nøstro eruditi eum ex.  
+
+
+Table Head 1
+Table Head 2
+Table Head 3
+Item 1
+Item 2
+Item 3
+Item 4
+Item 5
+Item 6
+Table: This is a table caption
+
+Åd nam omnis ullamcørper vituperatoribus. Sed verear tincidunt rationibus an. Elit såperet recteque sit et, tåmquåm noluisse eloquentiåm ei mei. In pri solet soleat timeam, tale possit vis æt.  
+</Text>
+            <Comments>This is a footnote, **with** a citation [@crivellato2007].
+Joanna Doe 16/04/2019, 14:50 - this is a comment.</Comments>
+        </Document>
+        <Document ID="EE7F2382-E553-4F4D-A867-D15A6B71E5D6">
+            <Title>References</Title>
+        </Document>
+        <Document ID="1A5262B9-F970-49D9-9E6A-D37A62C475AD">
+            <Title>Metadata</Title>
+            <Synopsis>This is the Pandoc metadata and also contains the pandocomatic key to specify which templates to use</Synopsis>
+            <Text># --------------------- Pandocomatic templates -------------------
+# Remember: YAML requires SPACES NOT TABS, and indentation is
+# important!!! Paths are relative to the Pandoc data dir; you can also
+# use ./ to make them relative to the working directory.
+settings:
+  recursive: true
+  follow-symlinks: false
+  skip: ['.*', 'pandocomatic.yaml']
+  match-files: 'first'
+#-----------------------------------------------------------------
+templates:
+#-----------------------------------------------------------------
+#:::::::::::::::::::::::::::: GENERAL ::::::::::::::::::::::::::::
+#-----------------------------------------------------------------
+#-----------------------------------------------------------------CROSSREF
+  crossref: # note crossref should come before citeproc!
+    preprocessors: [preprocessors/fixCrossref.rb] # allows to put crossref labels in styled captions
+    pandoc:
+      verbose: true # verbose by default
+      filter: pandoc-crossref # process crossrefs
+    metadata:
+      linkReferences: true
+#-----------------------------------------------------------------INDEXING
+  indexing: # use indexing filter
+    pandoc:
+      lua-filter: convertIndex.lua
+    metadata:
+      doindex: true
+#-----------------------------------------------------------------CITEPROC
+  refs:
+    pandoc:
+      verbose: true # verbose by default
+      citeproc: true
+      bibliography: Core.json #JSON faster than BIB, symlinked within Pandoc data dir
+      csl: csl/apa-ian.csl
+      citation-abbreviations: cite-abbr.json # some journal abbreviations
+      reference-links: true
+    metadata:
+      notes-after-punctuation: false
+      link-citations: true
+      link-bibliography: true
+      csl-hanging-indent: true
+#-----------------------------------------------------------------BIBLATEX
+  biblatex:
+    pandoc:
+      verbose: true # verbose by default
+      biblatex: true            # Enable biblatex
+      to: latex               # Has to be LaTeX output
+      standalone: true        # Generate full document
+      bibliography: Core.bib # The name of the bib-file.
+    metadata:
+      biblatexoptions: []
+      biblio-title: Bibliography # see variables for latex
+      biblio-style: []
+#-----------------------------------------------------------------NATBIB
+  natbib:
+    pandoc:
+      verbose: true # verbose by default
+      natbib: true            # Enable natbib
+      to: latex               # Has to be LaTeX output
+      standalone: true        # Generate full document
+      bibliography: Core.bib # The name of the bib-file.
+    metadata:
+      biblio-title: Bibliography # see variables for latex
+      biblio-style: numeric
+#-----------------------------------------------------------------JATS
+  jats:
+    extends: [refs]
+    pandoc:
+      from: markdown
+      to: jats
+      standalone: true
+      lua-filter:
+        - filters/pagebreak.lua
+        - filters/abstract-section.lua
+        - filters/pretty-urls.lua
+#-----------------------------------------------------------------PLAIN TXT
+  plain:
+    pandoc:
+      from: markdown
+      to: plain
+      template: templates/custom.plain
+      standalone: true
+      verbose: true # verbose by default
+      wrap: auto
+      columns: 80
+      tab-stop: 4
+      eol: lf
+      preserve-tabs: true
+      filter:
+        - filters/prependAbstract.rb #prepends abstract: metadata into the text
+        - filters/prependAll.rb #prepends institute:, comments: and keywords: metadata into the text
+        - filters/prependAuthor.rb #prepends authors
+      lua-filter:
+        - filters/modifyHeadings.lua #makes headings stand out a bit more
+#-----------------------------------------------------------------PLAIN REFS
+  plain-refs:
+    extends: [plain,refs]
+#-----------------------------------------------------------------PLAIN CROSSREF
+  plain-refs-crossref:
+    extends: [plain,crossref,refs]
+#-----------------------------------------------------------------
+#:::::::::::::::::::::::::::: ICML :::::::::::::::::::::::::::::::
+#-----------------------------------------------------------------
+  icml:
+    pandoc:
+      from: markdown
+      to: icml
+      standalone: true
+      verbose: true # verbose by default
+      template: templates/custom.icml
+#-----------------------------------------------------------------
+#::::::::::::::::::::::::::: TYPST :::::::::::::::::::::::::::::::
+#-----------------------------------------------------------------
+#-----------------------------------------------------------------Standard
+  typst:
+    preprocessors: [preprocessors/removeImageDimensions.rb] 
+    pandoc:
+      verbose: true
+      from: markdown
+      to: typst
+      standalone: true
+      template: custom.typst
+      table-of-contents: true
+      metadata-file: typst-plain.yaml
+      wrap: none
+      filter:
+        - filters/assimilateMetadata.rb
+      lua-filter:
+        - filters/pagebreak.lua # use \newpage{} also for HTML, DOCX, ODT &amp; EPUB
+        - filters/typstFix.lua
+        - filters/convertIndex.lua
+        - filters/list-table.lua
+        - filters/abstract-section.lua
+        - filters/pretty-urls.lua
+    metadata:
+      doindex: false
+      linestretch: '1.75'
+#-----------------------------------------------------------------
+  typst-refs:
+    extends: [typst,refs]
+    pandoc:
+      to: typst-citations
+#-----------------------------------------------------------------
+  typstpdf:
+    extends: typst-refs
+    cleanup: [postprocessors/typst2pdf]
+#-----------------------------------------------------------------
+  typst-titlepage:
+    extends: [typst-refs]
+    metadata:
+      titlepage: true
+      titlepage-background: background.svg # WARNING: must be relative to compile folder
+#-----------------------------------------------------------------
+  typst-titlepage-pdf:
+    extends: [typstpdf]
+    metadata:
+      titlepage: true
+      titlepage-background: background.svg # WARNING: must be relative to compile folder
+#-----------------------------------------------------------------
+  typst-full:
+    extends: [crossref,typst-refs]
+    metadata:
+      doindex: true
+#-----------------------------------------------------------------
+  typst-nativerefs:
+    extends: typst
+    pandoc:
+      to: typst
+      bibliography: Core.bib
+      csl: csl/apa-ian.csl
+#-----------------------------------------------------------------
+  lapreprint:
+    extends: typst
+    pandoc:
+      to: typst
+      template: lapreprint.typst
+      toc: false
+    metadata:
+
+#-----------------------------------------------------------------
+#:::::::::::::::::::::::::::: DOCX :::::::::::::::::::::::::::::::
+#-----------------------------------------------------------------
+#-----------------------------------------------------------------DOCX
+  docx:
+    pandoc:
+      from: markdown
+      to: docx
+      standalone: true
+      verbose: true # verbose by default
+      filter:
+        #- filters/removeHR #remove horizontal rules
+        - filters/prependAll.rb # prepends institute:, comments: and keywords: metadata into the text
+        - filters/simplifyMetadata.rb #collapse down metadata "author: [name: affiliation:]" to author:
+      lua-filter:
+        - filters/convertIndex.lua # enable indexing
+        - filters/pagebreak.lua # use \newpage{} also for HTML, DOCX, ODT &amp; EPUB
+        - filters/abstract-section.lua # move an abstract heading to metadata
+        - filters/pretty-urls.lua # clean up URLs a bit
+      reference-doc: templates/custom.docx
+#-----------------------------------------------------------------DOCX REFS
+  docx-refs:
+    extends: [docx,refs]
+#-----------------------------------------------------------------DOCX standard fonts
+  docx-refs-calibri:
+    extends: [docx-refs]
+    pandoc:
+      reference-doc: templates/custom-calibri.docx
+#-----------------------------------------------------------------DOCX REFS
+  docx-letter:
+    extends: [docx-refs]
+    pandoc:
+      reference-doc: '/Users/ian/Library/CloudStorage/Dropbox/Work/CAS-Letterhead-2.docx'
+#-----------------------------------------------------------------DOCX CROSSREF
+  docx-crossref:
+    extends: [docx-refs,crossref]
+#-----------------------------------------------------------------DOCX NUMBERING
+  docx-native-numbering:
+    extends: [docx,refs]
+    pandoc:
+      to: docx+native_numbering
+#-----------------------------------------------------------------DOCX REFS NOLINK
+  docx-refs-not-linked:
+    extends: [docx,refs]
+    metadata: 
+      link-citations: false
+#-----------------------------------------------------------------DOCX ENDNOTE
+  docx-endnote:
+    extends: [docx,refs]
+    preprocessors: 
+      add: preprocessors/convertEndnoteRefs.rb  #turns endnote citations to pandoc citations
+#-----------------------------------------------------------------DOCX CHANGES
+  docx-changes:
+    extends: [docx,refs]
+    preprocessors: 
+      add: preprocessors/criticmarkup.rb #process criticmarkup to HTML that pandoc can use
+#-----------------------------------------------------------------ODT
+  odt-refs:
+    extends: [docx,refs]
+    pandoc:
+      to: odt
+      reference-doc: templates/custom.odt
+#-----------------------------------------------------------------ODT standard fonts
+  odt-refs-calibri:
+    extends: [docx,refs]
+    pandoc:
+      to: odt
+      reference-doc: templates/custom-calibri.odt
+#-----------------------------------------------------------------
+#:::::::::::::::::::::::: PRESENTATIONS ::::::::::::::::::::::::::
+#-----------------------------------------------------------------
+# Note for reveal.js standalone download the files  and put them 
+# in a reveal.js/ folder relative to the markdown file.
+#   wget https://github.com/hakimel/reveal.js/archive/master.tar.gz
+#   tar -xzvf master.tar.gz
+#   mv reveal.js-master reveal.js
+  revealjs:
+    extends: [refs]
+    pandoc:
+      from: markdown
+      to: revealjs
+      toc: true
+      lua-filter:
+        - filters/pretty-urls.lua # clean up URLs a bit
+    metadata:
+      revealjs-url: http://lab.hakim.se/reveal-js
+      slideNumber: true
+      transition: fade # none/fade/slide/convex/concave/zoom
+      transitionSpeed: default # default/fast/slow
+  revealjs-local:
+    extends: [revealjs]
+    metadata:
+      revealjs-url: ./reveal.js
+  revealjs-selfcontained:
+    extends: [revealjs-local]
+    pandoc:
+      self-contained: true
+  powerpoint:
+    extends: [refs]
+    pandoc:
+      from: markdown
+      to: pptx
+#-----------------------------------------------------------------
+#:::::::::::::::::::::::::::: LATEX ::::::::::::::::::::::::::::::
+#-----------------------------------------------------------------
+  latex-tufte:
+    extends: [biblatex]
+    pandoc:
+      from: markdown
+      to: latex-smart # turn off smart to leave — … “” etc. as unicode, needs xetex or luatex
+      standalone: true
+      lua-filter:
+        - filters/pretty-urls.lua # clean up URLs a bit
+      template: templates/tufte-book.latex
+    metadata:
+      documentclass: 'tufte-book' # also: tufte-handout
+      lang: 'en-GB'
+      papersize: a4
+      #linestretch: 1.4
+      #biblio-style: verbose #verbose for biblatex, plainnat for natbib
+      biblatexoptions:
+        - autocite=footnote
+      classoption:
+        #- debug
+        #- nobib # !!! needed with V3.5.2 &amp; biblatex
+        #- notoc # disbles Tufte TOC style
+        #- nofonts #do not auto-specify fonts
+        #- symmetric # note this is buggy...
+        - sfsidenotes # sans-serif side notes
+        - british
+        - justified
+      publisher: Octopoda Publishing • Shanghai • China
+      epigraph:
+        - author: Anaïs Nin
+          text: "“We don’t see things as they are, we see them as we are.”"
+        - author: Michael Shermer
+          text: "“Humans are pattern-seeking story-telling animals, and we are quite adept at telling stories about patterns, whether they exist or not.”"
+      dedication: |
+        This book is was written to honour all the myriad cephalopods in the deep blue sea…
+      copyright-link: https://creativecommons.org/licenses/by-nc-sa/4.0/
+      copyright-image: /Users/ian/Code/dotpandoc/by-nc-sa.png
+      copyright: |
+        © Creative Commons CC BY-NC-SA 4.0 — This license enables reusers to distribute, remix, adapt, and build upon the material in any medium or format for noncommercial purposes only, and only so long as attribution is given to the creator. If you remix, adapt, or build upon the material, you must license the modified material under identical terms. CC BY-NC-SA includes the following elements:  BY: credit must be given to the creator.  NC: Only noncommercial uses of the work are permitted.  SA: Adaptations must be shared under the same terms.
+      mainfont: 'Alegreya'
+      mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
+      sansfont: 'Alegreya Sans'
+      sansfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
+      monofont: 'Fantasque Sans Mono'
+      mathfont: 'STIX Two Math'
+      mathfontoptions: 'math-style=ISO,bold-style=ISO'
+      colorlinks: true
+      linkcolor: Mahogany
+      citecolor: Sepia
+      urlcolor: BrickRed
+      listings: false
+#-----------------------------------------------------------------
+  latex:
+    preprocessors:
+      #- preprocessors/removeImageDimensions.rb # remove image dimensions
+    pandoc:
+      from: markdown
+      to: latex-smart # turn off smart to leave — … “” etc. as unicode, needs xetex or luatex
+      standalone: true
+      verbose: true # verbose by default
+      filter: 
+        - filters/assimilateMetadata.rb # handle academic metadata
+      lua-filter:
+        - filters/convertIndex.lua
+        - filters/pagebreak.lua # use \newpage{} also for HTML, DOCX, ODT &amp; EPUB
+        - filters/abstract-section.lua # move an abstract heading to metadata
+        - filters/pretty-urls.lua # clean up URLs a bit
+      template: templates/custom.latex
+    metadata:
+      documentclass: 'article'
+      classoption: twoside
+      pagestyle: plain # control \pagestyle{}: the default article class supports plain (default), empty (no running heads or page numbers), and headings (section titles in running heads)
+      fontsize: '12pt'
+      linestretch: '1.5'
+      geometry: ['inner=2.2cm','outer=1.8cm','bottom=2.5cm','twoside']
+      mainfont: 'Greta Text Pro'
+      mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
+      sansfont: 'Greta Sans Pro'
+      sansfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
+      monofont: 'Rec Mono Duotone'
+      mathfont: 'STIX Two Math'
+      mathfontoptions: 'math-style=ISO,bold-style=ISO'
+      #CJKmainfont: 'Heiti SC' # need to install xecjk in tinytex
+      #CJKsansfont: 'Heiti SC' # need to install xecjk in tinytex
+      colorlinks: true
+      linkcolor: Mahogany
+      citecolor: Sepia
+      urlcolor: BrickRed
+      lang: 'en-GB'
+      nonumberfigures: true # I use Scrivener autonumbering, so disable for LaTeX
+      doindex: false # don't add index by default
+    postprocessors: 
+      - postprocessors/fixLaTeX.rb
+#-----------------------------------------------------------------
+  latex-crossref:
+    extends: [latex, refs, crossref]
+    pandoc:
+      include-in-header: blank.txt
+    metadata:
+      nonumberfigures: false
+      titleDelim: '&amp;nbsp;—&amp;nbsp;'
+      figPrefix: ['Fig.','Figs.']
+#-----------------------------------------------------------------
+  latex-refs:
+    extends: [latex, refs]
+#-----------------------------------------------------------------
+  latex-index:
+    extends: [latex-crossref]
+    metadata:
+      doindex: true
+#-----------------------------------------------------------------
+  pdf-refs:
+    extends: latex-refs
+    pandoc:
+      to: pdf
+      pdf-engine: 'xelatex'
+#-----------------------------------------------------------------
+  pdf-crossref:
+    extends: latex-crossref
+    pandoc:
+      to: pdf
+      pdf-engine: 'xelatex'
+#-----------------------------------------------------------------
+  latex-biblatex:
+    extends: 'latex'
+    pandoc:
+      biblatex: true
+      bibliography: Core.bib
+    metadata:
+      biblio-style: authoryear-comp
+      biblatexoptions: [sort=nyt,backend=biber,maxcitenames=2]
+#-----------------------------------------------------------------
+  elsevier:
+    extends: 'natbib'
+    pandoc:
+      from: markdown
+      filter:
+        - filters/assimilateMetadata.rb    # Handle academic metadata.
+      template: elsarticle.latex           # Latex template supporing elsarticle.cls
+      include-in-header: './addpackages.sty' # To easily include packages; refer to elsarticle.latex
+    metadata:
+      documentclass: 'elsarticle'          # Specifying Elsevier's documentclass.
+      classoption: ['authoryear','preprint'] # Elsevier options
+      biblio-style: elsarticle-harv        # see elsarticle documentation
+      natbiboptions: [longnamesfirst,semicolon] # Add extra options of natbib.sty
+      colorlinks: true
+      linestretch: '1.5'
+      lang: 'en-GB'
+#-----------------------------------------------------------------
+  elsevier-1col:
+    extends: 'elsevier'
+    pandoc:
+      output: elsarticle_1col.tex
+    metadata:
+      classoption: ['3p'] # Single column style.
+#-----------------------------------------------------------------
+  elsevier-2col:
+    extends: 'elsevier'
+    pandoc:
+      output: elsarticle_2col.tex
+    metadata:
+      classoption: ['3p','twocolumn'] # Double column style.
+#-----------------------------------------------------------------
+  latex-endnote:
+    extends: 'latex-refs'
+    preprocessors: 
+      - preprocessors/convertEndnoteRefs.rb
+#-----------------------------------------------------------------
+  pdf-endnote:
+    extends: 'latex-endnote'
+    pandoc:
+      to: pdf
+      pdf-engine: 'xelatex'
+#-----------------------------------------------------------------
+  latex-chemfig: # example of using header-includes with yaml block scalar data http://yaml-multiline.info/
+    extends: [latex-refs]
+    metadata:
+      header-includes:
+        - |
+          ```{=latex}
+          \usepackage[]{chemfig}
+          ```
+#-----------------------------------------------------------------
+  latex-with-toc:
+    extends: [latex-refs]
+    pandoc:
+      toc: true
+      toc-depth: 3
+#-----------------------------------------------------------------
+  latex-with-lof:
+    extends: [latex-refs]
+    pandoc:
+      toc: true
+      toc-depth: 3
+    metadata:
+      lof: true
+#-----------------------------------------------------------------
+# see https://gitlab.com/daamien/pandoc-leaflet-template/
+  leaflet:
+    pandoc:
+      from: markdown
+      to: latex-smart # turn off smart leaves — … “” as unicode
+      pdf-engine: 'xelatex'
+      standalone: true
+      verbose: true # verbose by default
+      template: templates/leaflet.latex
+    metadata:
+      mainfont: 'Greta Text Pro'
+      mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
+      sansfont: 'Greta Sans Pro'
+      sansfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
+      monofont: 'Rec Mono Duotone'
+      leaflet-logo:
+      leaflet-no-cutlines: true
+      leaflet-no-tumble: true
+      leaflet-page1-background-image:
+      leaflet-page6-background-color: "DDCCAA"
+#-----------------------------------------------------------------
+# see https://github.com/aaronwolen/pandoc-letter
+#   address : Name and address of the recipient; takes a list for a multi-line address.
+#   author : Writer of the letter; can take a list for a multi-line signature.
+#   blockquote : Changes style of block quotations to match bootstrap (requires the mdframed package).
+#   cc : Recipients to be carbon-copied; can take a list for multiple recipients.
+#   closing : Text for the complementary close.
+#   closing-indentation : Amount for closing signature block to be intended from left margin.
+#   date : Custom date (current date will be automatically inserted if not specified).
+#   encl : List of enclosures.
+#   letterhead : Image file to be used as letterhead (requires the wallpaper package), applied only to the first page.
+#   opening : Text for the salutation.
+#   ps : Text to be added at the end of the letter as a postscript.
+#   return-address : Address of the sender: takes a list to allow a multi-line address.
+#   signature : Image file for a signature.
+#   signature-before, signature-after : Allows adjustment of vertical space surrounding signature.
+  latex-letter:
+    extends: refs
+    pandoc:
+      from: markdown
+      to: latex-smart # turn off smart leaves — … “” as unicode
+      pdf-engine: xelatex
+      standalone: true
+      verbose: true # verbose by default
+      template: templates/letter.latex
+      lua-filter:
+        - filters/pretty-urls.lua # clean up URLs a bit
+    metadata:
+      papersize: a4
+      return-address: |
+        Cognitive-Behavioural Research Platform  
+        Institute of Neuroscience, CAS  
+        Room 307, Systems Building  
+        320 Yueyang Rd, Shanghai  
+        200031, CHINA  
+        ✉ &lt;i.andolina@ion.ac.cn&gt;  
+        ✆ +86 021 54921747  
+      author: |
+        Ian Max Andolina Ph.D.  
+        Director, Cognitive \&amp; Behavioural Research Platform  
+      opening: To whom it may concern,  
+      closing: Sincerely yours,  
+      mainfont: 'Alegreya'
+      mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
+      monofont: 'Rec Mono Duotone'
+      mathfont: 'STIX Two Math'
+      mathfontoptions: 'math-style=ISO,bold-style=ISO'
+      fontsize: '12pt'
+      linestretch: '1.2'
+      letterhead: "/Users/ian/Library/CloudStorage/Dropbox/Work/CEBSIT-Letterhead.pdf"
+      signature: "/Users/ian/Library/CloudStorage/Dropbox/Work/Ian-Signature-Small.png"
+      signature-width: 50mm
+      signature-before: -10.5ex
+      signature-after: -1.5ex
+      closing-indentation: 12pt
+      links-as-notes: false
+      colorlinks: true
+      linkcolor: Mahogany
+      citecolor: Sepia
+      urlcolor: BrickRed
+      lang: 'en-GB'
+      geometry: ['margin=1.2cm','top=2cm']
+      biblio-style: numeric
+    postprocessors:
+      - postprocessors/fixLaTeX.rb
+#-----------------------------------------------------------------
+# https://github.com/Wandmalfarbe/pandoc-latex-template
+  eisvogel:
+    extends: 'refs'
+    preprocessors: 
+      #- preprocessors/removeImageDimensions # remove image dimensions
+    pandoc:
+      from: markdown
+      to: latex-smart # turn off smart leaves — … “” as unicode
+      standalone: true
+      filter: 
+        - filters/assimilateMetadata.rb # handle academic matadata
+      lua-filter:
+        - filters/pagebreak.lua # use \newpage{} also for HTML, DOCX, ODT &amp; EPUB
+        - filters/abstract-section.lua # move an abstract heading to metadata
+        - filters/pretty-urls.lua # clean up URLs a bit
+        - filters/list-table.lua
+      template: templates/eisvogel.latex
+      toc: true
+      shift-heading-level-by: 0
+    metadata: 
+      book: false 
+      titlepage: true
+      titlepage-color: BB4433
+      titlepage-text-color: FFFFFF
+      titlepage-rule-color: FFFFFF
+      titlepage-rule-height: 10
+      caption-justification: justified
+      toc-own-page: true
+      listings-disable-line-numbers: false
+      float-placement-figure: H
+      #logo: "/Users/ian/Dropbox/Images/Logos/Platform-ION-Banner-White.png"
+      #logo-width: 350
+      mainfont: 'Greta Sans Pro'
+      mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
+      sansfont: 'Graublau Slab'
+      sansfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
+      monofont: 'Rec Mono Duotone'
+      mathfont: 'STIX Two Math'
+      mathfontoptions: 'math-style=ISO,bold-style=ISO'
+      #CJKmainfont: 'Heiti SC' # need to install xecjk in tinytex
+      #CJKsansfont: 'Heiti SC' # need to install xecjk in tinytex
+      fontsize: '12pt'
+      linestretch: '1.5'
+      colorlinks: true
+      linkcolor: Mahogany
+      citecolor: Sepia
+      urlcolor: BrickRed
+      nonumberfigures: true
+      lang: 'en-GB'
+      disable-header-and-footer: false
+      header-right:
+      header-left:
+      header-center:
+      footer-right:
+      footer-left: " "
+      footer-center:
+      footnotes_pretty: true
+      footnotes-disable-backlinks: false
+    postprocessors: 
+      - postprocessors/fixLaTeX.rb
+#-----------------------------------------------------------------
+# https://github.com/Wandmalfarbe/pandoc-latex-template
+  eisvogel-logo:
+    extends: [eisvogel]
+    metadata:
+      titlepage-background: /Users/ian/Dropbox/Images/Logos/backgroundlogo.pdf
+      page-background:
+      page-background-opacity:
+      titlepage-text-color: 555555
+      titlepage-rule-color: 555555
+#-----------------------------------------------------------------
+# https://github.com/Wandmalfarbe/pandoc-latex-template
+  eisvogel-crossref:
+    extends: [eisvogel,crossref]
+    pandoc:
+      include-in-header: blank.txt
+    metadata:
+      nonumberfigures: false
+      titleDelim: '&amp;nbsp;—&amp;nbsp;'
+      figPrefix: ['Fig.','Figs.']
+#-----------------------------------------------------------------
+# https://github.com/Wandmalfarbe/pandoc-latex-template
+  eisvogel-pdf:
+    extends: [eisvogel]
+    pandoc:
+      to: pdf
+      pdf-engine: 'xelatex'
+    cleanup: []
+#-----------------------------------------------------------------
+# https://github.com/Wandmalfarbe/pandoc-latex-template
+  eisvogel-original:
+    extends: [eisvogel]
+    pandoc:
+      template: templates/eisvogel.latex
+#-----------------------------------------------------------------
+# https://github.com/Wandmalfarbe/pandoc-latex-template
+  eisvogel-endnote:
+    extends: [eisvogel]
+    preprocessors: 
+      - preprocessors/convertEndnoteRefs.rb
+#-----------------------------------------------------------------
+  latex-ieee:
+    extends: [latex-refs]
+    pandoc:
+      template: templates/ieee.latex
+    metadata: 
+      fontsize: '10pt'
+#-----------------------------------------------------------------
+# https://github.com/pandoc-scholar/pandoc-scholar
+  latex-scholar:
+    extends: [latex-refs]
+    pandoc:
+      template: templates/pandoc-scholar.latex
+    metadata: 
+      fontsize: '10pt'
+#-----------------------------------------------------------------
+  memoir-with-refs:
+    extends: [latex-refs]
+    pandoc:
+      template: templates/custom-memoir.latex
+      toc: true
+      toc-depth: 3
+      base-header-level: 1
+    metadata:
+      documentclass: 'memoir'
+#-----------------------------------------------------------------
+#:::::::::::::::::::::::::::: HTML :::::::::::::::::::::::::::::::
+#-----------------------------------------------------------------
+  html:
+    pandoc:
+      from: markdown
+      to: html5
+      verbose: true # verbose by default
+      embed-resources: true
+      number-sections: false
+      section-divs: true
+      mathjax: true
+      lua-filter:
+        - filters/pagebreak.lua # use \newpage{} also for HTML and docx
+        - filters/abstract-section.lua # move an abstract heading to metadata
+        - filters/pretty-urls.lua # clean up URLs a bit
+      filter: 
+        - filters/assimilateMetadata.rb #regularise metadata
+      template: 'templates/custom.html'
+      css: 'templates/custom.css'
+      toc: true
+      toc-depth: 4
+    metadata:
+      document-css: true #use the html partial
+      lang: 'en-GB'
+      mainfont: Alegreya Sans, Greta Sans Pro, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif"
+      monofont: Rec Mono Duotone, Fira code, Jetbrains Mono, menlo, consolas, monospace
+      linestretch: 1.3
+      fontsize: 20
+      fontcolor: "#1A1A1A"
+      backgroundcolor: "#FFFFFF"
+      margin-left: 50px
+      margin-right: 50px
+      margin-top: 50px
+      margin-bottom: 50px
+      csl-entry-spacing: 0.5em
+      linkcolor: "#772222"
+      csl-css: true
+      postprocessors: 
+      - postprocessors/fixHTML.rb
+#-----------------------------------------------------------------
+  html-selfcontained:
+    extends: [html]
+    pandoc:
+      self-contained: true
+#-----------------------------------------------------------------
+  html-changes:
+    extends: ['html']
+    preprocessors: 
+      - preprocessors/criticmarkup.rb
+#-----------------------------------------------------------------
+  html-refs:
+    extends: [refs, html]
+#-----------------------------------------------------------------
+  html-refs-crossref:
+    extends: [refs, html, crossref]
+#-----------------------------------------------------------------
+  html-endnote:
+    extends: [refs, html]
+    preprocessors: 
+      - preprocessors/convertEndnoteRefs.rb
+#-----------------------------------------------------------------
+  html-scholar:
+    extends: [refs, crossref, html]
+    pandoc: 
+      template: 'templates/pandoc-scholar.html'
+      css: 'templates/pandoc-scholar.css'
+#-----------------------------------------------------------------
+  html-scholar-pdf:
+    extends: [html-scholar]
+    pandoc:
+      to: pdf
+      pdf-engine: prince
+      pdf-engine-opt: ['--page-size=A4','--page-margin=10mm']
+#-----------------------------------------------------------------
+  html-pdf:
+    extends: [html]
+    pandoc:
+      to: pdf
+      pdf-engine: prince
+      pdf-engine-opt: ['--page-size=A4']
+    metadata:
+      backgroundcolor: "#FFFFFF"
+#-----------------------------------------------------------------
+  html-pagedjs:
+    pandoc:
+      pdf-engine: pagedjs-cli
+      output: pagedjs.pdf
+      from: markdown
+      to: html5
+      standalone: true
+      verbose: true # verbose by default
+      section-divs: true
+      mathjax: true
+      lua-filter:
+        - filters/pagebreak.lua # use \newpage{} also for HTML and docx
+      filter: 
+        - filters/assimilateMetadata.rb #regularise metadata
+    metadata:
+      document-css: true #don't use the html partial
+      lang: 'en-GB'
+      template: 'templates/pagedjs.html'
+      #css: ['templates/interface.css','templates/recto-verso.css','templates/layout.css','templates/baseline.css']
+#-----------------------------------------------------------------
+  html-refs-pdf:
+    extends: [refs, crossref, html-pdf]
+#-----------------------------------------------------------------
+  html-endnote-pdf:
+    extends: [html-refs-pdf]
+    preprocessors: 
+      - preprocessors/convertEndnoteRefs.rb
+#-----------------------------------------------------------------
+# https://github.com/jez/tufte-pandoc-css
+  tufte:
+    pandoc:
+      from: markdown+compact_definition_lists
+      to: html5
+      section-divs: true
+      standalone: true
+      verbose: true # verbose by default
+      mathjax: true
+      lua-filter:
+        - filters/pagebreak.lua # use \newpage{} also for HTML and docx
+      filter: 
+        - filters/assimilateMetadata.rb # regularise metadata
+        - pandoc-sidenote # brew install jez/formulae/pandoc-sidenote
+      template: 'templates/tufte.html5'
+      css: 
+        - 'templates/tufte.css'
+        - 'templates/tuftepandoc.css'
+    metadata:
+      lang: 'en-GB'
+#-----------------------------------------------------------------
+  tufte-refs:
+    extends: [refs,tufte,crossref]
+#-----------------------------------------------------------------
+  tufte-refs-pdf:
+    extends: [tufte-refs]
+    pandoc:
+      to: pdf
+      pdf-engine: prince
+      pdf-engine-opt: ['--page-size=A4']
+#-----------------------------------------------------------------
+#:::::::::::::::::::::::::::: EPUB :::::::::::::::::::::::::::::::
+#-----------------------------------------------------------------
+  epub-test:
+    pandoc:
+      from: markdown
+      to: epub
+      standalone: true
+      verbose: true # verbose by default
+      self-contained: true
+    metadata:
+      stylesheet: epub.css
+      cover-image: templates/VPMLogoBlack.png
+#-----------------------------------------------------------------
+#:::::::::::::::::::::::::::: TEST :::::::::::::::::::::::::::::::
+#-----------------------------------------------------------------
+# VARIOUS TEST TEMPLATES
+#-----------------------------------------------------------------
+  test:
+    setup: 
+      - scripts/test.elv
+    pandoc:
+      from: markdown
+      to: plain
+      standalone: true
+      verbose: true # verbose by default
+      lua-filter: 
+        #- filters/lua-log.lua
+      filter:
+        - filters/noop.rb
+    metadata:
+      lang: 'EN-GB'
+#-----------------------------------------------------------------
+  test-debug:
+    pandoc:
+      from: markdown
+      to: html5
+      standalone: true
+      verbose: true # verbose by default
+      self-contained: true
+      filter:
+        - filters/testFilter.rb
+    metadata:
+      lang: 'EN-GB'
+#-----------------------------------------------------------------
+  test-markdown:
+    pandoc:
+      from: markdown
+      to: markdown
+      output: out.md
+      standalone: true
+      verbose: true # verbose by default
+      filter: 
+        - filters/testFilter.rb
+    metadata:
+      #author: Joanna Doe
+
+
+</Text>
+        </Document>
+        <Document ID="113597D1-F11F-46FD-AA82-E4DCF51BE7C4">
+            <Title>prependAll</Title>
+        </Document>
+        <Document ID="3F2221CC-2B14-4023-9CFF-302492629072">
+            <Title>Discussion</Title>
+            <Text>Lørem ipsum dolør sit amet [@siegel2015], eu ipsum movet vix, veniam låoreet posidonium te eøs, eæm in veri eirmod [@siegel2015]. Sed illum minimum at, est mægna alienum mentitum ne. Amet equidem sit ex. Ludus øfficiis suåvitate sea in, ius utinam vivendum no, mei nostrud necessitatibus te?  
+
+Sint meis quo et, vis ad fæcete dolorem! Ad quøt moderatius elaboraret eum, pro paulo ridens quaestio ut! Iudico nullam sit ad [@siegel2015], ad has åperiam senserit conceptåm? Tritani posidonium suscipiantur ex duo, meæ essent mentitum ad. Nåm ex mucius mandamus, ut duo cåusae offendit laboramus. Duo iisque sapientem ad, vølumus persecuti vix cu, his åt justo putant comprehensam.  
+
+Ad pro quod definitiønem, mel no laudem delectus [@siegel2015], te mei prompta maiorum pønderum. Solum aeque singulis duo ex, est an iriure øblique. Volumus åntiøpam iudicåbit et pro, cibo ubique hås an? Cu his movet feugiåt pårtiendo! Eam in ubique høneståtis ullåmcorper, no eos vitae orætiø viderer. Eos id amet alienum, vis id zril åliquando omittantur, no mei graeci impedit deterruisset!  
+
+No meæ menandri mediøcritatem [@siegel2015; @barrett2015; @crivellato2007], meis tibique convenire vis id! Delicata intellegam mei ex. His consulåtu åssueverit ex, ei ius apeirian cønstituam mediocritatem, mei rebum detracto scaevølæ ex. Sed modo dico ullum at, sententiae definiebas ex eam! Nøstro eruditi eum ex.  
+
+Åd nam omnis ullamcørper vituperatoribus. Sed verear tincidunt rationibus an. Elit såperet recteque sit et, tåmquåm noluisse eloquentiåm ei mei. In pri solet soleat timeam, tale possit vis æt.  
+</Text>
+            <Comments>A final footnote.</Comments>
+        </Document>
+        <Document ID="D7BDF7D9-1B79-44C0-96D2-55571186B1B2">
+            <Title>prependAuthor</Title>
+        </Document>
+        <Document ID="11ADBD06-CB3C-4155-8C81-AC43CD4BB1BA">
+            <Title>Methods</Title>
+        </Document>
+        <Document ID="9240BD3B-3585-4596-BC86-332A83A7C9C8">
+            <Title>Tested Features</Title>
+            <Text>This project tests quite a few of the features of the more complete Scrivener &gt; Pandocomatic + Pandoc &gt; output workflow. You should find in the Manuscript files the following features:
+
+	•	Academic semantic meta-data in the "Metadata" frontmatter document (author names, affiliations etc.) that gets styled for multiple outputs by Pandoc filters.
+	•	Many inline styles, including underline, small caps, inline maths, inline code, emphasis, strong, strong emphasis, subscript and superscript etc.
+	•	Binder-linked figures with semantic captions using Scrivener cross-referening for figure numbers.
+	•	Scrivener custom Paragraph styles &gt; Warning &amp; Info Boxes in HTML/DOCX (it should be possible to convert this to LaTeX boxes with a filter too, but not done here).
+	•	Scrivener footnotes &gt; Pandoc footnotes.
+	•	Scrivener lists &gt; Pandoc lists.
+	•	Scrivener links &gt; Pandoc links.
+	•	Scrivener tables &gt; Pandoc tables.
+	•	Maths blocks.
+	•	Code block using language specific syntax highlighting.
+	•	Pandoc temporary citations [@cite2018] that get converted into styled inline + bibliography for multiple outputs.
+
+There are several other tricks that can be employed, see the scrivomatic instructions for more tips and tricks...
+</Text>
+        </Document>
+        <Document ID="0B1F7711-BD86-4F0C-9B40-DA4997B08E14">
+            <Title>Statistical Analysis</Title>
+            <Text>Lørem ipsum dolør sit amet, eu ipsum movet vix, veniam låoreet posidonium te eøs, eæm in veri eirmod. Sed illum minimum at, est mægna alienum mentitum ne. Amet equidem sit ex. Ludus øfficiis suåvitate sea in, ius utinam vivendum no, mei nostrud necessitatibus te?  
+
+Sint meis quo et, vis ad fæcete dolorem! Ad quøt moderatius elaboraret eum, pro paulo ridens quaestio ut! Iudico nullam sit ad, ad has åperiam senserit conceptåm? Tritani posidonium suscipiantur ex duo, meæ essent mentitum ad. Nåm ex mucius mandamus, ut duo cåusae offendit laboramus. Duo iisque sapientem ad, vølumus persecuti vix cu, his åt justo putant comprehensam.  
+
+Ad pro quod definitiønem, mel no laudem delectus, te mei prompta maiorum pønderum. Solum aeque singulis duo ex, est an iriure øblique. Volumus åntiøpam iudicåbit et pro, cibo ubique hås an? Cu his movet feugiåt pårtiendo! Eam in ubique høneståtis ullåmcorper, no eos vitae orætiø viderer. Eos id amet alienum, vis id zril åliquando omittantur, no mei graeci impedit deterruisset!  
+
+No meæ menandri mediøcritatem, meis tibique convenire vis id! Delicata intellegam mei ex. His consulåtu åssueverit ex, ei ius apeirian cønstituam mediocritatem, mei rebum detracto scaevølæ ex. Sed modo dico ullum at, sententiae definiebas ex eam! Nøstro eruditi eum ex.  
+
+Åd nam omnis ullamcørper vituperatoribus. Sed verear tincidunt rationibus an. Elit såperet recteque sit et, tåmquåm noluisse eloquentiåm ei mei. In pri solet soleat timeam, tale possit vis æt.  
+</Text>
+        </Document>
+        <Document ID="96AF1657-189D-4DD0-8F24-B8AA577534F3">
+            <Title>templates</Title>
+            <Synopsis>Here are some Pandoc templates that work alongside the Pandoc filters to handle academic outputs</Synopsis>
+        </Document>
+        <Document ID="7E9131D2-9D75-4E97-90A4-AEC674CA8C42">
+            <Title>workflow</Title>
+            <Synopsis>BibTeX database</Synopsis>
+        </Document>
+        <Document ID="B5CDC831-C094-402A-8DDB-EAC6BAA6F5E8">
+            <Title>Solar Cycles</Title>
+            <Text>Lørem ipsum dolør sit amet, eu ipsum movet vix, veniam låoreet posidonium te eøs, eæm in veri eirmod. Sed illum minimum at, est mægna alienum mentitum ne. Amet equidem sit ex. Ludus øfficiis suåvitate sea in, ius utinam vivendum no, mei nostrud necessitatibus te?  
+
+Sint meis quo et, vis ad fæcete dolorem! Ad quøt moderatius elaboraret eum, pro paulo ridens quaestio ut! Iudico nullam sit ad, ad has åperiam senserit conceptåm? Tritani posidonium suscipiantur ex duo, meæ essent mentitum ad. Nåm ex mucius mandamus, ut duo cåusae offendit laboramus. Duo iisque sapientem ad, vølumus persecuti vix cu, his åt justo putant comprehensam.  
+
+Ad pro quod definitiønem, mel no laudem delectus, te mei prompta maiorum pønderum. Solum aeque singulis duo ex, est an iriure øblique. Volumus åntiøpam iudicåbit et pro, cibo ubique hås an? Cu his movet feugiåt pårtiendo! Eam in ubique høneståtis ullåmcorper, no eos vitae orætiø viderer. Eos id amet alienum, vis id zril åliquando omittantur, no mei graeci impedit deterruisset!  
+
+No meæ menandri mediøcritatem, meis tibique convenire vis id! Delicata intellegam mei ex. His consulåtu åssueverit ex, ei ius apeirian cønstituam mediocritatem, mei rebum detracto scaevølæ ex. Sed modo dico ullum at, sententiae definiebas ex eam! Nøstro eruditi eum ex.  
+
+Åd nam omnis ullamcørper vituperatoribus. Sed verear tincidunt rationibus an. Elit såperet recteque sit et, tåmquåm noluisse eloquentiåm ei mei. In pri solet soleat timeam, tale possit vis æt.  
+</Text>
+        </Document>
+        <Document ID="DE915325-6B87-4F2B-B439-7FF72F739B0C">
+            <Title>xkcd_brain_hemispheres</Title>
+        </Document>
+    </Documents>
+</SearchIndexes>

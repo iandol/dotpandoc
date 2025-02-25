@@ -1,0 +1,20 @@
+standalone: true
+verbosity: INFO
+from: markdown
+to: typst
+metadata-file: typst-includes.yaml
+template: custom.typst
+wrap: preserve
+pdf-engine-opt: '--pdf-standard=a-2b'
+filters:
+  - assimilateMetadata.rb
+  - typstFix.lua
+  - pagebreak.lua
+  #- removeDimensions.lua
+  - convertIndex.lua
+  - list-table.lua
+  - abstract-section.lua
+  - pretty-urls.lua
+table-of-contents: true
+metadata:
+  nonumberfigures: true

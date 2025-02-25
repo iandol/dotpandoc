@@ -1,0 +1,19 @@
+#import "letter-pro-v3.0.0.typ": letter-simple
+
+#set text(lang: "en")
+
+#show: letter-simple.with(
+	sender: (
+$if(author)$
+		name: "$author$",
+$else$
+		name: "Ian Max Andolina",	
+$endif$
+		address: $return-address$,
+	),
+
+	date: "12. November 2014",
+	subject: "Einspruch gegen den ESt-Bescheid",
+)
+
+$body$

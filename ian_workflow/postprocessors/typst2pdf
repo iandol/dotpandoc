@@ -1,0 +1,14 @@
+#!/usr/bin/env elvish
+# Finds all *.typ files and compiles them if they've been modified 
+# in the last 120 seconds.
+# VERSION: 0.1.2
+
+var @files = *[nomatch-ok][type:regular].{typ typst}
+var now = (date +%s); # current time in seconds
+
+each {|f|
+	var mod = (stat -f %c $f) # file modified time in seconds
+	if ( < (- $now $mod) 120 ) { 
+		try { typst compile --pdf-standard a-2b $f $f".pdf" 2>&1 } catch { } 
+	}
+} $files

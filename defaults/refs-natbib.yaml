@@ -1,6 +1,0 @@
-verbosity: INFO # verbose by default
-cite-method: natbib
-bibliography: ${USERDATA}/Core.bib
-metadata:
-  biblio-style: plainnat
-

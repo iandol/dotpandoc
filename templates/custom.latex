@@ -55,7 +55,6 @@ $endif$
 
 \usepackage{orcidlink}
 
-
 $if(title)$
 \usepackage{titling}
 $if(linestretch)$

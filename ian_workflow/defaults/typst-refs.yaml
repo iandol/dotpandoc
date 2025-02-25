@@ -1,0 +1,27 @@
+standalone: true
+verbosity: INFO
+from: markdown
+to: typst-citations
+metadata-file: typst-includes.yaml
+template: custom.typst
+wrap: preserve
+filters:
+  - assimilateMetadata.rb
+  - typstFix.lua
+  - citeproc
+  - pagebreak.lua
+  - removeDimensions.lua
+  - convertIndex.lua
+  - list-table.lua
+  - abstract-section.lua
+  - pretty-urls.lua
+table-of-contents: true
+cite-method: citeproc
+bibliography: ${USERDATA}/Core.json #JSON faster than BIB, symlinked into Pandoc data dir
+csl: ${USERDATA}/csl/cell-doi.csl
+citation-abbreviations: ${USERDATA}/cite-abbr.json # my journal abbreviations
+metadata:
+  reference-section-title: Bibliography
+  notes-after-punctuation: false
+  link-citations: true
+  link-bibliography: true

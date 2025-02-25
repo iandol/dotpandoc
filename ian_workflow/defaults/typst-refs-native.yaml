@@ -1,0 +1,3 @@
+defaults: typst
+to: typst
+bibliography: ${USERDATA}/Core.bib

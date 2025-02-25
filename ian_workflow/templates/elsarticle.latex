@@ -1,0 +1,369 @@
+%% File: elsarticle.latex
+%% Purpose: Support Elsevier's `elsarticle` package through pandocomatic.
+%%          To that end turn the generic `elsarticle-template.tex` into
+%%          a template that can be used in conjunction with
+%%          pandocomatic and scrivomatic.
+%% Authors: Paul Brandt, Ian Max Andolina
+%% Date   : Dec. 06, 2021
+%% 
+%% This file is a manual integration of:
+%%      *   elsarticle-template.tex (NOT the `elsarticle-template-*.tex` 
+%%          examples that appear in the elsarticle template for these are  
+%%          not comprehensive enough for a full article).
+%%          Sourced from https://www.latextemplates.com/template/elsarticle-academic-journal
+%%      * custom.latex, a minimal portion of it to make it compatible with 
+%%          pandocomatic, and removing those parts that potentially 
+%%          redefine `elsarticle` definitions.
+%%          Sourced from https://github.com/iandol/dotpandoc/tree/master/templates
+%%
+%% Backwards compatibility with both files need to be managed manually.
+%%  
+%% Usage notes:
+%%      1 - You'd want to apply this in combination with:
+%%          * pandocomatic-elsarticle.yaml, or its contents integrated
+%%              in any other pandocomatic.yaml file
+%%          * (optional) addstyles.sty
+%%      2 - Connect <your>.md with pandocomatic's `elsevier` template
+%%          * just like any other regular pandocomatic template, hence
+%%          * Insert in <your>.md's yaml block:
+%%            pandocomatic_:
+%%              use-template:  
+%%                - elsevier  
+%%      2 - Run pandocomatic with <your>.md text as follows:
+%%          * pandocomatic -b -c ./pandocomatic-elsarticle.yaml ./<your>.md
+%%            This will generate <your>.tex, hence continue with
+%%          * latexmk -interaction=nonstopmode -f -pv -time -xelatex <your>.tex
+%%            This will generate <your>.pdf
+%%            
+%%
+%% Regarding elsarticle ::
+%% ---------------------------------------------
+%%
+%% Copyright 2007-2020 Elsevier Ltd
+%% 
+%% It may be distributed under the conditions of the LaTeX Project Public
+%% License, either version 1.2 of this license or (at your option) any
+%% later version.  The latest version of this license is in
+%%    http://www.latex-project.org/lppl.txt
+%% and version 1.2 or later is part of all distributions of LaTeX
+%% version 1999/12/01 or later.
+%%  
+%%
+%% Regarding dotpandoc's custom.latex ::
+%% ---------------------------------------------
+%% The template custom.latex is a fairly complicated piece of work 
+%% (thanks to Ian Max Andolina) to produce scientific articles in a simple
+%% workflow with Scrivener, pandocomatic and scrivomatic. 
+%% I've taken bits and pieces from it to make the elsarticle-template
+%% produce a tex document by application of a pandocomatic.yaml configuration.
+%% 
+%% 
+%%%%%%%%%%%%%
+
+\documentclass[sort&compress,$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
+%%
+%% !Todo!: Resolve the conflicting `&` in `sort&compress` when parameterized as
+%%         `classoption` in pandocomatic-elsarticle.yaml configuration.
+%%         Currently, this parameter is added here directly as opposed to
+%%         being pandocomatically configured.
+%% !Todo!: Check whether one- or two-column mode has been selected, and
+%%         establish the need to redefine Figures/Tables as done below.
+
+%%%%%%%%%%%%% REQUIRED PACKAGES
+%% The following packages are required for this template to remain compatible 
+%% (or at least effective) with the Elsevier template.
+
+%% Supporting colored links in citations to the References section.
+\usepackage{xcolor}
+
+%% The amssymb package provides various useful mathematical symbols
+%% whereas the amsthm package provides extended theorem environments
+\usepackage{amsmath,amssymb}
+
+%% The hyperref package is required since pandocmatic inserts \hypertarget
+%% around section titles and other inter-article linking.
+\usepackage[]{hyperref}
+% Setup hyperref to color the links, and insert authors, title and keywords
+% as meta-data to the pdf document properties.
+\hypersetup{
+$if(title-meta)$
+  pdftitle={$title-meta$},
+$endif$
+$if(author)$
+  pdfauthor={$for(author)$ $it.name$ $sep$, $endfor$},
+$endif$
+$if(lang)$
+  pdflang={$lang$},
+$endif$
+$if(subject)$
+  pdfsubject={$subject$},
+$endif$
+$if(keywords)$
+  pdfkeywords={$for(keywords)$ $it$ $sep$, $endfor$},
+$endif$
+$if(colorlinks)$
+  colorlinks=true,
+$else$
+  hidelinks,
+$endif$
+  pdfcreator={Scrivomatic, Pandoc and LaTeX}
+}
+%%
+
+%%
+%% Elsevier bibliography styles
+%% ----------------------------
+%% 
+\bibliographystyle{$if(biblio-style)$$biblio-style$$else$abbrvnat$endif$}
+\setcitestyle{open={(},close={)}} %Citation-related commands
+%% Add extra options of natbib.sty, if any specified.
+$if(natbiboptions)$\biboptions{$for(natbiboptions)$$natbiboptions$$sep$,$endfor$}$endif$
+%%
+%% !Todo!: Check the specifics of reference styles from elsarticle-template-*.tex
+%%         as mentioned in https://support.stmdocs.in/wiki/index.php?title=Model-wise_bibliographic_style_files
+%%         against the biboptions / bibliographicstyle settings from pandocomatic-elsarticle.yaml 
+%% !ToDo!: Some of the bibliographicstyle settings require \usepackage{numcompress}. 
+%%         Check whether this is included by this very template.
+%%
+
+%% 
+%% Handle figures and tables in two-column mode
+%% --------------------------------------------
+%% In a two-column paper, figures and tables can become too small or overflow
+%% the column width. In two-column mode we need to restore the original 
+%% behaviour:
+%% - For figures and tables, one needs to use the starred version * of these 
+%%   environments. This floats the environment to the top/bottom of page over
+%%   both columns.
+%%   Source: https://tex.stackexchange.com/questions/89462/page-wide-table-in-two-column-mode
+%%   Hence, redefine those environments:
+\makeatletter
+\renewenvironment{figure}{%
+  \begin{figure*}
+ }{% 
+  \end{figure*}
+ }
+\makeatother
+%%
+%% - Longtable does not work well with multicolumns. Therefore, 
+%%   redefine the longtable environment to enforce a single column mode before
+%%   its definition, and restore the two-column mode afterwards:
+\usepackage{stackengine}    % !!See Note (1) at the bottom!! 
+\usepackage{xltabular}		% Include longtable with column specifier X as in tabularx
+\usepackage{booktabs}		% To enhance the quality of tables in LaTeX. 
+                            % Guidelines are given as to what constitutes a 
+                            % good table in this context.
+\usepackage{etoolbox}       % Used for the \BeforeBegin- & \AfterEndEnvironment
+\BeforeBeginEnvironment{longtable}{%
+  \onecolumn%
+}
+\AfterEndEnvironment{longtable}{%
+  \twocolumn%
+}
+%%   This is not an optimal solution since it can result in pages around the
+%%   longtables that are partly blank unintentionally. Other solutions to
+%%   resolve this are welcome.
+%%
+%% !ToDo!: redefine simple tables, booktab and tabular.
+%% !ToDo!: Make this part conditional on the documentclass-defined one- or
+%%         two-column mode. That is, only include it when necessary.
+%%
+
+%%
+%%%%%%%%%%%%% end REQUIRED PACKAGES
+
+%%%%%%%%%%%%% OPTIONAL PACKAGES
+%% The following packages are optional for this template, as
+%% per the Elsevier template .
+
+%% For including figures, graphicx.sty has been loaded in
+%% elsarticle.cls. If you prefer to use the old commands
+%% please give \usepackage{epsfig}
+
+%% The lineno packages adds line numbers. Start line numbering with
+%% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
+%% for the whole article with \linenumbers.
+\usepackage{lineno}
+\modulolinenumbers[5]
+
+%% When you have an Orcid ID (refer to) you might want to include that
+%% in your author-field as \orcidlink{<orcid>}
+\usepackage{orcidlink}
+
+%% \usepackage{blindtext}
+
+%%
+%% Some pandocomatic-specified options require additional packages
+%%
+
+$if(linestretch)$
+%% LaTeX offers different line spacing options. The setspace package 
+%% implements \setstretch. Configure your YAML to include "linestretch: '1.4'"
+%% (or any other scaling factor) as one of the "metadata:" fields
+%% Note that this may conflict with the elsarticle documentclass option 
+\usepackage{setspace}
+$endif$
+
+%% Tightlist
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+%%
+
+%%
+%%%%%%%%%%%%% end OPTIONAL PACKAGES
+
+%%%%%%%%%%%%% PROJECT SPECIFIC PACKAGES 
+%%
+%% These are managed through the `include-in-header:` parameter in the 
+%% pandocomatic.yaml specification. Directly by listing the packages there, or 
+%% indirectly by specifying one single file, e.g., `addstyles.sty`, that 
+%% collects the required packages.
+$for(header-includes)$
+$header-includes$
+$endfor$
+%%
+%%%%%%%%%%%%% end PROJECT SPECIFIC PACKAGES
+
+%%%%%%%%%%%%% DEPENDENCIES
+%% When including packages by header-includes, 
+%% dependencies might occur with them.
+%% Resolve these dependencies below this line.
+%%
+
+%% Dependent on package{graphicx}
+$if(graphics)$
+% Scale images - calculate the maximum dimensions first
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+$endif$
+%%
+
+%%
+%%%%%%%%%%%%% end DEPENDENCIES
+
+%%%%%%%%%%%%% ADD & PARAMETERIZE elsarticle template elements
+
+$if(journalname)$\journal{$journalname$}$endif$
+
+\begin{document}
+
+\begin{frontmatter}
+
+%% TITLE elements
+$if(tnotetext)$
+\title{$title$\tnoteref{tlabel}}
+\tnotetext[tlabel]{$tnotetext$}
+$else$
+\title{$title$}
+$endif$
+%%
+
+%% AUTHOR elements
+$if(author)$
+$for(author)$\author[$for(author.affiliation)$$author.affiliation$$sep$,$endfor$]{$it.name$$if(it.orcid)$\fnref{$it.orcid$}$endif$$if(it.correspondence)$\corref{corrauth}$endif$}$if(it.orcid)$\fntext[$it.orcid$]{ORCID: \orcidlink{$it.orcid$}$it.orcid$}$endif$$if(it.correspondence)$\ead{$it.correspondence$}\cortext[corrauth]{Corresponding author}$endif$$if(it.email)$\ead{$it.email$}$endif$$sep$ $endfor$
+
+$endif$
+%%
+
+%% INSTITUTE elements
+$if(institute)$
+$for(institute)$\affiliation[$if(it.index)$$it.index$$endif$]{organization={$it.name$}} $endfor$
+
+$endif$
+%%
+
+%% ABSTRACT text
+$if(abstract)$
+\begin{abstract}
+$abstract$
+\end{abstract}
+$endif$
+
+%%Graphical abstract
+%\begin{graphicalabstract}
+%\includegraphics{grabs}
+%\end{graphicalabstract}
+
+%%Research highlights
+%\begin{highlights}
+%\item Research highlight 1
+%\item Research highlight 2
+%\end{highlights}
+%%
+
+%% KEYWORDS elements
+$if(keywords)$
+\begin{keyword}
+$for(keywords)$$keywords$$sep$\sep $endfor$
+\end{keyword}
+$endif$
+%%
+
+\end{frontmatter}
+
+%% Consider the use of line numbers
+\linenumbers
+
+$if(linestretch)$
+\setstretch{$linestretch$}
+$endif$
+
+%%%%%%%%%%%%% MAIN TEXT
+
+$body$
+
+%%%%%%%%%%%%% APPENDICES
+%% !ToDo!: Implement appendices.
+%%
+%% The Appendices part is started with the command \appendix;
+%% appendix sections are then done as normal sections, i.e.,
+%% \appendix
+%% \section{}
+%% \label{}
+
+%%%%%%%%%%%%% BIBLIOGRAPHY
+%% If you have bibdatabase file and want bibtex to generate the
+%% bibitems:
+%% 1. Set the `bibliography` parameter in the pandocomatic configuration;
+%% 2. Respect the related remarks from pandocomatic-elsarticle.template.
+%%
+$if(bibliography)$
+$if(biblio-title)$
+$if(has-chapters)$
+\renewcommand\bibname{$biblio-title$}
+$else$
+\renewcommand\refname{$biblio-title$}
+$endif$
+$endif$
+  \bibliography{$for(bibliography)$$bibliography$$sep$, $endfor$}
+$endif$
+%%
+
+$for(include-after)$
+$include-after$
+
+$endfor$
+\end{document}
+
+%%
+%% Note 1: For some reason that I cannot diagnose, the package `stackengine`
+%%         is required with the `\longtable` command as it is being used in 
+%%         elsarticle.latex; without its inclusion, the following error is
+%%         thrown, referring to the first four lines after `\longtable`:
+%% ! Undefined control sequence.
+%% <argument> (\columnwidth - 6\tabcolsep ) * \real 
+%%                                                  {0.2893}
+%%         Anyone who can diagnose the source of this error, please inform me.
+%%
+%% End of file `elsarticle.latex'.

@@ -1,0 +1,3 @@
+defaults: [refs, eisvogel]
+to: pdf
+pdf-engine: xelatex

@@ -1,0 +1,38 @@
+from: markdown
+to: latex
+standalone: true
+shift-heading-level-by: 0 # reader option
+top-level-division: default # part | chapter | section |default
+number-sections: false
+listings: false
+filters:
+  - assimilateMetadata.rb # handle academic metadata
+  - convertIndex.lua
+  - pretty-urls.lua
+  - abstract-section.lua
+template: custom.latex
+metadata:
+  documentclass: 'scrarticle'
+  classoption: twoside
+  pagestyle: plain # control \pagestyle{}: the default article class supports plain (default), empty (no running heads or page numbers), and headings (section titles in running heads)
+  fontsize: '12pt'
+  linestretch: '1.5'
+  geometry: ['inner=2.2cm','outer=1.8cm','bottom=2.5cm','twoside']
+  mainfont: 'Alegreya'
+  mainfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
+  mainfontfallback: ['Cambria Math','Apple Color Emoji','Noto Color Emoji']
+  sansfont: 'Alegreya Sans'
+  sansfontoptions: 'Numbers=OldStyle,Numbers=Proportional'
+  sansfontfallback: ['Arial Unicode MS','Apple Color Emoji','Noto Color Emoji']
+  monofont: 'Rec Mono Duotone'
+  mathfont: 'STIX Two Math'
+  mathfontoptions: 'math-style=ISO,bold-style=ISO'
+  #CJKmainfont: 'PingFang SC'
+  #CJKsansfont: 'PingFang SC'
+  colorlinks: true
+  linkcolor: Mahogany
+  citecolor: Sepia
+  urlcolor: BrickRed
+  lang: 'en-GB'
+  nonumberfigures: true # I use Scrivener autonumbering, so disable for LaTeX
+  doindex: true # add index commands

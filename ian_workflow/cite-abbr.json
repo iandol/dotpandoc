@@ -1,0 +1,33 @@
+{
+  "default": {
+    "container-title": {
+      "Annual Review of Neuroscience": "Annu. Rev. Neurosci.",
+      "Annual Review of Visual Science": "Annu. Rev. Vis. Sci.",
+      "Behavioural and Brain Sciences": "Beh. Brain Sci.",
+      "Cerebral Cortex": "Cereb. Cortex",
+      "Current Biology": "Curr. Biol.",
+      "Current Opinion in Neurobiology": "Curr. Opin. Neurobiol.",
+      "Experimental Brain Research": "Exp. Br. Res.",
+      "Journal of Cognitive Neuroscience": "J. Cog. Neurosci.",
+      "Journal of Comparative Neurology": "J. Comp. Neurol.",
+      "Journal of Neuroscience Methods": "J. Neurosci. Methods",
+      "Journal of Neuroscience": "J. Neurosci.",
+      "Journal of Neurophysiology": "J. Neurophysiol.",
+      "Journal of Physiology": "J. Physiol.",
+      "Journal of the Optical Society of America A": "J. Opt. Soc. Am. A",
+      "Journal of Vision": "J. Vis.",
+      "Nature Communications": "Nat. Comm.",
+      "Nature Reviews Neuroscience": "Nat. Rev. Neurosci.",
+      "Nature Neuroscience": "Nat. Neurosci.",
+      "Philosophical Transactions of the Royal Society B": "Phil. Trans. R. Soc. B",
+      "Proceedings of the Royal Society of London B: Biological Sciences": "Proc. R. Soc. Lond. B",
+      "Proceedings of the Royal Society of London": "Proc. R. Soc. Lond.",
+      "Proceedings of the National Academy of Sciences USA": "PNAS",
+      "Proceedings of the National Academy of Sciences United States of America": "PNAS",
+      "Scientific Reports": "Sci. Rep.",
+      "Trends in Cognitive Sciences": "Trends Cog. Sci.",
+      "Trends in Neuroscience": "Trends Neurosci.",
+      "Vision Research": "Vis. Res."
+    }
+  }
+}
