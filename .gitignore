@@ -4,6 +4,7 @@
 CoreTest.bib
 Core.bib
 Core.json
+CoreFast.json
 pandoclog.json
 *.spl
 *.log
@@ -13,6 +14,6 @@ pandoclog.json
 *.xdv
 *.blg
 *.out
-
+.pixi
 /.luarc.json
 custom/lapreprint.pdf

@@ -31,8 +31,8 @@ templates:
     pandoc:
       verbose: true # verbose by default
       citeproc: true
-      bibliography: Core.json #JSON faster than BIB, symlinked within Pandoc data dir
-      csl: csl/apa-ian.csl
+      bibliography: CoreFast.json #JSON faster than BIB, symlinked inside the Pandoc data dir
+      csl: csl/apa.csl # csl subfolder of pandoc data dir
       citation-abbreviations: cite-abbr.json # some journal abbreviations
       reference-links: true
     metadata:

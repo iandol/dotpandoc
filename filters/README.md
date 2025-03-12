@@ -25,8 +25,8 @@ wordcount: <$wc>
 pandocomatic_:
   use-template: [docx-refs, html-refs-pdf]
   pandoc:
-    bibliography: Core.json 
-    csl: csl/cell.csl
+    bibliography: CoreFast.json 
+    csl: csl/apa.csl
 ```
 
 The [assimilateMetadata](https://github.com/iandol/dotpandoc/blob/master/filters/assimilateMetadata) filter is the main filter that makes sure the author and institute fields are converted into the correct formats, adding a new field `correspondence_list` and `equal_contributions` for Pandoc templates to use.
