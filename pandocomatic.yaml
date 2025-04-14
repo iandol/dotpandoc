@@ -560,7 +560,7 @@ templates:
       citecolor: Sepia
       urlcolor: BrickRed
       lang: 'en-GB'
-      geometry: ['margin=1.2cm','top=2cm']
+      geometry: ['margin=1.2cm','top=2.2cm', 'bottom=1cm']
       biblio-style: numeric
     postprocessors:
       - postprocessors/fixLaTeX.rb
