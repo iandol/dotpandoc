@@ -1,0 +1,46 @@
+#import "minbook.typ": *
+
+$for(header-includes)$
+$header-includes$
+
+$endfor$
+
+#show: book.with(
+	title: [$title$],
+	subtitle: [$subtitle$],
+	authors: "$author$",
+	titlepage: true,
+$if(cover)$
+	cover: if "$cover$".ends-with(".jpg") or "$cover$".ends-with(".jpeg") or "$cover$".ends-with(".png") or "$cover$".ends-with(".svg") or "$cover$".ends-with(".pdf") {
+    image("$cover$", width: 100%, height: 100%, fit: "stretch")
+  } else if "$cover$" == "auto" {
+    auto
+  } else if "$cover$" == "none" {
+    none
+  } else {
+    auto
+  },
+$endif$
+	paper: "$paper$",
+	font: "$main-font$",
+	font-math: "$math-font$",
+	font-size: 11pt,
+	part: none,
+	chapter: none,
+	numbering-style: none,
+	toc: true,
+	justify: true,
+	line-space: 1.25em,
+)
+
+$for(include-before)$
+$include-before$
+
+$endfor$
+
+$body$
+
+$for(include-after)$
+
+$include-after$
+$endfor$

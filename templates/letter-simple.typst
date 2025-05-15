@@ -1,0 +1,37 @@
+#import "letter-pro-v3.0.0.typ": letter-simple
+
+#set text(lang: "en")
+
+#show: letter-simple.with(
+	sender: (
+$if(sender)$
+		name: [$sender$],
+$elseif(author)$
+		name: [$author$],
+$endif$
+$if(address)$
+		address: [$address$],
+$endif$
+$if(return-address)$
+		return-address: ["$return-address$"],
+$endif$
+	),
+$if(date)$
+	date: "$date$",
+$endif$
+$if(subject)$
+	subject: "$subject$",
+$endif$
+)
+
+$body$
+
+$if(signature)$
+#box(image("$signature$",width: 4cm))
+$endif$
+
+#v(1em)
+
+$if(signature-name)$
+#emph[$signature-name$]
+$endif$

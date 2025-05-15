@@ -2,38 +2,20 @@ standalone: true
 verbosity: INFO
 from: markdown
 to: typst
-metadata-file: typst-includes.yaml
-template: letter.typst
+template: letter-simple.typst
 wrap: preserve
+pdf-engine-opt: '--pdf-standard=a-3b'
 filters:
   - typstFix.lua
   - pagebreak.lua
-  - removeDimensions.lua
   - pretty-urls.lua
 metadata:
-  nonumberfigures: true
-  papersize: a4
-  return-address: 
-    - Cognition \& Behaviour Platform
-    - Institute of Neuroscience, CAS
-    - Room 307, Systems Building
-    - 320 Yueyang Rd, Shanghai 200031, CHINA
-    - ✉ <i.andolina@ion.ac.cn>
-    - ✆ +86 021 54921747
-  author: 'Ian Max Andolina Ph.D. Director, Cognition & Behaviour Platform'
-  opening: To whom it may concern,
-  closing: Sincerely yours,
-  mainfont: 'Graublau Sans'
+  #subject: 'Letter to the Editor'
+  #address: "Cognition & Behaviour Platform, Institute of Neuroscience CAS, Room 307 Systems Building, 320 Yueyang Rd Shanghai 200031, CHINA, ✉ i.andolina@ion.ac.cn, ✆ +86 021 54921747"
+  #return-address: "..."
+  #signature: "Ian-Signature.png"
+  #signature-name: 'Ian Max Andolina Ph.D.'
+  address: none
+  mainfont: 'Alegreya'
   linestretch: '1.2'
-  letterhead: "${HOME}/Dropbox/Work/ION-Letterhead.pdf"
-  signature: "${HOME}/Dropbox/Work/Ian-Signature.png"
-  signature-width: 45mm
-  signature-before: -11ex
-  signature-after: -1.5ex
-  closing-indentation: 12pt
-  links-as-notes: false
-  colorlinks: true
-  linkcolor: Mahogany
-  citecolor: Sepia
-  urlcolor: BrickRed
   lang: 'en-GB'
