@@ -1,19 +1,42 @@
+// This Typst template is for creating simple letters with a header image, sender information, date, subject, and a signature.
+// format: string ,
+// header: auto content none ,
+// footer: content none ,
+// folding-marks: boolean ,
+// hole-mark: boolean ,
+// sender: dictionary ,
+// recipient: content none ,
+// stamp: boolean ,
+// annotations: content none ,
+// information-box: content none ,
+// reference-signs: array none ,
+// date: content none ,
+// subject: string none ,
+// page-numbering: auto string function none ,
+// margin: dictionary ,
+// font: string array ,
+// body: content none
+
 #import "letter-pro-v3.0.0.typ": letter-simple
 
-#set text(lang: "en")
+#set text(lang: "$lang$")
 
 #show: letter-simple.with(
+$if(header-image)$
+	header: image("$header-image$"),
+$else$
+	header: none,
+$endif$
 	sender: (
 $if(sender)$
-		name: [$sender$],
-$elseif(author)$
-		name: [$author$],
+		name: "$sender$",
+$else$
+		name: none,
 $endif$
 $if(address)$
 		address: [$address$],
-$endif$
-$if(return-address)$
-		return-address: ["$return-address$"],
+$else$
+		address: none,
 $endif$
 	),
 $if(date)$
@@ -22,6 +45,13 @@ $endif$
 $if(subject)$
 	subject: "$subject$",
 $endif$
+$if(mainfont)$
+	font: "$mainfont$",
+$else$
+	font: "Alegreya Sans",
+$endif$
+	folding-marks: false,
+	hole-mark: false,
 )
 
 $body$

@@ -3,7 +3,7 @@ $if(doindex)$
 #import "@preview/in-dexter:0.5.3": *
 $endif$
 // https://typst.app/universe/package/gentle-clues/
-#import "@preview/gentle-clues:1.0.0": *
+#import "@preview/gentle-clues:1.2.0": *
 
 #show terms: it => {
 	it.children
@@ -43,7 +43,6 @@ $endif$
 
 #set table(inset: 6pt)
 #set text(font: main-font, ligatures: true, discretionary-ligatures: false, number-type: "old-style")
-#set par(leading: 0.85em, justify: true)
 #set quote(block: true)
 #show quote: set align(center)
 #show quote: set text(style: "italic")
@@ -58,7 +57,7 @@ $endif$
 $if(linestretch)$
 #set par(justify: true, spacing: 2em, leading: $linestretch$em)
 $else$
-#set par(justify: true, spacing: 2em, leading: 1.5em)
+#set par(justify: true, spacing: 2em, leading: 1.25em)
 $endif$
 $if(nonumberfigures)$
 #set figure(numbering: none)
@@ -155,8 +154,14 @@ $endif$
 $if(region)$
 	region: "$region$",
 $endif$
+$if(abstract-title)$
+  abstract-title: [$abstract-title$],
+$endif$
 $if(abstract)$
 	abstract: [$abstract$],
+$endif$
+$if(thanks)$
+  thanks: [$thanks$],
 $endif$
 $if(titlepage-background)$
 	titlepage-background: "$titlepage-background$",
@@ -167,13 +172,28 @@ $endif$
 $if(papersize)$
 	paper: "$papersize$",
 $endif$
-	font: main-font,
 $if(fontsize)$
 	fontsize: $fontsize$,
 $endif$
+	font: main-font,
+$if(mathfont)$
+	mathfont: ($for(mathfont)$"$mathfont$",$endfor$),
+$endif$
+$if(codefont)$
+	codefont: ($for(codefont)$"$codefont$",$endfor$),
+$endif$
 	numbering: $if(page-numbering)$"$page-numbering$"$else$none$endif$,
+$if(linestretch)$
+	linestretch: $linestretch$,
+$endif$
 $if(section-numbering)$
 	sectionnumbering: "$section-numbering$",
+$endif$
+$if(linkcolor)$
+  linkcolor: [$linkcolor$],
+$endif$
+$if(citecolor)$
+  citecolor: [$citecolor$],
 $endif$
 	cols: $if(columns)$$columns$$else$1$endif$,
 	doc,

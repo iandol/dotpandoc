@@ -135,7 +135,6 @@ templates:
         - filters/pretty-urls.lua
     metadata:
       doindex: false
-      linestretch: '1.75'
 #-----------------------------------------------------------------
   typst-refs:
     extends: [typst,refs]

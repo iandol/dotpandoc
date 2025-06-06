@@ -12,10 +12,10 @@ filters:
 metadata:
   #subject: 'Letter to the Editor'
   #address: "Cognition & Behaviour Platform, Institute of Neuroscience CAS, Room 307 Systems Building, 320 Yueyang Rd Shanghai 200031, CHINA, ✉ i.andolina@ion.ac.cn, ✆ +86 021 54921747"
-  #return-address: "..."
+  #address: none
   #signature: "Ian-Signature.png"
   #signature-name: 'Ian Max Andolina Ph.D.'
-  address: none
-  mainfont: 'Alegreya'
-  linestretch: '1.2'
-  lang: 'en-GB'
+  #header-image: "ION-Letterhead.png"
+  #mainfont: 'Alegreya'
+  #linestretch: '1.2'
+  lang: 'en'
