@@ -17,28 +17,48 @@
 // font: string array ,
 // body: content none
 
-#import "letter-pro-v3.0.0.typ": letter-simple
+//#import "letter-pro-v3.0.0.typ": letter-simple
+#import "@preview/letter-pro:3.0.0": letter-simple
 
 #set text(lang: "$lang$")
 
 #show: letter-simple.with(
+	format: "DIN-5008-B",
 $if(header-image)$
 	header: image("$header-image$"),
 $else$
-	header: none,
+	header: auto,
 $endif$
 	sender: (
-$if(sender)$
+$if(sender.name)$
 		name: "$sender$",
+$elseif(name)$
+		name: "$name$",
 $else$
 		name: none,
 $endif$
 $if(address)$
-		address: [$address$],
+		address: "$address$",
 $else$
 		address: none,
 $endif$
+$if(email)$
+		extra: [
+			$email$\ $if(telephone)$$telephone$$endif$
+		]
+$endif$
 	),
+$if(annotations)$
+	annotations: [$annotations$],
+$else$
+	annotations: "Recipient",
+$endif$
+$if(recipient)$
+		recipient: [$recipient$],
+$elseif(to)$
+		recipient: [$to$],
+$else$
+$endif$
 $if(date)$
 	date: "$date$",
 $endif$
@@ -52,6 +72,13 @@ $else$
 $endif$
 	folding-marks: false,
 	hole-mark: false,
+$if(footer)$
+	footer: (
+		content: "$footer$",
+	),
+$else$
+	footer: none,
+$endif$
 )
 
 $body$

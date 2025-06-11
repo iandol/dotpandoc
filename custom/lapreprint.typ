@@ -53,7 +53,7 @@
 
 	//date = "2023-11-19"
 	let dates;
-	if (type(date) == "datetime") {
+	if (date == "datetime") {
 		dates = ((title: "Published", date: date),)
 	}else if (type(date) == "dictionary") {
 		dates = (date,)
@@ -87,7 +87,7 @@
 		paper-size,
 		margin: (left: 25%),
 		header: context {
-			if counter(page).get().first() > 1 {
+			if here().position().page == 1 {
 				let headers = (
 					if (open-access) {smallcaps[Open Access]},
 					if (doi != none) { link("https://doi.org/" + doi, "DOI: " + doi)}
@@ -99,7 +99,7 @@
 				))
 			}
 		},
-		footer: block(
+		footer: context block(
 			width: 100%,
 			stroke: (top: 1pt + gray),
 			inset: (top: 8pt, right: 2pt),
@@ -115,7 +115,7 @@
 						#text(
 							size: 9pt, fill: gray.darken(50%)
 						)[
-							#context counter(page).display() of #context counter(page).final().first()
+							#counter(page).display() of #counter(page).final().first()
 						]
 					]
 				)
@@ -189,7 +189,7 @@
 			box(
 				width: 27%,
 				{
-					if (type(logo) == "content") {
+					if (logo == "content") {
 						logo
 					} else {
 						image(logo, width: 100%)
@@ -282,7 +282,7 @@
 	
 	if (abstract != none) {
 		let abstracts
-		if (type(abstract) == "content") {
+		if (abstract == "content") {
 			abstracts = (title: "Abstract", content: abstract)
 		} else {
 			abstracts = abstract
@@ -314,7 +314,7 @@
 		#v(1em)
 	]
 
-	set par(spacing: 2em)
+	set par(spacing: 1.5em)
 	
 	// Display the paper's contents.
 	body

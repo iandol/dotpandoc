@@ -1,0 +1,14 @@
+defaults:
+  - refs
+verbosity: INFO
+standalone: true
+from: markdown
+to: typst-citations
+template: lapreprint.typst
+wrap: none
+filters:
+  - typstFix.lua
+  - pagebreak.lua
+  - abstract-section.lua
+  - pretty-urls.lua
+

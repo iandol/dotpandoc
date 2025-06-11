@@ -10,12 +10,25 @@ filters:
   - pagebreak.lua
   - pretty-urls.lua
 metadata:
-  #subject: 'Letter to the Editor'
-  #address: "Cognition & Behaviour Platform, Institute of Neuroscience CAS, Room 307 Systems Building, 320 Yueyang Rd Shanghai 200031, CHINA, ✉ i.andolina@ion.ac.cn, ✆ +86 021 54921747"
-  #address: none
+  #subject: "Letter of Delegation"
+  #address: "Cognition & Behaviour Platform, Institute of Neuroscience CAS, Room 307 Systems Building, 320 Yueyang Rd Shanghai 200031, CHINA"
+  #email: 
+  #- |
+  #  ```{=typst}
+  #  #link("mailto:i.andolina@ion.ac.cn")[✉ i.andolina\@ion.ac.cn]
+  #  ```
+  #telephone: 
+  #- |
+  #  ```{=typst}
+  #  #link("tel:+8602154921747")[☎ +86 021 54921747]
+  #  ```
+  #footer: "Cognition & Behaviour Platform, Institute of Neuroscience CAS, Room 307 Systems Building, 320 Yueyang Rd Shanghai 200031, CHINA"
+  #annotations: "Recipient:"
+  #to: "Visa Centre, Shanghai, CHINA"
+  #date: 8th June 2025
   #signature: "Ian-Signature.png"
   #signature-name: 'Ian Max Andolina Ph.D.'
-  #header-image: "ION-Letterhead.png"
+  ##header-image: "ION-Letterhead.png"
   #mainfont: 'Alegreya'
-  #linestretch: '1.2'
+  linestretch: '1.3'
   lang: 'en'

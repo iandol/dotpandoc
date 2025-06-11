@@ -123,10 +123,10 @@
   }
   
   margin = (
-    left:   margin.at("left",   default: 25mm),
-    right:  margin.at("right",  default: 20mm),
-    top:    margin.at("top",    default: 20mm),
-    bottom: margin.at("bottom", default: 20mm),
+    left:   margin.at("left",   default: 15mm),
+    right:  margin.at("right",  default: 15mm),
+    top:    margin.at("top",    default: 10mm),
+    bottom: margin.at("bottom", default: 10mm),
   )
   
   set page(
@@ -161,7 +161,7 @@
     
     footer-descent: 0%,
     footer: context {
-      show: pad.with(top: 12pt, bottom: 12pt)
+      show: pad.with(top: 8pt, bottom: 8pt)
       
       let current-page = here().page()
       let page-count = counter(page).final().first()
@@ -257,7 +257,7 @@
 /// - address (content, none): Address of the sender
 /// - extra (content, none): Extra information about the sender
 #let header-simple(name, address, extra: none) = {
-  set text(size: 10pt)
+  set text(size: 8pt)
 
   if name != none {
     strong(name)
@@ -282,7 +282,7 @@
   set text(size: 7pt)
   set align(horizon)
   
-  pad(left: 5mm, underline(offset: 2pt, {
+  pad(left: 25mm, {
     if name != none {
       name
     }
@@ -294,7 +294,7 @@
     if address != none {
       address
     }
-  }))
+  ))
 })
 
 /// Creates a simple annotations box.
@@ -516,7 +516,7 @@
   page-numbering: auto,
 
   margin: (
-    left:   25mm,
+    left:   20mm,
     right:  20mm,
     top:    20mm,
     bottom: 20mm,
@@ -527,7 +527,7 @@
   body,
 ) = {
   margin = (
-    left:   margin.at("left",   default: 25mm),
+    left:   margin.at("left",   default: 20mm),
     right:  margin.at("right",  default: 20mm),
     top:    margin.at("top",    default: 20mm),
     bottom: margin.at("bottom", default: 20mm),
@@ -538,8 +538,6 @@
     title: subject,
     author: sender.name,
   )
-
-  set text(font: font, hyphenate: false)
 
   // Create a simple header if there is none
   if header == auto {
@@ -598,6 +596,7 @@
       }
       
       set par(justify: true)
+      set text(font: font)
       body
     },
 
