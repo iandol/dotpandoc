@@ -4,7 +4,6 @@
 	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
 	"version": "0.2.0",
 	"configurations": [	
-		
 		{
 			"type": "emmylua_new",
 			"request": "launch",
@@ -17,40 +16,6 @@
 				".lua.bytes"
 			],
 			"ideConnectDebugger": true
-		},
-		{
-			"type": "emmylua_launch",
-			"request": "launch",
-			"name": "Attach by launch program",
-			"program": "/opt/homebrew/bin/lua",
-			"workingDir": "",
-			"arguments": [],
-			"newWindow": false
-		},
-		{
-			"name": "Lua MobDebug: Current File",
-			"type": "luaMobDebug",
-			"request": "launch",
-			"workingDirectory": "${workspaceFolder}",
-			"sourceBasePath": "${workspaceFolder}",
-			"listenPort": 8172,
-			"stopOnEntry": true,
-			"sourceEncoding": "UTF-8",
-			"interpreter": "lua",
-			"arguments": [
-				"${relativeFile}"
-			]
-		},
-		{
-			"name": "Lua MobDebug: Listen",
-			"type": "luaMobDebug",
-			"request": "attach",
-			"workingDirectory": "${workspaceFolder}",
-			"sourceBasePath": "${workspaceFolder}",
-			"listenPublicly": false,
-			"listenPort": 8172,
-			"stopOnEntry": true,
-			"sourceEncoding": "UTF-8"
 		},
 		{ // Name: VSCode rdbg Ruby Debugger https://marketplace.visualstudio.com/items?itemName=KoichiSasada.vscode-rdbg
 			"type": "rdbg",

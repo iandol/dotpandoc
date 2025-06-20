@@ -23,6 +23,11 @@ Elvish:
     set-env LUA_PATH "./?.lua;"$E:ZBS"/lualibs/?/?.lua;"$E:ZBS"/lualibs/?.lua"
     set-env LUA_CPATH $E:ZBS"/bin/?.dylib;"$E:ZBS"/bin/clibs54/?.dylib;"$E:ZBS"/bin/clibs54/?/?.dylib"
 
+OR use Lua config itself:
+
+    package.path = package.path .. ";/home/linuxbrew/.linuxbrew/share/lua/5.4/?.lua;/home/linuxbrew/.linuxbrew/share/lua/5.4/?/?.lua/opt/zbstudio/lualibs/mobdebug/?.lua"
+    package.cpath = package.cpath .. ";/home/linuxbrew/.linuxbrew/lib/lua/5.4/?.so;/home/linuxbrew/.linuxbrew/lib/lua/5.4/?/?.so;/opt/zbstudio/bin/linux/x64/clibs64/?.so;/opt/zbstudio/bin/linux/x64/clibs64/?/?.so"
+
 ## With Lua installed:
 If you have installed Lua v5.4 and added mobdebug + luasocket using luarocks
 then they should be available in the default path locations (at least for
@@ -68,11 +73,6 @@ LuaPanda is another option https://github.com/Tencent/LuaHelper
 lg = require("logging")
 md = require("mobdebug")
 md.logging = true
-
---package.cpath = package.cpath .. ";/Users/ian/.vscode/extensions/tangzx.emmylua-0.8.20-darwin-arm64/debugger/emmy/mac/arm64/emmy_core.dylib"
---local dbg = require("emmy_core")
---dbg.tcpListen("localhost", 9966)
---dbg.waitIDE()
 
 function OrderedList(l)
 	md.start() --breakpoint

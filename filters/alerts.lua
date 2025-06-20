@@ -25,8 +25,8 @@ More *content*.
 Some content.
 :::
 
-Version:   0.11
-Copyright: (c) 2024 Ian Max Andolina License=MIT, see LICENSE for details
+Version:   0.12
+Copyright: (c) 2025 Ian Max Andolina License=MIT, see LICENSE for details
 ]]
 
 stringify = pandoc.utils.stringify
@@ -63,7 +63,8 @@ local function injectTitle(content, alert, customTitle)
 	local _,alertidx = alerts:find(alert)
 	if not alerts:includes(alert) then alert,alertidx = alerts[1],1 end
 	if isPandocList(customTitle) then customTitle = stringify(customTitle) end
-	
+	if customTitle == "" then customTitle = nil end
+  
 	local thisTitle = preIcon[alertidx] .. " " .. (customTitle or titleCase(alert))
 	
 	if isPandocList(content) then
