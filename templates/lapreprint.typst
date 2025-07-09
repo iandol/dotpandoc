@@ -6,149 +6,149 @@
 
 #show: template.with(
 $if(title)$
-  title: "$title$",
+	title: "$title$",
 $endif$
 $if(subtitle)$
-  subtitle: "$subtitle$",
+	subtitle: "$subtitle$",
 $endif$
 $if(short-title)$
-  short-title: "$short-title$",
+	short-title: "$short-title$",
 $endif$
-  open-access: true,
-  kind: "Original Research",
+	open-access: true,
+	kind: "Original Research",
 $if(theme)$
-  theme: $theme$,
+	theme: $theme$,
 $else$
-  theme: red.darken(50%),
+	theme: red.darken(50%),
 $endif$
 $if(venue)$
-  venue: [$venue$],
+	venue: [$venue$],
 $else$
-  venue: [bio#text(fill: red.darken(20%))[R]χiv],
+	venue: [bio#text(fill: red.darken(20%))[R]χiv],
 $endif$
 $if(logo)$
-  logo: "$logo$",
+	logo: "$logo$",
 $endif$
 $if(doi)$
-  doi: "$doi$",
+	doi: "$doi$",
 $endif$
 $if(date)$
 $if(date.year)$
-  date: $for(date)$ (title: $it.title$, date: (year: $it.year$, month: $it.month$, day: $it.day$),$endfor$
+	date: $for(date)$ (title: $it.title$, date: (year: $it.year$, month: $it.month$, day: $it.day$),$endfor$
 $else$
-  date: $date$,
+	date: $date$,
 $endif$
 $endif$
 $if(papersize)$
-  paper-size: "$papersize$",
+	paper-size: "$papersize$",
 $endif$
 $if(mainfont)$
-  font-face: "$mainfont$",
+	font-face: "$mainfont$",
 $endif$
 
 $if(csl)$
-  bibliography-style: "$csl$",
+	bibliography-style: "$csl$",
 $elseif(bibliographystyle)$
-  bibliography-style: "$bibliographystyle$",
+	bibliography-style: "$bibliographystyle$",
 $endif$
 $if(citeproc)$
 $if(bibliography)$
-  bibliography-file: "$bibliography$",
+	bibliography-file: "$bibliography$",
 $endif$
 $endif$
 $if(author)$
-  authors: (
+	authors: (
 $for(author)$
 $if(author.name)$
-    (
-      name: "$author.name$",
+		(
+			name: "$author.name$",
 $if(author.affiliation)$
-      affiliations: "$author.affiliation$",
+			affiliations: "$author.affiliation$",
 $endif$
 $if(author.email)$
-      email: "$author.email$",
+			email: "$author.email$",
 $endif$
 $if(author.orcid)$
-      orcid: "$author.orcid$"
+			orcid: "$author.orcid$"
 $endif$
-    ),
+		),
 $else$
-    (
-      name: "$author$"
-    ),
+		(
+			name: "$author$"
+		),
 $endif$
 $endfor$
-  ),
+	),
 $endif$
 $if(institute)$
-  affiliations: (
+	affiliations: (
 $for(institute)$
-    (id: "$it.index$", name: "$it.name$"),
+		(id: "$it.index$", name: "$it.name$"),
 $endfor$
-  ),
+	),
 $elseif(affiliations)$
-  affiliations: (
+	affiliations: (
 $for(affiliations)$
-    (id: "$it.index$", name: "$it.name$"),
+		(id: "$it.index$", name: "$it.name$"),
 $endfor$
-  ),
+	),
 $endif$
 $if(abstract)$
-  abstract: (
-    (title: "Abstract", content: [$abstract$]),
-  ),
+	abstract: (
+		(title: "Abstract", content: [$abstract$]),
+	),
 $endif$
 $if(keywords)$
-  keywords: ($for(keywords)$"$it$"$sep$,$endfor$),
+	keywords: ($for(keywords)$"$it$"$sep$,$endfor$),
 $endif$
-  margin: (
+	margin: (
 $if(margin-keypoints)$
-    (
-      title: "Key Points",
-      content: [
+		(
+			title: "Key Points",
+			content: [
 $for(margin-keypoints)$
-        - $it$
+				- $it$
 $endfor$
-      ],
-    ),
+			],
+		),
 $endif$
 $if(margin-correspondence)$
-    (
-      title: [#box(height: 1.1em, baseline: 13.5%)[#image.decode(mailSvg)]Correspondence],
-      content: [
+		(
+			title: [#box(height: 1.1em, baseline: 13.5%)[#image.decode(mailSvg)]Correspondence],
+			content: [
 $for(margin-correspondence)$
 #strong[#emph[$it$]]$sep$ & 
 $endfor$
-      ],
-    ),
+			],
+		),
 $endif$
 $if(margin-code)$
-    (
-      title: "Code Availability",
-      content: [
+		(
+			title: "Code Availability",
+			content: [
 $for(margin-code)$
-        $it$$sep$. 
+				$it$$sep$. 
 $endfor$
-      ],
-    ),
+			],
+		),
 $endif$
 $if(margin-funding)$
-    (
-      title: "Funding",
-      content: [
+		(
+			title: "Funding",
+			content: [
 $for(margin-funding)$
-        $it$$sep$. 
+				$it$$sep$. 
 $endfor$
-      ],
-    ),
+			],
+		),
 $endif$
-    (
-      title: "Competing Interests",
-      content: [
-        The authors declare no competing interests.
-      ],
-    ),
-  ),
+		(
+			title: "Competing Interests",
+			content: [
+				The authors declare no competing interests.
+			],
+		),
+	),
 )
 
 $for(header-includes)$
@@ -161,8 +161,8 @@ $include-before$
 $endfor$
 $if(toc)$
 #outline(
-  title: auto,
-  depth: none
+	title: auto,
+	depth: none
 );
 $endif$
 
@@ -172,6 +172,24 @@ $endif$
 #set par(justify: true)
 #show table: set par(justify: false)
 #show ref: strong
+$if(nonumberfigures)$
+#set figure(numbering: none)
+#show figure.caption: it => [
+	#set align(left)
+	#set par(justify: true, leading: 1em)
+	#set text(size: 11pt, discretionary-ligatures: false, number-type: "lining")
+	#emph[#it.body]
+	#v(1em)
+]
+$else$
+#show figure.caption: it => [
+	#set align(left)
+	#set par(justify: true, leading: 1em)
+	#set text(size: 11pt, discretionary-ligatures: false, number-type: "lining")
+	#emph[#it.supplement~#context(it.counter.display(it.numbering)) — #it.body]
+	#v(1em)
+]
+$endif$
 
 $body$
 

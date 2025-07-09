@@ -1,6 +1,6 @@
 $if(doindex)$
 // https://typst.app/universe/package/in-dexter
-#import "@preview/in-dexter:0.5.3": *
+#import "@preview/in-dexter:0.7.0": *
 $endif$
 // https://typst.app/universe/package/gentle-clues/
 #import "@preview/gentle-clues:1.2.0": *

@@ -310,6 +310,7 @@
 
 	show figure.caption: it => [
 		#set par(justify: true, leading: 0.8em)
+		#set text(discretionary-ligatures: false, number-type: "lining")
 		#strong[#it.supplement #context { it.counter.display(it.numbering) }]: #it.body
 		#v(1em)
 	]

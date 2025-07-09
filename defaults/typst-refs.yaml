@@ -23,5 +23,5 @@ citation-abbreviations: ${USERDATA}/cite-abbr.json # my journal abbreviations
 metadata:
   reference-section-title: Bibliography
   notes-after-punctuation: false
-  link-citations: true
+  link-citations: false
   link-bibliography: true

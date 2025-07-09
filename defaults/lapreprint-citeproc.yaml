@@ -11,4 +11,10 @@ filters:
   - pagebreak.lua
   - abstract-section.lua
   - pretty-urls.lua
+metadata:
+  reference-section-title: Bibliography
+  notes-after-punctuation: false
+  link-citations: false
+  link-bibliography: true
+  nonumberfigures: true
 
