@@ -1,0 +1,9 @@
+verbosity: INFO # verbose by default
+standalone: true
+from: markdown
+to: docx
+output-file: Out.docx
+filters:
+  - convertIndex.lua
+  - pagebreak.lua
+reference-doc: ${USERDATA}/templates/custom.docx

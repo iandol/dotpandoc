@@ -387,6 +387,14 @@ templates:
   latex-refs:
     extends: [latex, refs]
 #-----------------------------------------------------------------
+  latex-ieee:
+    extends: [latex-refs]
+    pandoc:
+      template: templates/ieee.latex
+      pdf-engine: 'pdflatex'
+    metadata: 
+      fontsize: '10pt'
+#-----------------------------------------------------------------
   latex-index:
     extends: [latex-crossref]
     metadata:
@@ -397,6 +405,12 @@ templates:
     pandoc:
       to: pdf
       pdf-engine: 'xelatex'
+#-----------------------------------------------------------------
+  pdf-ieee:
+    extends: [latex-ieee]
+    pandoc:
+      to: pdf
+      pdf-engine: 'pdflatex'
 #-----------------------------------------------------------------
   pdf-crossref:
     extends: latex-crossref
@@ -664,13 +678,6 @@ templates:
     extends: [eisvogel]
     preprocessors: 
       - preprocessors/convertEndnoteRefs.rb
-#-----------------------------------------------------------------
-  latex-ieee:
-    extends: [latex-refs]
-    pandoc:
-      template: templates/ieee.latex
-    metadata: 
-      fontsize: '10pt'
 #-----------------------------------------------------------------
 # https://github.com/pandoc-scholar/pandoc-scholar
   latex-scholar:
