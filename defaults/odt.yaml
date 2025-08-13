@@ -5,8 +5,8 @@ output-file: Out.odt
 filters:
   - prependAll.rb # prepends institute:, comments: and keywords: metadata into the text
   - simplifyMetadata.rb #collapse down metadata "author: [name: affiliation:]" to author:
+  - ensureWidth.lua
   - pretty-urls.lua
-  - convertIndex.lua
   - pagebreak.lua
 reference-doc: ${USERDATA}/templates/custom.odt
 template: ${USERDATA}/templates/custom.opendocument

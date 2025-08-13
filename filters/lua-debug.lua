@@ -59,8 +59,8 @@ But Zerobrane offers richer functionality…
 ## VS Code Alterative:
 
 https://github.com/EmmyLua/VSCode-EmmyLua -- it injects a precompiled
-library. Inject the library loading code using command palette, then use
-dbg.waitIDE() to pause, and dbg.breakHere() to break. Run code BEFORE debugger.
+library. Inject the library loading code using command palette, use
+dbg.waitIDE() to pause, and dbg.breakHere() to break. Run code BEFORE debugger starts.
 
 https://github.com/moteus/vscode-mobdebug -- need to use `luarocks install
 vscode-mobdebug` and then `require("vscode-mobdebug")`, you may need to

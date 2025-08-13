@@ -178,7 +178,7 @@ templates:
     metadata:
 
 #-----------------------------------------------------------------
-#:::::::::::::::::::::::::::: DOCX :::::::::::::::::::::::::::::::
+#:::::::::::::::::::::::::::: DOCX ODT :::::::::::::::::::::::::::
 #-----------------------------------------------------------------
 #-----------------------------------------------------------------DOCX
   docx:
@@ -188,11 +188,9 @@ templates:
       standalone: true
       verbose: true # verbose by default
       filter:
-        #- filters/removeHR #remove horizontal rules
         - filters/prependAll.rb # prepends institute:, comments: and keywords: metadata into the text
         - filters/simplifyMetadata.rb #collapse down metadata "author: [name: affiliation:]" to author:
       lua-filter:
-        - filters/convertIndex.lua # enable indexing
         - filters/pagebreak.lua # use \newpage{} also for HTML, DOCX, ODT & EPUB
         - filters/abstract-section.lua # move an abstract heading to metadata
         - filters/pretty-urls.lua # clean up URLs a bit
@@ -200,12 +198,18 @@ templates:
 #-----------------------------------------------------------------DOCX REFS
   docx-refs:
     extends: [docx,refs]
+#-----------------------------------------------------------------DOCX INDEX
+  docx-index:
+    extends: [docx-refs]
+    pandoc:
+      lua-filter:
+        - filters/convertIndex.lua
 #-----------------------------------------------------------------DOCX standard fonts
   docx-refs-calibri:
     extends: [docx-refs]
     pandoc:
       reference-doc: templates/custom-calibri.docx
-#-----------------------------------------------------------------DOCX REFS
+#-----------------------------------------------------------------DOCX LETTER
   docx-letter:
     extends: [docx-refs]
     pandoc:
@@ -220,22 +224,30 @@ templates:
       to: docx+native_numbering
 #-----------------------------------------------------------------DOCX REFS NOLINK
   docx-refs-not-linked:
-    extends: [docx,refs]
+    extends: [docx-refs]
     metadata: 
       link-citations: false
 #-----------------------------------------------------------------DOCX ENDNOTE
   docx-endnote:
-    extends: [docx,refs]
+    extends: [docx-refs]
     preprocessors: 
       add: preprocessors/convertEndnoteRefs.rb  #turns endnote citations to pandoc citations
 #-----------------------------------------------------------------DOCX CHANGES
   docx-changes:
-    extends: [docx,refs]
+    extends: [docx-refs]
     preprocessors: 
       add: preprocessors/criticmarkup.rb #process criticmarkup to HTML that pandoc can use
 #-----------------------------------------------------------------ODT
+  odt:
+    extends: [docx]
+    pandoc:
+      to: odt
+      reference-doc: templates/custom.odt
+      lua-filter:
+        - filters/ensureWidth.lua
+#-----------------------------------------------------------------ODT REFS
   odt-refs:
-    extends: [docx,refs]
+    extends: [odt,refs]
     pandoc:
       to: odt
       reference-doc: templates/custom.odt
