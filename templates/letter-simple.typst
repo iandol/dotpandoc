@@ -73,9 +73,7 @@ $endif$
 	folding-marks: false,
 	hole-mark: false,
 $if(footer)$
-	footer: (
-		content: "$footer$",
-	),
+	footer: "$footer$",
 $else$
 	footer: none,
 $endif$

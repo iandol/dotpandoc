@@ -4,7 +4,7 @@ from: markdown
 to: typst
 template: letter-simple.typst
 wrap: preserve
-pdf-engine-opt: '--pdf-standard=a-3b'
+pdf-engine-opt: ['--pdf-standard=a-3b','--root /']
 filters:
   - typstFix.lua
   - pagebreak.lua
