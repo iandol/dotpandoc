@@ -160,34 +160,38 @@ $include-before$
 
 $endfor$
 $if(toc)$
-#outline(
+outline(
 	title: auto,
 	depth: none
 );
 $endif$
 
 $if(linestretch)$
-#set par(leading: $linestretch$em)
+set par(leading: $linestretch$em)
 $endif$
-#set par(justify: true)
-#show table: set par(justify: false)
-#show ref: strong
+
+set par(justify: true, justification-limits: (
+      tracking: (min: -0.01em, max: 0.02em),
+))
+show table: set par(justify: false)
+show ref: strong
+
 $if(nonumberfigures)$
-#set figure(numbering: none)
-#show figure.caption: it => [
-	#set align(left)
-	#set par(justify: true, leading: 1em)
-	#set text(size: 11pt, discretionary-ligatures: false, number-type: "lining")
-	#emph[#it.body]
-	#v(1em)
+set figure(numbering: none)
+show figure.caption: it => [
+	set align(left)
+	set par(justify: true, leading: 1em)
+	set text(size: 11pt, discretionary-ligatures: false, number-type: "lining")
+	emph[#it.body]
+	v(1em)
 ]
 $else$
-#show figure.caption: it => [
-	#set align(left)
-	#set par(justify: true, leading: 1em)
-	#set text(size: 11pt, discretionary-ligatures: false, number-type: "lining")
-	#emph[#it.supplement~#context(it.counter.display(it.numbering)) — #it.body]
-	#v(1em)
+show figure.caption: it => [
+	set align(left)
+	set par(justify: true, leading: 1em)
+	set text(size: 11pt, discretionary-ligatures: false, number-type: "lining")
+	emph[#it.supplement~#context(it.counter.display(it.numbering)) — #it.body]
+	v(1em)
 ]
 $endif$
 

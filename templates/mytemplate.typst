@@ -59,7 +59,9 @@
 				if titlepage { none } else { grid(columns: (1fr, 1fr),align(left, text(style: "italic", font: sans-font, size: 8pt, running-head)),align(right, [#context counter(page).display()]))}
 			},
 	)
-	set par(justify: true)
+	set par(justify: true, justification-limits: (
+		tracking: (min: -0.01em, max: 0.02em),
+	))
 	set text(lang: lang,
 					 region: region,
 					 font: font,

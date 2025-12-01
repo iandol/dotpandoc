@@ -34,6 +34,8 @@ $if(sender.name)$
 		name: "$sender$",
 $elseif(name)$
 		name: "$name$",
+$elseif(author)$
+		name: "$author$",
 $else$
 		name: none,
 $endif$
@@ -73,7 +75,7 @@ $endif$
 	folding-marks: false,
 	hole-mark: false,
 $if(footer)$
-	footer: "$footer$",
+	footer: [$footer$],
 $else$
 	footer: none,
 $endif$
