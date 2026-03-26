@@ -61,19 +61,25 @@ $else$
 $endif$
 $if(nonumberfigures)$
 #set figure(numbering: none)
-#show figure.caption: it => [
+#show figure.caption: it => {
 	#set align(left)
 	#set par(justify: true, leading: 1em)
 	#set text(font: sans-font, size: 11pt, discretionary-ligatures: false, number-type: "lining")
 	#emph[#it.body]
-]
+}
 $else$
-#show figure.caption: it => [
-	#set align(left)
-	#set par(justify: true, leading: 1em)
-	#set text(font: sans-font, size: 11pt, discretionary-ligatures: false, number-type: "lining")
-	#emph[#it.supplement~#context(it.counter.display(it.numbering)) — #it.body]
-]
+#show figure.caption: it => {
+	set par(justify: true, leading: 1em)
+	set text(size: 11pt, discretionary-ligatures: false, number-type: "lining")
+	emph(
+		it.supplement
+		+ [ ]
+		+ context { it.counter.display(it.numbering) }
+		+ [ — ]
+		+ it.body
+	)
+	v(1em)
+}
 $endif$
 #show <refs>: set par(leading: 0.9em, spacing: 1.75em)
 #show <refs>: set text(size: 11pt, font: sans-font)

@@ -1,6 +1,6 @@
 standalone: true
 verbosity: INFO
-from: markdown
+from: markdown+alerts
 to: typst
 metadata-file: typst-includes.yaml
 template: custom.typst

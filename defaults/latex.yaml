@@ -1,4 +1,4 @@
-from: markdown
+from: markdown+alerts
 to: latex
 standalone: true
 shift-heading-level-by: 0 # reader option

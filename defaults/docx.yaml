@@ -1,5 +1,5 @@
 standalone: true
-from: markdown
+from: markdown+alerts
 to: docx
 output-file: Out.docx
 filters:

@@ -53,11 +53,13 @@
 
 	//date = "2023-11-19"
 	let dates;
-	if (date == "datetime") {
+	if (date == none or date == "") {
+		dates = none
+	} else if (type(date) == datetime) {
 		dates = ((title: "Published", date: date),)
-	}else if (type(date) == "dictionary") {
+	}else if (type(date) == dictionary) {
 		dates = (date,)
-	} else if (type(date) == "string") {
+	} else if (type(date) == str) {
 		//string as YYYY-MM-DD
 		let bits = date.split("-")
 		dates = ((title: "Published", date: datetime(year: int(bits.at(0)), month: int(bits.at(1)), day: int(bits.at(2)))),)
@@ -65,10 +67,14 @@
 		dates = date
 	}
 
-	date = dates.at(0).date
+	if (dates != none and dates.len() > 0) {
+		date = dates.at(0).date
+	} else {
+		date = none
+	}
 
 	// Create a short-citation, e.g. Cockett et al., 2023
-	let year = if (date != none) { ", " + date.display("[year]") }
+	let year = if (date != none) { ", " + date.display("[year]") } else { "" }
 	if (short-citation == auto and authors.len() == 1) {
 		short-citation = authors.at(0).name.split(" ").last() + year
 	} else if (short-citation == auto and authors.len() == 2) {
@@ -216,10 +222,10 @@
 					super(author.affiliations)
 				}
 				if "email" in author {
-					link("mailto://" + author.email)[#box(height: 1.1em, baseline: 13.5%)[#image.decode(mailSvg)]]
+					link("mailto://" + author.email)[#box(height: 1.1em, baseline: 13.5%)[#image(bytes(mailSvg))]]
 				}
 				if "orcid" in author {
-					link("https://orcid.org/" + author.orcid)[#box(height: 1.1em, baseline: 13.5%)[#image.decode(orcidSvg)]]
+					link("https://orcid.org/" + author.orcid)[#box(height: 1.1em, baseline: 13.5%)[#image(bytes(orcidSvg))]]
 				}
 			}).join(", ", last: ", and ")
 		})

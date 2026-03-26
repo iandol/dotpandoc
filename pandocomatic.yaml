@@ -117,7 +117,7 @@ templates:
     preprocessors: [preprocessors/removeImageDimensions.rb] 
     pandoc:
       verbose: true
-      from: markdown
+      from: markdown+alerts
       to: typst
       standalone: true
       template: custom.typst
@@ -135,6 +135,7 @@ templates:
         - filters/pretty-urls.lua
     metadata:
       doindex: false
+      nonumberfigures: true # I generally use Scrivener autonumbering, so disable for LaTeX
 #-----------------------------------------------------------------
   typst-refs:
     extends: [typst,refs]
@@ -183,7 +184,7 @@ templates:
 #-----------------------------------------------------------------DOCX
   docx:
     pandoc:
-      from: markdown
+      from: markdown+alerts
       to: docx
       standalone: true
       verbose: true # verbose by default
@@ -297,7 +298,7 @@ templates:
   latex-tufte:
     extends: [biblatex]
     pandoc:
-      from: markdown
+      from: markdown+alerts
       to: latex-smart # turn off smart to leave — … “” etc. as unicode, needs xetex or luatex
       standalone: true
       lua-filter:
@@ -344,12 +345,12 @@ templates:
       citecolor: Sepia
       urlcolor: BrickRed
       listings: false
-#-----------------------------------------------------------------
+#-----------------------------------------------------------------LATEX STANDARD
   latex:
     preprocessors:
       #- preprocessors/removeImageDimensions.rb # remove image dimensions
     pandoc:
-      from: markdown
+      from: markdown+alerts
       to: latex-smart # turn off smart to leave — … “” etc. as unicode, needs xetex or luatex
       standalone: true
       verbose: true # verbose by default
@@ -556,17 +557,17 @@ templates:
         - filters/pretty-urls.lua # clean up URLs a bit
     metadata:
       papersize: a4
-      return-address: |
-        Cognitive-Behavioural Research Platform  
-        Institute of Neuroscience, CAS  
-        Room 307, Systems Building  
-        320 Yueyang Rd, Shanghai  
-        200031, CHINA  
-        ✉ <i.andolina@ion.ac.cn>  
-        ✆ +86 021 54921747  
+      return-address:
+        - \emph{Cognitive \& Behavioural Research Platform}
+        - Institute of Neuroscience, CAS
+        - Room 307, Systems Building
+        - 320 Yueyang Rd, Shanghai
+        - 200031, CHINA
+        - ✉ <i.andolina@ion.ac.cn>
+        - ✆ +86 137 6455 4712
       author: |
         Ian Max Andolina Ph.D.  
-        Director, Cognitive \& Behavioural Research Platform  
+        **Director**, *Cognitive \& Behavioural Research Platform*
       opening: To whom it may concern,  
       closing: Sincerely yours,  
       mainfont: 'Alegreya'
@@ -588,8 +589,7 @@ templates:
       citecolor: Sepia
       urlcolor: BrickRed
       lang: 'en-GB'
-      geometry: ['margin=1.2cm','top=2.2cm', 'bottom=1cm']
-      biblio-style: numeric
+      geometry: ['margin=1.2cm','top=1.1cm', 'bottom=1cm']
     postprocessors:
       - postprocessors/fixLaTeX.rb
 #-----------------------------------------------------------------
@@ -716,7 +716,7 @@ templates:
 #-----------------------------------------------------------------
   html:
     pandoc:
-      from: markdown
+      from: markdown+alerts
       to: html5
       verbose: true # verbose by default
       embed-resources: true

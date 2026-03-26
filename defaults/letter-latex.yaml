@@ -1,12 +1,14 @@
+defaults: refs
 from: markdown
-to: latex
+to: latex-smart
+verbosity: INFO
 pdf-engine: xelatex
 standalone: true
 template: letter.latex
 metadata:
   papersize: a4
   return-address: 
-    - Cognition \& Behaviour Platform
+    - Cognition \& Behaviour Research Platform
     - Institute of Neuroscience, CAS
     - Room 307, Systems Building
     - 320 Yueyang Rd, Shanghai 200031, CHINA
@@ -23,8 +25,8 @@ metadata:
   #CJKmainfont: 'PingFang SC'
   fontsize: '11pt'
   linestretch: '1.2'
-  letterhead: "${HOME}/Dropbox/Work/ION-Letterhead.pdf"
-  signature: "${HOME}/Dropbox/Work/Ian-Signature.png"
+  letterhead: "${HOME}/Dropbox/Work/CEBSIT-Letterhead.png"
+  signature: "${HOME}/Dropbox/Work/Ian-Signature-Small.png"
   signature-width: 45mm
   signature-before: -11ex
   signature-after: -1.5ex
