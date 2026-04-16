@@ -5,18 +5,17 @@ $endif$
 // https://typst.app/universe/package/gentle-clues/
 #import "@preview/gentle-clues:1.2.0": *
 
-#show terms: it => {
-	it.children
-		.map(child => [
-			#strong[#child.term]
-			#block(inset: (left: 1.5em, top: -0.4em))[#child.description]
-			])
-		.join()
-}
+#let horizontalrule = line(start: (25%,0%), end: (75%,0%))
 
-#let horizontalrule = [
-	#line(start: (5%,0%), end: (95%,0%), stroke: (paint: gray, thickness: 4pt, cap: "round"))
+#show terms.item: it => block(breakable: false)[
+  #text(weight: "bold")[#it.term]
+  #block(inset: (left: 1.5em, top: -0.4em))[#it.description]
 ]
+
+#set table(
+  inset: 6pt,
+  stroke: none
+)
 
 $if(mainfont)$
 #let main-font = ("$mainfont$")
@@ -41,7 +40,6 @@ $else$
 #let mono-font = ("Rec Mono Casual","Cascadia Code","Menlo")
 $endif$
 
-#set table(inset: 6pt)
 #set text(font: main-font, ligatures: true, discretionary-ligatures: false, number-type: "old-style")
 #set quote(block: true)
 #show quote: set align(center)
@@ -54,11 +52,20 @@ $endif$
 #show table: set par(justify: false)
 #show ref: strong
 
-$if(linestretch)$
-#set par(justify: true, spacing: 2em, leading: $linestretch$em)
-$else$
-#set par(justify: true, spacing: 2em, leading: 1.25em)
+#show figure.where(
+  kind: table
+): set figure.caption(position: $if(table-caption-position)$$table-caption-position$$else$top$endif$)
+
+#show figure.where(
+  kind: image
+): set figure.caption(position: $if(figure-caption-position)$$figure-caption-position$$else$bottom$endif$)
+
+$if(highlighting-definitions)$
+// syntax highlighting functions from skylighting:
+$highlighting-definitions$
+
 $endif$
+
 $if(nonumberfigures)$
 #set figure(numbering: none)
 #show figure.caption: it => {
@@ -81,7 +88,7 @@ $else$
 	v(1em)
 }
 $endif$
-#show <refs>: set par(leading: 0.9em, spacing: 1.75em)
+#show <refs>: set par(leading: 0.9em, spacing: 1.4em)
 #show <refs>: set text(size: 11pt, font: sans-font)
 
 $for(header-includes)$
@@ -89,8 +96,8 @@ $header-includes$
 
 $endfor$
 
-$if(mytemplate)$
-#import "$mytemplate$": conf
+$if(template)$
+#import "$template$": conf
 $else$
 $mytemplate.typst()$
 $endif$
@@ -138,21 +145,11 @@ $endif$
 $endfor$
 	),
 $endif$
-$if(institute)$
-	affiliations: (
-$for(institute)$
-		(id: "$institute.index$", name: "$institute.name$"),
-$endfor$
-	),
-$endif$
 $if(keywords)$
-	keywords: ($for(keywords)$"$it$"$sep$, $endfor$),
+	keywords: ($for(keywords)$$keywords$$sep$,$endfor$),
 $endif$
 $if(date)$
 	date: [$date$],
-$endif$
-$if(toc)$
-	toc: true,
 $endif$
 $if(lang)$
 	lang: "$lang$",
@@ -168,6 +165,16 @@ $if(abstract)$
 $endif$
 $if(thanks)$
   thanks: [$thanks$],
+$endif$
+$if(institute)$
+	affiliations: (
+$for(institute)$
+		(id: "$institute.index$", name: "$institute.name$"),
+$endfor$
+	),
+$endif$
+$if(toc)$
+	toc: true,
 $endif$
 $if(titlepage-background)$
 	titlepage-background: "$titlepage-background$",
@@ -188,18 +195,21 @@ $endif$
 $if(codefont)$
 	codefont: ($for(codefont)$"$codefont$",$endfor$),
 $endif$
-	numbering: $if(page-numbering)$"$page-numbering$"$else$none$endif$,
 $if(linestretch)$
 	linestretch: $linestretch$,
 $endif$
 $if(section-numbering)$
 	sectionnumbering: "$section-numbering$",
 $endif$
+	pagenumbering: $if(page-numbering)$"$page-numbering$"$else$none$endif$,
 $if(linkcolor)$
-  linkcolor: [$linkcolor$],
+	linkcolor: [$linkcolor$],
 $endif$
 $if(citecolor)$
-  citecolor: [$citecolor$],
+	citecolor: [$citecolor$],
+$endif$
+$if(filecolor)$
+	filecolor: [$filecolor$],
 $endif$
 	cols: $if(columns)$$columns$$else$1$endif$,
 	doc,
@@ -213,6 +223,9 @@ $endfor$
 $body$
 
 $if(citations)$
+$for(nocite-ids)$
+#cite(label("${it}"), form: none)
+$endfor$
 $if(csl)$
 
 #set bibliography(style: "$csl$")
@@ -222,7 +235,7 @@ $elseif(bibliographystyle)$
 $endif$
 $if(bibliography)$
 
-#bibliography($for(bibliography)$"$bibliography$"$sep$,$endfor$)
+#bibliography(($for(bibliography)$"$bibliography$"$sep$,$endfor$)$if(full-bibliography)$, full: true$endif$)
 $endif$
 $endif$
 

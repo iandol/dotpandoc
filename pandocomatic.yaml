@@ -12,6 +12,19 @@ templates:
 #-----------------------------------------------------------------
 #:::::::::::::::::::::::::::: GENERAL ::::::::::::::::::::::::::::
 #-----------------------------------------------------------------
+
+#-----------------------------------------------------------------CITEPROC
+  refs:
+    pandoc:
+      citeproc: true
+      bibliography: CoreFast.json #JSON faster than BIB, symlinked inside the Pandoc data dir
+      csl: csl/apa.csl # csl subfolder of pandoc data dir
+      reference-links: true
+    metadata:
+      notes-after-punctuation: false
+      link-citations: true
+      link-bibliography: true
+      csl-hanging-indent: true
 #-----------------------------------------------------------------CROSSREF
   crossref: # note crossref should come before citeproc!
     preprocessors: [preprocessors/fixCrossref.rb] # allows to put crossref labels in styled captions
@@ -179,13 +192,38 @@ templates:
     metadata:
 
 #-----------------------------------------------------------------
-#:::::::::::::::::::::::::::: DOCX ODT :::::::::::::::::::::::::::
+#:::::::::::::::::::::::::::: ODT DOCX :::::::::::::::::::::::::::
 #-----------------------------------------------------------------
+#-----------------------------------------------------------------ODT
+  odt:
+    pandoc:
+      from: markdown+alerts
+      to: odt
+      reference-doc: templates/custom.odt
+      standalone: true
+      verbose: true # verbose by default
+      filter:
+        - filters/prependAll.rb # prepends institute:, comments: and keywords: metadata into the text
+        - filters/simplifyMetadata.rb #collapse down metadata "author: [name: affiliation:]" to author:
+      lua-filter:
+        - filters/pagebreak.lua # use \newpage{} also for HTML, DOCX, ODT & EPUB
+        - filters/pretty-urls.lua # clean up URLs a bit
+        - filters/ensureWidth.lua
+#-----------------------------------------------------------------ODT REFS
+  odt-refs:
+    extends: [refs,odt]
+#-----------------------------------------------------------------ODT standard fonts
+  odt-refs-calibri:
+    extends: [odt,refs]
+    pandoc:
+      to: odt
+      reference-doc: templates/custom-calibri.odt
 #-----------------------------------------------------------------DOCX
   docx:
     pandoc:
       from: markdown+alerts
       to: docx
+      reference-doc: templates/custom.docx
       standalone: true
       verbose: true # verbose by default
       filter:
@@ -195,7 +233,6 @@ templates:
         - filters/pagebreak.lua # use \newpage{} also for HTML, DOCX, ODT & EPUB
         - filters/abstract-section.lua # move an abstract heading to metadata
         - filters/pretty-urls.lua # clean up URLs a bit
-      reference-doc: templates/custom.docx
 #-----------------------------------------------------------------DOCX REFS
   docx-refs:
     extends: [docx,refs]
@@ -238,26 +275,6 @@ templates:
     extends: [docx-refs]
     preprocessors: 
       add: preprocessors/criticmarkup.rb #process criticmarkup to HTML that pandoc can use
-#-----------------------------------------------------------------ODT
-  odt:
-    extends: [docx]
-    pandoc:
-      to: odt
-      reference-doc: templates/custom.odt
-      lua-filter:
-        - filters/ensureWidth.lua
-#-----------------------------------------------------------------ODT REFS
-  odt-refs:
-    extends: [odt,refs]
-    pandoc:
-      to: odt
-      reference-doc: templates/custom.odt
-#-----------------------------------------------------------------ODT standard fonts
-  odt-refs-calibri:
-    extends: [docx,refs]
-    pandoc:
-      to: odt
-      reference-doc: templates/custom-calibri.odt
 #-----------------------------------------------------------------
 #:::::::::::::::::::::::: PRESENTATIONS ::::::::::::::::::::::::::
 #-----------------------------------------------------------------
