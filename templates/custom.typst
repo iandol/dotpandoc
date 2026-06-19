@@ -69,10 +69,10 @@ $endif$
 $if(nonumberfigures)$
 #set figure(numbering: none)
 #show figure.caption: it => {
-	#set align(left)
-	#set par(justify: true, leading: 1em)
-	#set text(font: sans-font, size: 11pt, discretionary-ligatures: false, number-type: "lining")
-	#emph[#it.body]
+	set align(left)
+	set par(justify: true, leading: 1em)
+	set text(font: sans-font, size: 11pt, discretionary-ligatures: false, number-type: "lining")
+	emph[it.body]
 }
 $else$
 #show figure.caption: it => {
