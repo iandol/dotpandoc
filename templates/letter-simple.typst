@@ -53,7 +53,7 @@ $endif$
 $if(annotations)$
 	annotations: [$annotations$],
 $else$
-	annotations: "Recipient",
+	annotations: none,
 $endif$
 $if(recipient)$
 		recipient: [$recipient$],

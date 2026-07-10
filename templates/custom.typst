@@ -45,12 +45,33 @@ $endif$
 #show quote: set align(center)
 #show quote: set text(style: "italic")
 #show quote: set pad(x: 5em, y: 1.75em)
-#show heading: set text(weight: "extrabold", font: heading-font, fill: luma(30%))
-#show heading: set block(below: 1.5em)
+#show heading: set text(weight: "extrabold", font: heading-font, fill: luma(25%))
+#show heading: set block(above: 2em, below: 1.25em)
 #show raw: set text(font: mono-font)
 #show link: set text(fill: rgb(65%, 25%, 0%))
 #show table: set par(justify: false)
 #show ref: strong
+
+#set table(
+	stroke: none,
+	gutter: 0.1em,
+	fill: (x, y) =>
+	if x == 0 or y == 0 { luma(70%) },
+)
+#set table.hline(
+	stroke: 0.5pt + luma(75%)
+)
+#show table.cell: it => {
+  if it.x == 0 or it.y == 0 {
+    set text(white)
+    strong(it)
+  } else if it.body == [] {
+    // Replace empty cells with 'N/A'
+    pad(..it.inset)[_N/A_]
+  } else {
+    it
+  }
+}
 
 #show figure.where(
   kind: table
