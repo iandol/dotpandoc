@@ -18,29 +18,35 @@ $endif$
 )
 
 $if(mainfont)$
-#let main-font = ("$mainfont$")
+#let main-font = ("$mainfont$", "Alegreya", "STKaiti", "Kaiti SC", "Libertinus Serif", "Source Serif 4")
 $else$
-#let main-font = ("Dolly Pro","Alegreya","Libertinus Serif", "Source Serif 4")
+#let main-font = ("Dolly Pro", "Alegreya", "STKaiti", "Kaiti SC", "Libertinus Serif", "Source Serif 4")
 $endif$
 $if(headerfont)$
-#let heading-font = ("$headerfont$")
+#let heading-font = ("$headerfont$", "Alegreya Sans SC", "STKaiti", "Kaiti SC")
 $elseif(sansfont)$
-#let heading-font = ("$sansfont$")
+#let heading-font = ("$sansfont$", "Alegreya Sans SC", "STKaiti", "Kaiti SC")
 $else$
-#let heading-font = ("Alegreya Sans SC","Graublau Slab","Source Sans 3")
+#let heading-font = ("Alegreya Sans SC", "STKaiti", "Kaiti SC", "Graublau Slab","Source Sans 3")
 $endif$
 $if(sansfont)$
-#let sans-font = ("$sansfont$")
+#let sans-font = ("$sansfont$", "Alegreya Sans", "STKaiti", "Kaiti SC", "Graublau Slab","Source Sans 3")
 $else$
-#let sans-font = ("Alegreya Sans","Graublau Slab","Source Sans 3")
+#let sans-font = ("Alegreya Sans","STKaiti", "Kaiti SC", "Graublau Slab","Source Sans 3")
 $endif$
 $if(monofont)$
 #let mono-font = ("$monofont$")
 $else$
-#let mono-font = ("Rec Mono Casual","Cascadia Code","Menlo")
+#let mono-font = ("Rec Mono Casual", "Cascadia Code", "Fira Code", "Menlo")
 $endif$
 
-#set text(font: main-font, ligatures: true, discretionary-ligatures: false, number-type: "old-style")
+#set text(
+	font: main-font, 
+	ligatures: true, 
+	discretionary-ligatures: false, 
+	number-type: "old-style",
+	cjk-latin-spacing: auto,
+)
 #set quote(block: true)
 #show quote: set align(center)
 #show quote: set text(style: "italic")
