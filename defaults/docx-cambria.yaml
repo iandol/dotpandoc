@@ -1,0 +1,4 @@
+defaults:
+  - refs
+  - docx
+reference-doc: ${USERDATA}/templates/custom-cambria.docx

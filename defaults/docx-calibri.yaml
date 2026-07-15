@@ -1,0 +1,4 @@
+defaults:
+  - refs-nolinks
+  - docx
+reference-doc: ${USERDATA}/templates/custom-calibri.docx

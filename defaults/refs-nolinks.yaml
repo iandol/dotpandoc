@@ -1,0 +1,4 @@
+defaults:
+  - refs
+metadata:
+  link-citations: false
