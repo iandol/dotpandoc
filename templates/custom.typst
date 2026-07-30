@@ -5,7 +5,7 @@ $endif$
 // https://typst.app/universe/package/gentle-clues/
 #import "@preview/gentle-clues:1.2.0": *
 
-#let horizontalrule = line(start: (25%,0%), end: (75%,0%))
+#set terms(hanging-indent: 1.5em)
 
 #show terms.item: it => block(breakable: false)[
   #text(weight: "bold")[#it.term]
@@ -16,6 +16,12 @@ $endif$
   inset: 6pt,
   stroke: none
 )
+
+#let horizontalrule = line(start: (25%,0%), end: (75%,0%))
+// Polyfill divider to allow compiling with typst < 0.15:
+#let divider = if "divider" in std { divider } else { horizontalrule }
+
+
 
 $if(mainfont)$
 #let main-font = ("$mainfont$", "Alegreya", "STKaiti", "Kaiti SC", "Libertinus Serif", "Source Serif 4")
@@ -118,16 +124,21 @@ $endif$
 #show <refs>: set par(leading: 0.9em, spacing: 1.4em)
 #show <refs>: set text(size: 11pt, font: sans-font)
 
+$if(template)$
+#import "$template$": conf
+$else$
+$template.typst()$
+$endif$
+
+$if(smart)$
+$else$
+#set smartquote(enabled: false)
+
+$endif$
 $for(header-includes)$
 $header-includes$
 
 $endfor$
-
-$if(template)$
-#import "$template$": conf
-$else$
-$mytemplate.typst()$
-$endif$
 
 #show: doc => conf(
 $if(title)$
@@ -173,7 +184,7 @@ $endfor$
 	),
 $endif$
 $if(keywords)$
-	keywords: ($for(keywords)$$keywords$$sep$,$endfor$),
+  keywords: ($for(keywords)$"$keywords/nowrap$"$sep$,$endfor$),
 $endif$
 $if(date)$
 	date: [$date$],
@@ -212,10 +223,12 @@ $endif$
 $if(papersize)$
 	paper: "$papersize$",
 $endif$
+$if(mainfont)$
+  font: ("$mainfont$",),
+$endif$
 $if(fontsize)$
 	fontsize: $fontsize$,
 $endif$
-	font: main-font,
 $if(mathfont)$
 	mathfont: ($for(mathfont)$"$mathfont$",$endfor$),
 $endif$
@@ -246,6 +259,12 @@ $for(include-before)$
 $include-before$
 
 $endfor$
+$if(toc)$
+#outline(
+  title: auto,
+  depth: $toc-depth$
+);
+$endif$
 
 $body$
 
