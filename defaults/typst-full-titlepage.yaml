@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=none
+defaults: [typst-full]
+metadata:
+  titlepage: true
+  titlepage-background: ${USERDATA}/templates/background1.svg

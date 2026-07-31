@@ -11,7 +11,7 @@ local ptype, stringify = utils.type, utils.stringify
 
 --- The target format of the conversion. This constant should be set by
 --- pandoc.
-local FORMAT = FORMAT
+local FORMAT = FORMAT or 'markdown'
 
 local equation_class = 'equation'
 
@@ -115,6 +115,7 @@ function ReferenceMap:count(reftype, level)
   else
     self.counters[reftype] = (self.counters[reftype] or 0) + 1
   end
+  return self.counters[reftype]
 end
 
 --- Add a new element to the reference map
@@ -124,6 +125,7 @@ function ReferenceMap:add(reftype, id, linktext)
     linktext = linktext or pandoc.Inlines{tostring(self.counters[reftype])}
 
     self.references['#' .. id] = {
+      ['number'] = self.counters[reftype],
       ['content'] = linktext,
       ['ref-type'] = reftypes[reftype]
     }
@@ -162,18 +164,25 @@ function ReferenceMap:fill(doc)
     end,
     Span = function (span)
       if span.identifier and span.classes:includes(equation_class) then
-        self:count('equation')
+        local eqnum = self:count('equation')
         self:add('equation', span.identifier)
+        span.attributes.number = eqnum and tostring(eqnum) or nil
         return span, false
       end
     end,
     Math = function (mth)
-      local formula, label = mth.text:match '^(.+)\\label%{(.+)%}%s*$'
-      if formula and label then
-        self:count('equation')
+      local before, label, after = mth.text:match '^(.+)\\label%{([^%}]+)%}(.*)$'
+      if before and label then
+        local formula = before .. (after or '')
+        local eqnum = self:count('equation')
         self:add('equation', label)
-        mth.text = formula:gsub('%s*$', '') -- trim end
-        return pandoc.Span(mth, {label, {equation_class}}), false
+        mth.text = formula:gsub('%s*$', ''):gsub('%s\n', '\n') -- trim lines
+        local attr = {
+          id = label,
+          class = equation_class,
+          number = eqnum and tostring(eqnum) or nil
+        }
+        return pandoc.Span(mth, attr), false
       end
     end,
     Table = function (tbl)
@@ -191,11 +200,11 @@ setmetatable(ReferenceMap, ReferenceMap)
 --- A pandoc Space element. Created once for optimization.
 local Space = pandoc.Space()
 
-local function make_label (refnum, conf, sep)
+local function make_label (refnum, name, sep)
   local num = refnum and refnum.content or pandoc.Inlines('?')
 
   return pandoc.Span(
-    {conf.name, Space} .. num .. sep,
+    pandoc.Inlines(name) .. {Space} .. num .. sep,
     {class="caption-label"}
   )
 end
@@ -203,11 +212,11 @@ end
 --- Add a label to a referenceable element.
 local function add_label (refnums, opts)
   return function (element)
-    local elementconf = opts.caption[element.t:lower()]
-    assert(elementconf, "Don't know how to make a label for " .. element.t)
+    local elementname = opts.name[element.t:lower()]
+    assert(elementname, "Don't know how to make a label for " .. element.t)
 
     local refnum = refnums['#' .. element.identifier]
-    local label = make_label(refnum, elementconf, opts.separator)
+    local label = make_label(refnum, elementname, opts.separator)
     local cpt = element.caption and element.caption.long
     if label and cpt then
       if cpt[1] and List{'Plain', 'Para'}:includes(cpt[1].t) then
@@ -223,18 +232,39 @@ end
 
 --- Set labels on links, references, figures, and tables.
 local function set_labels (refnums, opts)
+  -- Checks whether the given attributes mark an element as ignored.
+  local is_ignored = function (attr)
+    return attr.attributes['querverweis-ignore']
+      or attr.classes:includes('querverweis-ignore')
+  end
+
+  -- Returns a filter to format the link text.
+  local format_label_text = function (refobj)
+    return {
+      Str = function (str)
+        str.text = str.text:format(refobj.number)
+        return str
+      end
+    }
+  end
+
   return {
     Table = opts.labels and add_label(refnums, opts) or nil,
     Figure = opts.labels and add_label(refnums, opts) or nil,
 
     Link = function (link)
-      if not next (link.content) then
+      if not is_ignored(link.attr) then
         local refobj = refnums[link.target]
         if refobj then
           link.attributes['ref-type'] = opts['ref-types']
             and refobj['ref-type']
             or nil
-          link.content = refobj.content
+          if next(link.content) then
+            link.content = link.content:walk(format_label_text(refobj))
+          else
+            -- Use default content if the link was empty
+            link.content = refobj.content
+          end
           return link
         end
       end
@@ -258,18 +288,14 @@ local function set_labels (refnums, opts)
 end
 
 --- Set of default caption options.
-local default_captions = {
-  ['figure'] = {
-    name = 'Figure',
-  },
-  ['table'] = {
-    name = 'Table',
-  },
+local default_element_names = {
+  ['figure'] = 'Figure',
+  ['table'] = 'Table',
 }
 
 --- Set of default options.
 local default_options = {
-  ['caption']         = default_captions,
+  ['name']            = default_element_names,
   ['id-from-caption'] = true,
   ['labels']          = false,
   ['ref-types']       = false,

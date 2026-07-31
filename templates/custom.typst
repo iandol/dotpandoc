@@ -3,7 +3,7 @@ $if(doindex)$
 #import "@preview/in-dexter:0.7.2": *
 $endif$
 // https://typst.app/universe/package/gentle-clues/
-#import "@preview/gentle-clues:1.2.0": *
+#import "@preview/gentle-clues:1.3.1"
 
 #set terms(hanging-indent: 1.5em)
 
@@ -12,36 +12,29 @@ $endif$
   #block(inset: (left: 1.5em, top: -0.4em))[#it.description]
 ]
 
-#set table(
-  inset: 6pt,
-  stroke: none
-)
-
 #let horizontalrule = line(start: (25%,0%), end: (75%,0%))
 // Polyfill divider to allow compiling with typst < 0.15:
 #let divider = if "divider" in std { divider } else { horizontalrule }
 
-
-
 $if(mainfont)$
-#let main-font = ("$mainfont$", "Alegreya", "STKaiti", "Kaiti SC", "Libertinus Serif", "Source Serif 4")
+#let main-font = ("$mainfont/chomp$", "Alegreya", "STKaiti", "Kaiti SC", "Libertinus Serif", "Source Serif 4")
 $else$
 #let main-font = ("Dolly Pro", "Alegreya", "STKaiti", "Kaiti SC", "Libertinus Serif", "Source Serif 4")
 $endif$
 $if(headerfont)$
-#let heading-font = ("$headerfont$", "Alegreya Sans SC", "STKaiti", "Kaiti SC")
+#let heading-font = ("$headerfont/chomp$", "Alegreya Sans SC", "STKaiti", "Kaiti SC")
 $elseif(sansfont)$
-#let heading-font = ("$sansfont$", "Alegreya Sans SC", "STKaiti", "Kaiti SC")
+#let heading-font = ("$sansfont/chomp$", "Alegreya Sans SC", "STKaiti", "Kaiti SC")
 $else$
 #let heading-font = ("Alegreya Sans SC", "STKaiti", "Kaiti SC", "Graublau Slab","Source Sans 3")
 $endif$
 $if(sansfont)$
-#let sans-font = ("$sansfont$", "Alegreya Sans", "STKaiti", "Kaiti SC", "Graublau Slab","Source Sans 3")
+#let sans-font = ("$sansfont/chomp$", "Alegreya Sans", "STKaiti", "Kaiti SC", "Graublau Slab","Source Sans 3")
 $else$
 #let sans-font = ("Alegreya Sans","STKaiti", "Kaiti SC", "Graublau Slab","Source Sans 3")
 $endif$
 $if(monofont)$
-#let mono-font = ("$monofont$")
+#let mono-font = ("$monofont/chomp$", "Rec Mono Casual", "Cascadia Code", "Fira Code", "Menlo")
 $else$
 #let mono-font = ("Rec Mono Casual", "Cascadia Code", "Fira Code", "Menlo")
 $endif$
@@ -64,7 +57,9 @@ $endif$
 #show table: set par(justify: false)
 #show ref: strong
 
+
 #set table(
+	inset: 3pt,
 	stroke: none,
 	gutter: 0.1em,
 	fill: (x, y) =>
@@ -74,8 +69,9 @@ $endif$
 	stroke: 0.5pt + luma(75%)
 )
 #show table.cell: it => {
+	set text(font: sans-font, size: 9pt, discretionary-ligatures: false, number-type: "lining")
   if it.x == 0 or it.y == 0 {
-    set text(white)
+    set text(white, size: 10pt)
     strong(it)
   } else if it.body == [] {
     // Replace empty cells with 'N/A'
@@ -127,7 +123,7 @@ $endif$
 $if(template)$
 #import "$template$": conf
 $else$
-$template.typst()$
+$mytemplate.typst()$
 $endif$
 
 $if(smart)$

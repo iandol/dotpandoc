@@ -3,7 +3,8 @@ standalone: true
 from: markdown
 to: typst-citations
 metadata-file: typst-plain.yaml
-template: custom.typst
+verbosity: INFO
+template: bookly.typst
 filters:
   - include-files.lua # include files
   - typstFix.lua # move labels
@@ -11,6 +12,7 @@ filters:
   - convertIndex.lua # indexing
   - citeproc # refs
   - mermaid.lua # mermaid diagrams
+  - alerts.lua # alerts
   - list-table.lua # list tables
   - pagebreak.lua # page breaks
   - abstract-section.lua # move abstract to metadata

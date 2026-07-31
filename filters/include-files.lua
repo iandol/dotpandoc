@@ -2,17 +2,19 @@
 ---
 --- Copyright: © 2019–2021 Albert Krewinkel
 --- License:   MIT – see LICENSE file for details
+--- https://github.com/pandoc-ext/include-files
 
 -- Module pandoc.path is required and was added in version 2.12
 PANDOC_VERSION:must_be_at_least '2.12'
 
+local pandoc = require 'pandoc'
 local List = require 'pandoc.List'
 local path = require 'pandoc.path'
 local system = require 'pandoc.system'
 
 --- Get include auto mode
 local include_auto = false
-function get_vars (meta)
+local function get_vars (meta)
   if meta['include-auto'] then
     include_auto = true
   end
@@ -20,7 +22,7 @@ end
 
 --- Keep last heading level found
 local last_heading_level = 0
-function update_last_level(header)
+local function update_last_level(header)
   last_heading_level = header.level
 end
 
@@ -33,6 +35,13 @@ local function update_contents(blocks, shift_by, include_path)
         header.level = header.level + shift_by
       end
       return header
+    end,
+    -- If link paths are relative then prepend include file path
+    Link = function (link)
+        if path.is_relative(link.target) and string.sub(path.filename(link.target), 1, 1) ~= '#' and not string.find(link.target, "https?://") then
+            link.target = path.normalize(path.join({include_path, link.target}))
+        end
+        return link
     end,
     -- If image paths are relative then prepend include file path
     Image = function (image)

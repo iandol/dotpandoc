@@ -1,0 +1,137 @@
+#import "@preview/bookly:4.1.3": *
+
+$if(doindex)$
+// https://typst.app/universe/package/in-dexter
+#import "@preview/in-dexter:0.7.2": *
+$endif$
+// https://typst.app/universe/package/gentle-clues/
+#import "@preview/gentle-clues:1.3.1": *
+
+
+#let content-to-string(content) = {
+	if content.has("text") {
+		content.text
+	} else if content.has("children") {
+		content.children.map(content-to-string).join("")
+	} else if content.has("body") {
+		content-to-string(content.body)
+	} else if content == [ ] {
+		" "
+	}
+}
+
+$if(mainfont)$
+#let main-font = ("$mainfont/chomp$", "Alegreya", "STKaiti", "Kaiti SC", "Libertinus Serif", "Source Serif 4")
+$else$
+#let main-font = ("Dolly Pro", "Alegreya", "STKaiti", "Kaiti SC", "Libertinus Serif", "Source Serif 4")
+$endif$
+$if(headerfont)$
+#let heading-font = ("$headerfont/chomp$", "Alegreya Sans SC", "STKaiti", "Kaiti SC")
+$elseif(sansfont)$
+#let heading-font = ("$sansfont/chomp$", "Alegreya Sans SC", "STKaiti", "Kaiti SC")
+$else$
+#let heading-font = ("Alegreya Sans SC", "STKaiti", "Kaiti SC", "Graublau Slab","Source Sans 3")
+$endif$
+$if(sansfont)$
+#let sans-font = ("$sansfont/chomp$", "Alegreya Sans", "STKaiti", "Kaiti SC", "Graublau Slab","Source Sans 3")
+$else$
+#let sans-font = ("Alegreya Sans","STKaiti", "Kaiti SC", "Graublau Slab","Source Sans 3")
+$endif$
+$if(monofont)$
+#let mono-font = ("$monofont/chomp$", "Rec Mono Casual", "Cascadia Code", "Fira Code", "Menlo")
+$else$
+#let mono-font = ("Rec Mono Casual", "Cascadia Code", "Fira Code", "Menlo")
+$endif$
+
+$for(include-before)$
+$include-before$
+
+$endfor$
+
+#let config-colors = (
+  primary: rgb("#a02222"),
+  secondary: rgb("#dddddd").darken(15%)
+)
+
+#show: bookly.with(
+$if(title)$
+	title: [$title$],
+$endif$
+  author: ($for(author)$"$it.name$"$sep$,$endfor$),
+$if(theme)$
+  theme: $theme$,
+$endif$
+$if(lang)$
+	lang: "$lang$",
+$else$
+  lang: "en",
+$endif$
+  tufte: false,
+  fonts: (
+    body: main-font,
+    math: "Stix Two Math",
+  ),
+  title-page: book-title-page(
+    series: "CageLab",
+    subtitle: " ",
+    institution: "CEBSIT, CAS",
+    logo: image("logo.png"),
+    cover: image("logo.png", width: 50%)
+  ),
+  config-options: (
+    open-right: true,
+    alt-margins: false
+  )
+)
+
+#show table: it => {
+  set text(font: sans-font, size: 8pt,)
+  show raw: set text(size: 7.5pt)
+  it
+}
+
+#show raw: set text(font: mono-font)
+
+#set figure(numbering: "1")
+
+#show: front-matter
+
+#show: main-matter
+
+#tableofcontents
+
+#listoffigures
+
+#listoftables
+
+$body$
+
+$if(citations)$
+$for(nocite-ids)$
+#cite(label("${it}"), form: none)
+$endfor$
+$if(csl)$
+
+#set bibliography(style: "$csl$")
+$elseif(bibliographystyle)$
+
+#set bibliography(style: "$bibliographystyle$")
+$endif$
+$if(bibliography)$
+
+#bibliography(($for(bibliography)$"$bibliography$"$sep$,$endfor$)$if(full-bibliography)$, full: true$endif$)
+$endif$
+$endif$
+
+$if(doindex)$
+#pagebreak()
+= Index
+#columns(2)[
+  #make-index(title: none)
+]
+
+$endif$
+$for(include-after)$
+
+$include-after$
+$endfor$
