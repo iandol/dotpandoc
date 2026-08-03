@@ -100,18 +100,35 @@ setmetatable(SectionCounter, SectionCounter)
 local ReferenceMap = {}
 
 --- Create a new reference map.
-function ReferenceMap:new ()
+function ReferenceMap:new (opts)
+  opts = opts or {}
   local refmap = {
     references = {},
     counters = {},
+    -- Numbering mode: "1" = plain sequential numbers (default), "1.1" =
+    -- numbers prefixed with the current Heading 1, reset on every new one.
+    numbering = opts.numbering or '1',
+    -- The number of the current level-1 section, and the per-section
+    -- counters of figures/tables/equations (used only in "1.1" mode).
+    -- `section_number` must stay a present field: the metatable pattern
+    -- used by ReferenceMap makes missing-field access raise a
+    -- "'__index' chain too long" error.
+    section_number = false,
+    local_counts = {},
   }
   return setmetatable(refmap, self)
 end
 
 function ReferenceMap:count(reftype, level)
   if level then
+    -- Hierarchical section numbering.
     self.counters[reftype] =
       (self.counters[reftype] or SectionCounter()):increase(level)
+  elseif self.numbering == '1.1' then
+    -- Number within the current Heading 1 section, e.g. "2.1".
+    self.local_counts[reftype] = (self.local_counts[reftype] or 0) + 1
+    self.counters[reftype] =
+      (self.section_number or 0) .. '.' .. self.local_counts[reftype]
   else
     self.counters[reftype] = (self.counters[reftype] or 0) + 1
   end
@@ -122,12 +139,18 @@ end
 function ReferenceMap:add(reftype, id, linktext)
   -- Create a reference object if the ID is a non-empty string
   if type(id) == 'string' and id ~= '' then
-    linktext = linktext or pandoc.Inlines{tostring(self.counters[reftype])}
+    local counter = self.counters[reftype]
+    linktext = linktext or pandoc.Inlines{tostring(counter)}
+
+    -- Sections are numbered hierarchically via a SectionCounter; snapshot
+    -- its display string so later headers don't change earlier references.
+    local number = type(counter) == 'table' and tostring(counter) or counter
 
     self.references['#' .. id] = {
-      ['number'] = self.counters[reftype],
+      ['number'] = number,
       ['content'] = linktext,
-      ['ref-type'] = reftypes[reftype]
+      ['ref-type'] = reftypes[reftype],
+      ['type'] = reftype,
     }
   end
 end
@@ -160,6 +183,13 @@ function ReferenceMap:fill(doc)
       else
         self:count('section', h.level)
         self:add('section', h.attr.identifier)
+      end
+      -- On each new Heading 1, reset the per-section counters and remember
+      -- the current section number for "1.1" numbering mode.
+      if self.numbering == '1.1' and h.level == 1 then
+        self.local_counts = {}
+        self.section_number =
+          tostring(self.counters['section'] or ''):match('^(%d+)') or false
       end
     end,
     Span = function (span)
@@ -240,12 +270,29 @@ local function set_labels (refnums, opts)
 
   -- Returns a filter to format the link text.
   local format_label_text = function (refobj)
+    -- Sections carry a string snapshot (e.g. "1.1.2"); all other reference
+    -- types carry a plain number.
+    local number = refobj.number
     return {
       Str = function (str)
-        str.text = str.text:format(refobj.number)
+        if type(number) == 'number' then
+          str.text = str.text:format(number)
+        else
+          str.text = str.text:gsub('%%%a', number or '')
+        end
         return str
       end
     }
+  end
+
+  -- Prefix a default cross-reference with the name of the referenced element
+  -- type (e.g. "Fig."), if requested via the `link-labels` option.
+  local with_link_label = function (refobj, content)
+    local linkname = (opts['link-names'] or opts.name)[refobj.type]
+    if opts['link-labels'] and linkname then
+      return pandoc.Inlines(linkname) .. {Space} .. content
+    end
+    return content
   end
 
   return {
@@ -263,7 +310,7 @@ local function set_labels (refnums, opts)
             link.content = link.content:walk(format_label_text(refobj))
           else
             -- Use default content if the link was empty
-            link.content = refobj.content
+            link.content = with_link_label(refobj, refobj.content)
           end
           return link
         end
@@ -279,7 +326,8 @@ local function set_labels (refnums, opts)
           local attributes = {
             ['ref-type'] = opts['ref-types'] and refobj['ref-type'] or nil
           }
-          refs:insert(pandoc.Link(refobj.content, target, '', attributes))
+          local content = with_link_label(refobj, refobj.content)
+          refs:insert(pandoc.Link(content, target, '', attributes))
         end
       end
       return next(refs) and refs or cite
@@ -298,6 +346,9 @@ local default_options = {
   ['name']            = default_element_names,
   ['id-from-caption'] = true,
   ['labels']          = false,
+  ['link-labels']     = false,
+  ['link-names']      = false,
+  ['numbering']       = '1',
   ['ref-types']       = false,
   ['separator']       = pandoc.Inlines{Space},
 }
@@ -312,13 +363,15 @@ local function make_opts (useropts)
         (useropts.separator == 'colon' and pandoc.Inlines{':', Space}) or
         (useropts.separator == 'period' and pandoc.Inlines{'.', Space}) or
         value
-    elseif key == 'labels' then
+    elseif key == 'labels' or key == 'link-labels' then
       local labelsconf = useropts[key]
       if ptype(labelsconf) == 'List' then
         opts[key] = labelsconf:map(stringify):includes(FORMAT)
       else
         opts[key] = not not labelsconf  -- ensure boolean
       end
+    elseif key == 'numbering' then
+      opts[key] = stringify(useropts[key] or value)
     else
       opts[key] = useropts[key] or value
     end

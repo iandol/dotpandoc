@@ -84,19 +84,41 @@ $endif$
   )
 )
 
+#let raw-background = rgb("#e7e3d4")
+
+#show raw.where(block: false): it => box(
+  fill: raw-background,
+  radius: 3pt,
+  inset: (x: 0.1em, y: 0.1em),
+  outset: (x: 0.28em, y: 0.14em),
+  clip: false,
+)[
+  #set text(font: mono-font)
+  #it
+]
+
+#show raw.where(block: true): it => block(
+  fill: raw-background,
+  radius: 4pt,
+  width: 100%,
+  inset: 12pt,
+  clip: true,
+)[
+  #set text(font: mono-font)
+  #it
+]
+
 #show table: it => {
   set text(font: sans-font, size: 8pt,)
   show raw: set text(size: 7.5pt)
   it
 }
 
-#show raw: set text(font: mono-font)
-
-#set figure(numbering: "1")
-
 #show: front-matter
 
 #show: main-matter
+
+#set figure(numbering: "1")
 
 #tableofcontents
 

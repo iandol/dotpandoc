@@ -3,29 +3,21 @@ title: Test
 author: Jane Doe
 querverweis:
   labels: true
+  link-labels: true
+  numbering: "1.1"
 ---
 
 # Intro {#introduction}
 
 ![The face of a male mandrill](mandrill.jpg){#fig:mandrill}
 
-The *Mandrill* face in figure @fig:mandrill is a classic test image [@doe2012; @doe2013]. See also table @tbl:example.
+The *Mandrill* face in @fig:mandrill is a classic test image [@doe2012; @doe2013]. See also @tbl:example.
 
 | sample |
 |--------|
 | table  |
 
 : Example table []{#tbl:example}
-
-![The face of a male mandrill](mandrill.jpg){#fig:mandrill2}
-
-The *Mandrill* face in [Figure %d](#fig:mandrill2) is a classic test image. See also table @tbl:example2.
-
-| sample |
-|--------|
-| table  |
-
-: Example table []{#tbl:example2}
 
 This formula can be generalized to:
 
@@ -51,4 +43,16 @@ The results are interesting.
 | table  |
 
 : Example table []{#tbl:example3}
+
+## Details
+
+![The face of a male mandrill](mandrill.jpg){#fig:mandrill2}
+
+The *Mandrill* face in [Figure %d](#fig:mandrill2) is a classic test image. See also @tbl:example2.
+
+| sample |
+|--------|
+| table  |
+
+: Example table []{#tbl:example2}
 
