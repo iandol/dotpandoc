@@ -1,0 +1,15 @@
+\section{Index Test}\label{index-test}
+
+A block index:
+
+\index{BlockAlpha}
+
+Inline \index{beta} in text.
+
+Nested \index{Ancestor!Parent!item}.
+
+Main entry \index{gamma|texmf}.
+
+A term: this here\index{here}.
+
+Cross \index{delta|see{epsilon}}.

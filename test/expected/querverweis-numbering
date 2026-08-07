@@ -1,0 +1,28 @@
+# Introduction {#intro}
+
+![Intro figure](img.png){#fig:intro}
+
+See [1.1](#fig:intro), [1.1](#fig:intro), [Table 1.1](#tbl:first) and
+[Equation 1.1](#eq:demo).
+
+  a
+  ---
+  1
+
+  : First table {#tbl:first}
+
+[$$ a = b$$]{#eq:demo .equation number="1.1"}
+
+See also section [1](#intro).
+
+# Results
+
+![Results figure](img.png){#fig:results}
+
+  a
+  ---
+  1
+
+  : Results table {#tbl:results}
+
+See [2.1](#fig:results) and [2.1](#tbl:results).

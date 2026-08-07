@@ -84,6 +84,8 @@ end
 -- @param customTitle the [optional] custom title
 -- @return the prefix string
 local function createTypstPrefix(alert, customTitle)
+	if isPandocList(customTitle) then customTitle = stringify(customTitle) end
+	if customTitle == "" then customTitle = nil end
 	local adjustedAlert = alert
 	local adjustedTitle = titleCase(alert)
 	if alert == 'note' then

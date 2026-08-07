@@ -382,8 +382,35 @@ end
 
 return {{
     Pandoc = function (doc)
-      local opts = make_opts(doc.meta.querverweis)
+      local useropts = {}
+
+      -- Options from the `querverweis` metadata block (YAML map).
+      local qvmeta = doc.meta.querverweis
+      if qvmeta and ptype(qvmeta) == 'table' then
+        for k, v in pairs(qvmeta) do useropts[k] = v end
+      end
+
+      -- Also accept flat `-M querverweis.<key>=<value>` command-line
+      -- metadata, which pandoc exposes as dotted keys rather than a nested
+      -- map (e.g. -M querverweis.link-labels=true,
+      --      -M querverweis.link-names.figure=Fig.).
+      local prefix = 'querverweis.'
+      for key, value in pairs(doc.meta) do
+        if type(key) == 'string' and key:sub(1, #prefix) == prefix then
+          local path = key:sub(#prefix + 1)
+          local cur = useropts
+          local parts = {}
+          for part in path:gmatch('[^.]+') do parts[#parts + 1] = part end
+          for i = 1, #parts - 1 do
+            cur[parts[i]] = cur[parts[i]] or {}
+            cur = cur[parts[i]]
+          end
+          cur[parts[#parts]] = value
+        end
+      end
+
       doc.meta.querverweis = nil
+      local opts = make_opts(useropts)
       local refmap = ReferenceMap(opts)
 
       doc = refmap:fill(doc)

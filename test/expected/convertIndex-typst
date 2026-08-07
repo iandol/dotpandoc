@@ -1,0 +1,15 @@
+= Index Test
+<index-test>
+A block index:
+
+#index[BlockAlpha]
+
+Inline #index[Beta] in text.
+
+Nested #index("Ancestor", "Parent", "Item").
+
+Main entry #index-main[Gamma].
+
+A term: this here#index[Here].
+
+Cross #index[Delta, see—Epsilon].

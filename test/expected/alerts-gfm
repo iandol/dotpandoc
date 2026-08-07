@@ -1,0 +1,48 @@
+<div class="note" data-custom-style="Note">
+
+💡 Note\
+Note content.
+
+</div>
+
+<div class="tip" data-custom-style="Tip">
+
+🔦 A custom tip title\
+Tip content.
+
+</div>
+
+<div class="important" data-custom-style="Important">
+
+🤚 Important\
+Important content.
+
+</div>
+
+<div class="warning" data-custom-style="Warning">
+
+🚨 Watch out\
+Warning content.
+
+</div>
+
+<div class="caution" data-custom-style="Caution">
+
+❗ Caution\
+Caution content.
+
+</div>
+
+<div class="note" data-custom-style="Note">
+
+💡 Note\
+Fenced note.
+
+</div>
+
+<div class="important" data-custom-style="Important">
+
+🤚 Custom Fenced Title\
+Fenced important content.
+
+</div>

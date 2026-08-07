@@ -1,0 +1,27 @@
+\begin{alertnote}{Note}
+Note content.
+\end{alertnote}
+
+\begin{alerttip}{A custom tip title}
+Tip content.
+\end{alerttip}
+
+\begin{alertimportant}{Important}
+Important content.
+\end{alertimportant}
+
+\begin{alertwarning}{Watch out}
+Warning content.
+\end{alertwarning}
+
+\begin{alertcaution}{Caution}
+Caution content.
+\end{alertcaution}
+
+\begin{alertnote}{Note}
+Fenced note.
+\end{alertnote}
+
+\begin{alertimportant}{Custom Fenced Title}
+Fenced important content.
+\end{alertimportant}

@@ -1,0 +1,27 @@
+
+
+#info(title: "Note")[Note content.]
+
+
+
+#tip(title: "A custom tip title")[Tip content.]
+
+
+
+#memo(title: "Important")[Important content.]
+
+
+
+#warning(title: "Watch out")[Warning content.]
+
+
+
+#warning(title: "Caution")[Caution content.]
+
+
+
+#info(title: "Note")[Fenced note.]
+
+
+
+#memo(title: "Custom Fenced Title")[Fenced important content.]
