@@ -15,6 +15,7 @@ filters:
   - pagebreak.lua # page breaks
   - abstract-section.lua # move abstract to metadata
   - pretty-urls.lua # clean link text
+  - alerts.lua
 table-of-contents: true
 cite-method: citeproc
 bibliography: ${USERDATA}/CoreFast.json #JSON faster than BIB, symlinked into Pandoc data dir
