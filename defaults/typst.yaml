@@ -7,14 +7,15 @@ template: custom.typst
 wrap: preserve
 pdf-engine-opt: '--pdf-standard=a-2b'
 filters:
-  - assimilateMetadata.rb
-  - typstFix.lua
-  - pagebreak.lua
+  - assimilateMetadata.rb # assimilate metadata from YAML to Pandoc templates
+  - typstFix.lua # move labels
+  - pagebreak.lua # page breaks
   #- removeDimensions.lua
-  - convertIndex.lua
-  - list-table.lua
-  - abstract-section.lua
-  - pretty-urls.lua
+  - convertIndex.lua # indexing
+  - list-table.lua # list tables
+  - abstract-section.lua # move abstract to metadata
+  - pretty-urls.lua # clean link text
+  - alerts.lua # alert boxes
 table-of-contents: true
 metadata:
   nonumberfigures: true
